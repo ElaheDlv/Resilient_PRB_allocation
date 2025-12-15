@@ -54,7 +54,7 @@ python main.py [--mode server|headless] [options...]
 
 - `--preset default|simple` – the simple preset keeps one gNB/n78 cell active.
 - `--ue-max N` – cap simultaneous UEs (overrides `UE_DEFAULT_MAX_COUNT`).
-- `--ue-embb/--ue-urllc/--ue-mmtc` – in the simple preset, deterministically spawn exactly this many subscribers per slice.
+- `--ue-embb/--ue-urllc` – in the simple preset, deterministically spawn exactly this many subscribers per slice.
 - `--freeze-mobility` (or `SIM_FREEZE_MOBILITY=1`) – pin UE locations to keep SINR/MCS constant so PRB changes are isolated.
 - `--sim-step S` – simulation step length in seconds (default 1.0).
 - `--sim-seed N` (or `SIM_SEED=N`) – seed Python/NumPy/torch RNGs so UE placement, traces, and models are reproducible.
@@ -64,7 +64,7 @@ Example (server mode, deterministic slice mix, stationary UEs):
 
 ```bash
 python main.py --preset simple --mode server \
-  --ue-embb 4 --ue-urllc 3 --ue-mmtc 3 \
+  --ue-embb 4 --ue-urllc 3 \
   --freeze-mobility --sim-step 0.5
 ```
 
@@ -105,7 +105,7 @@ Example (one UE per slice, looping traces, strict replay):
 
 ```bash
 python main.py --preset simple --mode server --freeze-mobility \
-  --ue-embb 1 --ue-urllc 1 --ue-mmtc 1 \
+  --ue-embb 1 --ue-urllc 1 \
   --trace-raw-map IMSI_0:backend/assets/traces/eMBB_aligned.csv:10.0.0.2 \
   --trace-raw-map IMSI_1:backend/assets/traces/URLLC_aligned.csv:10.0.0.1 \
   --trace-raw-map IMSI_2:backend/assets/traces/mMTC_aligned.csv:10.0.0.3 \

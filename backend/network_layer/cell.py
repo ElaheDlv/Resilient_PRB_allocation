@@ -382,8 +382,12 @@ class Cell:
             if has_replay:
                 # How many bytes can we serve this step given capacity?
                 cap_bytes = int((cap_bps * dt) / 8)
+                take = 0
+                delay_s = 0.0
                 if hasattr(self.base_station, "pull_dl_bytes") and self.base_station.has_dl_replay(ue.ue_imsi):
                     take = self.base_station.pull_dl_bytes(ue.ue_imsi, cap_bytes)
+                    if hasattr(self.base_station, "get_dl_last_delay_s"):
+                        delay_s = float(self.base_station.get_dl_last_delay_s(ue.ue_imsi))
                     # Mirror remaining queue for UI/backcompat
                     ue.dl_buffer_bytes = int(getattr(self.base_station, "get_dl_buf_bytes", lambda x: 0)(ue.ue_imsi))
                 # else:  ### This  part might be useful in some cases .But for now we do not need it
@@ -416,27 +420,15 @@ class Cell:
             # TODO: downlink and uplink latency
             # After serving downlink data (after buffer update)
             if has_replay:
-                # Transmission delay for this step
-                #transmission_delay = (take * 8) / served_bps if served_bps > 0 else 0
-                #print("Transmission Delay:", transmission_delay)
-                transmission_delay = 0.0
-                # Queuing delay: remaining buffer to be served. When capacity collapses
-                # to zero we still expose a backlog-derived latency using a tiny
-                # fallback rate so dashboards/xApps can see the stall instead of 0.
-                backlog_bytes = max(0, int(getattr(ue, "dl_buffer_bytes", 0) or 0))
-                backlog_bits = backlog_bytes * 8
-                if cap_bps > 0:
-                    queuing_delay = backlog_bits / cap_bps
-                elif backlog_bits > 0:
-                    stall_bps = max(
-                        1e-9, float(getattr(settings, "TRACE_LATENCY_STALL_BPS", 1.0) or 1.0)
-                    )
-                    queuing_delay = backlog_bits / stall_bps
+                # Queuing delay: average time in queue for bytes served this step (t_serve - t_arrival)
+                if take > 0:
+                    ue.downlink_latency = delay_s
                 else:
-                    queuing_delay = 0.0
-                #print("Queuing Delay:", queuing_delay)
-                # Total downlink latency
-                ue.downlink_latency = transmission_delay + queuing_delay
+                    # No service this step: expose how long the head-of-line bytes have waited so far
+                    hol_wait = 0.0
+                    if hasattr(self.base_station, "get_dl_head_wait_s"):
+                        hol_wait = float(self.base_station.get_dl_head_wait_s(ue.ue_imsi))
+                    ue.downlink_latency = hol_wait
             else:
                 # No trace: assume no queuing, only transmission delay for a nominal packet
                 #nominal_packet_size = 1500  # bytes, typical MTU

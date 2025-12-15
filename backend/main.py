@@ -46,7 +46,6 @@ parser.add_argument("--preset", choices=["default", "simple"], help="Topology pr
 parser.add_argument("--ue-max", type=int, help="Override UE_DEFAULT_MAX_COUNT")
 parser.add_argument("--ue-embb", type=int, help="Simple preset: number of UEs with eMBB subscription")
 parser.add_argument("--ue-urllc", type=int, help="Simple preset: number of UEs with URLLC subscription")
-parser.add_argument("--ue-mmtc", type=int, help="Simple preset: number of UEs with mMTC subscription")
 parser.add_argument(
     "--freeze-mobility",
     action="store_true",
@@ -221,7 +220,7 @@ if args.dash_port is not None:
     os.environ["DASH_PORT"] = str(args.dash_port)
 
 # If per-slice counts are provided in simple preset, align total UEs accordingly
-slice_counts = [c for c in (args.ue_embb, args.ue_urllc, args.ue_mmtc) if c is not None]
+slice_counts = [c for c in (args.ue_embb, args.ue_urllc) if c is not None]
 if slice_counts and (args.preset == "simple"):
     total_from_slices = sum(slice_counts)
     if args.ue_max is not None and args.ue_max != total_from_slices:
@@ -236,8 +235,6 @@ if args.ue_embb is not None:
     os.environ["UE_SIMPLE_COUNT_EMBB"] = str(args.ue_embb)
 if args.ue_urllc is not None:
     os.environ["UE_SIMPLE_COUNT_URLLC"] = str(args.ue_urllc)
-if args.ue_mmtc is not None:
-    os.environ["UE_SIMPLE_COUNT_MMTC"] = str(args.ue_mmtc)
 if args.freeze_mobility:
     os.environ["SIM_FREEZE_MOBILITY"] = "1"
 if args.sim_step is not None:
@@ -332,7 +329,6 @@ if args.prb_const_urllc is not None:
     os.environ["PRB_CONST_ALLOC_URLLC"] = str(max(0, int(args.prb_const_urllc)))
 if args.prb_const_log_interval is not None:
     os.environ["PRB_CONST_LOG_INTERVAL"] = str(max(1, int(args.prb_const_log_interval)))
-
 # Trace mapping and options (export via env before importing settings)
 if args.trace_speedup is not None:
     os.environ["TRACE_SPEEDUP"] = str(args.trace_speedup)

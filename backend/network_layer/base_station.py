@@ -5,6 +5,7 @@ from .edge_server import EdgeServer
 import logging
 import base64
 from utils.traffic_trace import estimate_trace_period
+from collections import deque
 
 
 
@@ -44,8 +45,14 @@ class BaseStation:
         # ---------------- DL replay and buffering (gNB-side) ----------------
         # Per-UE DL buffer in bytes: represents queued downlink traffic waiting at the gNB.
         self._dl_buf = {}  # {imsi: int}
+        # Per-UE arrival timestamps for DL bins (FIFO). Each entry: (t_arrival_s, bytes)
+        self._dl_buf_queue = {}  # {imsi: deque[(float, int)]}
+        # Per-UE last observed queuing delay (seconds) for the bytes served in the latest pull.
+        self._dl_last_delay_s = {}  # {imsi: float}
         # Per-UE DL replay state: holds trace samples plus runtime cursor/clock info.
         self._dl_replay = {}  # {imsi: {samples, idx, clock_s, speedup, period_s}}
+        # Wall-clock (simulation) time accumulator for stamping arrivals.
+        self._time_s = 0.0
 
     def __repr__(self):
         return f"BS {self.bs_id}"
@@ -111,16 +118,61 @@ class BaseStation:
                     )
                 add = space
         self._dl_buf[ue_imsi] = cur + add
+        # Track arrival time for queuing delay (per bin treated as a packet batch)
+        q = self._dl_buf_queue.setdefault(ue_imsi, deque())
+        if add > 0:
+            q.append((self._time_s, add))
         return add
 
     def pull_dl_bytes(self, ue_imsi: str, cap_bytes: int) -> int:
         cur = int(self._dl_buf.get(ue_imsi, 0) or 0)
         take = max(0, min(cur, int(cap_bytes)))
         self._dl_buf[ue_imsi] = cur - take
+
+        # Drain from FIFO queue to compute queuing delay for the served bytes
+        served = 0
+        delay_weighted = 0.0
+        q = self._dl_buf_queue.get(ue_imsi)
+        if q is None:
+            q = deque()
+            self._dl_buf_queue[ue_imsi] = q
+        remaining = take
+        while q and remaining > 0:
+            t_arrival, b = q[0]
+            use = min(b, remaining)
+            served += use
+            delay_weighted += use * max(0.0, self._time_s - float(t_arrival))
+            b_after = b - use
+            remaining -= use
+            if b_after > 0:
+                q[0] = (t_arrival, b_after)
+            else:
+                q.popleft()
+        # Record bytes-weighted queuing delay (seconds) for this pull
+        if served > 0:
+            self._dl_last_delay_s[ue_imsi] = delay_weighted / served
+        else:
+            # Preserve previous delay if nothing was served
+            self._dl_last_delay_s.setdefault(ue_imsi, 0.0)
+
         return take
 
     def get_dl_buf_bytes(self, ue_imsi: str) -> int:
         return int(self._dl_buf.get(ue_imsi, 0) or 0)
+
+    def get_dl_last_delay_s(self, ue_imsi: str) -> float:
+        return float(self._dl_last_delay_s.get(ue_imsi, 0.0))
+
+    def get_dl_head_wait_s(self, ue_imsi: str) -> float:
+        """Time the oldest queued bytes have been waiting (t_now - t_arrival)."""
+        q = self._dl_buf_queue.get(ue_imsi)
+        if not q:
+            return 0.0
+        try:
+            t_arrival, _ = q[0]
+            return max(0.0, float(self._time_s) - float(t_arrival))
+        except Exception:
+            return 0.0
 
     def has_dl_replay(self, ue_imsi: str) -> bool:
         return ue_imsi in self._dl_replay
@@ -207,6 +259,14 @@ class BaseStation:
             pass
         if ue.ue_imsi in self.ue_registry:
             del self.ue_registry[ue.ue_imsi]
+        # Drop per-UE DL queue state
+        try:
+            if hasattr(self, "_dl_buf_queue"):
+                self._dl_buf_queue.pop(ue.ue_imsi, None)
+            if hasattr(self, "_dl_last_delay_s"):
+                self._dl_last_delay_s.pop(ue.ue_imsi, None)
+        except Exception:
+            pass
 
         # remove rrc measurement events for the UE
         events_to_remove = []
@@ -314,11 +374,21 @@ class BaseStation:
                 buf_bytes = 0
                 if hasattr(source_bs, "_dl_buf") and ue.ue_imsi in getattr(source_bs, "_dl_buf", {}):
                     buf_bytes = int(source_bs._dl_buf.pop(ue.ue_imsi, 0) or 0)
+                buf_q = None
+                if hasattr(source_bs, "_dl_buf_queue"):
+                    buf_q = source_bs._dl_buf_queue.pop(ue.ue_imsi, None)
+                last_delay = None
+                if hasattr(source_bs, "_dl_last_delay_s"):
+                    last_delay = source_bs._dl_last_delay_s.pop(ue.ue_imsi, None)
                 st = None
                 if hasattr(source_bs, "_dl_replay") and ue.ue_imsi in getattr(source_bs, "_dl_replay", {}):
                     st = source_bs._dl_replay.pop(ue.ue_imsi, None)
                 if hasattr(target_bs, "_dl_buf"):
                     target_bs._dl_buf[ue.ue_imsi] = int(getattr(target_bs, "_dl_buf", {}).get(ue.ue_imsi, 0) or 0) + buf_bytes
+                if buf_q is not None and hasattr(target_bs, "_dl_buf_queue"):
+                    target_bs._dl_buf_queue[ue.ue_imsi] = buf_q
+                if last_delay is not None and hasattr(target_bs, "_dl_last_delay_s"):
+                    target_bs._dl_last_delay_s[ue.ue_imsi] = last_delay
                 if st is not None and hasattr(target_bs, "_dl_replay"):
                     target_bs._dl_replay[ue.ue_imsi] = st
             except Exception:
@@ -331,6 +401,11 @@ class BaseStation:
             )
 
     def step(self, delta_time):
+        # Advance local simulation time for arrival/queuing stamps
+        try:
+            self._time_s += float(delta_time)
+        except Exception:
+            pass
         # Tick DL replayers (enqueue arrivals) before cells serve
         try:
             self.tick_dl_replay(delta_time)

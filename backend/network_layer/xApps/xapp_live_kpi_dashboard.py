@@ -436,24 +436,13 @@ class xAppLiveKPIDashboard(xAppBase):
                                 tooltip={"always_visible": False},
                             ),
                         ]),
-                        html.Div([
-                            html.Label("mMTC share (0-1)"),
-                            dcc.Slider(
-                                id="slice-mmtc-share",
-                                min=0,
-                                max=1.0,
-                                step=RAN_SLICE_KNOB_STEP_FRAC,
-                                value=self._default_slice_fraction("mMTC"),
-                                tooltip={"always_visible": False},
-                            ),
-                        ]),
                     ],
                 ),
                 html.Div(id="slice-share-label", style={"marginTop": "4px"}),
 
                 # Discrete RB move controls (Table 3 actions)
                 html.Div(
-                    style={"display": "grid", "gridTemplateColumns": "repeat(4, minmax(0, 1fr))", "gap": "8px", "marginTop": "12px"},
+                    style={"display": "grid", "gridTemplateColumns": "repeat(3, minmax(0, 1fr))", "gap": "8px", "marginTop": "12px"},
                     children=[
                         dcc.Dropdown(
                             id="cell-selector",
@@ -465,12 +454,8 @@ class xAppLiveKPIDashboard(xAppBase):
                             clearable=False,
                         ),
                         html.Button("Keep", id="act-0", n_clicks=0),
-                        html.Button("mMTC→URLLC", id="act-1", n_clicks=0),
-                        html.Button("mMTC→eMBB", id="act-2", n_clicks=0),
-                        html.Button("URLLC→mMTC", id="act-3", n_clicks=0),
-                        html.Button("URLLC→eMBB", id="act-4", n_clicks=0),
-                        html.Button("eMBB→mMTC", id="act-5", n_clicks=0),
-                        html.Button("eMBB→URLLC", id="act-6", n_clicks=0),
+                        html.Button("URLLC→eMBB", id="act-1", n_clicks=0),
+                        html.Button("eMBB→URLLC", id="act-2", n_clicks=0),
                     ],
                 ),
                 html.Div(id="slice-move-label", style={"marginTop": "4px"}),
@@ -530,14 +515,12 @@ class xAppLiveKPIDashboard(xAppBase):
             Output("slice-share-label", "children"),
             Input("slice-embb-share", "value"),
             Input("slice-urllc-share", "value"),
-            Input("slice-mmtc-share", "value"),
         )
-        def _set_slice_shares(v_embb, v_urllc, v_mmtc):
+        def _set_slice_shares(v_embb, v_urllc):
             # Normalize if sum > 1.0
             shares = {
                 "eMBB": float(v_embb or 0.0),
                 "URLLC": float(v_urllc or 0.0),
-                "mMTC": float(v_mmtc or 0.0),
             }
             ssum = sum(shares.values())
             if ssum > 1.0 and ssum > 0:
@@ -553,14 +536,11 @@ class xAppLiveKPIDashboard(xAppBase):
             if any_cell:
                 quotas = {k: int(any_cell.max_dl_prb * shares.get(k, 0.0)) for k in shares}
                 return (
-                    f"Slice shares set to eMBB={shares['eMBB']:.2f}, URLLC={shares['URLLC']:.2f}, "
-                    f"mMTC={shares['mMTC']:.2f}. Example quotas on {any_cell.cell_id}: {quotas} "
+                    f"Slice shares set to eMBB={shares['eMBB']:.2f}, URLLC={shares['URLLC']:.2f}. "
+                    f"Example quotas on {any_cell.cell_id}: {quotas} "
                     f"(of max {any_cell.max_dl_prb})."
                 )
-            return (
-                f"Slice shares set to eMBB={shares['eMBB']:.2f}, URLLC={shares['URLLC']:.2f}, "
-                f"mMTC={shares['mMTC']:.2f}."
-            )
+            return f"Slice shares set to eMBB={shares['eMBB']:.2f}, URLLC={shares['URLLC']:.2f}."
 
         @app.callback(
             Output("slice-move-label", "children"),
@@ -568,13 +548,9 @@ class xAppLiveKPIDashboard(xAppBase):
             Input("act-0", "n_clicks"),
             Input("act-1", "n_clicks"),
             Input("act-2", "n_clicks"),
-            Input("act-3", "n_clicks"),
-            Input("act-4", "n_clicks"),
-            Input("act-5", "n_clicks"),
-            Input("act-6", "n_clicks"),
             prevent_initial_call=True,
         )
-        def _handle_move(cell_sel, a0, a1, a2, a3, a4, a5, a6):
+        def _handle_move(cell_sel, a0, a1, a2):
             # Determine which button triggered
             ctx = dash.callback_context
             if not ctx.triggered:
@@ -584,12 +560,8 @@ class xAppLiveKPIDashboard(xAppBase):
                 return "No change applied."
             # Action mapping: (src, dst)
             action_map = {
-                "act-1": ("mMTC", "URLLC"),
-                "act-2": ("mMTC", "eMBB"),
-                "act-3": ("URLLC", "mMTC"),
-                "act-4": ("URLLC", "eMBB"),
-                "act-5": ("eMBB", "mMTC"),
-                "act-6": ("eMBB", "URLLC"),
+                "act-1": ("URLLC", "eMBB"),
+                "act-2": ("eMBB", "URLLC"),
             }
             if trig not in action_map:
                 return dash.no_update
