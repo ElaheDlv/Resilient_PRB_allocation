@@ -118,6 +118,20 @@ parser.add_argument(
     type=int,
     help="Interval (steps) for logging scalars to TensorBoard (default 1)",
 )
+# Resilient gym allocator (episodic) controls
+parser.add_argument("--res-gym-enable", action="store_true", help="Enable resilient gym allocator xApp")
+parser.add_argument(
+    "--res-gym-agent",
+    choices=["dqn", "qrdqn", "ppo", "pf"],
+    help="Agent type for resilient gym allocator",
+)
+parser.add_argument("--res-gym-config", type=str, help="Path to episode catalog JSON")
+parser.add_argument("--res-gym-train", action="store_true", help="Train the selected agent (default on)")
+parser.add_argument("--res-gym-eval", action="store_true", help="Eval-only (disable training)")
+parser.add_argument("--res-gym-action-levels", type=str, help="Comma-separated PRB deltas per slice (e.g. -8,-4,-2,-1,0,1,2,4,8)")
+parser.add_argument("--res-gym-tb-logdir", type=str, help="TensorBoard logdir for resilient gym allocator")
+parser.add_argument("--res-gym-dash-enable", action="store_true", help="Enable live snapshot dashboard for resilient gym allocator")
+parser.add_argument("--res-gym-dash-port", type=int, help="Port for the resilient gym dashboard (default 5055)")
 parser.add_argument(
     "--dqn-max-train-steps",
     type=int,
@@ -329,6 +343,26 @@ if args.prb_const_urllc is not None:
     os.environ["PRB_CONST_ALLOC_URLLC"] = str(max(0, int(args.prb_const_urllc)))
 if args.prb_const_log_interval is not None:
     os.environ["PRB_CONST_LOG_INTERVAL"] = str(max(1, int(args.prb_const_log_interval)))
+# Resilient gym allocator toggles
+if args.res_gym_enable:
+    os.environ["RES_GYM_ENABLE"] = "1"
+if args.res_gym_agent:
+    os.environ["RES_GYM_AGENT"] = args.res_gym_agent
+if args.res_gym_config:
+    os.environ["RES_GYM_CONFIG_PATH"] = args.res_gym_config
+if args.res_gym_train:
+    os.environ["RES_GYM_TRAIN"] = "1"
+if args.res_gym_eval:
+    os.environ["RES_GYM_TRAIN"] = "0"
+    os.environ["RES_GYM_EVAL_ONLY"] = "1"
+if args.res_gym_action_levels:
+    os.environ["RES_GYM_ACTION_LEVELS"] = args.res_gym_action_levels
+if args.res_gym_tb_logdir:
+    os.environ["RES_GYM_TB_LOGDIR"] = args.res_gym_tb_logdir
+if args.res_gym_dash_enable:
+    os.environ["RES_GYM_DASH_ENABLE"] = "1"
+if args.res_gym_dash_port is not None:
+    os.environ["RES_GYM_DASH_PORT"] = str(max(1, int(args.res_gym_dash_port)))
 # Trace mapping and options (export via env before importing settings)
 if args.trace_speedup is not None:
     os.environ["TRACE_SPEEDUP"] = str(args.trace_speedup)

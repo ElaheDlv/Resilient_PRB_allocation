@@ -21,6 +21,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import threading
 from collections import deque
 from itertools import product
 from typing import Dict, List, Optional, Tuple
@@ -53,6 +54,16 @@ except Exception:
     optim = None
     F = None
     SummaryWriter = None
+
+try:
+    from flask import Flask, jsonify, render_template_string
+
+    FLASK_AVAILABLE = True
+except Exception:
+    Flask = None
+    jsonify = None
+    render_template_string = None
+    FLASK_AVAILABLE = False
 
 
 # --------------------------- Replay buffer --------------------------- #
@@ -165,6 +176,7 @@ class ResilientPRBGymEnv:
         self._state_dim = 12  # KPI vector length
         self._managed_ues: set[str] = set()
         self._trace_cache: Dict[Tuple[str, str, float], List[Tuple[float, float, float]]] = {}
+        self._last_kpis: Dict = {}
 
     # ---------- Episode control ---------- #
     def reset(self) -> np.ndarray:
@@ -329,6 +341,7 @@ class ResilientPRBGymEnv:
             return np.zeros(self._state_dim, dtype=np.float32)
         cell = next(iter(self.ric.cell_list.values()))
         kpis = self._collect_kpis(cell)
+        self._last_kpis = kpis
         embb = kpis["slices"][SL_E]
         urllc = kpis["slices"][SL_U]
         pool = kpis["pool"]
@@ -357,6 +370,7 @@ class ResilientPRBGymEnv:
         free_prb = max(0.0, max_prb - alloc_dl)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
         alloc_by_slice = dict(getattr(cell, "allocated_dl_prb_by_slice", {}) or {})
+        req_map = getattr(cell, "dl_total_prb_demand", {}) or {}
         kpis = {SL_E: self._blank_slice(quotas.get(SL_E, 0.0), SL_E),
                 SL_U: self._blank_slice(quotas.get(SL_U, 0.0), SL_U)}
         for ue in getattr(cell, "connected_ue_list", {}).values():
@@ -368,6 +382,9 @@ class ResilientPRBGymEnv:
             data["buffer_bytes"] += float(getattr(ue, "dl_buffer_bytes", 0.0) or 0.0)
             lat = float(getattr(ue, "downlink_latency", 0.0) or 0.0)
             data["latencies"].append(lat)
+            imsi = getattr(ue, "ue_imsi", None)
+            if imsi:
+                data["prb_demand"] += float(req_map.get(imsi, 0.0) or 0.0)
         for sl, data in kpis.items():
             lats = data["latencies"]
             data["latency_mean_s"] = float(np.mean(lats)) if lats else 0.0
@@ -509,6 +526,7 @@ class ResilientPRBGymEnv:
             "prb_quota": float(prb),
             "prb_alloc": 0.0,
             "tx_mbps": 0.0,
+            "prb_demand": 0.0,
             "buffer_bytes": 0.0,
             "latencies": [],
             "latency_mean_s": 0.0,
@@ -563,6 +581,13 @@ class xAppResilientGymAllocator(xAppBase):
         self._dbg_step = 0
         self.tb_logdir = (getattr(settings, "RES_GYM_TB_LOGDIR", "") or "").strip()
         self._tb_writer = None
+        # Live dashboard
+        self.dash_enable = bool(getattr(settings, "RES_GYM_DASH_ENABLE", False))
+        self.dash_port = int(getattr(settings, "RES_GYM_DASH_PORT", 5055))
+        self._dash_app = None
+        self._dash_thread = None
+        self._dash_snapshot = {}
+        self._dash_lock = threading.Lock()
         self._global_step = 0
         self._eps = self.eps_start
         self._last_state: Optional[np.ndarray] = None
@@ -585,8 +610,11 @@ class xAppResilientGymAllocator(xAppBase):
         self._env = ResilientPRBGymEnv(self.ric)
         self._init_agent()
         self._last_state = self._env.reset()
+        # Publish initial snapshot so dashboard shows data before first step
+        self._update_snapshot(self._last_state, None, reward=0.0, done=False)
         self._init_debug_logger()
         self._init_tb_logger()
+        self._start_dashboard()
         print(
             f"{self.xapp_id}: enabled agent={self.agent_type} train={self.train} "
             f"actions={len(self._env.actions)} state_dim=12"
@@ -614,6 +642,7 @@ class xAppResilientGymAllocator(xAppBase):
         action_idx = self._select_action(self._last_state)
         next_state, reward, done, _ = self._env.step(action_idx)
         self._log_debug(self._last_state, action_idx, reward, done)
+        self._update_snapshot(self._last_state, action_idx, reward, done)
         if self.train and self._replay is not None:
             self._replay.push(self._last_state, action_idx, reward, next_state, float(done))
             self._learn()
@@ -670,8 +699,8 @@ class xAppResilientGymAllocator(xAppBase):
         valid_idx = [i for i, ok in enumerate(valid) if ok]
         if not valid_idx:
             return 0
-        if self.train and random.random() < self._eps:
-            return random.choice(valid_idx)
+            if self.train and random.random() < self._eps:
+                return random.choice(valid_idx)
         s = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         with torch.no_grad():
             if self.agent_type == "qrdqn":
@@ -725,6 +754,7 @@ class xAppResilientGymAllocator(xAppBase):
         self._ppo_storage["r"].append(reward)
         self._ppo_storage["d"].append(float(done))
         self._tb_log(self._last_state, action_idx, reward, done)
+        self._update_snapshot(self._last_state, action_idx, reward, done)
 
         if self.train and len(self._ppo_storage["r"]) >= self.ppo_rollout:
             self._ppo_update(next_state if not done else None)
@@ -865,9 +895,100 @@ class xAppResilientGymAllocator(xAppBase):
             self._tb_writer.add_scalar("urllc/prb_alloc", s[9], step)
             self._tb_writer.add_scalar("pool/max_prb", s[10], step)
             self._tb_writer.add_scalar("pool/free_prb", s[11], step)
+            sat = self._compute_satisfaction()
+            if sat:
+                for sl, val in sat.items():
+                    self._tb_writer.add_scalar(f"satisfaction/{sl}", val, step)
             self._tb_writer.flush()
         except Exception:
             pass
+
+    # ---------- Live dashboard (Flask) ---------- #
+    def _start_dashboard(self):
+        if not self.dash_enable:
+            return
+        if not FLASK_AVAILABLE:
+            print(f"{self.xapp_id}: Flask not available; dashboard disabled.")
+            return
+        try:
+            app = Flask(f"{self.xapp_id}_dash")
+
+            @app.route("/snapshot")
+            def snapshot():
+                with self._dash_lock:
+                    data = dict(self._dash_snapshot)
+                return jsonify(data)
+
+            @app.route("/")
+            def index():
+                return render_template_string(
+                    """
+<!doctype html>
+<html>
+<head><title>Resilient Gym Dashboard</title></head>
+<body style="font-family:Arial, sans-serif; padding:16px;">
+  <h3>Resilient Gym Snapshot</h3>
+  <pre id="data">Loading...</pre>
+  <script>
+    async function refresh() {
+      try {
+        const res = await fetch('/snapshot');
+        const json = await res.json();
+        document.getElementById('data').textContent = JSON.stringify(json, null, 2);
+      } catch (e) {
+        document.getElementById('data').textContent = 'Error fetching snapshot';
+      }
+    }
+    setInterval(refresh, 1000);
+    refresh();
+  </script>
+</body>
+</html>
+                    """
+                )
+
+            def _run():
+                app.run(host="0.0.0.0", port=self.dash_port, debug=False, use_reloader=False)
+
+            self._dash_app = app
+            self._dash_thread = threading.Thread(target=_run, daemon=True)
+            self._dash_thread.start()
+            print(f"{self.xapp_id}: dashboard running on port {self.dash_port}")
+        except Exception as exc:
+            print(f"{self.xapp_id}: failed to start dashboard: {exc}")
+
+    def _update_snapshot(self, state: Optional[np.ndarray], action_idx: Optional[int], reward: float, done: bool):
+        if not self.dash_enable or state is None:
+            return
+        snap = {
+            "step": self._global_step,
+            "episode_idx": self._env._episode_idx if self._env else -1,
+            "action_idx": action_idx,
+            "reward": reward,
+            "done": done,
+            "state": state.tolist(),
+        }
+        sat = self._compute_satisfaction()
+        if sat:
+            snap["satisfaction"] = sat
+        with self._dash_lock:
+            self._dash_snapshot = snap
+
+    def _compute_satisfaction(self) -> Optional[Dict[str, float]]:
+        """Compute PRB satisfaction per slice: alloc / demand (clamped to [0,1])."""
+        kpis = getattr(self._env, "_last_kpis", None) if hasattr(self, "_env") else None
+        if not kpis:
+            return None
+        sat = {}
+        slices = kpis.get("slices", {})
+        for sl, data in slices.items():
+            demand = float(data.get("prb_demand", 0.0) or 0.0)
+            alloc = float(data.get("prb_alloc", 0.0) or 0.0)
+            if demand <= 0:
+                sat[sl] = 1.0  # no demand -> fully satisfied
+            else:
+                sat[sl] = max(0.0, min(1.0, alloc / demand))
+        return sat
 
     # ---------- Proportional-fair heuristic (stateless) ---------- #
     def _pf_action(self, state: np.ndarray) -> int:
