@@ -128,6 +128,8 @@ class PRBGymEnv:
                 self._register_episode_ue(imsi, sl, cfg)
 
     def _clear_managed_ues(self):
+        # Remove previously managed UEs from the sim and purge their history from plots
+        old_managed = set(self._managed_ues)
         if self.sim_engine:
             for imsi in list(self.sim_engine.ue_list.keys()):
                 self.sim_engine.deregister_ue(imsi)
@@ -287,6 +289,16 @@ class PRBGymEnv:
                 return False
         return True
 
+    def ready(self) -> bool:
+        """Return True when managed UEs are attached to a cell (prevents stepping on empty sims)."""
+        if not self._managed_ues or self.sim_engine is None:
+            return False
+        for imsi in self._managed_ues:
+            ue = self.sim_engine.ue_list.get(imsi)
+            if ue is None or getattr(ue, "current_cell", None) is None:
+                return False
+        return True
+
     # ---------------- KPIs ----------------
     def _get_state(self):
         cell = self._target_cell()
@@ -344,6 +356,8 @@ class xAppPRBDashboardStandalone(xAppBase):
         self._action_hist = deque(maxlen=400)
         self._slice_tx = defaultdict(lambda: deque(maxlen=400))
         self._ue_tx = defaultdict(lambda: deque(maxlen=400))
+        self._ue_sinr = defaultdict(lambda: deque(maxlen=400))
+        self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
         self._slice_prb = defaultdict(lambda: deque(maxlen=400))
         self._slice_latency = defaultdict(lambda: deque(maxlen=400))
 
@@ -364,6 +378,9 @@ class xAppPRBDashboardStandalone(xAppBase):
     def step(self):
         if not self.running:
             return
+        if not self.env.ready():
+            # Skip stepping until new episode UEs are attached; avoids gaps with zero metrics
+            return
         _, (reward, metrics), done, info = self.env.step(self.current_action)
         self._record_metrics(reward, metrics, info)
         self.last_metrics = {
@@ -379,6 +396,14 @@ class xAppPRBDashboardStandalone(xAppBase):
             if nxt is None:
                 print("[xApp] Episode catalog exhausted; stopping xApp.")
                 self.running = False
+            else:
+                # Prune histories for UEs that are no longer managed in the new episode
+                with self._lock:
+                    active = set(getattr(self.env, "_managed_ues", set()) or [])
+                    for store in (self._ue_tx, self._ue_sinr, self._ue_cqi):
+                        for imsi in list(store.keys()):
+                            if active and imsi not in active:
+                                store.pop(imsi, None)
 
     # dashboard hooks
     def set_action(self, a: int):
@@ -410,6 +435,12 @@ class xAppPRBDashboardStandalone(xAppBase):
                 if bps is None:
                     bps = getattr(ue, "downlink_bitrate", 0.0)
                 self._ue_tx[imsi].append(float(bps) / 1e6)
+                sinr = getattr(ue, "downlink_sinr", None)
+                if sinr is not None:
+                    self._ue_sinr[imsi].append(float(sinr))
+                cqi = getattr(ue, "downlink_cqi", None)
+                if cqi is not None:
+                    self._ue_cqi[imsi].append(float(cqi))
 
     def _mark_episode_boundary(self):
         """Append a boundary point with zero throughput to indicate UE removal/episode reset."""
@@ -421,8 +452,14 @@ class xAppPRBDashboardStandalone(xAppBase):
                 self._slice_tx[sl].append(0.0)
                 self._slice_prb[sl].append(0.0)
                 self._slice_latency[sl].append(0.0)
-            for imsi, hist in self._ue_tx.items():
-                hist.append(0.0)
+            for imsi, hist in list(self._ue_tx.items()):
+                if imsi in getattr(self.env, "_managed_ues", set()):
+                    hist.append(0.0)
+                else:
+                    # Prune legends for non-active UEs
+                    self._ue_tx.pop(imsi, None)
+                    self._ue_sinr.pop(imsi, None)
+                    self._ue_cqi.pop(imsi, None)
 
     def _start_dashboard(self):
         if self._dash_thread and self._dash_thread.is_alive():
@@ -483,6 +520,10 @@ class xAppPRBDashboardStandalone(xAppBase):
                 html.Div(style={"display": "grid", "gridTemplateColumns": "1fr", "gap": "12px"}, children=[
                     dcc.Graph(id="fig-ue-throughput"),
                 ]),
+                html.Div(style={"display": "grid", "gridTemplateColumns": "repeat(2, minmax(0, 1fr))", "gap": "12px"}, children=[
+                    dcc.Graph(id="fig-ue-sinr"),
+                    dcc.Graph(id="fig-ue-cqi"),
+                ]),
 
                 dcc.Interval(id="tick", interval=750, n_intervals=0),
             ],
@@ -511,6 +552,8 @@ class xAppPRBDashboardStandalone(xAppBase):
                 Output("fig-throughput", "figure"),
                 Output("fig-latency", "figure"),
                 Output("fig-ue-throughput", "figure"),
+                Output("fig-ue-sinr", "figure"),
+                Output("fig-ue-cqi", "figure"),
                 Output("latest-metrics", "children"),
             ],
             [Input("tick", "n_intervals")],
@@ -527,11 +570,13 @@ class xAppPRBDashboardStandalone(xAppBase):
                 lat_u = list(self._slice_latency.get(SL_U, []))
                 ue_keys = list(self._ue_tx.keys())
                 ue_tx_map = {k: list(v) for k, v in self._ue_tx.items()}
+                ue_sinr_map = {k: list(v) for k, v in self._ue_sinr.items()}
+                ue_cqi_map = {k: list(v) for k, v in self._ue_cqi.items()}
                 latest = self.last_metrics.copy()
 
             if not tx:
                 empty = go.Figure()
-                return empty, empty, empty, empty, empty, "Waiting for metrics..."
+                return empty, empty, empty, empty, empty, empty, empty, "Waiting for metrics..."
 
             fig_actions = tidy(go.Figure(data=[
                 go.Scatter(x=tx, y=act, mode="lines+markers", name="Action", line=dict(color="#ff7f0e"), marker=dict(size=6)),
@@ -570,6 +615,37 @@ class xAppPRBDashboardStandalone(xAppBase):
                 )
             fig_ue = tidy(go.Figure(data=tr_ue), "Per‑UE Throughput", "Mbps")
 
+            # Per‑UE SINR/CQI
+            tr_sinr = []
+            tr_cqi = []
+            palette = ["#1f77b4", "#d62728", "#2ca02c", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
+            for idx, imsi in enumerate(sorted(set(list(ue_sinr_map.keys()) + list(ue_cqi_map.keys())))):
+                color = palette[idx % len(palette)]
+                ys_s = ue_sinr_map.get(imsi, [])
+                if ys_s:
+                    tr_sinr.append(
+                        go.Scatter(
+                            x=tx[-len(ys_s):],
+                            y=ys_s,
+                            mode="lines",
+                            name=imsi,
+                            line=dict(color=color),
+                        )
+                    )
+                ys_c = ue_cqi_map.get(imsi, [])
+                if ys_c:
+                    tr_cqi.append(
+                        go.Scatter(
+                            x=tx[-len(ys_c):],
+                            y=ys_c,
+                            mode="lines",
+                            name=imsi,
+                            line=dict(color=color),
+                        )
+                    )
+            fig_sinr = tidy(go.Figure(data=tr_sinr), "Per‑UE SINR", "dB")
+            fig_cqi = tidy(go.Figure(data=tr_cqi), "Per‑UE CQI", "CQI")
+
             def _fmt(v, digits=3):
                 try:
                     return f"{float(v):.{digits}f}"
@@ -588,7 +664,7 @@ class xAppPRBDashboardStandalone(xAppBase):
                 )
             latest_text = html.Ul([html.Li(t) for t in lines])
 
-            return fig_actions, fig_prb, fig_tx, fig_lat, fig_ue, latest_text
+            return fig_actions, fig_prb, fig_tx, fig_lat, fig_ue, fig_sinr, fig_cqi, latest_text
 
         host = os.getenv("PRB_TRACE_DASH_HOST", "0.0.0.0")
         port = int(os.getenv("PRB_TRACE_DASH_PORT", "8060"))

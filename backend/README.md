@@ -198,6 +198,7 @@ python -m backend.tools.convert_training_configs_to_gym_catalog \
 - `settings/ran_config.py` – topology presets, base-station definitions, slice names, constant PRB map.
 - `settings/slice_config.py` – slice KPIs, PRB budgets, UE load targets.
 - `settings/ue_config.py` – UE radio profiles, mobility models.
+- UE spawning: UEs are placed round‑robin near available cells (uniform in a disk of radius `UE_SPAWN_RADIUS_M`, default 200 m). Override with `--ue-spawn-radius` or env `UE_SPAWN_RADIUS_M`. Background auto-spawn is skipped when `PRB_GYM_CONFIG_PATH` is set, so Gym/dashboard runs only use episode UEs.
 - `settings/ric_config.py` – xApp enable flags and controller wiring.
 - `settings/agent_config.py` – RL hyperparameters (gamma, epsilon, replay buffer sizes, logging paths).
 - `settings/ws_server_config.py` – WebSocket host/port.

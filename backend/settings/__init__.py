@@ -9,3 +9,4 @@ from .channel_config import *
 from .agent_config import *
 from .core_config import *
 from .ai_service_config import *
+from .res_gym_config import *

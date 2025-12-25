@@ -217,6 +217,11 @@ parser.add_argument(
     help="Loop trace playback (replay continuously)",
 )
 parser.add_argument(
+    "--ue-spawn-radius",
+    type=float,
+    help="Spawn UEs within this radius (meters) around the chosen anchor cell (default 200)",
+)
+parser.add_argument(
     "--slice-prb",
     action="append",
     help="Initial downlink PRB quota per slice (format SLICE=PRBs or SLICE:PRBs). Repeatable.",
@@ -458,6 +463,8 @@ if args.slice_prb:
             continue
     if overrides:
         os.environ["RAN_SLICE_DL_PRB_OVERRIDES"] = json.dumps(overrides)
+if args.ue_spawn_radius is not None:
+    os.environ["UE_SPAWN_RADIUS_M"] = str(max(0.0, float(args.ue_spawn_radius)))
 
 # Load .env (won't override already-set env)
 dotenv.load_dotenv()

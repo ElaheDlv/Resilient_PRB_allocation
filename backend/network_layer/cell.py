@@ -313,7 +313,8 @@ class Cell:
             s = getattr(ue, "slice_type", None)
             if s is None:
                 # If slice unknown, treat as eMBB
-                s = "eMBB"
+                #s = "eMBB"
+                print(f"Cell {self.cell_id}: UE {ue.ue_imsi} has unknown slice type.")
             ues_by_slice.setdefault(s, []).append(ue.ue_imsi)
 
         for s, quota in self.slice_dl_prb_quota.items():

@@ -1,6 +1,7 @@
 import asyncio
 import json
 import random
+import math
 
 from utils import (
     get_random_ue_operational_region,
@@ -36,6 +37,8 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
         self._trace_cache = {}
         # Track UEs that still need a trace attachment (e.g., awaiting slice info)
         self._pending_trace_attach = set()
+        # Round-robin pointer for UE spawn across cells
+        self._spawn_cell_idx = 0
 
     def add_base_station(self, bs):
         assert isinstance(bs, BaseStation)
@@ -52,6 +55,15 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
         assert cell.cell_id not in self.cell_list
         self.cell_list[cell.cell_id] = cell
 
+    def _next_spawn_cell(self):
+        """Round-robin through available cells to pick a spawn anchor."""
+        cells = list(self.cell_list.values())
+        if not cells:
+            return None
+        idx = self._spawn_cell_idx % len(cells)
+        self._spawn_cell_idx += 1
+        return cells[idx]
+
     def reset_network(self):
         logger.info("Resetting network...")
         self.base_station_list = {}
@@ -64,6 +76,7 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
         self.core_network = None
         self.ric = None
         self._pending_trace_attach.clear()
+        self._spawn_cell_idx = 0
         logger.info("Network reset complete.")
 
     def network_setup(self):
@@ -242,7 +255,7 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
 
     def spawn_UEs(self):
         # Avoid background spawns during Gym-driven episodes or before init completes.
-        if getattr(settings, "PRB_GYM_ENABLE", False):
+        if getattr(settings, "PRB_GYM_ENABLE", False) or getattr(settings, "PRB_GYM_CONFIG_PATH", ""):
             return
         if self.sim_step <= 0:
             return
@@ -356,12 +369,25 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
                 f"Selected register_slice '{attach_slice}' is not in subscription list for UE {ue_imsi}."
             )
             return False
-        # Generate parameters for new UE
+        # Generate parameters for new UE anchored near a cell (round-robin)
         op_region = {"min_x": 0, "min_y": 0, "max_x": 2000, "max_y": 2000}
-        pos_x = random.randint(op_region["min_x"], op_region["max_x"])
-        pos_y = random.randint(op_region["min_y"], op_region["max_y"])
-        target_x = random.randint(op_region["min_x"], op_region["max_x"])
-        target_y = random.randint(op_region["min_y"], op_region["max_y"])
+        base_cell = self._next_spawn_cell()
+        spawn_radius = float(getattr(settings, "UE_SPAWN_RADIUS_M", 200.0))
+        if base_cell:
+            ang = random.random() * 2 * math.pi
+            rad = math.sqrt(random.random()) * spawn_radius  # uniform in disk
+            pos_x = base_cell.position_x + rad * math.cos(ang)
+            pos_y = base_cell.position_y + rad * math.sin(ang)
+            # Clamp to operational region
+            pos_x = max(op_region["min_x"], min(op_region["max_x"], pos_x))
+            pos_y = max(op_region["min_y"], min(op_region["max_y"], pos_y))
+            target_x = pos_x
+            target_y = pos_y
+        else:
+            pos_x = random.randint(op_region["min_x"], op_region["max_x"])
+            pos_y = random.randint(op_region["min_y"], op_region["max_y"])
+            target_x = pos_x
+            target_y = pos_y
         speed_mps = random.randint(settings.UE_speed_mps_MIN, settings.UE_speed_mps_MAX)
         from .ue import UE
 
