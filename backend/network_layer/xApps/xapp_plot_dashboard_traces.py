@@ -356,6 +356,8 @@ class xAppPRBDashboardStandalone(xAppBase):
         self._action_hist = deque(maxlen=400)
         self._slice_tx = defaultdict(lambda: deque(maxlen=400))
         self._ue_tx = defaultdict(lambda: deque(maxlen=400))
+        self._ue_prb_demand = defaultdict(lambda: deque(maxlen=400))
+        self._ue_prb_sat = defaultdict(lambda: deque(maxlen=400))
         self._ue_sinr = defaultdict(lambda: deque(maxlen=400))
         self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
         self._slice_prb = defaultdict(lambda: deque(maxlen=400))
@@ -435,6 +437,14 @@ class xAppPRBDashboardStandalone(xAppBase):
                 if bps is None:
                     bps = getattr(ue, "downlink_bitrate", 0.0)
                 self._ue_tx[imsi].append(float(bps) / 1e6)
+                # Demand/grant and satisfaction (grant/demand)
+                cell = getattr(self.env, "_target_cell", lambda: None)()
+                if cell:
+                    demand = float(getattr(cell, "dl_total_prb_demand", {}).get(imsi, 0) or 0)
+                    granted = float(getattr(cell, "prb_ue_allocation_dict", {}).get(imsi, {}).get("downlink", 0) or 0)
+                    self._ue_prb_demand[imsi].append(demand)
+                    sat = 1.0 if demand <= 0 else min(1.5, granted / demand)
+                    self._ue_prb_sat[imsi].append(sat)
                 sinr = getattr(ue, "downlink_sinr", None)
                 if sinr is not None:
                     self._ue_sinr[imsi].append(float(sinr))
@@ -458,6 +468,8 @@ class xAppPRBDashboardStandalone(xAppBase):
                 else:
                     # Prune legends for non-active UEs
                     self._ue_tx.pop(imsi, None)
+                    self._ue_prb_demand.pop(imsi, None)
+                    self._ue_prb_sat.pop(imsi, None)
                     self._ue_sinr.pop(imsi, None)
                     self._ue_cqi.pop(imsi, None)
 
@@ -521,6 +533,10 @@ class xAppPRBDashboardStandalone(xAppBase):
                     dcc.Graph(id="fig-ue-throughput"),
                 ]),
                 html.Div(style={"display": "grid", "gridTemplateColumns": "repeat(2, minmax(0, 1fr))", "gap": "12px"}, children=[
+                    dcc.Graph(id="fig-ue-demand"),
+                    dcc.Graph(id="fig-ue-sat"),
+                ]),
+                html.Div(style={"display": "grid", "gridTemplateColumns": "repeat(2, minmax(0, 1fr))", "gap": "12px"}, children=[
                     dcc.Graph(id="fig-ue-sinr"),
                     dcc.Graph(id="fig-ue-cqi"),
                 ]),
@@ -552,6 +568,8 @@ class xAppPRBDashboardStandalone(xAppBase):
                 Output("fig-throughput", "figure"),
                 Output("fig-latency", "figure"),
                 Output("fig-ue-throughput", "figure"),
+                Output("fig-ue-demand", "figure"),
+                Output("fig-ue-sat", "figure"),
                 Output("fig-ue-sinr", "figure"),
                 Output("fig-ue-cqi", "figure"),
                 Output("latest-metrics", "children"),
@@ -570,13 +588,15 @@ class xAppPRBDashboardStandalone(xAppBase):
                 lat_u = list(self._slice_latency.get(SL_U, []))
                 ue_keys = list(self._ue_tx.keys())
                 ue_tx_map = {k: list(v) for k, v in self._ue_tx.items()}
+                ue_demand_map = {k: list(v) for k, v in self._ue_prb_demand.items()}
+                ue_sat_map = {k: list(v) for k, v in self._ue_prb_sat.items()}
                 ue_sinr_map = {k: list(v) for k, v in self._ue_sinr.items()}
                 ue_cqi_map = {k: list(v) for k, v in self._ue_cqi.items()}
                 latest = self.last_metrics.copy()
 
             if not tx:
                 empty = go.Figure()
-                return empty, empty, empty, empty, empty, empty, empty, "Waiting for metrics..."
+                return empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, "Waiting for metrics..."
 
             fig_actions = tidy(go.Figure(data=[
                 go.Scatter(x=tx, y=act, mode="lines+markers", name="Action", line=dict(color="#ff7f0e"), marker=dict(size=6)),
@@ -614,6 +634,37 @@ class xAppPRBDashboardStandalone(xAppBase):
                     )
                 )
             fig_ue = tidy(go.Figure(data=tr_ue), "Per‑UE Throughput", "Mbps")
+
+            # Demand/grant satisfaction plots
+            tr_dem = []
+            tr_sat = []
+            palette = ["#1f77b4", "#d62728", "#2ca02c", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
+            for idx, imsi in enumerate(sorted(set(list(ue_demand_map.keys()) + list(ue_sat_map.keys())))):
+                color = palette[idx % len(palette)]
+                ys_d = ue_demand_map.get(imsi, [])
+                if ys_d:
+                    tr_dem.append(
+                        go.Scatter(
+                            x=tx[-len(ys_d):],
+                            y=ys_d,
+                            mode="lines",
+                            name=imsi,
+                            line=dict(color=color),
+                        )
+                    )
+                ys_s = ue_sat_map.get(imsi, [])
+                if ys_s:
+                    tr_sat.append(
+                        go.Scatter(
+                            x=tx[-len(ys_s):],
+                            y=ys_s,
+                            mode="lines",
+                            name=imsi,
+                            line=dict(color=color),
+                        )
+                    )
+            fig_dem = tidy(go.Figure(data=tr_dem), "Per‑UE PRB Demand", "PRBs")
+            fig_sat = tidy(go.Figure(data=tr_sat), "Per‑UE Satisfaction (grant/demand)", "ratio")
 
             # Per‑UE SINR/CQI
             tr_sinr = []
@@ -664,7 +715,7 @@ class xAppPRBDashboardStandalone(xAppBase):
                 )
             latest_text = html.Ul([html.Li(t) for t in lines])
 
-            return fig_actions, fig_prb, fig_tx, fig_lat, fig_ue, fig_sinr, fig_cqi, latest_text
+            return fig_actions, fig_prb, fig_tx, fig_lat, fig_ue, fig_dem, fig_sat, fig_sinr, fig_cqi, latest_text
 
         host = os.getenv("PRB_TRACE_DASH_HOST", "0.0.0.0")
         port = int(os.getenv("PRB_TRACE_DASH_PORT", "8060"))
