@@ -36,6 +36,9 @@ class Cell:
         self.slice_dl_prb_quota = self._init_slice_quota()
         # Tracking allocated PRBs by slice in the last round
         self.allocated_dl_prb_by_slice = {s: 0 for s in self.slice_dl_prb_quota.keys()}
+        # Jammer state: number of DL PRBs blocked for this cell in the current step
+        self.jammed_dl_prb = 0
+        self._effective_max_dl_prb = self.max_dl_prb
 
     def __repr__(self):
         return f"Cell({self.cell_id}, base_station={self.base_station.bs_id}, frequency_band={self.frequency_band}, carrier_frequency_MHz={self.carrier_frequency_MHz})"
@@ -466,6 +469,8 @@ class Cell:
             "vis_position_y": self.position_y * settings.REAL_LIFE_DISTANCE_MULTIPLIER,
             "prb_ue_allocation_dict": self.prb_ue_allocation_dict,
             "max_dl_prb": self.max_dl_prb,
+            "jammed_dl_prb": self.jammed_dl_prb,
+            "effective_max_dl_prb": getattr(self, "_effective_max_dl_prb", self.max_dl_prb),
             "max_ul_prb": self.max_ul_prb,
             "allocated_dl_prb": self.allocated_dl_prb,
             "allocated_ul_prb": self.allocated_ul_prb,

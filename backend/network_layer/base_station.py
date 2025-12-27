@@ -53,6 +53,8 @@ class BaseStation:
         self._dl_replay = {}  # {imsi: {samples, idx, clock_s, speedup, period_s}}
         # Wall-clock (simulation) time accumulator for stamping arrivals.
         self._time_s = 0.0
+        # Jammer hook: number of DL PRBs jammed for this BS's cells (set per-step).
+        self._jam_const_prbs = 0
 
     def __repr__(self):
         return f"BS {self.bs_id}"
@@ -406,6 +408,8 @@ class BaseStation:
             self._time_s += float(delta_time)
         except Exception:
             pass
+        # Apply optional jamming window (sample jammer for testing)
+        self._apply_constant_jamming()
         # Tick DL replayers (enqueue arrivals) before cells serve
         try:
             self.tick_dl_replay(delta_time)
@@ -440,6 +444,52 @@ class BaseStation:
 
         # process (reject, merge or execute) all the RIC control actions
         self.process_ric_control_actions()
+
+    def _apply_constant_jamming(self):
+        """Sample jammer: periodically remove DL PRBs during configured step windows.
+
+        Controls (settings.py):
+            JAM_CONST_PERIOD_STEPS: how often to start a jam window (e.g., 10)
+            JAM_CONST_DURATION_STEPS: how many steps the jam lasts once started (e.g., 10)
+            JAM_CONST_PRBS: number of DL PRBs to jam during the window (e.g., 5)
+            JAM_CONST_START_OFFSET: optional initial offset before the first jam window (default 0)
+        """
+        sim_step = getattr(self.simulation_engine, "sim_step", 0)
+        period = int(getattr(settings, "JAM_CONST_PERIOD_STEPS", -1))
+        duration = max(0, int(getattr(settings, "JAM_CONST_DURATION_STEPS", 0)))
+        jam_prbs = max(0, int(getattr(settings, "JAM_CONST_PRBS", 0)))
+        offset = max(0, int(getattr(settings, "JAM_CONST_START_OFFSET", 0)))
+        # Active if we're in the duration window after each period tick, post-offset.
+        active = False
+        if period > 0 and jam_prbs > 0 and duration > 0 and sim_step >= offset:
+            rel = sim_step - offset
+            pos_in_period = rel % period
+            active = pos_in_period < duration
+        for cell in self.cell_list.values():
+            if active:
+                # Save base quotas once at window start
+                if cell.cell_id not in self._jam_saved_quota:
+                    self._jam_saved_quota[cell.cell_id] = dict(cell.slice_dl_prb_quota)
+                base_quota = self._jam_saved_quota[cell.cell_id]
+                effective_max = max(0, int(cell.max_dl_prb) - jam_prbs)
+                total = sum(base_quota.values())
+                if effective_max == 0 or total == 0:
+                    new_quota = {s: 0 for s in base_quota}
+                else:
+                    scale = effective_max / float(total)
+                    new_quota = {s: int(v * scale) for s, v in base_quota.items()}
+                cell.slice_dl_prb_quota = new_quota
+                cell.jammed_dl_prb = jam_prbs
+                cell._effective_max_dl_prb = effective_max
+            else:
+                # Restore quotas after jam window
+                if cell.cell_id in self._jam_saved_quota:
+                    cell.slice_dl_prb_quota = dict(self._jam_saved_quota[cell.cell_id])
+                    del self._jam_saved_quota[cell.cell_id]
+                cell.jammed_dl_prb = 0
+                cell._effective_max_dl_prb = cell.max_dl_prb
+            
+        print(f"Jamming active: {active}")
 
     def on_ue_application_traffic(self, ue, traffic_data):
         url = traffic_data["url"]

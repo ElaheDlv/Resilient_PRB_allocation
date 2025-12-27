@@ -115,3 +115,23 @@ TRACE_DEBUG = os.getenv("TRACE_DEBUG", "0") in ("1", "true", "True")
 TRACE_DEBUG_IMSI = set([
     s.strip() for s in os.getenv("TRACE_DEBUG_IMSI", "").split(",") if s.strip()
 ])
+
+# ---------------------------
+# Jamming (sample constant jammer)
+# ---------------------------
+try:
+    JAM_CONST_PERIOD_STEPS = int(os.getenv("JAM_CONST_PERIOD_STEPS", "-1"))
+except Exception:
+    JAM_CONST_PERIOD_STEPS = -1
+try:
+    JAM_CONST_DURATION_STEPS = int(os.getenv("JAM_CONST_DURATION_STEPS", "0"))
+except Exception:
+    JAM_CONST_DURATION_STEPS = 0
+try:
+    JAM_CONST_PRBS = int(os.getenv("JAM_CONST_PRBS", "0"))
+except Exception:
+    JAM_CONST_PRBS = 0
+try:
+    JAM_CONST_START_OFFSET = int(os.getenv("JAM_CONST_START_OFFSET", "0"))
+except Exception:
+    JAM_CONST_START_OFFSET = 0

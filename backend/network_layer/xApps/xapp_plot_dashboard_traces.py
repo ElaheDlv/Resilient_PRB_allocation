@@ -361,6 +361,8 @@ class xAppPRBDashboardStandalone(xAppBase):
         self._ue_sinr = defaultdict(lambda: deque(maxlen=400))
         self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
         self._slice_prb = defaultdict(lambda: deque(maxlen=400))
+        self._cell_max_prb = deque(maxlen=400)
+        self._cell_eff_prb = deque(maxlen=400)
         self._slice_latency = defaultdict(lambda: deque(maxlen=400))
 
         # Dash server
@@ -451,6 +453,11 @@ class xAppPRBDashboardStandalone(xAppBase):
                 cqi = getattr(ue, "downlink_cqi", None)
                 if cqi is not None:
                     self._ue_cqi[imsi].append(float(cqi))
+            # Track cell max PRBs for supply context
+            cell = getattr(self.env, "_target_cell", lambda: None)()
+            if cell:
+                self._cell_max_prb.append(int(getattr(cell, "max_dl_prb", 0) or 0))
+                self._cell_eff_prb.append(int(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0))
 
     def _mark_episode_boundary(self):
         """Append a boundary point with zero throughput to indicate UE removal/episode reset."""
@@ -472,6 +479,9 @@ class xAppPRBDashboardStandalone(xAppBase):
                     self._ue_prb_sat.pop(imsi, None)
                     self._ue_sinr.pop(imsi, None)
                     self._ue_cqi.pop(imsi, None)
+            # Keep total PRB history aligned
+            if self._cell_max_prb:
+                self._cell_max_prb.append(self._cell_max_prb[-1])
 
     def _start_dashboard(self):
         if self._dash_thread and self._dash_thread.is_alive():
@@ -525,6 +535,9 @@ class xAppPRBDashboardStandalone(xAppBase):
                     dcc.Graph(id="fig-prb"),
                     dcc.Graph(id="fig-throughput"),
                 ]),
+                html.Div(style={"display": "grid", "gridTemplateColumns": "1fr", "gap": "12px"}, children=[
+                    dcc.Graph(id="fig-cell-prb"),
+                ]),
                 html.Div(style={"display": "grid", "gridTemplateColumns": "repeat(2, minmax(0, 1fr))", "gap": "12px"}, children=[
                     dcc.Graph(id="fig-latency"),
                     html.Div(id="latest-metrics", style={"fontSize": "13px", "lineHeight": "1.4"}),
@@ -566,6 +579,7 @@ class xAppPRBDashboardStandalone(xAppBase):
                 Output("fig-actions", "figure"),
                 Output("fig-prb", "figure"),
                 Output("fig-throughput", "figure"),
+                Output("fig-cell-prb", "figure"),
                 Output("fig-latency", "figure"),
                 Output("fig-ue-throughput", "figure"),
                 Output("fig-ue-demand", "figure"),
@@ -584,6 +598,8 @@ class xAppPRBDashboardStandalone(xAppBase):
                 tx_mbps_u = list(self._slice_tx.get(SL_U, []))
                 prb_e = list(self._slice_prb.get(SL_E, []))
                 prb_u = list(self._slice_prb.get(SL_U, []))
+                cell_max = list(self._cell_max_prb)
+                cell_eff = list(self._cell_eff_prb)
                 lat_e = list(self._slice_latency.get(SL_E, []))
                 lat_u = list(self._slice_latency.get(SL_U, []))
                 ue_keys = list(self._ue_tx.keys())
@@ -596,7 +612,7 @@ class xAppPRBDashboardStandalone(xAppBase):
 
             if not tx:
                 empty = go.Figure()
-                return empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, "Waiting for metrics..."
+                return empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, "Waiting for metrics..."
 
             fig_actions = tidy(go.Figure(data=[
                 go.Scatter(x=tx, y=act, mode="lines+markers", name="Action", line=dict(color="#ff7f0e"), marker=dict(size=6)),
@@ -611,6 +627,11 @@ class xAppPRBDashboardStandalone(xAppBase):
                 go.Scatter(x=tx, y=tx_mbps_e, mode="lines", name="eMBB Mbps", line=dict(color="#1f77b4")),
                 go.Scatter(x=tx, y=tx_mbps_u, mode="lines", name="URLLC Mbps", line=dict(color="#d62728")),
             ]), "Slice Throughput", "Mbps")
+
+            fig_cell_prb = tidy(go.Figure(data=[
+                go.Scatter(x=tx[-len(cell_max):], y=cell_max, mode="lines", name="Cell max DL PRBs", line=dict(color="#7f7f7f")),
+                go.Scatter(x=tx[-len(cell_eff):], y=cell_eff, mode="lines", name="Effective DL PRBs", line=dict(color="#ffbf00")),
+            ]), "Cell PRB Capacity", "PRBs")
 
             fig_lat = tidy(go.Figure(data=[
                 go.Scatter(x=tx, y=lat_e, mode="lines", name="eMBB", line=dict(color="#1f77b4")),
@@ -715,7 +736,7 @@ class xAppPRBDashboardStandalone(xAppBase):
                 )
             latest_text = html.Ul([html.Li(t) for t in lines])
 
-            return fig_actions, fig_prb, fig_tx, fig_lat, fig_ue, fig_dem, fig_sat, fig_sinr, fig_cqi, latest_text
+            return fig_actions, fig_prb, fig_tx, fig_cell_prb, fig_lat, fig_ue, fig_dem, fig_sat, fig_sinr, fig_cqi, latest_text
 
         host = os.getenv("PRB_TRACE_DASH_HOST", "0.0.0.0")
         port = int(os.getenv("PRB_TRACE_DASH_PORT", "8060"))
