@@ -195,7 +195,12 @@ class BaseStation:
             spd = float(st.get("speedup", 1.0) or 1.0)
             # Advance replay clock by dt*speedup so faster replays compress time.
             st["clock_s"] = float(st.get("clock_s", 0.0)) + step * spd
-            clock = st["clock_s"]
+            # Round clock to limit floating drift so bins are not skipped at ~1ms scales.
+            clock = round(st["clock_s"], 9)
+            st["clock_s"] = clock
+            # Use a small negative guard so bins landing exactly on the boundary are picked
+            # up in the *next* tick (avoids double consumption at 1 kHz).
+            eps = max(1e-9, abs(step) * 1e-6)
             # idx tracks the next sample to enqueue for this UE.
             idx = int(st.get("idx", 0))
             n = len(samples)
@@ -207,7 +212,10 @@ class BaseStation:
                 # exactly once per cycle.
                 # if int(clock) % 100 == 0:
                 #     print(f"[trace-ts] {imsi}: sample_t={samples[idx][0]:.6f}s clock={clock:.6f}s idx={idx}")
-                while idx < n and float(samples[idx][0]) <= clock:
+                # Consume only bins strictly before the current clock (minus epsilon) so
+                # bins that align with the tick boundary are consumed in the following
+                # step. This prevents "2 then 0" cadence when dt == bin width.
+                while idx < n and float(samples[idx][0]) < clock - eps:
                     dl = int(samples[idx][1] or 0)
                     if dl > 0:
                         self.enqueue_dl_bytes(imsi, dl)
