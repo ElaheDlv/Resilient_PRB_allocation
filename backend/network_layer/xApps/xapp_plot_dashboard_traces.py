@@ -50,6 +50,7 @@ class PRBGymEnv:
     def __init__(self, ric):
         self.ric = ric
         self.sim_engine = getattr(ric, "simulation_engine", None)
+        self._on_clear = None
 
         self.period_steps = max(1, int(getattr(settings, "DQN_PRB_DECISION_PERIOD_STEPS", 1)))
         self.move_step = max(1, int(getattr(settings, "DQN_PRB_MOVE_STEP", 1)))
@@ -76,6 +77,10 @@ class PRBGymEnv:
         self._action_combos = list(product([-1, 0, 1], repeat=2))
 
         self._state_dim = 6
+
+    def register_clear_hook(self, fn):
+        """Allow callers (xApp) to drop any cached UE series when episodes reset."""
+        self._on_clear = fn
 
     # ---------------- Episode handling ----------------
     def _load_episode_specs(self) -> List[Dict]:
@@ -134,6 +139,8 @@ class PRBGymEnv:
             for imsi in list(self.sim_engine.ue_list.keys()):
                 self.sim_engine.deregister_ue(imsi)
         self._managed_ues.clear()
+        if callable(self._on_clear):
+            self._on_clear()
 
     def _apply_initial_prb(self, prb_map):
         for cell in self.sim_engine.cell_list.values():
@@ -365,6 +372,9 @@ class xAppPRBDashboardStandalone(xAppBase):
         self._cell_eff_prb = deque(maxlen=400)
         self._slice_latency = defaultdict(lambda: deque(maxlen=400))
 
+        # Hook to clear plot caches when the env wipes managed UEs
+        self.env.register_clear_hook(self._clear_plot_caches)
+
         # Dash server
         self._dash_app = None
         self._dash_thread = None
@@ -458,6 +468,18 @@ class xAppPRBDashboardStandalone(xAppBase):
             if cell:
                 self._cell_max_prb.append(int(getattr(cell, "max_dl_prb", 0) or 0))
                 self._cell_eff_prb.append(int(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0))
+
+    def _clear_plot_caches(self):
+        """Drop per-UE histories so stale UEs disappear from plots after resets."""
+        with self._lock:
+            for store in (
+                self._ue_tx,
+                self._ue_prb_demand,
+                self._ue_prb_sat,
+                self._ue_sinr,
+                self._ue_cqi,
+            ):
+                store.clear()
 
     def _mark_episode_boundary(self):
         """Append a boundary point with zero throughput to indicate UE removal/episode reset."""

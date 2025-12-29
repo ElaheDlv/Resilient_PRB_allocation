@@ -135,3 +135,7 @@ try:
     JAM_CONST_START_OFFSET = int(os.getenv("JAM_CONST_START_OFFSET", "0"))
 except Exception:
     JAM_CONST_START_OFFSET = 0
+try:
+    JAM_RESERVED_PRBS = int(os.getenv("JAM_RESERVED_PRBS", "0"))
+except Exception:
+    JAM_RESERVED_PRBS = 0

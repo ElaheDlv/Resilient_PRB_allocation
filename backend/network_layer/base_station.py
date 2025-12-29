@@ -465,29 +465,25 @@ class BaseStation:
             rel = sim_step - offset
             pos_in_period = rel % period
             active = pos_in_period < duration
+        reserved = max(0, int(getattr(settings, "JAM_RESERVED_PRBS", 0)))
         for cell in self.cell_list.values():
-            if active:
-                # Save base quotas once at window start
-                if cell.cell_id not in self._jam_saved_quota:
-                    self._jam_saved_quota[cell.cell_id] = dict(cell.slice_dl_prb_quota)
-                base_quota = self._jam_saved_quota[cell.cell_id]
-                effective_max = max(0, int(cell.max_dl_prb) - jam_prbs)
-                total = sum(base_quota.values())
-                if effective_max == 0 or total == 0:
-                    new_quota = {s: 0 for s in base_quota}
-                else:
-                    scale = effective_max / float(total)
-                    new_quota = {s: int(v * scale) for s, v in base_quota.items()}
-                cell.slice_dl_prb_quota = new_quota
-                cell.jammed_dl_prb = jam_prbs
-                cell._effective_max_dl_prb = effective_max
+            # Base usable pool excludes reserved PRBs; jam subtracts from the usable pool only.
+            usable_max = max(0, int(cell.max_dl_prb) - reserved)
+            jam_active = jam_prbs if active else 0
+            target_max = max(0, usable_max - jam_active)
+            base_quota = dict(cell.slice_dl_prb_quota)
+            total = sum(base_quota.values())
+            if target_max == 0 or total == 0:
+                new_quota = {s: 0 for s in base_quota}
+            elif total > target_max:
+                scale = target_max / float(total)
+                new_quota = {s: int(v * scale) for s, v in base_quota.items()}
             else:
-                # Restore quotas after jam window
-                if cell.cell_id in self._jam_saved_quota:
-                    cell.slice_dl_prb_quota = dict(self._jam_saved_quota[cell.cell_id])
-                    del self._jam_saved_quota[cell.cell_id]
-                cell.jammed_dl_prb = 0
-                cell._effective_max_dl_prb = cell.max_dl_prb
+                new_quota = base_quota
+            cell.slice_dl_prb_quota = new_quota
+            # Report jammed as reserved + active jam for visibility.
+            cell.jammed_dl_prb = reserved + jam_active
+            cell._effective_max_dl_prb = target_max
             
         print(f"Jamming active: {active}")
 
