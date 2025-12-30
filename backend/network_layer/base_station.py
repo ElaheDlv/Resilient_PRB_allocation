@@ -215,8 +215,10 @@ class BaseStation:
                 # Consume only bins strictly before the current clock (minus epsilon) so
                 # bins that align with the tick boundary are consumed in the following
                 # step. This prevents "2 then 0" cadence when dt == bin width.
-                while idx < n and float(samples[idx][0]) < clock - eps:
+                #print("clock:", clock)
+                while idx < n and float(samples[idx][0]) <= clock - eps:
                     dl = int(samples[idx][1] or 0)
+                    #print("sample_t:", samples[idx][0], "dl_bytes:", dl)
                     if dl > 0:
                         self.enqueue_dl_bytes(imsi, dl)
                     idx += 1
@@ -493,7 +495,7 @@ class BaseStation:
             cell.jammed_dl_prb = reserved + jam_active
             cell._effective_max_dl_prb = target_max
             
-        print(f"Jamming active: {active}")
+        #print(f"Jamming active: {active}")
 
     def on_ue_application_traffic(self, ue, traffic_data):
         url = traffic_data["url"]

@@ -229,11 +229,16 @@ def load_raw_packet_csv(
             t0 = t - (first_t or 0.0)
             # Compute bin start time (or keep original timestamp when binning disabled)
             if use_binning:
-                b = math.floor(t0 / bin_width) * bin_width
+                # Round the bin boundary to mitigate float jitter at ms-scale 
+                idx = int(round(t0 / bin_width))  # or int(math.floor((t0 + 1e-9) / bin_width))
+                b = round(idx * bin_width, 9)
+                #b = round(math.floor(t0 / bin_width) * bin_width, 9)
             else:
                 # Round to mitigate floating noise when timestamps are high precision
                 b = round(t0, 9)
+            #print("packet_t:", t, "norm_t:", t0, "bin:", b)
             dl, ul = bins.get(b, (0, 0))
+            #print("before dl:", dl, "ul:", ul)
             # Subtract protocol overhead to approximate payload bytes
             adj = max(0, int(length) - max(0, int(overhead_sub_bytes)))
             if ue_ip and dst == ue_ip:
@@ -241,6 +246,7 @@ def load_raw_packet_csv(
             if ue_ip and src == ue_ip:
                 ul += adj
             bins[b] = (dl, ul)
+            #print("after dl:", dl, "ul:", ul)
 
         if not bins:
             return []

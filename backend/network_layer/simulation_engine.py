@@ -221,6 +221,23 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
                     samples = load_raw_packet_csv(
                         path, ue_ip=ue_ip, bin_s=float(bin_s), overhead_sub_bytes=int(overhead)
                     )
+                    # Snap timestamps to the bin grid to avoid boundary jitter at ms-scale
+                    if samples and float(bin_s) > 0:
+                        bs = float(bin_s)
+                        samples = [(round(float(t) / bs) * bs, dl, ul) for (t, dl, ul) in samples]
+                    # Optional rebin to simulator step so one bin aligns with one tick.
+                    sim_step = getattr(settings, "SIM_STEP_TIME_DEFAULT", None)
+                    try:
+                        sim_step = float(sim_step)
+                    except Exception:
+                        sim_step = None
+                    if samples and sim_step and sim_step > 0:
+                        rebinned = {}
+                        for t, dl, ul in samples:
+                            b = round(math.floor(float(t) / sim_step) * sim_step, 9)
+                            cur_dl, cur_ul = rebinned.get(b, (0, 0))
+                            rebinned[b] = (cur_dl + int(dl or 0), cur_ul + int(ul or 0))
+                        samples = [(t, v[0], v[1]) for t, v in sorted(rebinned.items())]
                 except Exception as e:
                     logger.error(f"Failed to load RAW trace for {ue.ue_imsi} from {path}: {e}")
                     samples = []
@@ -292,16 +309,17 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
                 logger.info(
                     f"UE {ue.ue_imsi} reached target: ({ue.target_x}, {ue.target_y})"
                 )
-                # assign a new target for the UE
-                target_x = random.randint(
-                    ue.operation_region["min_x"],
-                    ue.operation_region["max_x"],
-                )
-                target_y = random.randint(
-                    ue.operation_region["min_y"],
-                    ue.operation_region["max_y"],
-                )
-                ue.set_target(target_x, target_y)
+                # When mobility is frozen, keep UEs pinned; don't resample targets.
+                if not getattr(settings, "SIM_FREEZE_MOBILITY", False):
+                    target_x = random.randint(
+                        ue.operation_region["min_x"],
+                        ue.operation_region["max_x"],
+                    )
+                    target_y = random.randint(
+                        ue.operation_region["min_y"],
+                        ue.operation_region["max_y"],
+                    )
+                    ue.set_target(target_x, target_y)
 
             if not ue.connected:
                 ue_to_remove.append(ue)

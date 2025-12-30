@@ -494,7 +494,13 @@ from intelligence_layer.ai_service_pipeline import handle_ai_service_pipeline_ch
 if _pending_settings_reload:
     settings = importlib.reload(settings)
 
-#setup_logging(level=logging.WARNING)
+# Enable verbose logging when trace debugging is requested so trace_replay logs emit.
+if getattr(settings, "TRACE_DEBUG", False):
+    import logging as _logging
+
+    setup_logging(level=_logging.INFO)
+    _logging.getLogger("trace_replay").setLevel(_logging.INFO)
+    _logging.getLogger().setLevel(_logging.INFO)
 
 # Validate configured traces (if any) early and log summary
 try:

@@ -294,7 +294,9 @@ class Cell:
 
             # Only enforce the GBR floor when the queue persists at or above the GBR load.
             gbr_bytes_per_step = (dl_gbr * sim_dt) / 8.0 if dl_gbr > 0 and sim_dt > 0 else 0.0
-            enforce_baseline = backlog_bytes >= gbr_bytes_per_step and backlog_prbs > 0
+            # Always apply the GBR-derived baseline when configured so capacity doesn't
+            # collapse to the 1-PRB fallback on empty-queue ticks.
+            enforce_baseline = (dl_gbr > 0) and (baseline_prbs > 0)
             active_baseline = baseline_prbs if enforce_baseline else 0
 
             # Resulting demand matches real traffic, with GBR acting as a floor only
@@ -421,6 +423,7 @@ class Cell:
                 # No trace attached for this UE: do not fabricate throughput.
                 ue.served_downlink_bitrate = 0.0
                 ue.set_downlink_bitrate(0.0)
+            print("cap_bps:", cap_bytes, 'downlink_bitrate:', ue.downlink_bitrate)
             # TODO: downlink and uplink latency
             # After serving downlink data (after buffer update)
             if has_replay:
