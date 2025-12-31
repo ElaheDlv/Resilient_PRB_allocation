@@ -35,8 +35,7 @@ RAN_PRB_CAP_SLIDER_MAX = 50
 # These are applied per cell (converted to integer PRB counts using that cell's max_dl_prb).
 RAN_SLICE_DL_PRB_SPLIT_DEFAULT = {
     "eMBB": 0.7,
-    "URLLC": 0.2,
-    "mMTC": 0.1,
+    "URLLC": 0.3,
 }
 
 _prb_override_env = os.getenv("RAN_SLICE_DL_PRB_OVERRIDES", "")

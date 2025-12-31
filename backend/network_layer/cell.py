@@ -167,7 +167,7 @@ class Cell:
         try:
             default_frac = settings.RAN_SLICE_DL_PRB_SPLIT_DEFAULT
         except Exception:
-            default_frac = {"eMBB": 1.0, "URLLC": 0.0, "mMTC": 0.0}
+            default_frac = {"eMBB": 1.0, "URLLC": 0.0}
         total_assigned = 0
         for s, frac in default_frac.items():
             frac = max(0.0, float(frac))
@@ -423,7 +423,7 @@ class Cell:
                 # No trace attached for this UE: do not fabricate throughput.
                 ue.served_downlink_bitrate = 0.0
                 ue.set_downlink_bitrate(0.0)
-            print("cap_bps:", cap_bytes, 'downlink_bitrate:', ue.downlink_bitrate)
+            #print("cap_bps:", cap_bytes, 'downlink_bitrate:', ue.downlink_bitrate)
             # TODO: downlink and uplink latency
             # After serving downlink data (after buffer update)
             if has_replay:

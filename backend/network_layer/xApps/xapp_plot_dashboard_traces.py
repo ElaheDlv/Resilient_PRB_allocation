@@ -320,19 +320,22 @@ class PRBGymEnv:
         return np.array(s, dtype=np.float32)
 
     def _aggregate_slice_metrics(self, cell):
-        agg = {SL_E: {}, SL_U: {}}
+        agg = {SL_E: {}, SL_U: {}, "meta": {"total_ue": 0, "ue_max": int(getattr(settings, "UE_DEFAULT_MAX_COUNT", 0) or 0)}}
         for sl in (SL_E, SL_U):
             agg[sl] = {
                 "slice_prb": cell.slice_dl_prb_quota.get(sl, 0),
                 "tx_mbps": 0.0,
                 "buf_bytes": 0.0,
                 "latency": 0.0,
+                "ue_count": 0,
             }
         for ue in cell.connected_ue_list.values():
             sl = ue.slice_type
             agg[sl]["tx_mbps"] += ue.served_downlink_bitrate / 1e6
             agg[sl]["buf_bytes"] += ue.dl_buffer_bytes
             agg[sl]["latency"] += ue.downlink_latency
+            agg[sl]["ue_count"] += 1
+            agg["meta"]["total_ue"] += 1
         return agg
 
     def _reward(self, cell):
@@ -576,7 +579,7 @@ class xAppPRBDashboardStandalone(xAppBase):
                     dcc.Graph(id="fig-ue-cqi"),
                 ]),
 
-                dcc.Interval(id="tick", interval=750, n_intervals=0),
+                dcc.Interval(id="tick", interval=500, n_intervals=0),
             ],
         )
 
@@ -747,6 +750,7 @@ class xAppPRBDashboardStandalone(xAppBase):
                     return v if v not in (None, "") else "-"
 
             metrics = latest.get("metrics", {}) if isinstance(latest, dict) else {}
+            meta = metrics.get("meta", {}) if isinstance(metrics, dict) else {}
             action_txt = action_labels.get(latest.get("action", None), "-")
             lines = [f"Action: {action_txt}"]
             for sl in (SL_E, SL_U):
@@ -754,8 +758,13 @@ class xAppPRBDashboardStandalone(xAppBase):
                 lines.append(
                     f"{sl}: PRB={_fmt(m.get('slice_prb', '-'), 0)}, "
                     f"Tx={_fmt(m.get('tx_mbps', '-'))} Mbps, "
-                    f"Latency={_fmt(m.get('latency', '-'))}"
+                    f"Latency={_fmt(m.get('latency', '-'))}, "
+                    f"UEs={_fmt(m.get('ue_count', '-'), 0)}"
                 )
+            if meta:
+                total_ue = _fmt(meta.get("total_ue", "-"), 0)
+                ue_max = _fmt(meta.get("ue_max", "-"), 0)
+                lines.append(f"UEs total={total_ue}, UE_max={ue_max}")
             latest_text = html.Ul([html.Li(t) for t in lines])
 
             return fig_actions, fig_prb, fig_tx, fig_cell_prb, fig_lat, fig_ue, fig_dem, fig_sat, fig_sinr, fig_cqi, latest_text
