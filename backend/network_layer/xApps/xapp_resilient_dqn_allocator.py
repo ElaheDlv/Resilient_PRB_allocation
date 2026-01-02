@@ -578,6 +578,7 @@ class xAppResilientDQNAllocator(xAppBase):
         self._dash_app = None
         self._dash_thread = None
         self._lock = threading.Lock()
+        self._last_info = {}
         # History buffers for quick plotting
         self._t = deque(maxlen=400)
         self._hist_reward = deque(maxlen=400)
@@ -590,6 +591,18 @@ class xAppResilientDQNAllocator(xAppBase):
         self._hist_queue_u = deque(maxlen=400)
         self._hist_reserve = deque(maxlen=400)
         self._hist_prb_ratio = deque(maxlen=400)
+        self._hist_action_idx = deque(maxlen=400)
+        # Per-slice and per-UE histories (lightweight, capped)
+        self._slice_prb = defaultdict(lambda: deque(maxlen=400))
+        self._slice_tx = defaultdict(lambda: deque(maxlen=400))
+        self._slice_sat = defaultdict(lambda: deque(maxlen=400))
+        self._ue_tx = defaultdict(lambda: deque(maxlen=400))
+        self._ue_prb_demand = defaultdict(lambda: deque(maxlen=400))
+        self._ue_prb_sat = defaultdict(lambda: deque(maxlen=400))
+        self._ue_sinr = defaultdict(lambda: deque(maxlen=400))
+        self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
+        self._cell_max_prb = deque(maxlen=400)
+        self._cell_eff_prb = deque(maxlen=400)
 
     def start(self):
         if not self.enabled:
@@ -645,11 +658,15 @@ class xAppResilientDQNAllocator(xAppBase):
             return
         obs = info.get("obs") if isinstance(info, dict) else {}
         action = info.get("action") if isinstance(info, dict) else (0, 0)
+        action_idx = info.get("action_idx") if isinstance(info, dict) else None
         with self._lock:
             t = self._global_step
+            self._last_info = info or {}
             self._t.append(t)
             self._hist_reward.append(float(reward))
             self._hist_action.append(float(sum(action) if action else 0))
+            if action_idx is not None:
+                self._hist_action_idx.append(int(action_idx))
             self._hist_embb_thr.append(float(obs.get("embb_throughput", 0.0) or 0.0))
             self._hist_urllc_thr.append(float(obs.get("urllc_throughput", 0.0) or 0.0))
             self._hist_latency.append(float(obs.get("urllc_latency", 0.0) or 0.0))
@@ -658,6 +675,49 @@ class xAppResilientDQNAllocator(xAppBase):
             self._hist_queue_u.append(float(obs.get("urllc_queue", 0.0) or 0.0))
             self._hist_reserve.append(float(sum(action) if action else 0) / max(1.0, TOTAL_RESILIENCY_PRB))
             self._hist_prb_ratio.append(float(obs.get("effective_prb_ratio", 0.0) or 0.0))
+            # Slice metrics from current cell
+            cell = getattr(self._env, "_target_cell", lambda: None)()
+            if cell:
+                quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+                alloc = dict(getattr(cell, "allocated_dl_prb_by_slice", {}) or {})
+                demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
+                alloc_map = getattr(cell, "prb_ue_allocation_dict", {}) or {}
+                for sl in (SL_E, SL_U):
+                    self._slice_prb[sl].append(float(quotas.get(sl, 0.0) or 0.0))
+                    self._slice_tx[sl].append(float((self._hist_embb_thr if sl == SL_E else self._hist_urllc_thr)[-1]))
+                    dem = 0.0
+                    for ue in getattr(cell, "connected_ue_list", {}).values():
+                        if getattr(ue, "slice_type", None) != sl:
+                            continue
+                        imsi = getattr(ue, "ue_imsi", None)
+                        if imsi:
+                            dem += float(demand_map.get(imsi, 0.0) or 0.0)
+                    allo = float(alloc.get(sl, 0.0) or 0.0)
+                    sat = 1.0 if dem <= 0 else min(1.5, allo / dem)
+                    self._slice_sat[sl].append(sat)
+                # Per-UE throughput/demand/sat/SINR/CQI
+                managed = set(getattr(self._env, "_managed_ues", set()) or [])
+                for imsi, ue in getattr(self.ric, "ue_list", {}).items():
+                    if managed and imsi not in managed:
+                        continue
+                    bps = getattr(ue, "served_downlink_bitrate", None)
+                    if bps is None:
+                        bps = getattr(ue, "downlink_bitrate", 0.0)
+                    self._ue_tx[imsi].append(float(bps) / 1e6)
+                    demand = float(demand_map.get(imsi, 0.0) or 0.0)
+                    granted = float(alloc_map.get(imsi, {}).get("downlink", 0.0) or 0.0)
+                    self._ue_prb_demand[imsi].append(demand)
+                    sat = 1.0 if demand <= 0 else min(1.5, granted / demand)
+                    self._ue_prb_sat[imsi].append(sat)
+                    sinr = getattr(ue, "downlink_sinr", None)
+                    if sinr is not None:
+                        self._ue_sinr[imsi].append(float(sinr))
+                    cqi = getattr(ue, "downlink_cqi", None)
+                    if cqi is not None:
+                        self._ue_cqi[imsi].append(float(cqi))
+                self._cell_max_prb.append(int(getattr(cell, "max_dl_prb", 0) or 0))
+                eff = getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0))
+                self._cell_eff_prb.append(int(eff or 0))
 
     def _start_dashboard(self):
         if not self.dash_enable or not DASH_AVAILABLE:
@@ -672,10 +732,14 @@ class xAppResilientDQNAllocator(xAppBase):
         app.layout = html.Div(
             [
                 html.H3("Resilient DQN Dashboard"),
+                html.Pre(id="snapshot", style={"whiteSpace": "pre-wrap"}),
                 dcc.Graph(id="thr-graph"),
                 dcc.Graph(id="lat-graph"),
                 dcc.Graph(id="queue-graph"),
                 dcc.Graph(id="reward-graph"),
+                dcc.Graph(id="ue-graph"),
+                dcc.Graph(id="radio-graph"),
+                dcc.Graph(id="supply-graph"),
                 dcc.Interval(id="tick", interval=1000, n_intervals=0),
             ]
         )
@@ -685,10 +749,14 @@ class xAppResilientDQNAllocator(xAppBase):
             Output("lat-graph", "figure"),
             Output("queue-graph", "figure"),
             Output("reward-graph", "figure"),
+            Output("ue-graph", "figure"),
+            Output("radio-graph", "figure"),
+            Output("supply-graph", "figure"),
             Input("tick", "n_intervals"),
         )
         def _update(_):
             with self._lock:
+                snap = dict(self._last_info)
                 t = list(self._t)
                 thr_e = list(self._hist_embb_thr)
                 thr_u = list(self._hist_urllc_thr)
@@ -699,11 +767,25 @@ class xAppResilientDQNAllocator(xAppBase):
                 reward = list(self._hist_reward)
                 reserve = list(self._hist_reserve)
                 prb_ratio = list(self._hist_prb_ratio)
+                action_idx = list(self._hist_action_idx)
+                slice_prb = {k: list(v) for k, v in self._slice_prb.items()}
+                slice_tx = {k: list(v) for k, v in self._slice_tx.items()}
+                slice_sat = {k: list(v) for k, v in self._slice_sat.items()}
+                ue_tx = {k: list(v) for k, v in self._ue_tx.items()}
+                ue_demand = {k: list(v) for k, v in self._ue_prb_demand.items()}
+                ue_sat = {k: list(v) for k, v in self._ue_prb_sat.items()}
+                ue_sinr = {k: list(v) for k, v in self._ue_sinr.items()}
+                ue_cqi = {k: list(v) for k, v in self._ue_cqi.items()}
+                cell_max = list(self._cell_max_prb)
+                cell_eff = list(self._cell_eff_prb)
 
             thr_fig = go.Figure()
             thr_fig.add_trace(go.Scatter(x=t, y=thr_e, mode="lines", name="eMBB throughput (bps)"))
             thr_fig.add_trace(go.Scatter(x=t, y=thr_u, mode="lines", name="URLLC throughput (bps)"))
-            thr_fig.update_layout(title="Throughput", xaxis_title="step")
+            if slice_prb:
+                thr_fig.add_trace(go.Scatter(x=t, y=slice_prb.get(SL_E, []), mode="lines", name="eMBB PRB"))
+                thr_fig.add_trace(go.Scatter(x=t, y=slice_prb.get(SL_U, []), mode="lines", name="URLLC PRB"))
+            thr_fig.update_layout(title="Throughput / PRB", xaxis_title="step")
 
             lat_fig = go.Figure()
             lat_fig.add_trace(go.Scatter(x=t, y=lat, mode="lines", name="URLLC latency (s)"))
@@ -723,13 +805,66 @@ class xAppResilientDQNAllocator(xAppBase):
             r_fig.add_trace(
                 go.Scatter(x=t, y=prb_ratio, mode="lines", name="effective PRB ratio", yaxis="y2")
             )
+            if action_idx:
+                r_fig.add_trace(go.Scatter(x=t, y=action_idx, mode="lines", name="action idx", yaxis="y2"))
             r_fig.update_layout(
                 title="Reward / Reserve",
                 xaxis_title="step",
                 yaxis=dict(title="reward"),
                 yaxis2=dict(title="fractions", overlaying="y", side="right"),
             )
-            return thr_fig, lat_fig, q_fig, r_fig
+            ue_fig = go.Figure()
+            for imsi, series in ue_tx.items():
+                ue_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} tx (Mbps)"))
+            for imsi, series in ue_demand.items():
+                ue_fig.add_trace(
+                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} prb demand", yaxis="y2")
+                )
+            for imsi, series in ue_sat.items():
+                ue_fig.add_trace(
+                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} sat", yaxis="y3")
+                )
+            ue_fig.update_layout(
+                title="Per-UE throughput / demand / satisfaction",
+                xaxis_title="step",
+                yaxis=dict(title="Mbps"),
+                yaxis2=dict(title="PRB", overlaying="y", side="right"),
+                yaxis3=dict(title="sat", overlaying="y", side="right", position=0.98),
+                legend=dict(orientation="h"),
+            )
+
+            radio_fig = go.Figure()
+            for imsi, series in ue_sinr.items():
+                radio_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} SINR (dB)"))
+            for imsi, series in ue_cqi.items():
+                radio_fig.add_trace(
+                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} CQI", yaxis="y2")
+                )
+            radio_fig.update_layout(
+                title="Per-UE SINR / CQI",
+                xaxis_title="step",
+                yaxis=dict(title="SINR (dB)"),
+                yaxis2=dict(title="CQI", overlaying="y", side="right"),
+                legend=dict(orientation="h"),
+            )
+
+            supply_fig = go.Figure()
+            supply_fig.add_trace(go.Scatter(x=t[-len(cell_max):], y=cell_max, mode="lines", name="cell max PRB"))
+            supply_fig.add_trace(go.Scatter(x=t[-len(cell_eff):], y=cell_eff, mode="lines", name="effective PRB"))
+            for sl, series in slice_sat.items():
+                supply_fig.add_trace(
+                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} sat", yaxis="y2")
+                )
+            supply_fig.update_layout(
+                title="PRB supply / satisfaction",
+                xaxis_title="step",
+                yaxis=dict(title="PRB"),
+                yaxis2=dict(title="sat", overlaying="y", side="right"),
+                legend=dict(orientation="h"),
+            )
+
+            snap_text = self._format_snapshot(snap)
+            return snap_text, thr_fig, lat_fig, q_fig, r_fig, ue_fig, radio_fig, supply_fig
 
         def _run():
             app.run(host="0.0.0.0", port=self.dash_port, debug=False, use_reloader=False)
@@ -738,6 +873,43 @@ class xAppResilientDQNAllocator(xAppBase):
         self._dash_thread = threading.Thread(target=_run, daemon=True)
         self._dash_thread.start()
         print(f"{self.xapp_id}: dashboard running on port {self.dash_port}")
+
+    def _format_snapshot(self, snap: Dict) -> str:
+        if not snap:
+            return "No data yet"
+        action = snap.get("action") or (0, 0)
+        action_idx = snap.get("action_idx")
+        obs = snap.get("obs") or {}
+        cell = getattr(self._env, "_target_cell", lambda: None)()
+        lines = []
+        if action_idx is not None:
+            lines.append(f"Action: {action_idx}: Δe={action[0]}, Δu={action[1]}")
+        else:
+            lines.append(f"Action: Δe={action[0]}, Δu={action[1]}")
+        # Slice metrics
+        cell_ref = cell or (list(getattr(self.ric, "cell_list", {}).values()) or [None])[0]
+        if cell_ref:
+            quotas = dict(getattr(cell_ref, "slice_dl_prb_quota", {}) or {})
+            alloc = dict(getattr(cell_ref, "allocated_dl_prb_by_slice", {}) or {})
+            req = getattr(cell_ref, "dl_total_prb_demand", {}) or {}
+            connected = getattr(cell_ref, "connected_ue_list", {}) or {}
+            for sl in (SL_E, SL_U):
+                tx = float(obs.get("embb_throughput" if sl == SL_E else "urllc_throughput", 0.0) or 0.0) / 1e6
+                lat = float(obs.get("urllc_latency", 0.0) or 0.0) if sl == SL_U else float(
+                    obs.get("embb_latency", 0.0) or 0.0
+                )
+                ues = sum(1 for ue in connected.values() if getattr(ue, "slice_type", None) == sl)
+                prb = float(quotas.get(sl, 0.0) or 0.0)
+                lines.append(f"{sl}: PRB={prb:.0f}, Tx={tx:.3f} Mbps, Latency={lat:.3f}, UEs={ues}")
+            total_ues = len(getattr(self.ric, "ue_list", {}) or {})
+            ue_max = int(getattr(settings, "UE_DEFAULT_MAX_COUNT", 0) or 0)
+            lines.append(f"UEs total={total_ues}, UE_max={ue_max}")
+            # Jamming / effective PRB
+            eff = getattr(cell_ref, "_effective_max_dl_prb", getattr(cell_ref, "max_dl_prb", 0))
+            max_dl = getattr(cell_ref, "max_dl_prb", 0)
+            if eff != max_dl:
+                lines.append(f"Jamming: effective PRB={eff}/{max_dl}")
+        return "\n".join(lines)
 
     # ---------- Agent helpers ---------- #
     def _init_agent(self):
