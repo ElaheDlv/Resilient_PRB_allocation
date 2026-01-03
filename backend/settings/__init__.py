@@ -11,3 +11,4 @@ from .core_config import *
 from .ai_service_config import *
 from .res_gym_config import *
 from .res_dqn_config import *
+from .res_qrdqn_config import *
