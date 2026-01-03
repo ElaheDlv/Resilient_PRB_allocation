@@ -99,8 +99,8 @@ URLLC_BASE_PRB = float(
 )
 EMBB_QUEUE_MAX = float(getattr(settings, "RES_QRDQN_EMBB_QUEUE_MAX", getattr(settings, "RES_DQN_EMBB_QUEUE_MAX", 200000.0)))
 URLLC_QUEUE_MAX = float(getattr(settings, "RES_QRDQN_URLLC_QUEUE_MAX", getattr(settings, "RES_DQN_URLLC_QUEUE_MAX", 200000.0)))
-EMBB_THR_MAX = float(getattr(settings, "RES_QRDQN_EMBB_THR_MAX", getattr(settings, "RES_DQN_EMBB_THR_MAX", 1.8e8)))  # bps
-URLLC_THR_MAX = float(getattr(settings, "RES_QRDQN_URLLC_THR_MAX", getattr(settings, "RES_DQN_URLLC_THR_MAX", 7.5e7)))  # bps
+EMBB_THR_MAX = float(getattr(settings, "RES_QRDQN_EMBB_THR_MAX", getattr(settings, "RES_DQN_EMBB_THR_MAX", 9.6e7)))  # bps
+URLLC_THR_MAX = float(getattr(settings, "RES_QRDQN_URLLC_THR_MAX", getattr(settings, "RES_DQN_URLLC_THR_MAX", 4.16e7)))  # bps
 URLLC_LATENCY_DEADLINE = float(
     getattr(settings, "RES_QRDQN_URLLC_LATENCY_DEADLINE", getattr(settings, "RES_DQN_URLLC_LATENCY_DEADLINE", 0.001))
 )
@@ -138,7 +138,7 @@ def latency_excess(latency: float, deadline: float) -> float:
 
 def compute_reward(
     obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
-) -> float | Tuple[float, Dict[str, float]]:
+):
     """
     obs: simulator outputs after applying the action
     action: (r_e, r_u)
@@ -160,12 +160,12 @@ def compute_reward(
 
     reward = reward_embb - penalty_latency - penalty_reserve
     if return_parts:
-        return float(reward), {
+        parts = {
             "reward_embb": float(reward_embb),
             "penalty_latency": float(penalty_latency),
             "penalty_reserve": float(penalty_reserve),
-            "reward_total": float(reward),
         }
+        return float(reward), parts
     return float(reward)
 
 
@@ -594,7 +594,9 @@ class ResilientQRDQNEnv:
             "latency": latency,
         }
 
-    def _compute_reward(self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]) -> Tuple[float, Dict]:
+    def _compute_reward(
+        self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]
+    ) -> Tuple[float, Dict[str, float]]:
         weights = {
             "w_e": float(getattr(settings, "RES_QRDQN_W_E", getattr(settings, "RES_DQN_W_E", 1.0))),
             "w_u": float(getattr(settings, "RES_QRDQN_W_U", getattr(settings, "RES_DQN_W_U", 1.5))),
@@ -669,6 +671,9 @@ class xAppResilientQRDQNAllocator(xAppBase):
         # History buffers for quick plotting
         self._t = deque(maxlen=400)
         self._hist_reward = deque(maxlen=400)
+        self._hist_reward_embb = deque(maxlen=400)
+        self._hist_penalty_latency = deque(maxlen=400)
+        self._hist_penalty_reserve = deque(maxlen=400)
         self._hist_action = deque(maxlen=400)
         self._hist_embb_thr = deque(maxlen=400)
         self._hist_urllc_thr = deque(maxlen=400)
@@ -757,6 +762,10 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self._last_info = info or {}
             self._t.append(t)
             self._hist_reward.append(float(reward))
+            parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
+            self._hist_reward_embb.append(float(parts.get("reward_embb", 0.0)))
+            self._hist_penalty_latency.append(float(parts.get("penalty_latency", 0.0)))
+            self._hist_penalty_reserve.append(float(parts.get("penalty_reserve", 0.0)))
             self._hist_action.append(float(sum(action) if action else 0))
             if action_idx is not None:
                 self._hist_action_idx.append(int(action_idx))
@@ -877,6 +886,9 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 lat = list(self._hist_latency)
                 deadline = list(self._hist_deadline)
                 reward = list(self._hist_reward)
+                reward_embb = list(self._hist_reward_embb)
+                penalty_latency = list(self._hist_penalty_latency)
+                penalty_reserve = list(self._hist_penalty_reserve)
                 reserve = list(self._hist_reserve)
                 prb_ratio = list(self._hist_prb_ratio)
                 action_idx = list(self._hist_action_idx)
@@ -914,6 +926,26 @@ class xAppResilientQRDQNAllocator(xAppBase):
 
             reward_fig = go.Figure()
             reward_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
+            if reward_embb:
+                reward_fig.add_trace(go.Scatter(x=t[-len(reward_embb):], y=reward_embb, mode="lines", name="reward embb"))
+            if penalty_latency:
+                reward_fig.add_trace(
+                    go.Scatter(
+                        x=t[-len(penalty_latency):],
+                        y=[-v for v in penalty_latency],
+                        mode="lines",
+                        name="latency penalty (neg)",
+                    )
+                )
+            if penalty_reserve:
+                reward_fig.add_trace(
+                    go.Scatter(
+                        x=t[-len(penalty_reserve):],
+                        y=[-v for v in penalty_reserve],
+                        mode="lines",
+                        name="reserve penalty (neg)",
+                    )
+                )
             reward_fig.update_layout(title="Reward", xaxis_title="step", yaxis_title="reward")
 
             reserve_fig = go.Figure()
@@ -1020,6 +1052,17 @@ class xAppResilientQRDQNAllocator(xAppBase):
             lines.append(f"Action: {action_idx}: Δe={action[0]}, Δu={action[1]}")
         else:
             lines.append(f"Action: Δe={action[0]}, Δu={action[1]}")
+        parts = snap.get("reward_parts") or {}
+        if parts:
+            total = float(parts.get("reward_embb", 0.0)) - float(parts.get("penalty_latency", 0.0)) - float(
+                parts.get("penalty_reserve", 0.0)
+            )
+            lines.append(
+                "Reward parts: "
+                f"total={total:.3f}, embb={float(parts.get('reward_embb', 0.0)):.3f}, "
+                f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
+                f"reserve_pen=-{float(parts.get('penalty_reserve', 0.0)):.3f}"
+            )
         # Slice metrics
         cell_ref = cell or (list(getattr(self.ric, "cell_list", {}).values()) or [None])[0]
         if cell_ref:
@@ -1057,15 +1100,6 @@ class xAppResilientQRDQNAllocator(xAppBase):
         state_block = self._format_state_block(obs, self._last_state, snap.get("prev_action"))
         if state_block:
             lines.append(state_block)
-        parts = snap.get("reward_parts") or {}
-        if parts:
-            lines.append(
-                "Reward parts: "
-                f"eMBB={parts.get('reward_embb', 0.0):.3f}, "
-                f"lat_pen={parts.get('penalty_latency', 0.0):.3f}, "
-                f"reserve_pen={parts.get('penalty_reserve', 0.0):.3f}, "
-                f"total={parts.get('reward_total', 0.0):.3f}"
-            )
         return "\n".join(lines)
 
     def _log_state_debug(self, obs: Optional[Dict], state: Optional[np.ndarray], info: Optional[Dict]):
@@ -1242,7 +1276,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
             target = rewards.unsqueeze(1) + (1 - dones.unsqueeze(1)) * self.gamma * next_dist
         dist = self._policy(states)[range(len(states)), actions]
         n_atoms = self._policy.n_atoms
-        tau = torch.linspace(0.0, 1.0, steps=n_atoms + 1, device=self.device)[1:]
+        tau = (torch.arange(n_atoms, device=self.device, dtype=torch.float32) + 0.5) / float(max(1, n_atoms))
         diff = target.unsqueeze(1) - dist.unsqueeze(2)
         huber = torch.where(diff.abs() < 1.0, 0.5 * diff.pow(2), diff.abs() - 0.5)
         loss = (torch.abs(tau.unsqueeze(0) - (diff.detach() < 0).float()) * huber).mean()
