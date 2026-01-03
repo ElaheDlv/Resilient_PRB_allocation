@@ -112,14 +112,16 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
     prev_action: (r_e_prev, r_u_prev)
     """
     denom_prb = max(1.0, float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)))
+    lat_ratio = _safe_div(obs.get("urllc_latency", 0.0), obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
+    lat_log = min(5.0, math.log1p(max(0.0, lat_ratio)))  # cap extreme spikes
     state = [
-        _safe_div(obs.get("embb_demand_prb", 0.0), denom_prb),
-        _safe_div(obs.get("urllc_demand_prb", 0.0), denom_prb),
-        _safe_div(obs.get("embb_queue", 0.0), obs.get("embb_queue_max", EMBB_QUEUE_MAX)),
-        _safe_div(obs.get("urllc_queue", 0.0), obs.get("urllc_queue_max", URLLC_QUEUE_MAX)),
+        min(1.0, _safe_div(obs.get("embb_demand_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("urllc_demand_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("embb_queue", 0.0), obs.get("embb_queue_max", EMBB_QUEUE_MAX))),
+        min(1.0, _safe_div(obs.get("urllc_queue", 0.0), obs.get("urllc_queue_max", URLLC_QUEUE_MAX))),
         _safe_div(obs.get("embb_throughput", 0.0), obs.get("embb_throughput_max", EMBB_THR_MAX)),
         _safe_div(obs.get("urllc_throughput", 0.0), obs.get("urllc_throughput_max", URLLC_THR_MAX)),
-        _safe_div(obs.get("urllc_latency", 0.0), obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE)),
+        lat_log,
         float(obs.get("effective_prb_ratio", 0.0)),
         _safe_div(prev_action[0], TOTAL_RESILIENCY_PRB),
         _safe_div(prev_action[1], TOTAL_RESILIENCY_PRB),
@@ -134,7 +136,9 @@ def latency_excess(latency: float, deadline: float) -> float:
     return max(0.0, float(latency) / float(deadline) - 1.0)
 
 
-def compute_reward(obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict) -> float:
+def compute_reward(
+    obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
+) -> float | Tuple[float, Dict[str, float]]:
     """
     obs: simulator outputs after applying the action
     action: (r_e, r_u)
@@ -145,17 +149,23 @@ def compute_reward(obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, i
     r_e, r_u = action
 
     reward_embb = weights["w_e"] * np.log(1 + obs.get("embb_throughput", 0.0))
-    reward_urllc = weights["w_u"] * np.log(1 + obs.get("urllc_throughput", 0.0))
 
     excess = latency_excess(
         obs.get("urllc_latency", 0.0),
         obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
     )
-    penalty_latency = weights["lambda_latency"] * excess
+    penalty_latency = weights["w_u"] * math.log1p(excess)
 
     penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
 
-    reward = reward_embb + reward_urllc - penalty_latency - penalty_reserve
+    reward = reward_embb - penalty_latency - penalty_reserve
+    if return_parts:
+        return float(reward), {
+            "reward_embb": float(reward_embb),
+            "penalty_latency": float(penalty_latency),
+            "penalty_reserve": float(penalty_reserve),
+            "reward_total": float(reward),
+        }
     return float(reward)
 
 
@@ -275,7 +285,7 @@ class ResilientQRDQNEnv:
         self._apply_action(cur_action)
         obs = self._collect_obs()
         state = build_state(obs, prev_act)
-        reward = self._compute_reward(obs, cur_action, prev_act)
+        reward, reward_parts = self._compute_reward(obs, cur_action, prev_act)
         self._steps_in_episode += 1
         done = (self._steps_in_episode >= self._episode_step_limit) or self._traces_consumed()
         info = {
@@ -284,6 +294,7 @@ class ResilientQRDQNEnv:
             "action": cur_action,
             "prev_action": prev_act,
             "action_idx": action_idx,
+            "reward_parts": reward_parts,
         }
         return state, reward, done, info
 
@@ -583,7 +594,7 @@ class ResilientQRDQNEnv:
             "latency": latency,
         }
 
-    def _compute_reward(self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]) -> float:
+    def _compute_reward(self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]) -> Tuple[float, Dict]:
         weights = {
             "w_e": float(getattr(settings, "RES_QRDQN_W_E", getattr(settings, "RES_DQN_W_E", 1.0))),
             "w_u": float(getattr(settings, "RES_QRDQN_W_U", getattr(settings, "RES_DQN_W_U", 1.5))),
@@ -592,7 +603,7 @@ class ResilientQRDQNEnv:
             ),
             "mu": float(getattr(settings, "RES_QRDQN_MU_RESERVE", getattr(settings, "RES_DQN_MU_RESERVE", 0.5))),
         }
-        return compute_reward(obs, action, prev_action, weights)
+        return compute_reward(obs, action, prev_action, weights, return_parts=True)
 
     def _blank_obs(self) -> Dict:
         return {
@@ -1043,7 +1054,96 @@ class xAppResilientQRDQNAllocator(xAppBase):
             max_dl = getattr(cell_ref, "max_dl_prb", 0)
         if eff != max_dl:
             lines.append(f"Jamming: effective PRB={eff}/{max_dl}")
+        state_block = self._format_state_block(obs, self._last_state, snap.get("prev_action"))
+        if state_block:
+            lines.append(state_block)
+        parts = snap.get("reward_parts") or {}
+        if parts:
+            lines.append(
+                "Reward parts: "
+                f"eMBB={parts.get('reward_embb', 0.0):.3f}, "
+                f"lat_pen={parts.get('penalty_latency', 0.0):.3f}, "
+                f"reserve_pen={parts.get('penalty_reserve', 0.0):.3f}, "
+                f"total={parts.get('reward_total', 0.0):.3f}"
+            )
         return "\n".join(lines)
+
+    def _log_state_debug(self, obs: Optional[Dict], state: Optional[np.ndarray], info: Optional[Dict]):
+        """Console print of raw obs vs normalized state for debugging."""
+        if obs is None or state is None:
+            return
+        try:
+            action = (info.get("action") if isinstance(info, dict) else None) or (0, 0)
+            prev_action = (info.get("prev_action") if isinstance(info, dict) else None) or (0, 0)
+            action_idx = info.get("action_idx") if isinstance(info, dict) else None
+            raw_line = (
+                "raw: "
+                f"e_demand={obs.get('embb_demand_prb', 0.0):.3f}, "
+                f"u_demand={obs.get('urllc_demand_prb', 0.0):.3f}, "
+                f"e_queue={obs.get('embb_queue', 0.0):.1f}/{obs.get('embb_queue_max', EMBB_QUEUE_MAX):.1f}, "
+                f"u_queue={obs.get('urllc_queue', 0.0):.1f}/{obs.get('urllc_queue_max', URLLC_QUEUE_MAX):.1f}, "
+                f"e_thr={obs.get('embb_throughput', 0.0):.3f}/{obs.get('embb_throughput_max', EMBB_THR_MAX):.3f}, "
+                f"u_thr={obs.get('urllc_throughput', 0.0):.3f}/{obs.get('urllc_throughput_max', URLLC_THR_MAX):.3f}, "
+                f"u_lat={obs.get('urllc_latency', 0.0):.6f}/{obs.get('urllc_latency_deadline', URLLC_LATENCY_DEADLINE):.6f}, "
+                f"eff_prb_ratio={obs.get('effective_prb_ratio', 0.0):.3f}, "
+                f"prev_action=({prev_action[0]:.1f},{prev_action[1]:.1f})"
+            )
+            norm_names = [
+                "e_demand_n",
+                "u_demand_n",
+                "e_queue_n",
+                "u_queue_n",
+                "e_thr_n",
+                "u_thr_n",
+                "u_lat_n",
+                "eff_ratio_n",
+                "prev_e_n",
+                "prev_u_n",
+            ]
+            norm_vals = state.tolist() if hasattr(state, "tolist") else list(state)
+            norm_pairs = ", ".join(f"{k}={float(v):.3f}" for k, v in zip(norm_names, norm_vals))
+            prefix = f"[STATE][QRDQN] step={self._global_step}"
+            if action_idx is not None:
+                prefix += f" action_idx={action_idx}"
+            prefix += f" Δe={action[0]}, Δu={action[1]}"
+            print("\n".join([prefix, raw_line, f"norm: {norm_pairs}"]))
+        except Exception:
+            pass
+
+    def _format_state_block(self, obs: Optional[Dict], state: Optional[np.ndarray], prev_action: Optional[Tuple[int, int]]):
+        if obs is None or state is None:
+            return ""
+        try:
+            prev = prev_action or (0, 0)
+            raw = (
+                f"raw: "
+                f"e_demand={obs.get('embb_demand_prb', 0.0):.3f}, "
+                f"u_demand={obs.get('urllc_demand_prb', 0.0):.3f}, "
+                f"e_queue={obs.get('embb_queue', 0.0):.1f}/{obs.get('embb_queue_max', EMBB_QUEUE_MAX):.1f}, "
+                f"u_queue={obs.get('urllc_queue', 0.0):.1f}/{obs.get('urllc_queue_max', URLLC_QUEUE_MAX):.1f}, "
+                f"e_thr={obs.get('embb_throughput', 0.0):.3f}/{obs.get('embb_throughput_max', EMBB_THR_MAX):.3f}, "
+                f"u_thr={obs.get('urllc_throughput', 0.0):.3f}/{obs.get('urllc_throughput_max', URLLC_THR_MAX):.3f}, "
+                f"u_lat={obs.get('urllc_latency', 0.0):.6f}/{obs.get('urllc_latency_deadline', URLLC_LATENCY_DEADLINE):.6f}, "
+                f"eff_ratio={obs.get('effective_prb_ratio', 0.0):.3f}, "
+                f"prev_action=({prev[0]:.1f},{prev[1]:.1f})"
+            )
+            norm_names = [
+                "e_dem_n",
+                "u_dem_n",
+                "e_q_n",
+                "u_q_n",
+                "e_thr_n",
+                "u_thr_n",
+                "u_lat_n",
+                "eff_n",
+                "prev_e_n",
+                "prev_u_n",
+            ]
+            norm_vals = state.tolist() if hasattr(state, "tolist") else list(state)
+            norm = "norm: " + ", ".join(f"{k}={float(v):.3f}" for k, v in zip(norm_names, norm_vals))
+            return "\n".join([raw, norm])
+        except Exception:
+            return ""
 
     # ---------- Agent helpers ---------- #
     def _init_tb(self):
