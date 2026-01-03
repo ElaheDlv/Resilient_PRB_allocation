@@ -139,6 +139,16 @@ parser.add_argument(
 )
 parser.add_argument("--dqn-log-tb", action="store_true", help="Enable TensorBoard logging for DQN")
 parser.add_argument("--dqn-tb-dir", type=str, help="TensorBoard log dir for DQN")
+# Resilient DQN allocator (non-episodic)
+parser.add_argument("--res-dqn-enable", action="store_true", help="Enable resilient DQN allocator xApp")
+parser.add_argument("--res-dqn-train", action="store_true", help="Train resilient DQN (default on)")
+parser.add_argument("--res-dqn-eval", action="store_true", help="Eval-only resilient DQN (disable training)")
+parser.add_argument("--res-dqn-levels", type=str, help="Comma-separated resiliency levels (e.g., 0,2,4,6,8,10,12,14,16,18)")
+parser.add_argument("--res-dqn-total", type=int, help="Total resiliency PRB budget")
+parser.add_argument("--res-dqn-dec-period", type=int, help="Decision period in sim steps")
+parser.add_argument("--res-dqn-dash-port", type=int, help="Port for the resilient DQN dashboard (default 5060)")
+parser.add_argument("--res-dqn-tb", action="store_true", help="Enable TensorBoard for resilient DQN")
+parser.add_argument("--res-dqn-tb-dir", type=str, help="TensorBoard logdir for resilient DQN")
 # Gym-style PRB allocator
 parser.add_argument("--prb-gym", action="store_true", help="Enable Gym-style PRB allocator xApp")
 parser.add_argument("--prb-gym-config", type=str, help="Episode config JSON for the Gym-style PRB xApp")
@@ -368,6 +378,26 @@ if args.res_gym_dash_enable:
     os.environ["RES_GYM_DASH_ENABLE"] = "1"
 if args.res_gym_dash_port is not None:
     os.environ["RES_GYM_DASH_PORT"] = str(max(1, int(args.res_gym_dash_port)))
+# Resilient DQN allocator env wiring
+if args.res_dqn_enable:
+    os.environ["RES_DQN_ENABLE"] = "1"
+if args.res_dqn_train:
+    os.environ["RES_DQN_TRAIN"] = "1"
+if args.res_dqn_eval:
+    os.environ["RES_DQN_TRAIN"] = "0"
+    os.environ["RES_DQN_EVAL_ONLY"] = "1"
+if args.res_dqn_levels:
+    os.environ["RES_DQN_LEVELS"] = args.res_dqn_levels
+if args.res_dqn_total is not None:
+    os.environ["RES_DQN_TOTAL_RESILIENCY_PRB"] = str(max(0, int(args.res_dqn_total)))
+if args.res_dqn_dec_period is not None:
+    os.environ["RES_DQN_DECISION_PERIOD"] = str(max(1, int(args.res_dqn_dec_period)))
+if args.res_dqn_dash_port is not None:
+    os.environ["RES_DQN_DASH_PORT"] = str(max(1, int(args.res_dqn_dash_port)))
+if args.res_dqn_tb:
+    os.environ["RES_DQN_TB_ENABLE"] = "1"
+if args.res_dqn_tb_dir:
+    os.environ["RES_DQN_TB_DIR"] = args.res_dqn_tb_dir
 # Trace mapping and options (export via env before importing settings)
 if args.trace_speedup is not None:
     os.environ["TRACE_SPEEDUP"] = str(args.trace_speedup)

@@ -24,7 +24,7 @@ if _levels_raw:
     except Exception:
         RES_DQN_LEVELS = None
 else:
-    RES_DQN_LEVELS = None
+    RES_DQN_LEVELS = [-9, -3, -1, 0, 1, 3, 9]
 try:
     RES_DQN_TOTAL_RESILIENCY_PRB = int(os.getenv("RES_DQN_TOTAL_RESILIENCY_PRB", "18"))
 except Exception:
@@ -49,10 +49,10 @@ try:
 except Exception:
     RES_DQN_EMBB_QUEUE_MAX, RES_DQN_URLLC_QUEUE_MAX = 200000.0, 200000.0
 try:
-    RES_DQN_EMBB_THR_MAX = float(os.getenv("RES_DQN_EMBB_THR_MAX", "5e7"))
-    RES_DQN_URLLC_THR_MAX = float(os.getenv("RES_DQN_URLLC_THR_MAX", "5e7"))
+    RES_DQN_EMBB_THR_MAX = float(os.getenv("RES_DQN_EMBB_THR_MAX", "1.8e8"))
+    RES_DQN_URLLC_THR_MAX = float(os.getenv("RES_DQN_URLLC_THR_MAX", "7.5e7"))
 except Exception:
-    RES_DQN_EMBB_THR_MAX, RES_DQN_URLLC_THR_MAX = 5e7, 5e7
+    RES_DQN_EMBB_THR_MAX, RES_DQN_URLLC_THR_MAX = 1.8e8, 7.5e7
 try:
     RES_DQN_URLLC_LATENCY_DEADLINE = float(os.getenv("RES_DQN_URLLC_LATENCY_DEADLINE", "0.01"))
 except Exception:
@@ -95,3 +95,7 @@ try:
     RES_DQN_DASH_PORT = int(os.getenv("RES_DQN_DASH_PORT", "5060"))
 except Exception:
     RES_DQN_DASH_PORT = 5060
+
+# TensorBoard logging
+RES_DQN_TB_ENABLE = os.getenv("RES_DQN_TB_ENABLE", "0") in ("1", "true", "True")
+RES_DQN_TB_DIR = os.getenv("RES_DQN_TB_DIR", "backend/tb_logs/res_dqn")

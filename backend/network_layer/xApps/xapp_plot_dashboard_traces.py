@@ -77,6 +77,15 @@ class PRBGymEnv:
         self._action_combos = list(product([-1, 0, 1], repeat=2))
 
         self._state_dim = 6
+        # Track a reserve pool (initialised from JAM_RESERVED_PRBS) that actions draw from/return to.
+        self._reserve_base = max(0, int(getattr(settings, "JAM_RESERVED_PRBS", 0)))
+        self._reserve_free = self._reserve_base
+        # Baseline quotas per cell and per-slice bonus (from reserve) applied on top
+        self._base_quota: Dict[str, Dict[str, int]] = {}
+        self._bonus_quota: Dict[str, Dict[str, int]] = {}
+        # Hold action index (0,0) used as default after one-shot actions
+        self._hold_action = next((i for i, c in enumerate(self._action_combos) if c == (0, 0)), 0)
+        self._oneshot = False
 
     def register_clear_hook(self, fn):
         """Allow callers (xApp) to drop any cached UE series when episodes reset."""
@@ -114,6 +123,10 @@ class PRBGymEnv:
         if self._episode_idx >= len(self._episodes):
             return None
 
+        # Reset reserve pool each episode to configured baseline
+        self._reserve_free = int(self._reserve_base)
+        setattr(settings, "JAM_RESERVED_PRBS", int(self._reserve_free))
+
         self._current_episode = self._episodes[self._episode_idx]
         self._episode_step_limit = self._calc_episode_step_limit(self._current_episode)
         self._steps_in_episode = 0
@@ -131,6 +144,13 @@ class PRBGymEnv:
             for i in range(cfg["ue_count"]):
                 imsi = f"GIMSI_{spec['id']}_{sl}_{i}"
                 self._register_episode_ue(imsi, sl, cfg)
+        # Snapshot baseline quotas and clear bonuses
+        self._base_quota.clear()
+        self._bonus_quota.clear()
+        for cell in self.sim_engine.cell_list.values():
+            base = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            self._base_quota[cell.cell_id] = {SL_E: int(base.get(SL_E, 0)), SL_U: int(base.get(SL_U, 0))}
+            self._bonus_quota[cell.cell_id] = {SL_E: 0, SL_U: 0}
 
     def _clear_managed_ues(self):
         # Remove previously managed UEs from the sim and purge their history from plots
@@ -251,28 +271,74 @@ class PRBGymEnv:
     def _apply_action(self, cell, action_idx):
         combo = self._action_combos[int(action_idx)]
         delta_prb = self.move_step
-        quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+        cell_id = getattr(cell, "cell_id", "default")
+        base = self._base_quota.get(cell_id)
+        if base is None:
+            current = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            base = {SL_E: int(current.get(SL_E, 0)), SL_U: int(current.get(SL_U, 0))}
+            self._base_quota[cell_id] = base
+        bonus = self._bonus_quota.setdefault(cell_id, {SL_E: 0, SL_U: 0})
         for sl in (SL_E, SL_U):
-            quotas.setdefault(sl, 0)
+            bonus.setdefault(sl, 0)
         max_prb = int(getattr(cell, "max_dl_prb", 0) or 0)
         if max_prb <= 0:
             return
-        # Remove PRBs for negative moves first
-        for sl, sign in zip((SL_E, SL_U), combo):
-            if sign < 0:
-                reduce = min(delta_prb * abs(sign), quotas[sl])
-                quotas[sl] -= reduce
-        # Apply positive moves
+        # Track jam impact so we keep quotas inside (max_prb - reserve - jam)
+        reserved_before = max(0, int(getattr(settings, "JAM_RESERVED_PRBS", self._reserve_free)))
+        jam_active = max(0, int(getattr(cell, "jammed_dl_prb", 0)) - reserved_before)
+        # Apply actions against the reserve pool (positive: draw from reserve; negative: return to reserve)
         for sl, sign in zip((SL_E, SL_U), combo):
             if sign > 0:
-                quotas[sl] += delta_prb * sign
-        # Keep total within pool
+                take = min(delta_prb * sign, self._reserve_free)
+                bonus[sl] += take
+                self._reserve_free -= take
+            elif sign < 0:
+                give = min(delta_prb * abs(sign), bonus[sl])
+                bonus[sl] -= give
+                self._reserve_free += give
+
+        # Clamp reserve within bounds
+        self._reserve_free = max(0, min(self._reserve_free, self._reserve_base))
+
+        # Build quotas = base + bonus
+        quotas = {sl: int(base.get(sl, 0)) + int(bonus.get(sl, 0)) for sl in (SL_E, SL_U)}
         total = sum(quotas.values())
-        if total > max_prb:
-            scale = max_prb / float(max(1, total))
+        target_max = max(0, max_prb - self._reserve_free - jam_active)
+
+        # First trim bonuses (never the base) if we exceed capacity
+        if total > target_max:
+            excess = total - target_max
+            bonus_sum = sum(bonus.values())
+            if bonus_sum > 0:
+                trim = min(excess, bonus_sum)
+                factor = max(0.0, (bonus_sum - trim) / float(bonus_sum))
+                prev_bonus_sum = bonus_sum
+                for sl in bonus:
+                    bonus[sl] = int(bonus[sl] * factor)
+                new_bonus_sum = sum(bonus.values())
+                self._reserve_free = max(0, min(self._reserve_base, self._reserve_free + (prev_bonus_sum - new_bonus_sum)))
+                quotas = {sl: int(base.get(sl, 0)) + int(bonus.get(sl, 0)) for sl in (SL_E, SL_U)}
+                total = sum(quotas.values())
+
+        # If still over (base alone too large for target_max), scale quotas down; return only bonus portion to reserve
+        if total > target_max and total > 0:
+            scale = target_max / float(total)
+            prev_bonus_sum = sum(bonus.values())
             for sl in quotas:
                 quotas[sl] = int(quotas[sl] * scale)
+            # Recompute bonuses as any amount above base (never negative)
+            for sl in bonus:
+                bonus[sl] = max(0, quotas.get(sl, 0) - base.get(sl, 0))
+            new_bonus_sum = sum(bonus.values())
+            self._reserve_free = max(0, min(self._reserve_base, self._reserve_free + (prev_bonus_sum - new_bonus_sum)))
+
+        # Reserve cannot exceed what remains after quotas and jam
+        self._reserve_free = min(self._reserve_free, max(0, max_prb - jam_active - sum(quotas.values())))
+
+        self._bonus_quota[cell_id] = {sl: int(max(0, bonus.get(sl, 0))) for sl in (SL_E, SL_U)}
         cell.slice_dl_prb_quota = {k: int(max(0, v)) for k, v in quotas.items()}
+        # Publish the new reserve so the base-station jamming logic sees it
+        setattr(settings, "JAM_RESERVED_PRBS", int(self._reserve_free))
 
     def _target_cell(self):
         return next(iter(self.sim_engine.cell_list.values()))
@@ -320,7 +386,7 @@ class PRBGymEnv:
         return np.array(s, dtype=np.float32)
 
     def _aggregate_slice_metrics(self, cell):
-        agg = {SL_E: {}, SL_U: {}, "meta": {"total_ue": 0, "ue_max": int(getattr(settings, "UE_DEFAULT_MAX_COUNT", 0) or 0)}}
+        agg = {SL_E: {}, SL_U: {}, "meta": {"total_ue": 0, "ue_max": int(getattr(settings, "UE_DEFAULT_MAX_COUNT", 0) or 0), "reserve_free": int(self._reserve_free), "reserve_total": int(self._reserve_base)}}
         for sl in (SL_E, SL_U):
             agg[sl] = {
                 "slice_prb": cell.slice_dl_prb_quota.get(sl, 0),
@@ -336,6 +402,10 @@ class PRBGymEnv:
             agg[sl]["latency"] += ue.downlink_latency
             agg[sl]["ue_count"] += 1
             agg["meta"]["total_ue"] += 1
+        # Normalise latency to per‑UE mean so slice metrics are comparable across UE counts
+        for sl in (SL_E, SL_U):
+            cnt = max(1, agg[sl]["ue_count"])
+            agg[sl]["latency"] = agg[sl]["latency"] / cnt if agg[sl]["ue_count"] > 0 else 0.0
         return agg
 
     def _reward(self, cell):
@@ -355,7 +425,14 @@ class xAppPRBDashboardStandalone(xAppBase):
     def __init__(self, ric):
         super().__init__(ric=ric)
         self.env = PRBGymEnv(ric)
-        self.current_action = 4  # keep (index of (0,0) in the 3x3 action grid)
+        # Hold action index (0,0) shared with env; default to center (4) if not found
+        self._hold_action = getattr(self.env, "_hold_action", None)
+        if self._hold_action is None:
+            combos = getattr(self.env, "_action_combos", []) or []
+            self._hold_action = next((i for i, c in enumerate(combos) if c == (0, 0)), 4)
+        self.current_action = self._hold_action  # last applied
+        self._pending_action: Optional[int] = None  # queued for next step
+        self._last_action_applied = self._hold_action
         self.last_metrics = {}
         self.running = False
         self._lock = threading.Lock()
@@ -398,14 +475,20 @@ class xAppPRBDashboardStandalone(xAppBase):
         if not self.env.ready():
             # Skip stepping until new episode UEs are attached; avoids gaps with zero metrics
             return
-        _, (reward, metrics), done, info = self.env.step(self.current_action)
-        self._record_metrics(reward, metrics, info)
+        # Consume pending action once; otherwise hold
+        action_used = self._pending_action if self._pending_action is not None else self._hold_action
+        self._pending_action = None
+        _, (reward, metrics), done, info = self.env.step(action_used)
+        self._record_metrics(reward, metrics, info, action_used)
+        self._last_action_applied = action_used
         self.last_metrics = {
             "time": time.time(),
-            "action": self.current_action,
+            "action": action_used,
             "episode": info,
             "metrics": metrics,
         }
+        # Track the last applied; current_action reflects that for history plots
+        self.current_action = action_used
         if done:
             # Mark boundary so plots show the drop/reset between episodes
             self._mark_episode_boundary()
@@ -425,19 +508,19 @@ class xAppPRBDashboardStandalone(xAppBase):
     # dashboard hooks
     def set_action(self, a: int):
         if 0 <= a < len(self.env._action_combos):
-            self.current_action = a
+            self._pending_action = a
 
     def get_metrics(self):
         return self.last_metrics
 
     # ---------------- internal helpers ----------------
-    def _record_metrics(self, reward, metrics, info):
+    def _record_metrics(self, reward, metrics, info, action_used: int):
         step_idx = info.get("step") if isinstance(info, dict) else None
         with self._lock:
             managed = set(getattr(self.env, "_managed_ues", set()) or [])
             self._global_step += 1
             self._t.append(self._global_step if step_idx is None else self._global_step)
-            self._action_hist.append(int(self.current_action))
+            self._action_hist.append(int(action_used))
             for sl in (SL_E, SL_U):
                 m = metrics.get(sl, {}) if metrics else {}
                 self._slice_tx[sl].append(float(m.get("tx_mbps", 0.0) or 0.0))
@@ -530,7 +613,14 @@ class xAppPRBDashboardStandalone(xAppBase):
         def _action_label(idx: int) -> str:
             de, du = self.env._action_combos[idx]
             step = self.env.move_step
-            return f"{idx}: Δe={de*step}, Δu={du*step}"
+            parts = []
+            if de != 0:
+                parts.append(f"{SL_E} {'+' if de>0 else '-'}{abs(de*step)} ({'use' if de>0 else 'return'} reserve)")
+            if du != 0:
+                parts.append(f"{SL_U} {'+' if du>0 else '-'}{abs(du*step)} ({'use' if du>0 else 'return'} reserve)")
+            if not parts:
+                parts.append("hold")
+            return f"{idx}: " + " / ".join(parts)
 
         action_labels = {i: _action_label(i) for i in range(len(self.env._action_combos))}
         action_btn_ids = [f"act-{i}" for i in range(len(self.env._action_combos))]
@@ -540,7 +630,7 @@ class xAppPRBDashboardStandalone(xAppBase):
             children=[
                 html.H2("PRB Trace Dashboard xApp"),
                 html.Div([
-                    html.Label("Actions (shared PRB pool — matches PRB Gym allocator)"),
+                    html.Label("Actions (draw/return PRBs to the reserve pool)"),
                     html.Div(
                         style={"display": "grid", "gridTemplateColumns": "repeat(3, minmax(0, 1fr))", "gap": "8px"},
                         children=[
@@ -597,7 +687,9 @@ class xAppPRBDashboardStandalone(xAppBase):
             lm = self.get_metrics()
             episode = lm.get("episode", {}) if isinstance(lm, dict) else {}
             ep_text = f"Episode: {episode.get('episode_id', 'N/A')} | Step: {episode.get('step', '-')}"
-            return f"Current action: {action_labels.get(self.current_action, '?')}", ep_text
+            last_act = action_labels.get(getattr(self, "_last_action_applied", self.current_action), "?")
+            queued_act = action_labels.get(self._pending_action if self._pending_action is not None else self._hold_action, "?")
+            return f"Last applied: {last_act} | Queued: {queued_act}", ep_text
 
         @app.callback(
             [
@@ -637,7 +729,19 @@ class xAppPRBDashboardStandalone(xAppBase):
 
             if not tx:
                 empty = go.Figure()
-                return empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, empty, "Waiting for metrics..."
+                return (
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    empty,
+                    "Waiting for metrics...",
+                )
 
             fig_actions = tidy(go.Figure(data=[
                 go.Scatter(x=tx, y=act, mode="lines+markers", name="Action", line=dict(color="#ff7f0e"), marker=dict(size=6)),
@@ -764,7 +868,13 @@ class xAppPRBDashboardStandalone(xAppBase):
             if meta:
                 total_ue = _fmt(meta.get("total_ue", "-"), 0)
                 ue_max = _fmt(meta.get("ue_max", "-"), 0)
-                lines.append(f"UEs total={total_ue}, UE_max={ue_max}")
+                reserve_free = _fmt(meta.get("reserve_free", "-"), 0)
+                reserve_total = _fmt(meta.get("reserve_total", "-"), 0)
+                try:
+                    reserve_used = _fmt(float(reserve_total) - float(reserve_free), 0)
+                except Exception:
+                    reserve_used = "-"
+                lines.append(f"UEs total={total_ue}, UE_max={ue_max}, reserve_free={reserve_free}, reserve_used={reserve_used}")
             latest_text = html.Ul([html.Li(t) for t in lines])
 
             return fig_actions, fig_prb, fig_tx, fig_cell_prb, fig_lat, fig_ue, fig_dem, fig_sat, fig_sinr, fig_cqi, latest_text

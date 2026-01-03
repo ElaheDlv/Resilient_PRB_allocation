@@ -12,7 +12,9 @@ import math
 import random
 import threading
 import time
-from collections import deque
+import os
+from datetime import datetime
+from collections import deque, defaultdict
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -29,6 +31,10 @@ try:
     import torch.nn as nn
     import torch.nn.functional as F
     import torch.optim as optim
+    try:
+        from torch.utils.tensorboard import SummaryWriter
+    except Exception:
+        SummaryWriter = None
 
     TORCH_AVAILABLE = True
 except Exception:
@@ -37,6 +43,7 @@ except Exception:
     nn = None
     F = None
     optim = None
+    SummaryWriter = None
 
 try:
     import dash
@@ -63,9 +70,7 @@ def _safe_div(a: float, b: float) -> float:
 
 
 # --------------------------- Action/state helpers --------------------------- #
-RESILIENCY_LEVELS = (
-    getattr(settings, "RES_DQN_LEVELS", None) or [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-)
+RESILIENCY_LEVELS = getattr(settings, "RES_DQN_LEVELS", None) or [-9, -3, -1, 0, 1, 3, 9]
 TOTAL_RESILIENCY_PRB = int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18))
 DEFAULT_MAX_DL_PRB = int(getattr(settings, "RES_DQN_MAX_DL_PRB", 218))
 
@@ -159,11 +164,14 @@ class _ReplayBuffer:
         batch_size = min(batch_size, len(self.buf))
         idx = np.random.choice(len(self.buf), batch_size, replace=False)
         states, actions, rewards, next_states, dones = zip(*[self.buf[i] for i in idx])
+        # Collapse to contiguous numpy arrays before torch conversion (avoids slow list-of-arrays warning)
+        states = np.asarray(states, dtype=np.float32)
+        next_states = np.asarray(next_states, dtype=np.float32)
         return (
-            torch.tensor(states, dtype=torch.float32),
+            torch.from_numpy(states),
             torch.tensor(actions, dtype=torch.long),
             torch.tensor(rewards, dtype=torch.float32),
-            torch.tensor(next_states, dtype=torch.float32),
+            torch.from_numpy(next_states),
             torch.tensor(dones, dtype=torch.float32),
         )
 
@@ -260,8 +268,37 @@ class ResilientDQNEnv:
             "obs": obs,
             "action": cur_action,
             "prev_action": prev_act,
+            "action_idx": action_idx,
         }
         return state, reward, done, info
+
+    def _action_mask(self) -> List[bool]:
+        """Mask actions that overflow current (jammed) PRB capacity."""
+        cell = self._target_cell()
+        if cell is None:
+            return [True] * len(self.actions)
+        max_prb = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
+        base = self._base_quota.get(cell.cell_id, {})
+        base_e = float(base.get(SL_E, 0) or 0.0)
+        base_u = float(base.get(SL_U, 0) or 0.0)
+        pool_used = max(0.0, float(self.prev_action[0])) + max(0.0, float(self.prev_action[1]))
+        mask = []
+        for de, du in self.actions:
+            new_e = base_e + de
+            new_u = base_u + du
+            if new_e < 0 or new_u < 0:
+                mask.append(False)
+                continue
+            if new_e + new_u > max_prb + 1e-9:
+                mask.append(False)
+                continue
+            # Do not return more to the pool than currently borrowed
+            pool_return = max(0.0, -float(de)) + max(0.0, -float(du))
+            if pool_return > pool_used + 1e-9:
+                mask.append(False)
+                continue
+            mask.append(True)
+        return mask
 
     # ---------- Helpers ---------- #
     def _snapshot_base_quotas(self):
@@ -430,19 +467,31 @@ class ResilientDQNEnv:
         """Apply resiliency PRBs on top of the snapshot baseline quotas."""
         for cell in self.ric.cell_list.values():
             base = self._base_quota.get(cell.cell_id, {})
-            quotas = {
-                SL_E: int(base.get(SL_E, 0)) + int(action[0]),
-                SL_U: int(base.get(SL_U, 0)) + int(action[1]),
-            }
-            max_prb = max(1, int(getattr(cell, "max_dl_prb", 1)))
-            total = sum(quotas.values())
-            if total > max_prb:
-                print(f"[DQN ENV] Adjusting quotas {quotas} to fit max_prb {max_prb}")
-                scale = max_prb / float(total)
-                quotas[SL_E] = int(quotas[SL_E] * scale)
-                quotas[SL_U] = int(quotas[SL_U] * scale)
-            quotas[SL_E] = max(0, int(quotas[SL_E]))
-            quotas[SL_U] = max(0, int(quotas[SL_U]))
+            base_e = int(base.get(SL_E, 0))
+            base_u = int(base.get(SL_U, 0))
+            base_total = base_e + base_u
+            max_prb = float(getattr(cell, "max_dl_prb", 0) or 0.0)
+            eff_prb = float(getattr(cell, "_effective_max_dl_prb", max_prb) or max_prb)
+            capacity = min(max_prb, eff_prb, base_total + TOTAL_RESILIENCY_PRB)
+
+            de, du = action
+            # Do not dip below baseline
+            delta_e = max(0.0, base_e + de - base_e)
+            delta_u = max(0.0, base_u + du - base_u)
+            delta_sum = delta_e + delta_u
+            avail_extra = max(0.0, capacity - base_total)
+            if delta_sum > avail_extra and delta_sum > 0:
+                scale = avail_extra / delta_sum
+                delta_e *= scale
+                delta_u *= scale
+            new_e = base_e + delta_e
+            new_u = base_u + delta_u
+            total = new_e + new_u
+            if total > capacity and total > 0:
+                scale = capacity / total
+                new_e *= scale
+                new_u *= scale
+            quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
             cell.slice_dl_prb_quota = quotas
 
     def _collect_obs(self) -> Dict:
@@ -573,6 +622,9 @@ class xAppResilientDQNAllocator(xAppBase):
         self._replay: Optional[_ReplayBuffer] = None
         self._last_state: Optional[np.ndarray] = None
         self._episode_done = False
+        self.tb_enable = bool(getattr(settings, "RES_DQN_TB_ENABLE", False))
+        self.tb_dir = (getattr(settings, "RES_DQN_TB_DIR", "") or "").strip()
+        self._tb_writer = None
         self.dash_enable = bool(getattr(settings, "RES_DQN_DASH_ENABLE", False))
         self.dash_port = int(getattr(settings, "RES_DQN_DASH_PORT", 5060))
         self._dash_app = None
@@ -596,9 +648,11 @@ class xAppResilientDQNAllocator(xAppBase):
         self._slice_prb = defaultdict(lambda: deque(maxlen=400))
         self._slice_tx = defaultdict(lambda: deque(maxlen=400))
         self._slice_sat = defaultdict(lambda: deque(maxlen=400))
+        self._slice_sat_raw = defaultdict(lambda: deque(maxlen=400))
         self._ue_tx = defaultdict(lambda: deque(maxlen=400))
         self._ue_prb_demand = defaultdict(lambda: deque(maxlen=400))
         self._ue_prb_sat = defaultdict(lambda: deque(maxlen=400))
+        self._ue_prb_sat_raw = defaultdict(lambda: deque(maxlen=400))
         self._ue_sinr = defaultdict(lambda: deque(maxlen=400))
         self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
         self._cell_max_prb = deque(maxlen=400)
@@ -613,10 +667,13 @@ class xAppResilientDQNAllocator(xAppBase):
             self.enabled = False
             return
         self._env = ResilientDQNEnv(self.ric)
+        # Clear plots when env wipes managed UEs
+        self._env.register_clear_hook(self._clear_plot_caches)
         self._init_agent()
         self._last_state = self._env.reset()
         if self.dash_enable:
             self._start_dashboard()
+        self._init_tb()
         print(
             f"{self.xapp_id}: enabled train={self.train} actions={NUM_ACTIONS} state_dim={len(self._last_state)}"
         )
@@ -649,6 +706,7 @@ class xAppResilientDQNAllocator(xAppBase):
         if self.train and self._replay is not None:
             self._replay.push(self._last_state, action_idx, reward, next_state, float(done))
             self._learn()
+        self._tb_log(self._last_state, action_idx, reward, info)
         self._last_state = next_state
         self._episode_done = bool(done)
 
@@ -693,8 +751,10 @@ class xAppResilientDQNAllocator(xAppBase):
                         if imsi:
                             dem += float(demand_map.get(imsi, 0.0) or 0.0)
                     allo = float(alloc.get(sl, 0.0) or 0.0)
-                    sat = 1.0 if dem <= 0 else min(1.5, allo / dem)
+                    raw_ratio = 1.0 if dem <= 0 else (allo / dem)
+                    sat = 1.0 if dem <= 0 else min(1.0, raw_ratio)
                     self._slice_sat[sl].append(sat)
+                    self._slice_sat_raw[sl].append(raw_ratio)
                 # Per-UE throughput/demand/sat/SINR/CQI
                 managed = set(getattr(self._env, "_managed_ues", set()) or [])
                 for imsi, ue in getattr(self.ric, "ue_list", {}).items():
@@ -707,8 +767,10 @@ class xAppResilientDQNAllocator(xAppBase):
                     demand = float(demand_map.get(imsi, 0.0) or 0.0)
                     granted = float(alloc_map.get(imsi, {}).get("downlink", 0.0) or 0.0)
                     self._ue_prb_demand[imsi].append(demand)
-                    sat = 1.0 if demand <= 0 else min(1.5, granted / demand)
+                    raw_ratio = 1.0 if demand <= 0 else (granted / demand)
+                    sat = 1.0 if demand <= 0 else min(1.0, raw_ratio)
                     self._ue_prb_sat[imsi].append(sat)
+                    self._ue_prb_sat_raw[imsi].append(raw_ratio)
                     sinr = getattr(ue, "downlink_sinr", None)
                     if sinr is not None:
                         self._ue_sinr[imsi].append(float(sinr))
@@ -733,24 +795,41 @@ class xAppResilientDQNAllocator(xAppBase):
             [
                 html.H3("Resilient DQN Dashboard"),
                 html.Pre(id="snapshot", style={"whiteSpace": "pre-wrap"}),
-                dcc.Graph(id="thr-graph"),
+                dcc.Graph(id="action-graph"),
+                dcc.Graph(id="prb-graph"),
+                dcc.Graph(id="throughput-graph"),
                 dcc.Graph(id="lat-graph"),
-                dcc.Graph(id="queue-graph"),
                 dcc.Graph(id="reward-graph"),
-                dcc.Graph(id="ue-graph"),
-                dcc.Graph(id="radio-graph"),
+                dcc.Graph(id="reserve-graph"),
+                dcc.Graph(id="ratio-graph"),
+                dcc.Graph(id="ue-throughput-graph"),
+                dcc.Graph(id="ue-demand-graph"),
+                dcc.Graph(id="ue-sat-graph"),
+                dcc.Graph(id="slice-sat-graph"),
+                dcc.Graph(id="slice-sat-raw-graph"),
+                dcc.Graph(id="sinr-graph"),
+                dcc.Graph(id="cqi-graph"),
                 dcc.Graph(id="supply-graph"),
                 dcc.Interval(id="tick", interval=1000, n_intervals=0),
             ]
         )
 
         @app.callback(
-            Output("thr-graph", "figure"),
+            Output("snapshot", "children"),
+            Output("action-graph", "figure"),
+            Output("prb-graph", "figure"),
+            Output("throughput-graph", "figure"),
             Output("lat-graph", "figure"),
-            Output("queue-graph", "figure"),
             Output("reward-graph", "figure"),
-            Output("ue-graph", "figure"),
-            Output("radio-graph", "figure"),
+            Output("reserve-graph", "figure"),
+            Output("ratio-graph", "figure"),
+            Output("ue-throughput-graph", "figure"),
+            Output("ue-demand-graph", "figure"),
+            Output("ue-sat-graph", "figure"),
+            Output("slice-sat-graph", "figure"),
+            Output("slice-sat-raw-graph", "figure"),
+            Output("sinr-graph", "figure"),
+            Output("cqi-graph", "figure"),
             Output("supply-graph", "figure"),
             Input("tick", "n_intervals"),
         )
@@ -762,15 +841,14 @@ class xAppResilientDQNAllocator(xAppBase):
                 thr_u = list(self._hist_urllc_thr)
                 lat = list(self._hist_latency)
                 deadline = list(self._hist_deadline)
-                q_e = list(self._hist_queue_e)
-                q_u = list(self._hist_queue_u)
                 reward = list(self._hist_reward)
                 reserve = list(self._hist_reserve)
                 prb_ratio = list(self._hist_prb_ratio)
                 action_idx = list(self._hist_action_idx)
                 slice_prb = {k: list(v) for k, v in self._slice_prb.items()}
-                slice_tx = {k: list(v) for k, v in self._slice_tx.items()}
+                #slice_tx = {k: list(v) for k, v in self._slice_tx.items()}
                 slice_sat = {k: list(v) for k, v in self._slice_sat.items()}
+                slice_sat_raw = {k: list(v) for k, v in self._slice_sat_raw.items()}
                 ue_tx = {k: list(v) for k, v in self._ue_tx.items()}
                 ue_demand = {k: list(v) for k, v in self._ue_prb_demand.items()}
                 ue_sat = {k: list(v) for k, v in self._ue_prb_sat.items()}
@@ -779,92 +857,101 @@ class xAppResilientDQNAllocator(xAppBase):
                 cell_max = list(self._cell_max_prb)
                 cell_eff = list(self._cell_eff_prb)
 
+            action_fig = go.Figure()
+            if action_idx:
+                action_fig.add_trace(go.Scatter(x=t[-len(action_idx):], y=action_idx, mode="lines", name="action idx"))
+            action_fig.update_layout(title="Actions", xaxis_title="step")
+
+            prb_fig = go.Figure()
+            for sl, series in slice_prb.items():
+                prb_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} PRB"))
+            prb_fig.update_layout(title="Slice PRB quotas", xaxis_title="step")
+
             thr_fig = go.Figure()
-            thr_fig.add_trace(go.Scatter(x=t, y=thr_e, mode="lines", name="eMBB throughput (bps)"))
-            thr_fig.add_trace(go.Scatter(x=t, y=thr_u, mode="lines", name="URLLC throughput (bps)"))
-            if slice_prb:
-                thr_fig.add_trace(go.Scatter(x=t, y=slice_prb.get(SL_E, []), mode="lines", name="eMBB PRB"))
-                thr_fig.add_trace(go.Scatter(x=t, y=slice_prb.get(SL_U, []), mode="lines", name="URLLC PRB"))
-            thr_fig.update_layout(title="Throughput / PRB", xaxis_title="step")
+            thr_fig.add_trace(go.Scatter(x=t, y=[v / 1e6 for v in thr_e], mode="lines", name="eMBB throughput (Mbps)"))
+            thr_fig.add_trace(go.Scatter(x=t, y=[v / 1e6 for v in thr_u], mode="lines", name="URLLC throughput (Mbps)"))
+            thr_fig.update_layout(title="Throughput", xaxis_title="step", yaxis_title="Mbps")
 
             lat_fig = go.Figure()
             lat_fig.add_trace(go.Scatter(x=t, y=lat, mode="lines", name="URLLC latency (s)"))
             lat_fig.add_trace(go.Scatter(x=t, y=deadline, mode="lines", name="deadline", line=dict(dash="dash")))
             lat_fig.update_layout(title="Latency", xaxis_title="step")
 
-            q_fig = go.Figure()
-            q_fig.add_trace(go.Scatter(x=t, y=q_e, mode="lines", name="eMBB queue (bytes)"))
-            q_fig.add_trace(go.Scatter(x=t, y=q_u, mode="lines", name="URLLC queue (bytes)"))
-            q_fig.update_layout(title="Queue backlog", xaxis_title="step")
+            reward_fig = go.Figure()
+            reward_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
+            reward_fig.update_layout(title="Reward", xaxis_title="step", yaxis_title="reward")
 
-            r_fig = go.Figure()
-            r_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
-            r_fig.add_trace(
-                go.Scatter(x=t, y=reserve, mode="lines", name="reserve fraction", yaxis="y2")
-            )
-            r_fig.add_trace(
-                go.Scatter(x=t, y=prb_ratio, mode="lines", name="effective PRB ratio", yaxis="y2")
-            )
-            if action_idx:
-                r_fig.add_trace(go.Scatter(x=t, y=action_idx, mode="lines", name="action idx", yaxis="y2"))
-            r_fig.update_layout(
-                title="Reward / Reserve",
-                xaxis_title="step",
-                yaxis=dict(title="reward"),
-                yaxis2=dict(title="fractions", overlaying="y", side="right"),
-            )
-            ue_fig = go.Figure()
+            reserve_fig = go.Figure()
+            reserve_fig.add_trace(go.Scatter(x=t, y=reserve, mode="lines", name="reserve fraction"))
+            reserve_fig.update_layout(title="Reserve fraction", xaxis_title="step", yaxis_title="fraction")
+
+            ratio_fig = go.Figure()
+            ratio_fig.add_trace(go.Scatter(x=t, y=prb_ratio, mode="lines", name="effective PRB ratio"))
+            ratio_fig.update_layout(title="Effective PRB ratio", xaxis_title="step", yaxis_title="ratio")
+            ue_thr_fig = go.Figure()
             for imsi, series in ue_tx.items():
-                ue_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} tx (Mbps)"))
-            for imsi, series in ue_demand.items():
-                ue_fig.add_trace(
-                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} prb demand", yaxis="y2")
-                )
-            for imsi, series in ue_sat.items():
-                ue_fig.add_trace(
-                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} sat", yaxis="y3")
-                )
-            ue_fig.update_layout(
-                title="Per-UE throughput / demand / satisfaction",
-                xaxis_title="step",
-                yaxis=dict(title="Mbps"),
-                yaxis2=dict(title="PRB", overlaying="y", side="right"),
-                yaxis3=dict(title="sat", overlaying="y", side="right", position=0.98),
-                legend=dict(orientation="h"),
-            )
+                ue_thr_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} tx (Mbps)"))
+            ue_thr_fig.update_layout(title="Per-UE throughput", xaxis_title="step", yaxis_title="Mbps", legend=dict(orientation="h"))
 
-            radio_fig = go.Figure()
+            ue_dem_fig = go.Figure()
+            for imsi, series in ue_demand.items():
+                ue_dem_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} prb demand"))
+            ue_dem_fig.update_layout(title="Per-UE PRB demand", xaxis_title="step", yaxis_title="PRB", legend=dict(orientation="h"))
+
+            ue_sat_fig = go.Figure()
+            for imsi, series in ue_sat.items():
+                ue_sat_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} sat"))
+            ue_sat_fig.update_layout(title="Per-UE satisfaction", xaxis_title="step", yaxis_title="sat", legend=dict(orientation="h"))
+
+            slice_sat_fig = go.Figure()
+            for sl, series in slice_sat.items():
+                slice_sat_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} sat capped"))
+            slice_sat_fig.update_layout(title="Slice satisfaction (capped)", xaxis_title="step", yaxis_title="sat", legend=dict(orientation="h"))
+
+            slice_sat_raw_fig = go.Figure()
+            for sl, series in slice_sat_raw.items():
+                slice_sat_raw_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} sat raw"))
+            slice_sat_raw_fig.update_layout(title="Slice satisfaction (raw)", xaxis_title="step", yaxis_title="sat raw", legend=dict(orientation="h"))
+
+            sinr_fig = go.Figure()
             for imsi, series in ue_sinr.items():
-                radio_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} SINR (dB)"))
+                sinr_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} SINR (dB)"))
+            sinr_fig.update_layout(title="Per-UE SINR", xaxis_title="step", yaxis_title="dB", legend=dict(orientation="h"))
+
+            cqi_fig = go.Figure()
             for imsi, series in ue_cqi.items():
-                radio_fig.add_trace(
-                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} CQI", yaxis="y2")
-                )
-            radio_fig.update_layout(
-                title="Per-UE SINR / CQI",
-                xaxis_title="step",
-                yaxis=dict(title="SINR (dB)"),
-                yaxis2=dict(title="CQI", overlaying="y", side="right"),
-                legend=dict(orientation="h"),
-            )
+                cqi_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} CQI"))
+            cqi_fig.update_layout(title="Per-UE CQI", xaxis_title="step", yaxis_title="CQI", legend=dict(orientation="h"))
 
             supply_fig = go.Figure()
             supply_fig.add_trace(go.Scatter(x=t[-len(cell_max):], y=cell_max, mode="lines", name="cell max PRB"))
             supply_fig.add_trace(go.Scatter(x=t[-len(cell_eff):], y=cell_eff, mode="lines", name="effective PRB"))
-            for sl, series in slice_sat.items():
-                supply_fig.add_trace(
-                    go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} sat", yaxis="y2")
-                )
             supply_fig.update_layout(
-                title="PRB supply / satisfaction",
+                title="PRB supply (max vs effective)",
                 xaxis_title="step",
-                yaxis=dict(title="PRB"),
-                yaxis2=dict(title="sat", overlaying="y", side="right"),
+                yaxis_title="PRB",
                 legend=dict(orientation="h"),
             )
 
             snap_text = self._format_snapshot(snap)
-            return snap_text, thr_fig, lat_fig, q_fig, r_fig, ue_fig, radio_fig, supply_fig
+            return (
+                snap_text,
+                action_fig,
+                prb_fig,
+                thr_fig,
+                lat_fig,
+                reward_fig,
+                reserve_fig,
+                ratio_fig,
+                ue_thr_fig,
+                ue_dem_fig,
+                ue_sat_fig,
+                slice_sat_fig,
+                slice_sat_raw_fig,
+                sinr_fig,
+                cqi_fig,
+                supply_fig,
+            )
 
         def _run():
             app.run(host="0.0.0.0", port=self.dash_port, debug=False, use_reloader=False)
@@ -873,6 +960,18 @@ class xAppResilientDQNAllocator(xAppBase):
         self._dash_thread = threading.Thread(target=_run, daemon=True)
         self._dash_thread.start()
         print(f"{self.xapp_id}: dashboard running on port {self.dash_port}")
+
+    def _clear_plot_caches(self):
+        with self._lock:
+            for store in (
+                self._ue_tx,
+                self._ue_prb_demand,
+                self._ue_prb_sat,
+                self._ue_prb_sat_raw,
+                self._ue_sinr,
+                self._ue_cqi,
+            ):
+                store.clear()
 
     def _format_snapshot(self, snap: Dict) -> str:
         if not snap:
@@ -900,18 +999,82 @@ class xAppResilientDQNAllocator(xAppBase):
                 )
                 ues = sum(1 for ue in connected.values() if getattr(ue, "slice_type", None) == sl)
                 prb = float(quotas.get(sl, 0.0) or 0.0)
-                lines.append(f"{sl}: PRB={prb:.0f}, Tx={tx:.3f} Mbps, Latency={lat:.3f}, UEs={ues}")
+                # Satisfaction (capped and raw) for snapshot
+                dem = 0.0
+                for ue in connected.values():
+                    if getattr(ue, "slice_type", None) != sl:
+                        continue
+                    imsi = getattr(ue, "ue_imsi", None)
+                    if imsi:
+                        dem += float(req.get(imsi, 0.0) or 0.0)
+                allo = float(alloc.get(sl, 0.0) or 0.0)
+                raw_sat = 1.0 if dem <= 0 else (allo / dem)
+                cap_sat = 1.0 if dem <= 0 else min(1.0, raw_sat)
+                lines.append(f"{sl}: PRB={prb:.0f}, Tx={tx:.3f} Mbps, Latency={lat:.3f}, UEs={ues}, Sat={cap_sat:.2f} (raw {raw_sat:.2f})")
             total_ues = len(getattr(self.ric, "ue_list", {}) or {})
             ue_max = int(getattr(settings, "UE_DEFAULT_MAX_COUNT", 0) or 0)
             lines.append(f"UEs total={total_ues}, UE_max={ue_max}")
             # Jamming / effective PRB
             eff = getattr(cell_ref, "_effective_max_dl_prb", getattr(cell_ref, "max_dl_prb", 0))
             max_dl = getattr(cell_ref, "max_dl_prb", 0)
-            if eff != max_dl:
-                lines.append(f"Jamming: effective PRB={eff}/{max_dl}")
+        if eff != max_dl:
+            lines.append(f"Jamming: effective PRB={eff}/{max_dl}")
         return "\n".join(lines)
 
     # ---------- Agent helpers ---------- #
+    def _init_tb(self):
+        if not self.tb_enable or SummaryWriter is None or not self.tb_dir:
+            return
+        try:
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            run_name = (
+                f"{ts}_resdqn_lr{self.lr}_gamma{self.gamma}_eps{self.eps_start}-{self.eps_end}"
+                f"_batch{self.batch}_buffer{self.buffer_cap}_total{TOTAL_RESILIENCY_PRB}"
+            )
+            run_dir = os.path.join(self.tb_dir, run_name)
+            os.makedirs(run_dir, exist_ok=True)
+            self._tb_writer = SummaryWriter(log_dir=run_dir)
+            print(f"{self.xapp_id}: tensorboard logging -> {run_dir}")
+        except Exception as exc:
+            print(f"{self.xapp_id}: failed to init tensorboard logger {self.tb_dir}: {exc}")
+            self._tb_writer = None
+
+    def _tb_log(self, state: Optional[np.ndarray], action_idx: Optional[int], reward: float, info: Optional[Dict]):
+        if self._tb_writer is None or state is None:
+            return
+        step = self._global_step
+        try:
+            self._tb_writer.add_scalar("reward", reward, step)
+            if action_idx is not None:
+                self._tb_writer.add_scalar("action_idx", action_idx, step)
+            obs = info.get("obs") if isinstance(info, dict) else None
+            if obs:
+                self._tb_writer.add_scalar(f"{SL_E}/throughput_bps", float(obs.get("embb_throughput", 0.0) or 0.0), step)
+                self._tb_writer.add_scalar(f"{SL_U}/throughput_bps", float(obs.get("urllc_throughput", 0.0) or 0.0), step)
+                self._tb_writer.add_scalar(f"{SL_E}/queue_bytes", float(obs.get("embb_queue", 0.0) or 0.0), step)
+                self._tb_writer.add_scalar(f"{SL_U}/queue_bytes", float(obs.get("urllc_queue", 0.0) or 0.0), step)
+                self._tb_writer.add_scalar(f"{SL_U}/latency_s", float(obs.get("urllc_latency", 0.0) or 0.0), step)
+                self._tb_writer.add_scalar("pool/effective_prb_ratio", float(obs.get("effective_prb_ratio", 0.0) or 0.0), step)
+                cell = getattr(self._env, "_target_cell", lambda: None)()
+                if cell:
+                    req = getattr(cell, "dl_total_prb_demand", {}) or {}
+                    alloc = getattr(cell, "allocated_dl_prb_by_slice", {}) or {}
+                    for sl in (SL_E, SL_U):
+                        dem = 0.0
+                        for ue in getattr(cell, "connected_ue_list", {}).values():
+                            if getattr(ue, "slice_type", None) != sl:
+                                continue
+                            imsi = getattr(ue, "ue_imsi", None)
+                            if imsi:
+                                dem += float(req.get(imsi, 0.0) or 0.0)
+                        allo = float(alloc.get(sl, 0.0) or 0.0)
+                        sat = 1.0 if dem <= 0 else min(1.0, allo / dem)
+                        self._tb_writer.add_scalar(f"{sl}/satisfaction_capped", sat, step)
+                        self._tb_writer.add_scalar(f"{sl}/satisfaction_raw", (1.0 if dem <= 0 else (allo / dem)), step)
+            self._tb_writer.flush()
+        except Exception:
+            pass
+
     def _init_agent(self):
         in_dim = len(build_state(self._env._blank_obs(), (0, 0)))  # type: ignore[arg-type]
         out_dim = NUM_ACTIONS
@@ -922,12 +1085,20 @@ class xAppResilientDQNAllocator(xAppBase):
         self._replay = _ReplayBuffer(capacity=self.buffer_cap)
 
     def _select_action(self, state: np.ndarray) -> int:
+        mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
+        valid_idx = [i for i, ok in enumerate(mask) if ok]
+        if not valid_idx:
+            return 0
         if self.train and random.random() < self._eps:
-            return int(random.randrange(NUM_ACTIONS))
+            return int(random.choice(valid_idx))
         s = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         with torch.no_grad():
             q = self._policy(s)
-            idx = int(torch.argmax(q, dim=1).item())
+            q_np = q.cpu().numpy().flatten()
+            for i, ok in enumerate(mask):
+                if not ok:
+                    q_np[i] = -1e9
+            idx = int(np.argmax(q_np))
         return idx
 
     def _learn(self):
