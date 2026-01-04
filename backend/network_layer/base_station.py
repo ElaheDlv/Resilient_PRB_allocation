@@ -11,6 +11,8 @@ from collections import deque
 
 logger = logging.getLogger(__name__)
 
+SL_E = getattr(settings, "NETWORK_SLICE_EMBB_NAME", "eMBB")
+SL_U = getattr(settings, "NETWORK_SLICE_URLLC_NAME", "URLLC")
 
 class BaseStation:
     def __init__(self, simulation_engine, bs_init_data):
@@ -477,22 +479,39 @@ class BaseStation:
             active = pos_in_period < duration
         reserved = max(0, int(getattr(settings, "JAM_RESERVED_PRBS", 0)))
         for cell in self.cell_list.values():
+            # Persist the initial per-slice quotas as the jammer's reference (set once).
+            if not hasattr(cell, "base_dl_prb_quota"):
+                cell.base_dl_prb_quota = dict(cell.slice_dl_prb_quota)
             # Base usable pool excludes reserved PRBs; jam subtracts from the usable pool only.
             usable_max = max(0, int(cell.max_dl_prb) - reserved)
             jam_active = jam_prbs if active else 0
             target_max = max(0, usable_max - jam_active)
-            base_quota = dict(cell.slice_dl_prb_quota)
+            # Scale the jammer's baseline quotas down proportionally if jammed capacity is smaller.
+            base_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
             total = sum(base_quota.values())
-            if target_max == 0 or total == 0:
-                new_quota = {s: 0 for s in base_quota}
-            elif total > target_max:
+            if total > 0 and target_max < total:
                 scale = target_max / float(total)
-                new_quota = {s: int(v * scale) for s, v in base_quota.items()}
-            else:
-                new_quota = base_quota
-            cell.slice_dl_prb_quota = new_quota
-            #print(cell.slice_dl_prb_quota,"slice_dl_prb_quota")
-            # Report jammed as reserved + active jam for visibility.
+                # Scale proportionally and distribute any remainder to match target_max.
+                scaled = {}
+                remainders = []
+                for s, v in base_quota.items():
+                    raw = v * scale
+                    down = int(raw)
+                    scaled[s] = down
+                    remainders.append((raw - down, s))
+                leftover = target_max - sum(scaled.values())
+                # Give leftover PRBs to slices with largest fractional remainder.
+                remainders.sort(reverse=True)
+                for _, s in remainders:
+                    if leftover <= 0:
+                        break
+                    scaled[s] += 1
+                    leftover -= 1
+                base_quota = scaled
+                cell.base_dl_prb_quota = base_quota
+                # Align live quotas to the jammed baseline once; allocator will adjust thereafter.
+                cell.slice_dl_prb_quota = dict(base_quota)
+            # Do not overwrite live quotas; just reduce effective capacity.
             cell.jammed_dl_prb = reserved + jam_active
             cell._effective_max_dl_prb = target_max
             

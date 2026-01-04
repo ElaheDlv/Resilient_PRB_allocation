@@ -88,6 +88,7 @@ RESILIENCY_LEVELS = getattr(settings, "RES_DQN_LEVELS", None) or [-9, -3, -1, 0,
 # Prefer jammer-reserved PRBs as the resiliency pool; fall back to explicit config.
 _reserve_from_jammer = int(getattr(settings, "JAM_RESERVED_PRBS", 0) or 0)
 _reserve_from_cfg = int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18))
+_jammed_prbs = int(getattr(settings, "JAM_CONST_PRBS", 0) or 0)
 TOTAL_RESILIENCY_PRB = max(_reserve_from_jammer, _reserve_from_cfg)
 DEFAULT_MAX_DL_PRB = int(getattr(settings, "RES_DQN_MAX_DL_PRB", 218))
 
@@ -306,47 +307,31 @@ class ResilientDQNEnv:
         cell = self._target_cell()
         if cell is None:
             return [True] * len(self.actions)
-        # Prefer jammed-effective PRBs if available; otherwise fall back to physical max.
-        # _effective_max_dl_prb already excludes jammer-reserved PRBs, so add them back to keep the reserve usable.
-        max_prb_phys = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0) + float(
-            _reserve_from_jammer
-        )
-        base = self._base_quota.get(cell.cell_id, {})
-        base_e = float(base.get(SL_E, 0) or 0.0)
-        base_u = float(base.get(SL_U, 0) or 0.0)
+        # Jammer reports effective PRBs excluding reserved+jam; add reserved back to get usable capacity for reserve pool.
+        eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
+        max_prb_phys = eff_max + float(_reserve_from_jammer)
+        base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
+        base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
+        base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
+        if base_e == 0 and base_u == 0:
+            base = self._base_quota.get(cell.cell_id, {})
+            base_e = float(base.get(SL_E, 0) or 0.0)
+            base_u = float(base.get(SL_U, 0) or 0.0)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-        base_total = base_e + base_u
         cur_e = float(quotas.get(SL_E, base_e) or base_e)
         cur_u = float(quotas.get(SL_U, base_u) or base_u)
+        base_total = base_e + base_u
         cur_total = cur_e + cur_u
-        pool_used_pre = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
-        # If the environment (e.g., jamming) reduced quotas below the baseline and nothing is borrowed, adopt current quotas as baseline.
-        if (pool_used_pre < 1e-6) and (cur_total + 1e-6 < base_total) and (cur_total <= max_prb_phys + 1e-6):
-            base_e = cur_e
-            base_u = cur_u
-            base_total = cur_total
-            self._base_quota[cell.cell_id] = {SL_E: int(round(base_e)), SL_U: int(round(base_u))}
-        # If jamming reduces physical PRBs below the snapshotted baseline, scale the baseline down.
-        if base_total > max_prb_phys and base_total > 0:
-            scale = max_prb_phys / base_total
-            base_e_eff = base_e * scale
-            base_u_eff = base_u * scale
-        else:
-            base_e_eff = base_e
-            base_u_eff = base_u
-        # Reserve pool is fixed; jamming should not shrink the available reserve.
-        max_prb = min(max_prb_phys, base_e_eff + base_u_eff + TOTAL_RESILIENCY_PRB)
-        cur_e = float(quotas.get(SL_E, base_e_eff) or base_e_eff)
-        cur_u = float(quotas.get(SL_U, base_u_eff) or base_u_eff)
-        print("Base quotas:", base_e_eff, base_u_eff, " Current quotas:", cur_e, cur_u, " Max PRB:", max_prb)
-        cur_total = cur_e + cur_u
-        pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - (base_e_eff + base_u_eff)))
+        max_prb = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
+        pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
+        print("Base quotas:", base_e, base_u, " Current quotas:", cur_e, cur_u, " Max PRB:", max_prb)
+
         mask = []
         for de, du in self.actions:
             #print(self.actions.index((de, du)), " Testing action delta:", de, du)
             new_e = cur_e + de
             new_u = cur_u + du
-            if new_e < base_e_eff or new_u < base_u_eff:
+            if new_e < base_e or new_u < base_u:
                 #print("  Action delta:", de, du, " New quotas:", new_e, new_u, " Below base quota")
                 mask.append(False)
                 continue
@@ -355,7 +340,7 @@ class ResilientDQNEnv:
                 continue
             # Do not return more to the pool than currently borrowed
             pool_return = max(0.0, -float(de)) + max(0.0, -float(du))
-            #print("  Action delta:", de, du, " New quotas:", new_e, new_u, " Pool used/return:", pool_used, pool_return)
+            print("  Action delta:", de, du, " New quotas:", new_e, new_u, " Pool used/return:", pool_used, pool_return)
             if pool_return > pool_used + 1e-9:
                 mask.append(False)
                 continue
@@ -367,7 +352,7 @@ class ResilientDQNEnv:
         if not self.ric:
             return
         for cell in self.ric.cell_list.values():
-            quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            quotas = dict(getattr(cell, "base_dl_prb_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
             self._base_quota[cell.cell_id] = {SL_E: int(quotas.get(SL_E, 0)), SL_U: int(quotas.get(SL_U, 0))}
 
     def _restore_base_quotas(self):
@@ -528,24 +513,20 @@ class ResilientDQNEnv:
     def _apply_action(self, action: Tuple[int, int]):
         """Apply resiliency PRBs on top of the snapshot baseline quotas."""
         for cell in self.ric.cell_list.values():
-            base = self._base_quota.get(cell.cell_id, {})
-            base_e = int(base.get(SL_E, 0))
-            base_u = int(base.get(SL_U, 0))
+            base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
+            base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
+            base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
+            if base_e == 0 and base_u == 0:
+                base = self._base_quota.get(cell.cell_id, {})
+                base_e = float(base.get(SL_E, 0) or 0.0)
+                base_u = float(base.get(SL_U, 0) or 0.0)
             base_total = base_e + base_u
             quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-            max_prb_phys = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0) + float(
-                _reserve_from_jammer
-            )
             cur_e = float(quotas.get(SL_E, base_e) or base_e)
             cur_u = float(quotas.get(SL_U, base_u) or base_u)
             cur_total = cur_e + cur_u
-            pool_used_pre = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
-            # If the environment (e.g., jamming) reduced quotas below the baseline and nothing is borrowed, adopt current quotas as baseline.
-            if (pool_used_pre < 1e-6) and (cur_total + 1e-6 < base_total) and (cur_total <= max_prb_phys + 1e-6):
-                base_e = int(round(cur_e))
-                base_u = int(round(cur_u))
-                base_total = base_e + base_u
-                self._base_quota[cell.cell_id] = {SL_E: base_e, SL_U: base_u}
+            eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
+            max_prb_phys = eff_max + float(_reserve_from_jammer)
             # Reserve pool is fixed; jamming affects baseline but not available reserve.
             capacity = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
 
