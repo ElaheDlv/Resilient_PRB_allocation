@@ -340,7 +340,7 @@ class ResilientDQNEnv:
                 continue
             # Do not return more to the pool than currently borrowed
             pool_return = max(0.0, -float(de)) + max(0.0, -float(du))
-            print("  Action delta:", de, du, " New quotas:", new_e, new_u, " Pool used/return:", pool_used, pool_return)
+            #print("  Action delta:", de, du, " New quotas:", new_e, new_u, " Pool used/return:", pool_used, pool_return)
             if pool_return > pool_used + 1e-9:
                 mask.append(False)
                 continue
