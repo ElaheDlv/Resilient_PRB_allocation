@@ -491,6 +491,7 @@ class BaseStation:
             else:
                 new_quota = base_quota
             cell.slice_dl_prb_quota = new_quota
+            #print(cell.slice_dl_prb_quota,"slice_dl_prb_quota")
             # Report jammed as reserved + active jam for visibility.
             cell.jammed_dl_prb = reserved + jam_active
             cell._effective_max_dl_prb = target_max

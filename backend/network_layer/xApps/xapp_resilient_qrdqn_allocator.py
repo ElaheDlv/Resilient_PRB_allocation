@@ -93,11 +93,7 @@ _reserve_from_cfg = int(
     getattr(settings, "RES_QRDQN_TOTAL_RESILIENCY_PRB", getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18))
 )
 TOTAL_RESILIENCY_PRB = max(_reserve_from_jammer, _reserve_from_cfg)
-ALLOW_NEG_DELTAS = _as_bool(
-    getattr(settings, "RES_QRDQN_ALLOW_NEG_DELTAS", getattr(settings, "RES_DQN_ALLOW_NEG_DELTAS", False))
-)
 DEFAULT_MAX_DL_PRB = int(getattr(settings, "RES_QRDQN_MAX_DL_PRB", getattr(settings, "RES_DQN_MAX_DL_PRB", 218)))
-ALLOW_NEG_DELTAS = bool(getattr(settings, "RES_QRDQN_ALLOW_NEG_DELTAS", getattr(settings, "RES_DQN_ALLOW_NEG_DELTAS", False)))
 
 
 def build_action_list() -> List[Tuple[int, int]]:
@@ -324,20 +320,42 @@ class ResilientQRDQNEnv:
         cell = self._target_cell()
         if cell is None:
             return [True] * len(self.actions)
-        max_prb_phys = float(getattr(cell, "max_dl_prb", 0) or 0.0)
-        max_prb = min(max_prb_phys, float(sum((self._base_quota.get(cell.cell_id, {}) or {}).values())) + TOTAL_RESILIENCY_PRB)
+        max_prb_phys = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0) + float(
+            _reserve_from_jammer
+        )
         base = self._base_quota.get(cell.cell_id, {})
         base_e = float(base.get(SL_E, 0) or 0.0)
         base_u = float(base.get(SL_U, 0) or 0.0)
-        pool_used = max(0.0, float(self.prev_action[0])) + max(0.0, float(self.prev_action[1]))
+        quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+        base_total = base_e + base_u
+        cur_e = float(quotas.get(SL_E, base_e) or base_e)
+        cur_u = float(quotas.get(SL_U, base_u) or base_u)
+        cur_total = cur_e + cur_u
+        pool_used_pre = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
+        # If the environment (e.g., jamming) reduced quotas below the baseline and nothing is borrowed, adopt current quotas as baseline.
+        if (pool_used_pre < 1e-6) and (cur_total + 1e-6 < base_total) and (cur_total <= max_prb_phys + 1e-6):
+            base_e = cur_e
+            base_u = cur_u
+            base_total = cur_total
+            self._base_quota[cell.cell_id] = {SL_E: int(round(base_e)), SL_U: int(round(base_u))}
+        # If jamming reduces physical PRBs below the snapshotted baseline, scale the baseline down.
+        if base_total > max_prb_phys and base_total > 0:
+            scale = max_prb_phys / base_total
+            base_e_eff = base_e * scale
+            base_u_eff = base_u * scale
+        else:
+            base_e_eff = base_e
+            base_u_eff = base_u
+        max_prb = min(max_prb_phys, base_e_eff + base_u_eff + TOTAL_RESILIENCY_PRB)
+        cur_e = float(quotas.get(SL_E, base_e_eff) or base_e_eff)
+        cur_u = float(quotas.get(SL_U, base_u_eff) or base_u_eff)
+        cur_total = cur_e + cur_u
+        pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - (base_e_eff + base_u_eff)))
         mask = []
         for de, du in self.actions:
-            if not ALLOW_NEG_DELTAS and (de < 0 or du < 0):
-                mask.append(False)
-                continue
-            new_e = base_e + de
-            new_u = base_u + du
-            if new_e < 0 or new_u < 0:
+            new_e = cur_e + de
+            new_u = cur_u + du
+            if new_e < base_e_eff or new_u < base_u_eff:
                 mask.append(False)
                 continue
             if new_e + new_u > max_prb + 1e-9:
@@ -521,21 +539,36 @@ class ResilientQRDQNEnv:
             base_e = int(base.get(SL_E, 0))
             base_u = int(base.get(SL_U, 0))
             base_total = base_e + base_u
-            max_prb_phys = float(getattr(cell, "max_dl_prb", 0) or 0.0)
+            quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            max_prb_phys = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0) + float(
+                _reserve_from_jammer
+            )
+            cur_e = float(quotas.get(SL_E, base_e) or base_e)
+            cur_u = float(quotas.get(SL_U, base_u) or base_u)
+            cur_total = cur_e + cur_u
+            pool_used_pre = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
+            # If the environment (e.g., jamming) reduced quotas below the baseline and nothing is borrowed, adopt current quotas as baseline.
+            if (pool_used_pre < 1e-6) and (cur_total + 1e-6 < base_total) and (cur_total <= max_prb_phys + 1e-6):
+                base_e = int(round(cur_e))
+                base_u = int(round(cur_u))
+                base_total = base_e + base_u
+                self._base_quota[cell.cell_id] = {SL_E: base_e, SL_U: base_u}
             capacity = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
 
             de, du = action
-            # Do not dip below baseline
-            delta_e = max(0.0, base_e + de - base_e) if not ALLOW_NEG_DELTAS else float(de)
-            delta_u = max(0.0, base_u + du - base_u) if not ALLOW_NEG_DELTAS else float(du)
+            # Apply deltas relative to current quotas but never below baseline
+            new_e = max(base_e, cur_e + float(de))
+            new_u = max(base_u, cur_u + float(du))
+            delta_e = new_e - cur_e
+            delta_u = new_u - cur_u
             delta_sum = delta_e + delta_u
-            avail_extra = max(0.0, capacity - base_total)
+            avail_extra = max(0.0, capacity - cur_total)
             if delta_sum > avail_extra and delta_sum > 0:
                 scale = avail_extra / delta_sum
                 delta_e *= scale
                 delta_u *= scale
-            new_e = base_e + delta_e
-            new_u = base_u + delta_u
+            new_e = cur_e + delta_e
+            new_u = cur_u + delta_u
             total = new_e + new_u
             if total > capacity and total > 0:
                 scale = capacity / total
@@ -731,6 +764,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
         self._cell_max_prb = deque(maxlen=400)
         self._cell_eff_prb = deque(maxlen=400)
+        # Time scaling
+        self._sim_dt = float(getattr(settings, "SIM_STEP_TIME_DEFAULT", 1.0))
 
     def start(self):
         if not self.enabled:
@@ -741,6 +776,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self.enabled = False
             return
         self._env = ResilientQRDQNEnv(self.ric)
+        self._sim_dt = self._detect_sim_dt()
         # Clear plots when env wipes managed UEs
         self._env.register_clear_hook(self._clear_plot_caches)
         self._init_agent()
@@ -758,13 +794,6 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._global_step += 1
         # Only act every decision_period steps
         if self._global_step % self._decision_period != 0:
-            # Between decisions, revert to baseline (no delta).
-            try:
-                if self._env and getattr(self._env, "prev_action", (0, 0)) != (0, 0):
-                    self._env.prev_action = (0, 0)
-                    self._env._apply_action((0, 0))
-            except Exception:
-                pass
             return
 
         if self._last_state is None or self._episode_done:
@@ -808,7 +837,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         action = info.get("action") if isinstance(info, dict) else (0, 0)
         action_idx = info.get("action_idx") if isinstance(info, dict) else None
         with self._lock:
-            t = self._global_step
+            t = self._global_step * self._sim_dt
             self._last_info = info or {}
             self._t.append(t)
             self._hist_reward.append(float(reward))
@@ -959,22 +988,22 @@ class xAppResilientQRDQNAllocator(xAppBase):
             action_fig = go.Figure()
             if action_idx:
                 action_fig.add_trace(go.Scatter(x=t[-len(action_idx):], y=action_idx, mode="lines", name="action idx"))
-            action_fig.update_layout(title="Actions", xaxis_title="step")
+            action_fig.update_layout(title="Actions", xaxis_title="time (s)")
 
             prb_fig = go.Figure()
             for sl, series in slice_prb.items():
                 prb_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} PRB"))
-            prb_fig.update_layout(title="Slice PRB quotas", xaxis_title="step")
+            prb_fig.update_layout(title="Slice PRB quotas", xaxis_title="time (s)")
 
             thr_fig = go.Figure()
             thr_fig.add_trace(go.Scatter(x=t, y=[v / 1e6 for v in thr_e], mode="lines", name="eMBB throughput (Mbps)"))
             thr_fig.add_trace(go.Scatter(x=t, y=[v / 1e6 for v in thr_u], mode="lines", name="URLLC throughput (Mbps)"))
-            thr_fig.update_layout(title="Throughput", xaxis_title="step", yaxis_title="Mbps")
+            thr_fig.update_layout(title="Throughput", xaxis_title="time (s)", yaxis_title="Mbps")
 
             lat_fig = go.Figure()
             lat_fig.add_trace(go.Scatter(x=t, y=lat, mode="lines", name="URLLC latency (s)"))
             lat_fig.add_trace(go.Scatter(x=t, y=deadline, mode="lines", name="deadline", line=dict(dash="dash")))
-            lat_fig.update_layout(title="Latency", xaxis_title="step")
+            lat_fig.update_layout(title="Latency", xaxis_title="time (s)")
 
             reward_fig = go.Figure()
             reward_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
@@ -998,7 +1027,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                         name="reserve penalty (neg)",
                     )
                 )
-            reward_fig.update_layout(title="Reward", xaxis_title="step", yaxis_title="reward")
+            reward_fig.update_layout(title="Reward", xaxis_title="time (s)", yaxis_title="reward")
 
             reserve_fig = go.Figure()
             reserve_fig.add_trace(go.Scatter(x=t, y=reserve, mode="lines", name="reserve fraction"))
@@ -1006,52 +1035,52 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 reserve_fig.add_trace(
                     go.Scatter(x=t[-len(reserve_used):], y=reserve_used, mode="lines", name="reserve used (PRB)")
                 )
-            reserve_fig.update_layout(title="Reserve usage", xaxis_title="step", yaxis_title="fraction / PRB")
+            reserve_fig.update_layout(title="Reserve usage", xaxis_title="time (s)", yaxis_title="fraction / PRB")
 
             ratio_fig = go.Figure()
             ratio_fig.add_trace(go.Scatter(x=t, y=prb_ratio, mode="lines", name="effective PRB ratio"))
-            ratio_fig.update_layout(title="Effective PRB ratio", xaxis_title="step", yaxis_title="ratio")
+            ratio_fig.update_layout(title="Effective PRB ratio", xaxis_title="time (s)", yaxis_title="ratio")
             ue_thr_fig = go.Figure()
             for imsi, series in ue_tx.items():
                 ue_thr_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} tx (Mbps)"))
-            ue_thr_fig.update_layout(title="Per-UE throughput", xaxis_title="step", yaxis_title="Mbps", legend=dict(orientation="h"))
+            ue_thr_fig.update_layout(title="Per-UE throughput", xaxis_title="time (s)", yaxis_title="Mbps", legend=dict(orientation="h"))
 
             ue_dem_fig = go.Figure()
             for imsi, series in ue_demand.items():
                 ue_dem_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} prb demand"))
-            ue_dem_fig.update_layout(title="Per-UE PRB demand", xaxis_title="step", yaxis_title="PRB", legend=dict(orientation="h"))
+            ue_dem_fig.update_layout(title="Per-UE PRB demand", xaxis_title="time (s)", yaxis_title="PRB", legend=dict(orientation="h"))
 
             ue_sat_fig = go.Figure()
             for imsi, series in ue_sat.items():
                 ue_sat_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} sat"))
-            ue_sat_fig.update_layout(title="Per-UE satisfaction", xaxis_title="step", yaxis_title="sat", legend=dict(orientation="h"))
+            ue_sat_fig.update_layout(title="Per-UE satisfaction", xaxis_title="time (s)", yaxis_title="sat", legend=dict(orientation="h"))
 
             slice_sat_fig = go.Figure()
             for sl, series in slice_sat.items():
                 slice_sat_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} sat capped"))
-            slice_sat_fig.update_layout(title="Slice satisfaction (capped)", xaxis_title="step", yaxis_title="sat", legend=dict(orientation="h"))
+            slice_sat_fig.update_layout(title="Slice satisfaction (capped)", xaxis_title="time (s)", yaxis_title="sat", legend=dict(orientation="h"))
 
             slice_sat_raw_fig = go.Figure()
             for sl, series in slice_sat_raw.items():
                 slice_sat_raw_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{sl} sat raw"))
-            slice_sat_raw_fig.update_layout(title="Slice satisfaction (raw)", xaxis_title="step", yaxis_title="sat raw", legend=dict(orientation="h"))
+            slice_sat_raw_fig.update_layout(title="Slice satisfaction (raw)", xaxis_title="time (s)", yaxis_title="sat raw", legend=dict(orientation="h"))
 
             sinr_fig = go.Figure()
             for imsi, series in ue_sinr.items():
                 sinr_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} SINR (dB)"))
-            sinr_fig.update_layout(title="Per-UE SINR", xaxis_title="step", yaxis_title="dB", legend=dict(orientation="h"))
+            sinr_fig.update_layout(title="Per-UE SINR", xaxis_title="time (s)", yaxis_title="dB", legend=dict(orientation="h"))
 
             cqi_fig = go.Figure()
             for imsi, series in ue_cqi.items():
                 cqi_fig.add_trace(go.Scatter(x=t[-len(series):], y=series, mode="lines", name=f"{imsi} CQI"))
-            cqi_fig.update_layout(title="Per-UE CQI", xaxis_title="step", yaxis_title="CQI", legend=dict(orientation="h"))
+            cqi_fig.update_layout(title="Per-UE CQI", xaxis_title="time (s)", yaxis_title="CQI", legend=dict(orientation="h"))
 
             supply_fig = go.Figure()
             supply_fig.add_trace(go.Scatter(x=t[-len(cell_max):], y=cell_max, mode="lines", name="cell max PRB"))
             supply_fig.add_trace(go.Scatter(x=t[-len(cell_eff):], y=cell_eff, mode="lines", name="effective PRB"))
             supply_fig.update_layout(
                 title="PRB supply (max vs effective)",
-                xaxis_title="step",
+                xaxis_title="time (s)",
                 yaxis_title="PRB",
                 legend=dict(orientation="h"),
             )
@@ -1096,6 +1125,18 @@ class xAppResilientQRDQNAllocator(xAppBase):
             ):
                 store.clear()
 
+    def _detect_sim_dt(self) -> float:
+        dt = float(getattr(settings, "SIM_STEP_TIME_DEFAULT", 1.0))
+        eng = getattr(self.ric, "simulation_engine", None)
+        for attr in ("time_step", "sim_step_time", "step_time", "dt"):
+            try:
+                val = getattr(eng, attr, None)
+                if val is not None:
+                    return float(val)
+            except Exception:
+                continue
+        return dt
+
     def _format_snapshot(self, snap: Dict) -> str:
         if not snap:
             return "No data yet"
@@ -1108,6 +1149,11 @@ class xAppResilientQRDQNAllocator(xAppBase):
             lines.append(f"Action: {action_idx}: Δe={action[0]}, Δu={action[1]}")
         else:
             lines.append(f"Action: Δe={action[0]}, Δu={action[1]}")
+        lines.append(f"Time: step={self._global_step}, sim={self._global_step * self._sim_dt:.3f}s")
+        ep_id = snap.get("episode_id")
+        ep_idx = getattr(self._env, "_episode_idx", None)
+        if ep_id or ep_idx is not None:
+            lines.append(f"Episode: {ep_id if ep_id is not None else 'unknown'} (idx={ep_idx if ep_idx is not None else '?'})")
         parts = snap.get("reward_parts") or {}
         if parts:
             total = float(parts.get("reward_embb", 0.0)) - float(parts.get("penalty_latency", 0.0)) - float(
@@ -1119,6 +1165,11 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
                 f"reserve_pen=-{float(parts.get('penalty_reserve', 0.0)):.3f}"
             )
+        reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
+        lines.append(
+            f"Reserve pool: total={TOTAL_RESILIENCY_PRB}, used={reserve_used:.1f}, "
+            f"action_delta={float(sum(action)):.1f}"
+        )
         # Slice metrics
         cell_ref = cell or (list(getattr(self.ric, "cell_list", {}).values()) or [None])[0]
         if cell_ref:
