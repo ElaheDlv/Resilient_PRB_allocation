@@ -69,10 +69,29 @@ def _safe_div(a: float, b: float) -> float:
     return float(a) / b
 
 
+def _as_bool(val, default: bool = False) -> bool:
+    """Robust bool parser for env/config inputs."""
+    if val is None:
+        return default
+    if isinstance(val, bool):
+        return val
+    if isinstance(val, str):
+        return val.strip().lower() in ("1", "true", "yes", "y", "on")
+    try:
+        return bool(int(val))
+    except Exception:
+        return default
+
+
 # --------------------------- Action/state helpers --------------------------- #
 RESILIENCY_LEVELS = getattr(settings, "RES_DQN_LEVELS", None) or [-9, -3, -1, 0, 1, 3, 9]
-TOTAL_RESILIENCY_PRB = int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18))
+# Prefer jammer-reserved PRBs as the resiliency pool; fall back to explicit config.
+_reserve_from_jammer = int(getattr(settings, "JAM_RESERVED_PRBS", 0) or 0)
+_reserve_from_cfg = int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18))
+TOTAL_RESILIENCY_PRB = max(_reserve_from_jammer, _reserve_from_cfg)
+ALLOW_NEG_DELTAS = _as_bool(getattr(settings, "RES_DQN_ALLOW_NEG_DELTAS", False))
 DEFAULT_MAX_DL_PRB = int(getattr(settings, "RES_DQN_MAX_DL_PRB", 218))
+ALLOW_NEG_DELTAS = bool(getattr(settings, "RES_DQN_ALLOW_NEG_DELTAS", False))
 
 
 def build_action_list() -> List[Tuple[int, int]]:
@@ -288,13 +307,18 @@ class ResilientDQNEnv:
         cell = self._target_cell()
         if cell is None:
             return [True] * len(self.actions)
-        max_prb = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
+        max_prb_phys = float(getattr(cell, "max_dl_prb", 0) or 0.0)
+        # Reserve pool is fixed; jamming should not shrink the available reserve.
+        max_prb = min(max_prb_phys, float(sum((self._base_quota.get(cell.cell_id, {}) or {}).values())) + TOTAL_RESILIENCY_PRB)
         base = self._base_quota.get(cell.cell_id, {})
         base_e = float(base.get(SL_E, 0) or 0.0)
         base_u = float(base.get(SL_U, 0) or 0.0)
         pool_used = max(0.0, float(self.prev_action[0])) + max(0.0, float(self.prev_action[1]))
         mask = []
         for de, du in self.actions:
+            if not ALLOW_NEG_DELTAS and (de < 0 or du < 0):
+                mask.append(False)
+                continue
             new_e = base_e + de
             new_u = base_u + du
             if new_e < 0 or new_u < 0:
@@ -481,16 +505,17 @@ class ResilientDQNEnv:
             base_e = int(base.get(SL_E, 0))
             base_u = int(base.get(SL_U, 0))
             base_total = base_e + base_u
-            max_prb = float(getattr(cell, "max_dl_prb", 0) or 0.0)
-            eff_prb = float(getattr(cell, "_effective_max_dl_prb", max_prb) or max_prb)
-            capacity = min(max_prb, eff_prb, base_total + TOTAL_RESILIENCY_PRB)
+            max_prb_phys = float(getattr(cell, "max_dl_prb", 0) or 0.0)
+            # Reserve pool is fixed; jamming affects baseline but not available reserve.
+            capacity = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
 
             de, du = action
             # Do not dip below baseline
-            delta_e = max(0.0, base_e + de - base_e)
-            delta_u = max(0.0, base_u + du - base_u)
+            delta_e = max(0.0, base_e + de - base_e) if not ALLOW_NEG_DELTAS else float(de)
+            delta_u = max(0.0, base_u + du - base_u) if not ALLOW_NEG_DELTAS else float(du)
             delta_sum = delta_e + delta_u
             avail_extra = max(0.0, capacity - base_total)
+            print('avail_extra:', avail_extra)
             if delta_sum > avail_extra and delta_sum > 0:
                 scale = avail_extra / delta_sum
                 delta_e *= scale
@@ -511,6 +536,9 @@ class ResilientDQNEnv:
             return self._blank_obs()
         cell = next(iter(self.ric.cell_list.values()))
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+        base = self._base_quota.get(cell.cell_id, {})
+        base_total = float(sum(base.values()) or 0.0)
+        reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
         expected_prb = max(1.0, float(sum(quotas.values()) or 1.0))
         alloc_total = float(getattr(cell, "allocated_dl_prb", 0.0) or 0.0)
         effective_ratio = _safe_div(alloc_total, expected_prb)
@@ -532,6 +560,8 @@ class ResilientDQNEnv:
             "urllc_latency": urllc["latency"],
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
             "effective_prb_ratio": effective_ratio,
+            "effective_max_prb": float(getattr(cell, "_effective_max_dl_prb", 0.0) or 0.0),
+            "reserve_used_prb": reserve_used,
         }
 
     def _traces_consumed(self) -> bool:
@@ -635,6 +665,10 @@ class xAppResilientDQNAllocator(xAppBase):
         self._replay: Optional[_ReplayBuffer] = None
         self._last_state: Optional[np.ndarray] = None
         self._episode_done = False
+        self._episode_return = 0.0
+        self._episode_len = 0
+        self._episode_counter = 0
+        self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
         self.tb_enable = bool(getattr(settings, "RES_DQN_TB_ENABLE", False))
         self.tb_dir = (getattr(settings, "RES_DQN_TB_DIR", "") or "").strip()
         self._tb_writer = None
@@ -658,6 +692,7 @@ class xAppResilientDQNAllocator(xAppBase):
         self._hist_queue_e = deque(maxlen=400)
         self._hist_queue_u = deque(maxlen=400)
         self._hist_reserve = deque(maxlen=400)
+        self._hist_reserve_used = deque(maxlen=400)
         self._hist_prb_ratio = deque(maxlen=400)
         self._hist_action_idx = deque(maxlen=400)
         # Per-slice and per-UE histories (lightweight, capped)
@@ -700,9 +735,17 @@ class xAppResilientDQNAllocator(xAppBase):
         self._global_step += 1
         # Only act every decision_period steps
         if self._global_step % self._decision_period != 0:
+            # Between decisions, revert to baseline (no delta).
+            try:
+                if self._env and getattr(self._env, "prev_action", (0, 0)) != (0, 0):
+                    self._env.prev_action = (0, 0)
+                    self._env._apply_action((0, 0))
+            except Exception:
+                pass
             return
 
         if self._last_state is None or self._episode_done:
+            self._reset_episode_trackers()
             self._last_state = self._env.reset()
             self._episode_done = False
             return
@@ -718,13 +761,21 @@ class xAppResilientDQNAllocator(xAppBase):
 
         action_idx = self._select_action(self._last_state)
         next_state, reward, done, info = self._env.step(action_idx)
+        self._episode_return += float(reward)
+        self._episode_len += 1
+        parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
+        for k in self._episode_reward_parts:
+            self._episode_reward_parts[k] += float(parts.get(k, 0.0))
         self._record_metrics(reward, info)
         if self.train and self._replay is not None:
             self._replay.push(self._last_state, action_idx, reward, next_state, float(done))
             self._learn()
-        self._tb_log(self._last_state, action_idx, reward, info)
+        self._tb_log(self._last_state, action_idx, reward, info, done=bool(done))
         self._last_state = next_state
         self._episode_done = bool(done)
+        if done:
+            self._episode_counter += 1
+            self._reset_episode_trackers()
 
     # ---------- Telemetry / dashboard ---------- #
     def _record_metrics(self, reward: float, info: Optional[Dict]):
@@ -752,6 +803,7 @@ class xAppResilientDQNAllocator(xAppBase):
             self._hist_queue_e.append(float(obs.get("embb_queue", 0.0) or 0.0))
             self._hist_queue_u.append(float(obs.get("urllc_queue", 0.0) or 0.0))
             self._hist_reserve.append(float(sum(action) if action else 0) / max(1.0, TOTAL_RESILIENCY_PRB))
+            self._hist_reserve_used.append(float(obs.get("reserve_used_prb", 0.0) or 0.0))
             self._hist_prb_ratio.append(float(obs.get("effective_prb_ratio", 0.0) or 0.0))
             # Slice metrics from current cell
             cell = getattr(self._env, "_target_cell", lambda: None)()
@@ -866,6 +918,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 penalty_latency = list(self._hist_penalty_latency)
                 penalty_reserve = list(self._hist_penalty_reserve)
                 reserve = list(self._hist_reserve)
+                reserve_used = list(self._hist_reserve_used)
                 prb_ratio = list(self._hist_prb_ratio)
                 action_idx = list(self._hist_action_idx)
                 slice_prb = {k: list(v) for k, v in self._slice_prb.items()}
@@ -926,7 +979,11 @@ class xAppResilientDQNAllocator(xAppBase):
 
             reserve_fig = go.Figure()
             reserve_fig.add_trace(go.Scatter(x=t, y=reserve, mode="lines", name="reserve fraction"))
-            reserve_fig.update_layout(title="Reserve fraction", xaxis_title="step", yaxis_title="fraction")
+            if reserve_used:
+                reserve_fig.add_trace(
+                    go.Scatter(x=t[-len(reserve_used):], y=reserve_used, mode="lines", name="reserve used (PRB)")
+                )
+            reserve_fig.update_layout(title="Reserve usage", xaxis_title="step", yaxis_title="fraction / PRB")
 
             ratio_fig = go.Figure()
             ratio_fig.add_trace(go.Scatter(x=t, y=prb_ratio, mode="lines", name="effective PRB ratio"))
@@ -1173,12 +1230,15 @@ class xAppResilientDQNAllocator(xAppBase):
             print(f"{self.xapp_id}: failed to init tensorboard logger {self.tb_dir}: {exc}")
             self._tb_writer = None
 
-    def _tb_log(self, state: Optional[np.ndarray], action_idx: Optional[int], reward: float, info: Optional[Dict]):
+    def _tb_log(
+        self, state: Optional[np.ndarray], action_idx: Optional[int], reward: float, info: Optional[Dict], done: bool = False
+    ):
         if self._tb_writer is None or state is None:
             return
         step = self._global_step
         try:
             self._tb_writer.add_scalar("reward", reward, step)
+            self._tb_writer.add_scalar("epsilon", float(self._eps), step)
             if action_idx is not None:
                 self._tb_writer.add_scalar("action_idx", action_idx, step)
             obs = info.get("obs") if isinstance(info, dict) else None
@@ -1189,7 +1249,21 @@ class xAppResilientDQNAllocator(xAppBase):
                 self._tb_writer.add_scalar(f"{SL_U}/queue_bytes", float(obs.get("urllc_queue", 0.0) or 0.0), step)
                 self._tb_writer.add_scalar(f"{SL_U}/latency_s", float(obs.get("urllc_latency", 0.0) or 0.0), step)
                 self._tb_writer.add_scalar("pool/effective_prb_ratio", float(obs.get("effective_prb_ratio", 0.0) or 0.0), step)
+                # Capacity visibility
                 cell = getattr(self._env, "_target_cell", lambda: None)()
+                cell_eff = float(getattr(cell, "_effective_max_dl_prb", 0.0) or 0.0) if cell else 0.0
+                cell_max = float(getattr(cell, "max_dl_prb", 0.0) or 0.0) if cell else 0.0
+                base_total = 0.0
+                if cell:
+                    base_total = float(sum((self._base_quota.get(getattr(cell, "cell_id", ""), {}) or {}).values()))
+                    cur_quota = getattr(cell, "slice_dl_prb_quota", {}) or {}
+                    cur_total = float(sum(cur_quota.values()) or 0.0)
+                    reserve_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
+                self._tb_writer.add_scalar("capacity/effective_prb", cell_eff, step)
+                self._tb_writer.add_scalar("capacity/physical_max_prb", cell_max, step)
+                self._tb_writer.add_scalar("capacity/base_total_prb", base_total, step)
+                self._tb_writer.add_scalar("capacity/reserve_pool_prb", TOTAL_RESILIENCY_PRB, step)
+                self._tb_writer.add_scalar("capacity/reserve_used_prb", reserve_used, step)
                 if cell:
                     req = getattr(cell, "dl_total_prb_demand", {}) or {}
                     alloc = getattr(cell, "allocated_dl_prb_by_slice", {}) or {}
@@ -1202,12 +1276,25 @@ class xAppResilientDQNAllocator(xAppBase):
                             if imsi:
                                 dem += float(req.get(imsi, 0.0) or 0.0)
                         allo = float(alloc.get(sl, 0.0) or 0.0)
+                        self._tb_writer.add_scalar(f"{sl}/prb_alloc", allo, step)
                         sat = 1.0 if dem <= 0 else min(1.0, allo / dem)
                         self._tb_writer.add_scalar(f"{sl}/satisfaction_capped", sat, step)
                         self._tb_writer.add_scalar(f"{sl}/satisfaction_raw", (1.0 if dem <= 0 else (allo / dem)), step)
+            if done:
+                ep_idx = self._episode_counter
+                self._tb_writer.add_scalar("episode_return", self._episode_return, ep_idx)
+                self._tb_writer.add_scalar("episode_length", self._episode_len, ep_idx)
+                for name, val in self._episode_reward_parts.items():
+                    self._tb_writer.add_scalar(f"episode_reward_parts/{name}", val, ep_idx)
             self._tb_writer.flush()
         except Exception:
             pass
+
+    def _reset_episode_trackers(self):
+        self._episode_return = 0.0
+        self._episode_len = 0
+        for k in self._episode_reward_parts:
+            self._episode_reward_parts[k] = 0.0
 
     def _init_agent(self):
         in_dim = len(build_state(self._env._blank_obs(), (0, 0)))  # type: ignore[arg-type]
@@ -1253,6 +1340,11 @@ class xAppResilientDQNAllocator(xAppBase):
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()
+        if self._tb_writer is not None:
+            try:
+                self._tb_writer.add_scalar("loss", float(loss.item()), self._global_step)
+            except Exception:
+                pass
 
         if self._global_step % self.target_update == 0:
             self._target.load_state_dict(self._policy.state_dict())
