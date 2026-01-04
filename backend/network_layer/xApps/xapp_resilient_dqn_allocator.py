@@ -1129,7 +1129,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 "Reward parts: "
                 f"total={total:.3f}, embb={float(parts.get('reward_embb', 0.0)):.3f}, "
                 f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
-                f"reserve_pen=-{float(parts.get('penalty_reserve', 0.0)):.3f}"
+                f"reserve_pen={float(parts.get('penalty_reserve', 0.0)):.3f}"
             )
         reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
         lines.append(
