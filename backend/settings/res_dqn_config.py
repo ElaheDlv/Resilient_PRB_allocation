@@ -67,7 +67,7 @@ except Exception:
     RES_DQN_EPS_START, RES_DQN_EPS_END, RES_DQN_EPS_DECAY = 1.0, 0.05, 20000
 try:
     RES_DQN_GAMMA = float(os.getenv("RES_DQN_GAMMA", "0.99"))
-    RES_DQN_LR = float(os.getenv("RES_DQN_LR", "1e-3"))
+    RES_DQN_LR = float(os.getenv("RES_DQN_LR", "1e-4"))
     RES_DQN_BATCH = int(os.getenv("RES_DQN_BATCH", "64"))
     RES_DQN_BUFFER = int(os.getenv("RES_DQN_BUFFER", "100000"))
     RES_DQN_TARGET_UPDATE = int(os.getenv("RES_DQN_TARGET_UPDATE", "2000"))
