@@ -694,6 +694,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._target: Optional[_QRDQN] = None
         self._optimizer = None
         self._replay: Optional[_ReplayBuffer] = None
+        self._decision_steps = 0  # counts RL decisions (not simulator ticks)
         self._last_state: Optional[np.ndarray] = None
         self._episode_done = False
         self._episode_return = 0.0
@@ -773,6 +774,9 @@ class xAppResilientQRDQNAllocator(xAppBase):
         if self._global_step % self._decision_period != 0:
             return
 
+        # Only count epsilon decay on actual RL decisions (not sim ticks)
+        self._decision_steps += 1
+
         if self._last_state is None or self._episode_done:
             self._reset_episode_trackers()
             self._last_state = self._env.reset()
@@ -780,7 +784,9 @@ class xAppResilientQRDQNAllocator(xAppBase):
             return
 
         if self.train:
-            frac = max(0.0, (self.eps_decay - self._global_step) / float(max(1, self.eps_decay)))
+            # Decay based on decision steps so eps only changes when we act
+            decisions_elapsed = max(0, self._decision_steps - 1)
+            frac = max(0.0, (self.eps_decay - decisions_elapsed) / float(max(1, self.eps_decay)))
             self._eps = self.eps_end + (self.eps_start - self.eps_end) * frac
         else:
             self._eps = 0.0
@@ -1404,5 +1410,5 @@ class xAppResilientQRDQNAllocator(xAppBase):
             except Exception:
                 pass
 
-        if self._global_step % self.target_update == 0:
+        if self._decision_steps > 0 and self._decision_steps % self.target_update == 0:
             self._target.load_state_dict(self._policy.state_dict())
