@@ -165,7 +165,11 @@ def compute_reward(
 
     r_e, r_u = action
 
-    reward_embb = weights["w_e"] * np.log(1 + obs.get("embb_throughput", 0.0))
+    # Normalized eMBB throughput keeps scale bounded and sensitive to jamming-induced drops.
+    e_thr = obs.get("embb_throughput", 0.0)
+    e_max = obs.get("embb_throughput_max", EMBB_THR_MAX)
+    thr_ratio = _safe_div(e_thr, e_max)
+    reward_embb = weights["w_e"] * math.log1p(thr_ratio * 15.0)
 
     excess = latency_excess(
         obs.get("urllc_latency", 0.0),
@@ -1290,14 +1294,16 @@ class xAppResilientQRDQNAllocator(xAppBase):
     def _tb_log(
         self, state: Optional[np.ndarray], action_idx: Optional[int], reward: float, info: Optional[Dict], done: bool = False
     ):
-        if self._tb_writer is None or state is None:
+        if self._tb_writer is None:
             return
         step = self._global_step
         try:
-            self._tb_writer.add_scalar("reward", reward, step)
-            self._tb_writer.add_scalar("epsilon", float(self._eps), step)
-            if action_idx is not None:
-                self._tb_writer.add_scalar("action_idx", action_idx, step)
+            if state is not None:
+                self._tb_writer.add_scalar("reward", reward, step)
+                self._tb_writer.add_scalar("reward_cumulative", self._episode_return, step)
+                self._tb_writer.add_scalar("epsilon", float(self._eps), step)
+                if action_idx is not None:
+                    self._tb_writer.add_scalar("action_idx", action_idx, step)
             obs = info.get("obs") if isinstance(info, dict) else None
             if obs:
                 self._tb_writer.add_scalar(f"{SL_E}/throughput_bps", float(obs.get("embb_throughput", 0.0) or 0.0), step)
@@ -1311,6 +1317,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 cell_eff = float(getattr(cell, "_effective_max_dl_prb", 0.0) or 0.0) if cell else 0.0
                 cell_max = float(getattr(cell, "max_dl_prb", 0.0) or 0.0) if cell else 0.0
                 base_total = 0.0
+                reserve_used = 0.0
                 if cell:
                     base_total = float(sum((self._base_quota.get(getattr(cell, "cell_id", ""), {}) or {}).values()))
                     cur_quota = getattr(cell, "slice_dl_prb_quota", {}) or {}
@@ -1338,12 +1345,19 @@ class xAppResilientQRDQNAllocator(xAppBase):
                         sat = 1.0 if dem <= 0 else min(1.0, allo / dem)
                         self._tb_writer.add_scalar(f"{sl}/satisfaction_capped", sat, step)
                         self._tb_writer.add_scalar(f"{sl}/satisfaction_raw", (1.0 if dem <= 0 else (allo / dem)), step)
-            if done:
+        except Exception:
+            pass
+        if done:
+            try:
                 ep_idx = self._episode_counter
                 self._tb_writer.add_scalar("episode_return", self._episode_return, ep_idx)
+                self._tb_writer.add_scalar("episode_return_vs_step", self._episode_return, step)
                 self._tb_writer.add_scalar("episode_length", self._episode_len, ep_idx)
                 for name, val in self._episode_reward_parts.items():
                     self._tb_writer.add_scalar(f"episode_reward_parts/{name}", val, ep_idx)
+            except Exception:
+                pass
+        try:
             self._tb_writer.flush()
         except Exception:
             pass

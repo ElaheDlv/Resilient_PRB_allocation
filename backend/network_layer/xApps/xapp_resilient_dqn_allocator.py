@@ -145,38 +145,93 @@ def latency_excess(latency: float, deadline: float) -> float:
     return max(0.0, float(latency) / float(deadline) - 1.0)
 
 
-def compute_reward(
-    obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
-):
-    """
-    obs: simulator outputs after applying the action
-    action: (r_e, r_u)
-    prev_action: (r_e_prev, r_u_prev)
-    weights: dict of reward weights
-    """
+# def compute_reward(
+#     obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
+# ):
+#     """
+#     obs: simulator outputs after applying the action
+#     action: (r_e, r_u)
+#     prev_action: (r_e_prev, r_u_prev)
+#     weights: dict of reward weights
+#     """
 
+#     r_e, r_u = action
+
+#     # Normalized eMBB throughput keeps scale bounded and sensitive to jamming-induced drops.
+#     e_thr = obs.get("embb_throughput", 0.0)
+#     e_max = obs.get("embb_throughput_max", EMBB_THR_MAX)
+#     thr_ratio = _safe_div(e_thr, e_max)
+#     reward_embb = weights["w_e"] * math.log1p(thr_ratio * 15.0)
+
+#     excess = latency_excess(
+#         obs.get("urllc_latency", 0.0),
+#         obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
+#     )
+#     penalty_latency = weights["w_u"] * math.log1p(excess)
+
+#     penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
+
+#     reward = reward_embb - penalty_latency - penalty_reserve
+#     if return_parts:
+#         parts = {
+#             "reward_embb": float(reward_embb),
+#             "penalty_latency": float(penalty_latency),
+#             "penalty_reserve": float(penalty_reserve),
+#         }
+#         return float(reward), parts
+#     return float(reward)
+
+def compute_reward(obs, action, prev_action, weights, return_parts=False):
     r_e, r_u = action
+    
+    # 1. Throughput Reward (unchanged, but ensure w_e is dominant in good times)
+    e_thr = obs.get("embb_throughput", 0.0)
+    e_max = obs.get("embb_throughput_max", EMBB_THR_MAX)
+    # Clip ratio to 1.0 to prevent weird artifacts
+    thr_ratio = min(1.0, _safe_div(e_thr, e_max)) 
+    reward_embb = weights["w_e"] * thr_ratio # Linear is often more stable than log for throughput
 
-    reward_embb = weights["w_e"] * np.log(1 + obs.get("embb_throughput", 0.0))
+    # 2. Latency Penalty (The "Cliff" fix)
+    lat = obs.get("urllc_latency", 0.0)
+    deadline = obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE)
+    
+    # Calculate simple ratio
+    lat_ratio = _safe_div(lat, deadline)
+    
+    # Soft penalty starts BEFORE the deadline (e.g. at 80% usage)
+    # Hard penalty kicks in after 1.0
+    # We clip the ratio at 5.0 so the gradient doesn't explode during crashes
+    lat_penalty_val = 0.0
+    if lat_ratio > 0.8:
+        lat_penalty_val = math.exp(min(5.0, lat_ratio) - 1.0) # Exponential ramp up
+    
+    penalty_latency = weights["w_u"] * lat_penalty_val
 
-    excess = latency_excess(
-        obs.get("urllc_latency", 0.0),
-        obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
-    )
-    penalty_latency = weights["w_u"] * math.log1p(excess)
+    # 3. Queue Penalty (The Leading Indicator fix)
+    # If the URLLC queue is building up, punish immediately
+    u_q = obs.get("urllc_queue", 0.0)
+    u_q_max = obs.get("urllc_queue_max", URLLC_QUEUE_MAX)
+    q_ratio = min(1.0, _safe_div(u_q, u_q_max))
+    penalty_queue = weights.get("w_q", 2.0) * (q_ratio ** 2) # Square it to punish large queues harder
 
+    # 4. Resource cost
     penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
 
-    reward = reward_embb - penalty_latency - penalty_reserve
+    # Total
+    reward = reward_embb - penalty_latency - penalty_queue - penalty_reserve
+    
+    # CLIPPING the total reward is also a good safety practice
+    reward = max(-10.0, min(10.0, reward))
+
     if return_parts:
         parts = {
             "reward_embb": float(reward_embb),
             "penalty_latency": float(penalty_latency),
+            "penalty_queue": float(penalty_queue), # Log this!
             "penalty_reserve": float(penalty_reserve),
         }
         return float(reward), parts
     return float(reward)
-
 
 # --------------------------- Replay buffer + model --------------------------- #
 class _ReplayBuffer:
@@ -670,7 +725,7 @@ class xAppResilientDQNAllocator(xAppBase):
         self.train = bool(getattr(settings, "RES_DQN_TRAIN", True))
         self.device = "cuda" if TORCH_AVAILABLE and torch.cuda.is_available() else "cpu"
         self.gamma = float(getattr(settings, "RES_DQN_GAMMA", 0.99))
-        self.lr = float(getattr(settings, "RES_DQN_LR", 1e-3))
+        self.lr = float(getattr(settings, "RES_DQN_LR", 1e-4))
         self.batch = int(getattr(settings, "RES_DQN_BATCH", 64))
         self.buffer_cap = int(getattr(settings, "RES_DQN_BUFFER", 100000))
         self.target_update = int(getattr(settings, "RES_DQN_TARGET_UPDATE", 2000))
@@ -1286,14 +1341,16 @@ class xAppResilientDQNAllocator(xAppBase):
     def _tb_log(
         self, state: Optional[np.ndarray], action_idx: Optional[int], reward: float, info: Optional[Dict], done: bool = False
     ):
-        if self._tb_writer is None or state is None:
+        if self._tb_writer is None:
             return
         step = self._global_step
         try:
-            self._tb_writer.add_scalar("reward", reward, step)
-            self._tb_writer.add_scalar("epsilon", float(self._eps), step)
-            if action_idx is not None:
-                self._tb_writer.add_scalar("action_idx", action_idx, step)
+            if state is not None:
+                self._tb_writer.add_scalar("reward", reward, step)
+                self._tb_writer.add_scalar("reward_cumulative", self._episode_return, step)
+                self._tb_writer.add_scalar("epsilon", float(self._eps), step)
+                if action_idx is not None:
+                    self._tb_writer.add_scalar("action_idx", action_idx, step)
             obs = info.get("obs") if isinstance(info, dict) else None
             if obs:
                 self._tb_writer.add_scalar(f"{SL_E}/throughput_bps", float(obs.get("embb_throughput", 0.0) or 0.0), step)
@@ -1307,6 +1364,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 cell_eff = float(getattr(cell, "_effective_max_dl_prb", 0.0) or 0.0) if cell else 0.0
                 cell_max = float(getattr(cell, "max_dl_prb", 0.0) or 0.0) if cell else 0.0
                 base_total = 0.0
+                reserve_used = 0.0
                 if cell:
                     base_total = float(sum((self._base_quota.get(getattr(cell, "cell_id", ""), {}) or {}).values()))
                     cur_quota = getattr(cell, "slice_dl_prb_quota", {}) or {}
@@ -1333,12 +1391,19 @@ class xAppResilientDQNAllocator(xAppBase):
                         sat = 1.0 if dem <= 0 else min(1.0, allo / dem)
                         self._tb_writer.add_scalar(f"{sl}/satisfaction_capped", sat, step)
                         self._tb_writer.add_scalar(f"{sl}/satisfaction_raw", (1.0 if dem <= 0 else (allo / dem)), step)
-            if done:
+        except Exception:
+            pass
+        if done:
+            try:
                 ep_idx = self._episode_counter
                 self._tb_writer.add_scalar("episode_return", self._episode_return, ep_idx)
+                self._tb_writer.add_scalar("episode_return_vs_step", self._episode_return, step)
                 self._tb_writer.add_scalar("episode_length", self._episode_len, ep_idx)
                 for name, val in self._episode_reward_parts.items():
                     self._tb_writer.add_scalar(f"episode_reward_parts/{name}", val, ep_idx)
+            except Exception:
+                pass
+        try:
             self._tb_writer.flush()
         except Exception:
             pass
