@@ -247,7 +247,7 @@ def compute_reward(
     #ach_embb = float(obs.get("embb_achievable_throughput", 0.0) or 0.0)
     #ach_urllc = float(obs.get("urllc_achievable_throughput", 0.0) or 0.0)
     #ach_total = ach_embb + ach_urllc
-    ####***base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
+    base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     #print("Base achievable eMBB throughput from obs:", base_ach_embb)
     #base_ach_urllc = float(obs.get("urllc_base_achievable_throughput", 0.0) or 0.0)
     #base_ach_total = base_ach_embb + base_ach_urllc
@@ -263,10 +263,10 @@ def compute_reward(
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     #print("eMBB max throughput from obs:", embb_max_throughput)
     
-    #####***target = min(base_ach_embb, embb_max_throughput)
+    #####target = min(base_ach_embb, embb_max_throughput)
     #print("Target throughput for reward computation:", target)
 
-    ###reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
+    ####reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
     reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)))
 
     excess = latency_excess(
@@ -420,7 +420,7 @@ class ResilientDQNEnv:
         # Jammer reports effective PRBs excluding reserved+jam; add reserved back to get usable capacity for reserve pool.
         eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
         max_prb_phys = eff_max + float(_reserve_from_jammer)
-        print("Effective max PRB from cell:", eff_max, " Physical max PRB:", max_prb_phys)
+        #print("Effective max PRB from cell:", eff_max, " Physical max PRB:", max_prb_phys)
         base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
         base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
         base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)

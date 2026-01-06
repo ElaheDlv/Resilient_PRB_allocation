@@ -480,14 +480,17 @@ class BaseStation:
         reserved = max(0, int(getattr(settings, "JAM_RESERVED_PRBS", 0)))
         for cell in self.cell_list.values():
             # Persist the initial per-slice quotas as the jammer's reference (set once).
-            if not hasattr(cell, "base_dl_prb_quota"):
-                cell.base_dl_prb_quota = dict(cell.slice_dl_prb_quota)
+            if not hasattr(cell, "_jam_base_quota"):
+                base_snapshot = dict(cell.slice_dl_prb_quota)
+                cell._jam_base_quota = base_snapshot
+                cell.base_dl_prb_quota = dict(base_snapshot)
+                cell._jam_was_active = False
             # Base usable pool excludes reserved PRBs; jam subtracts from the usable pool only.
             usable_max = max(0, int(cell.max_dl_prb) - reserved)
             jam_active = jam_prbs if active else 0
             target_max = max(0, usable_max - jam_active)
             # Scale the jammer's baseline quotas down proportionally if jammed capacity is smaller.
-            base_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
+            base_quota = dict(getattr(cell, "_jam_base_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
             total = sum(base_quota.values())
             if total > 0 and target_max < total:
                 scale = target_max / float(total)
@@ -509,8 +512,15 @@ class BaseStation:
                     leftover -= 1
                 base_quota = scaled
                 cell.base_dl_prb_quota = base_quota
+                #print(f"Jammer scaling cell {cell.cell_id} quotas to {base_quota}")
                 # Align live quotas to the jammed baseline once; allocator will adjust thereafter.
                 cell.slice_dl_prb_quota = dict(base_quota)
+                cell._jam_was_active = True
+            elif not active and getattr(cell, "_jam_was_active", False):
+                # Restore base quotas when coming out of a jam window.
+                cell.base_dl_prb_quota = dict(base_quota)
+                cell.slice_dl_prb_quota = dict(base_quota)
+                cell._jam_was_active = False
             # Do not overwrite live quotas; just reduce effective capacity.
             cell.jammed_dl_prb = reserved + jam_active
             cell._effective_max_dl_prb = target_max
