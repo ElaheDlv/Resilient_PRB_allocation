@@ -121,6 +121,15 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
     prev_action: (r_e_prev, r_u_prev)
     """
     denom_prb = max(1.0, float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)))
+    #phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB))
+    #eff_max = float(obs.get("effective_max_prb", phys_max))
+    #jammed_prb = max(0.0, phys_max - eff_max)
+    #print("phys max:", phys_max)
+    #print("eff max:", eff_max)
+    #print("jammed prb:", _jammed_prbs)
+    # jammed_ratio = float(obs.get("jammed_ratio", -1.0))
+    # if jammed_ratio < 0.0:
+    #     jammed_ratio = min(1.0, _safe_div(_jammed_prbs, denom_prb))
     lat_ratio = _safe_div(obs.get("urllc_latency", 0.0), obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
     lat_log = min(5.0, math.log1p(max(0.0, lat_ratio)))  # cap extreme spikes
     state = [
@@ -132,6 +141,10 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
         _safe_div(obs.get("urllc_throughput", 0.0), obs.get("urllc_throughput_max", URLLC_THR_MAX)),
         lat_log,
         float(obs.get("effective_prb_ratio", 0.0)),
+        #min(1.0, _safe_div(eff_max, phys_max)),
+        #float(obs.get("jammed_prb", 0.0)) / denom_prb,
+        #jammed_ratio,
+        min(1.0, _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)),
         _safe_div(prev_action[0], TOTAL_RESILIENCY_PRB),
         _safe_div(prev_action[1], TOTAL_RESILIENCY_PRB),
     ]
@@ -153,43 +166,72 @@ def compute_reward(
     return_parts: bool = False,
 ):
     """
-    Simplified Lyapunov reward. prev_action kept for caller compatibility, but unused.
+    Jamming-aware resilient reward.
+    Rewards mitigation under attack, not normal operation.
     """
-    r_e, r_u = action
 
-    # Defaults allow safe execution even if some weights are omitted.
-    w_e = weights.get("w_e", 0.8)
-    w_q = weights.get("w_q", 2.0)
-    mu = weights.get("mu", 0.1)
+    #r_e, r_u = action
 
-    # 1. eMBB Utility (Throughput)
-    e_thr = max(0.0, float(obs.get("embb_throughput", 0.0)))
-    e_max = max(1.0, float(obs.get("embb_throughput_max", EMBB_THR_MAX)))
-    thr_ratio = min(1.0, max(0.0, e_thr / e_max))
-    reward_embb = w_e * math.log1p(thr_ratio * 10.0)
+    # -------------------------
+    # Detect jamming via capacity loss
+    # -------------------------
+    eff_max = float(obs.get("effective_max_prb", 0.0) or 0.0)
+    phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB) or DEFAULT_MAX_DL_PRB)
+    is_jammed = eff_max < phys_max - 1e-6
 
-    # 2. URLLC Stability (Queue Pressure)
-    u_q = max(0.0, float(obs.get("urllc_queue", 0.0)))
-    u_q_max = max(1.0, float(obs.get("urllc_queue_max", URLLC_QUEUE_MAX)))
-    q_ratio = min(1.0, max(0.0, u_q / u_q_max))
-    penalty_queue = w_q * (q_ratio**2)
+    # -------------------------
+    # No-jamming: neutral / stability reward
+    # -------------------------
+    if not is_jammed:
+        reward = weights.get("w_idle", 0.01)
+        if return_parts:
+            return float(reward), {
+                "reward_embb": 0.0,
+                "penalty_latency": 0.0,
+                "penalty_reserve": 0.0,
+                "idle_reward": float(reward),
+            }
+        return float(reward)
 
-    # 3. Resource Cost (The "Rent")
-    penalty_reserve = mu * (r_e + r_u) / float(TOTAL_RESILIENCY_PRB)
+    # =========================
+    # Jamming-aware reward
+    # =========================
 
-    # 4. Total & Clipping
-    reward = reward_embb - penalty_queue - penalty_reserve
-    #reward = max(-2.0, min(2.0, raw_reward))
+    # ---- Throughput preservation (relative to max achievable)
+    e_thr = obs.get("embb_throughput", 0.0)
+    e_ref = obs.get("embb_throughput_max", EMBB_THR_MAX)
+
+    thr_ratio = _safe_div(e_thr, e_ref)
+    thr_ratio = min(max(thr_ratio, 0.0), 2.0)
+
+    reward_embb = weights["w_e"] * math.log1p(3.0 * thr_ratio)
+
+    # ---- Latency containment (penalize excess only)
+    excess = latency_excess(
+        obs.get("urllc_latency", 0.0),
+        obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
+    )
+    penalty_latency = weights["w_u"] * math.log1p(excess)
+
+    # ---- Reserve usage penalty (only meaningful under attack)
+    used_reserve = float(obs.get("reserve_used_prb", 0.0) or 0.0)
+    reserve_ratio = used_reserve / max(1.0, TOTAL_RESILIENCY_PRB)
+    penalty_reserve = weights["mu"] * reserve_ratio
+
+    reward = reward_embb - penalty_latency - penalty_reserve
 
     if return_parts:
         parts = {
             "reward_embb": float(reward_embb),
-            "penalty_queue": float(penalty_queue),
+            "penalty_latency": float(penalty_latency),
             "penalty_reserve": float(penalty_reserve),
-            "reward": float(reward),
+            "thr_ratio": float(thr_ratio),
+            "reserve_ratio": float(reserve_ratio),
         }
         return float(reward), parts
+
     return float(reward)
+
 
 # --------------------------- Replay buffer + model --------------------------- #
 class _ReplayBuffer:
@@ -570,20 +612,31 @@ class ResilientDQNEnv:
         if not self.ric or not self.ric.cell_list:
             return self._blank_obs()
         cell = next(iter(self.ric.cell_list.values()))
+        #max_dl_prb = float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB))
+        #effective_max_prb = float(getattr(cell, "_effective_max_dl_prb", max_dl_prb) or max_dl_prb)
+        #jammed_prb = max(0.0, max_dl_prb - effective_max_prb)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
         base = self._base_quota.get(cell.cell_id, {})
+        #print("Current quotas:", quotas, " Base quotas:", base)
         base_total = float(sum(base.values()) or 0.0)
         reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
-        expected_prb = max(1.0, float(sum(quotas.values()) or 1.0))
-        alloc_total = float(getattr(cell, "allocated_dl_prb", 0.0) or 0.0)
-        effective_ratio = _safe_div(alloc_total, expected_prb)
+        #print("base total:", base_total, " reserve used:", reserve_used)
+        effective_prb_ratio = float((base_total - _jammed_prbs) / base_total)
+        #expected_prb = max(1.0, float(sum(quotas.values()) or 1.0))
+        #print("Expected PRB:", expected_prb)
+        #alloc_total = float(getattr(cell, "allocated_dl_prb", 0.0) or 0.0)
+        #print("Allocated PRB:", alloc_total)
+        #print("expected PRB:", expected_prb)
+        #effective_ratio = _safe_div(alloc_total, expected_prb)
+        #effective_ratio = _safe_div(alloc_total, expected_prb)
+        #print("Effective PRB Ratio:", effective_ratio)
 
         embb = self._aggregate_slice(cell, SL_E)
         urllc = self._aggregate_slice(cell, SL_U)
         return {
             "embb_demand_prb": embb["demand_prb"],
             "urllc_demand_prb": urllc["demand_prb"],
-            "max_dl_prb": float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB)),
+            #"max_dl_prb": max_dl_prb,
             "embb_queue": embb["queue"],
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": urllc["queue"],
@@ -594,8 +647,10 @@ class ResilientDQNEnv:
             "urllc_throughput_max": URLLC_THR_MAX,
             "urllc_latency": urllc["latency"],
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
-            "effective_prb_ratio": effective_ratio,
-            "effective_max_prb": float(getattr(cell, "_effective_max_dl_prb", 0.0) or 0.0),
+            "effective_prb_ratio": effective_prb_ratio,
+            #"effective_max_prb": effective_max_prb,
+            #"jammed_prb": _jammed_prbs,
+            #"jammed_ratio": _safe_div(_jammed_prbs, max_dl_prb),
             "reserve_used_prb": reserve_used,
         }
 
@@ -670,6 +725,11 @@ class ResilientDQNEnv:
             "urllc_latency": 0.0,
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
             "effective_prb_ratio": 0.0,
+            "reserve_used_prb": 0.0,
+            "max_dl_prb": DEFAULT_MAX_DL_PRB,
+            #"effective_max_prb": DEFAULT_MAX_DL_PRB,
+            "jammed_prb": 0.0,
+            "jammed_ratio": 0.0,
         }
 
 
@@ -704,7 +764,7 @@ class xAppResilientDQNAllocator(xAppBase):
         self._episode_return = 0.0
         self._episode_len = 0
         self._episode_counter = 0
-        self._episode_reward_parts = {"reward_embb": 0.0, "penalty_queue": 0.0, "penalty_reserve": 0.0}
+        self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
         self.tb_enable = bool(getattr(settings, "RES_DQN_TB_ENABLE", False))
         self.tb_dir = (getattr(settings, "RES_DQN_TB_DIR", "") or "").strip()
         self._tb_writer = None
@@ -718,7 +778,7 @@ class xAppResilientDQNAllocator(xAppBase):
         self._t = deque(maxlen=400)
         self._hist_reward = deque(maxlen=400)
         self._hist_reward_embb = deque(maxlen=400)
-        self._hist_penalty_queue = deque(maxlen=400)
+        self._hist_penalty_latency = deque(maxlen=400)
         self._hist_penalty_reserve = deque(maxlen=400)
         self._hist_action = deque(maxlen=400)
         self._hist_embb_thr = deque(maxlen=400)
@@ -731,7 +791,6 @@ class xAppResilientDQNAllocator(xAppBase):
         self._hist_reserve_used = deque(maxlen=400)
         self._hist_prb_ratio = deque(maxlen=400)
         self._hist_action_idx = deque(maxlen=400)
-        self._hist_raw_reward = deque(maxlen=400)
         self._hist_episode_return = deque(maxlen=200)
         self._hist_episode_idx = deque(maxlen=200)
         # Per-slice and per-UE histories (lightweight, capped)
@@ -834,10 +893,8 @@ class xAppResilientDQNAllocator(xAppBase):
             self._hist_reward.append(float(reward))
             parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
             self._hist_reward_embb.append(float(parts.get("reward_embb", 0.0)))
-            self._hist_penalty_queue.append(float(parts.get("penalty_queue", 0.0)))
+            self._hist_penalty_latency.append(float(parts.get("penalty_latency", 0.0)))
             self._hist_penalty_reserve.append(float(parts.get("penalty_reserve", 0.0)))
-            # raw_reward is before clipping; fall back to observed reward if missing.
-            self._hist_raw_reward.append(float(parts.get("raw_reward", reward)))
             self._hist_action.append(float(sum(action) if action else 0))
             if action_idx is not None:
                 self._hist_action_idx.append(int(action_idx))
@@ -960,9 +1017,8 @@ class xAppResilientDQNAllocator(xAppBase):
                 deadline = list(self._hist_deadline)
                 reward = list(self._hist_reward)
                 reward_embb = list(self._hist_reward_embb)
-                penalty_queue = list(self._hist_penalty_queue)
+                penalty_latency = list(self._hist_penalty_latency)
                 penalty_reserve = list(self._hist_penalty_reserve)
-                raw_reward = list(self._hist_raw_reward)
                 reserve = list(self._hist_reserve)
                 reserve_used = list(self._hist_reserve_used)
                 prb_ratio = list(self._hist_prb_ratio)
@@ -1005,13 +1061,13 @@ class xAppResilientDQNAllocator(xAppBase):
             reward_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
             if reward_embb:
                 reward_fig.add_trace(go.Scatter(x=t[-len(reward_embb):], y=reward_embb, mode="lines", name="reward embb"))
-            if penalty_queue:
+            if penalty_latency:
                 reward_fig.add_trace(
                     go.Scatter(
-                        x=t[-len(penalty_queue):],
-                        y=[-v for v in penalty_queue],
+                        x=t[-len(penalty_latency):],
+                        y=[-v for v in penalty_latency],
                         mode="lines",
-                        name="queue penalty (neg)",
+                        name="latency penalty (neg)",
                     )
                 )
             if penalty_reserve:
@@ -1023,8 +1079,6 @@ class xAppResilientDQNAllocator(xAppBase):
                         name="reserve penalty (neg)",
                     )
                 )
-            if raw_reward:
-                reward_fig.add_trace(go.Scatter(x=t[-len(raw_reward):], y=raw_reward, mode="lines", name="raw reward"))
             reward_fig.update_layout(title="Reward", xaxis_title="time (s)", yaxis_title="reward")
 
             reserve_fig = go.Figure()
@@ -1154,13 +1208,13 @@ class xAppResilientDQNAllocator(xAppBase):
             lines.append(f"Episode: {ep_id if ep_id is not None else 'unknown'} (idx={ep_idx if ep_idx is not None else '?'})")
         parts = snap.get("reward_parts") or {}
         if parts:
-            total = float(parts.get("reward_embb", 0.0)) - float(parts.get("penalty_queue", 0.0)) - float(
+            total = float(parts.get("reward_embb", 0.0)) - float(parts.get("penalty_latency", 0.0)) - float(
                 parts.get("penalty_reserve", 0.0)
             )
             lines.append(
                 "Reward parts: "
                 f"total={total:.3f}, embb={float(parts.get('reward_embb', 0.0)):.3f}, "
-                f"queue_pen=-{float(parts.get('penalty_queue', 0.0)):.3f}, "
+                f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
                 f"reserve_pen={float(parts.get('penalty_reserve', 0.0)):.3f}"
             )
         reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
@@ -1225,6 +1279,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 f"u_thr={obs.get('urllc_throughput', 0.0):.3f}/{obs.get('urllc_throughput_max', URLLC_THR_MAX):.3f}, "
                 f"u_lat={obs.get('urllc_latency', 0.0):.6f}/{obs.get('urllc_latency_deadline', URLLC_LATENCY_DEADLINE):.6f}, "
                 f"eff_prb_ratio={obs.get('effective_prb_ratio', 0.0):.3f}, "
+                f"reserve_used={obs.get('reserve_used_prb', 0.0):.1f}, "
                 f"prev_action=({prev_action[0]:.1f},{prev_action[1]:.1f})"
             )
             norm_names = [
@@ -1236,6 +1291,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 "u_thr_n",
                 "u_lat_n",
                 "eff_ratio_n",
+                "reserve_used_n",
                 "prev_e_n",
                 "prev_u_n",
             ]
@@ -1264,6 +1320,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 f"u_thr={obs.get('urllc_throughput', 0.0):.3f}/{obs.get('urllc_throughput_max', URLLC_THR_MAX):.3f}, "
                 f"u_lat={obs.get('urllc_latency', 0.0):.6f}/{obs.get('urllc_latency_deadline', URLLC_LATENCY_DEADLINE):.6f}, "
                 f"eff_ratio={obs.get('effective_prb_ratio', 0.0):.3f}, "
+                f"reserve_used={obs.get('reserve_used_prb', 0.0):.1f}, "
                 f"prev_action=({prev[0]:.1f},{prev[1]:.1f})"
             )
             norm_names = [
@@ -1275,6 +1332,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 "u_thr_n",
                 "u_lat_n",
                 "eff_n",
+                "reserve_used_n",
                 "prev_e_n",
                 "prev_u_n",
             ]
