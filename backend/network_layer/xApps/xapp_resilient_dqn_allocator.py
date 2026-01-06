@@ -121,9 +121,9 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
     prev_action: (r_e_prev, r_u_prev)
     """
     denom_prb = max(1.0, float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)))
-    #phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB))
-    #eff_max = float(obs.get("effective_max_prb", phys_max))
-    #jammed_prb = max(0.0, phys_max - eff_max)
+    # phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)) - getattr(settings, "JAM_RESERVED_PRBS", 0)
+    # eff_max = float(obs.get("effective_max_prb", phys_max))
+    # jammed_prb = max(0.0, phys_max - eff_max)
     #print("phys max:", phys_max)
     #print("eff max:", eff_max)
     #print("jammed prb:", _jammed_prbs)
@@ -612,8 +612,12 @@ class ResilientDQNEnv:
         if not self.ric or not self.ric.cell_list:
             return self._blank_obs()
         cell = next(iter(self.ric.cell_list.values()))
-        #max_dl_prb = float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB))
-        #effective_max_prb = float(getattr(cell, "_effective_max_dl_prb", max_dl_prb) or max_dl_prb)
+        max_dl_prb = float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB))
+        effective_max_prb = float(getattr(cell, "_effective_max_dl_prb", max_dl_prb) or max_dl_prb)
+        phys_max = max_dl_prb - getattr(settings, "JAM_RESERVED_PRBS", 0)
+        #print("Phys max PRB:", phys_max, " Effective max PRB:", effective_max_prb)
+        #phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)) - getattr(settings, "JAM_RESERVED_PRBS", 0)
+        jammed_prb = max(0.0, phys_max - effective_max_prb)
         #jammed_prb = max(0.0, max_dl_prb - effective_max_prb)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
         base = self._base_quota.get(cell.cell_id, {})
@@ -621,7 +625,10 @@ class ResilientDQNEnv:
         base_total = float(sum(base.values()) or 0.0)
         reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
         #print("base total:", base_total, " reserve used:", reserve_used)
-        effective_prb_ratio = float((base_total - _jammed_prbs) / base_total)
+        #effective_prb_ratio = float(base_total / (base_total + _jammed_prbs))
+        effective_prb_ratio = min(1.0, _safe_div(effective_max_prb, phys_max))
+        # print("jammed prbs:", _jammed_prbs)
+        # print("base total:", base_total)
         #expected_prb = max(1.0, float(sum(quotas.values()) or 1.0))
         #print("Expected PRB:", expected_prb)
         #alloc_total = float(getattr(cell, "allocated_dl_prb", 0.0) or 0.0)
@@ -648,7 +655,7 @@ class ResilientDQNEnv:
             "urllc_latency": urllc["latency"],
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
             "effective_prb_ratio": effective_prb_ratio,
-            #"effective_max_prb": effective_max_prb,
+            "effective_max_prb": effective_max_prb,
             #"jammed_prb": _jammed_prbs,
             #"jammed_ratio": _safe_div(_jammed_prbs, max_dl_prb),
             "reserve_used_prb": reserve_used,
