@@ -21,7 +21,7 @@ import numpy as np
 
 import settings
 from .xapp_base import xAppBase
-from utils import load_raw_packet_csv
+from utils import load_raw_packet_csv, estimate_throughput
 
 SL_E = getattr(settings, "NETWORK_SLICE_EMBB_NAME", "eMBB")
 SL_U = getattr(settings, "NETWORK_SLICE_URLLC_NAME", "URLLC")
@@ -88,7 +88,7 @@ RESILIENCY_LEVELS = getattr(settings, "RES_DQN_LEVELS", None) or [-9, -3, -1, 0,
 # Prefer jammer-reserved PRBs as the resiliency pool; fall back to explicit config.
 _reserve_from_jammer = int(getattr(settings, "JAM_RESERVED_PRBS", 0) or 0)
 _reserve_from_cfg = int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18))
-_jammed_prbs = int(getattr(settings, "JAM_CONST_PRBS", 0) or 0)
+#_jammed_prbs = int(getattr(settings, "JAM_CONST_PRBS", 0) or 0)
 TOTAL_RESILIENCY_PRB = max(_reserve_from_jammer, _reserve_from_cfg)
 DEFAULT_MAX_DL_PRB = int(getattr(settings, "RES_DQN_MAX_DL_PRB", 218))
 
@@ -158,78 +158,133 @@ def latency_excess(latency: float, deadline: float) -> float:
     return max(0.0, float(latency) / float(deadline) - 1.0)
 
 
+# def compute_reward(
+#     obs: Dict,
+#     action: Tuple[int, int],
+#     prev_action: Tuple[int, int],
+#     weights: Dict,
+#     return_parts: bool = False,
+# ):
+#     """
+#     Jamming-aware resilient reward.
+#     Rewards mitigation under attack, not normal operation.
+#     """
+
+#     #r_e, r_u = action
+
+#     # -------------------------
+#     # Detect jamming via capacity loss
+#     # -------------------------
+#     eff_max = float(obs.get("effective_max_prb", 0.0) or 0.0)
+#     phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB) or DEFAULT_MAX_DL_PRB)
+#     is_jammed = eff_max < phys_max - 1e-6
+
+#     # -------------------------
+#     # No-jamming: neutral / stability reward
+#     # -------------------------
+#     if not is_jammed:
+#         reward = weights.get("w_idle", 0.01)
+#         if return_parts:
+#             return float(reward), {
+#                 "reward_embb": 0.0,
+#                 "penalty_latency": 0.0,
+#                 "penalty_reserve": 0.0,
+#                 "idle_reward": float(reward),
+#             }
+#         return float(reward)
+
+#     # =========================
+#     # Jamming-aware reward
+#     # =========================
+
+#     # ---- Throughput preservation (relative to max achievable)
+#     e_thr = obs.get("embb_throughput", 0.0)
+#     e_ref = obs.get("embb_throughput_max", EMBB_THR_MAX)
+
+#     thr_ratio = _safe_div(e_thr, e_ref)
+#     thr_ratio = min(max(thr_ratio, 0.0), 2.0)
+
+#     reward_embb = weights["w_e"] * math.log1p(3.0 * thr_ratio)
+
+#     # ---- Latency containment (penalize excess only)
+#     excess = latency_excess(
+#         obs.get("urllc_latency", 0.0),
+#         obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
+#     )
+#     penalty_latency = weights["w_u"] * math.log1p(excess)
+
+#     # ---- Reserve usage penalty (only meaningful under attack)
+#     used_reserve = float(obs.get("reserve_used_prb", 0.0) or 0.0)
+#     reserve_ratio = used_reserve / max(1.0, TOTAL_RESILIENCY_PRB)
+#     penalty_reserve = weights["mu"] * reserve_ratio
+
+#     reward = reward_embb - penalty_latency - penalty_reserve
+
+#     if return_parts:
+#         parts = {
+#             "reward_embb": float(reward_embb),
+#             "penalty_latency": float(penalty_latency),
+#             "penalty_reserve": float(penalty_reserve),
+#             "thr_ratio": float(thr_ratio),
+#             "reserve_ratio": float(reserve_ratio),
+#         }
+#         return float(reward), parts
+
+#     return float(reward)
+
+
 def compute_reward(
-    obs: Dict,
-    action: Tuple[int, int],
-    prev_action: Tuple[int, int],
-    weights: Dict,
-    return_parts: bool = False,
+    obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
 ):
     """
-    Jamming-aware resilient reward.
-    Rewards mitigation under attack, not normal operation.
+    obs: simulator outputs after applying the action
+    action: (r_e, r_u)
+    prev_action: (r_e_prev, r_u_prev)
+    weights: dict of reward weights
     """
 
-    #r_e, r_u = action
+    r_e, r_u = action
+    #ach_embb = float(obs.get("embb_achievable_throughput", 0.0) or 0.0)
+    #ach_urllc = float(obs.get("urllc_achievable_throughput", 0.0) or 0.0)
+    #ach_total = ach_embb + ach_urllc
+    ####***base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
+    #print("Base achievable eMBB throughput from obs:", base_ach_embb)
+    #base_ach_urllc = float(obs.get("urllc_base_achievable_throughput", 0.0) or 0.0)
+    #base_ach_total = base_ach_embb + base_ach_urllc
+    # print(
+    #     f"[compute_reward] achievable throughput: eMBB={ach_embb:.2f} bps, "
+    #     f"URLLC={ach_urllc:.2f} bps, total={ach_total:.2f} bps"
+    # )
+    # print(
+    #     f"[compute_reward] base achievable throughput (using base PRBs): "
+    #     f"eMBB={base_ach_embb:.2f} bps, URLLC={base_ach_urllc:.2f} bps, total={base_ach_total:.2f} bps"
+    # )
 
-    # -------------------------
-    # Detect jamming via capacity loss
-    # -------------------------
-    eff_max = float(obs.get("effective_max_prb", 0.0) or 0.0)
-    phys_max = float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB) or DEFAULT_MAX_DL_PRB)
-    is_jammed = eff_max < phys_max - 1e-6
+    embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
+    #print("eMBB max throughput from obs:", embb_max_throughput)
+    
+    #####***target = min(base_ach_embb, embb_max_throughput)
+    #print("Target throughput for reward computation:", target)
 
-    # -------------------------
-    # No-jamming: neutral / stability reward
-    # -------------------------
-    if not is_jammed:
-        reward = weights.get("w_idle", 0.01)
-        if return_parts:
-            return float(reward), {
-                "reward_embb": 0.0,
-                "penalty_latency": 0.0,
-                "penalty_reserve": 0.0,
-                "idle_reward": float(reward),
-            }
-        return float(reward)
+    ###reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
+    reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)))
 
-    # =========================
-    # Jamming-aware reward
-    # =========================
-
-    # ---- Throughput preservation (relative to max achievable)
-    e_thr = obs.get("embb_throughput", 0.0)
-    e_ref = obs.get("embb_throughput_max", EMBB_THR_MAX)
-
-    thr_ratio = _safe_div(e_thr, e_ref)
-    thr_ratio = min(max(thr_ratio, 0.0), 2.0)
-
-    reward_embb = weights["w_e"] * math.log1p(3.0 * thr_ratio)
-
-    # ---- Latency containment (penalize excess only)
     excess = latency_excess(
         obs.get("urllc_latency", 0.0),
         obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
     )
     penalty_latency = weights["w_u"] * math.log1p(excess)
 
-    # ---- Reserve usage penalty (only meaningful under attack)
-    used_reserve = float(obs.get("reserve_used_prb", 0.0) or 0.0)
-    reserve_ratio = used_reserve / max(1.0, TOTAL_RESILIENCY_PRB)
-    penalty_reserve = weights["mu"] * reserve_ratio
+    penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
 
     reward = reward_embb - penalty_latency - penalty_reserve
-
     if return_parts:
         parts = {
             "reward_embb": float(reward_embb),
             "penalty_latency": float(penalty_latency),
             "penalty_reserve": float(penalty_reserve),
-            "thr_ratio": float(thr_ratio),
-            "reserve_ratio": float(reserve_ratio),
         }
         return float(reward), parts
-
     return float(reward)
 
 
@@ -365,6 +420,7 @@ class ResilientDQNEnv:
         # Jammer reports effective PRBs excluding reserved+jam; add reserved back to get usable capacity for reserve pool.
         eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
         max_prb_phys = eff_max + float(_reserve_from_jammer)
+        print("Effective max PRB from cell:", eff_max, " Physical max PRB:", max_prb_phys)
         base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
         base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
         base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
@@ -379,7 +435,7 @@ class ResilientDQNEnv:
         cur_total = cur_e + cur_u
         max_prb = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
         pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
-        #print("Base quotas:", base_e, base_u, " Current quotas:", cur_e, cur_u, " Max PRB:", max_prb)
+        print("Base quotas:", base_e, base_u, " Current quotas:", cur_e, cur_u, " Max PRB:", max_prb)
 
         mask = []
         for de, du in self.actions:
@@ -638,6 +694,8 @@ class ResilientDQNEnv:
         #effective_ratio = _safe_div(alloc_total, expected_prb)
         #print("Effective PRB Ratio:", effective_ratio)
 
+        # embb = self._aggregate_slice(cell, SL_E, effective_prb_ratio)
+        # urllc = self._aggregate_slice(cell, SL_U, effective_prb_ratio)
         embb = self._aggregate_slice(cell, SL_E)
         urllc = self._aggregate_slice(cell, SL_U)
         return {
@@ -650,8 +708,12 @@ class ResilientDQNEnv:
             "urllc_queue_max": URLLC_QUEUE_MAX,
             "embb_throughput": embb["throughput"],
             "embb_throughput_max": EMBB_THR_MAX,
+            #"embb_achievable_throughput": embb.get("achievable_throughput", 0.0),
+            "embb_base_achievable_throughput": embb.get("base_achievable_throughput", 0.0),
             "urllc_throughput": urllc["throughput"],
             "urllc_throughput_max": URLLC_THR_MAX,
+            #"urllc_achievable_throughput": urllc.get("achievable_throughput", 0.0),
+            "urllc_base_achievable_throughput": urllc.get("base_achievable_throughput", 0.0),
             "urllc_latency": urllc["latency"],
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
             "effective_prb_ratio": effective_prb_ratio,
@@ -683,6 +745,48 @@ class ResilientDQNEnv:
     def _target_cell(self):
         return next(iter(self.sim_engine.cell_list.values())) if self.sim_engine else None
 
+    # def _aggregate_slice(self, cell, slice_name: str, effective_prb_ratio: float) -> Dict[str, float]:
+    #     demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
+    #     demand = 0.0
+    #     queue = 0.0
+    #     throughput = 0.0
+    #     #achievable_throughput = 0.0
+    #     base_achievable_throughput = 0.0
+    #     latencies = []
+    #     ues = [
+    #         ue
+    #         for ue in getattr(cell, "connected_ue_list", {}).values()
+    #         if getattr(ue, "slice_type", None) == slice_name
+    #     ]
+    #     ue_count = max(1, len(ues))  # avoid divide-by-zero below
+    #     base_quota = float((self._base_quota.get(cell.cell_id, {}) or {}).get(slice_name, 0.0))
+    #     print(f"Base quota for slice {slice_name}: {base_quota} PRBs")
+    #     #base_prb_per_ue = (base_quota * effective_prb_ratio) / ue_count
+    #     base_prb_per_ue = base_quota / ue_count
+    #     #print(f"Base quota for slice {slice_name}: {base_quota} PRBs, per UE: {base_prb_per_ue} PRBs")
+    #     for ue in ues:
+    #         imsi = getattr(ue, "ue_imsi", None)
+    #         if imsi:
+    #             demand += float(demand_map.get(imsi, 0.0) or 0.0)
+    #         throughput += float(getattr(ue, "served_downlink_bitrate", 0.0) or 0.0)
+    #         #achievable_throughput += float(getattr(ue, "achievable_downlink_bitrate", 0.0) or 0.0)
+    #         queue += float(getattr(ue, "dl_buffer_bytes", 0.0) or 0.0)
+    #         latencies.append(float(getattr(ue, "downlink_latency", 0.0) or 0.0))
+    #         mcs = getattr(ue, "downlink_mcs_data", None) or {}
+    #         mod_order = float(mcs.get("modulation_order", 0.0) or 0.0)
+    #         code_rate = float(mcs.get("target_code_rate", 0.0) or 0.0)
+    #         if mod_order > 0 and code_rate > 0 and base_prb_per_ue > 0:
+    #             base_achievable_throughput += float(estimate_throughput(mod_order, code_rate, base_prb_per_ue))
+    #     latency = float(np.mean(latencies)) if latencies else 0.0
+    #     return {
+    #         "demand_prb": demand,
+    #         "queue": queue,
+    #         "throughput": throughput,
+    #         #"achievable_throughput": achievable_throughput,
+    #         "base_achievable_throughput": base_achievable_throughput,
+    #         "latency": latency,
+    #     }
+        
     def _aggregate_slice(self, cell, slice_name: str) -> Dict[str, float]:
         demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
         demand = 0.0
@@ -727,8 +831,12 @@ class ResilientDQNEnv:
             "urllc_queue_max": URLLC_QUEUE_MAX,
             "embb_throughput": 0.0,
             "embb_throughput_max": EMBB_THR_MAX,
+            #"embb_achievable_throughput": 0.0,
+            "embb_base_achievable_throughput": 0.0,
             "urllc_throughput": 0.0,
             "urllc_throughput_max": URLLC_THR_MAX,
+            #"urllc_achievable_throughput": 0.0,
+            "urllc_base_achievable_throughput": 0.0,
             "urllc_latency": 0.0,
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
             "effective_prb_ratio": 0.0,
