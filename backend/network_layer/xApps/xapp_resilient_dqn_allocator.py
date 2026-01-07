@@ -169,6 +169,9 @@ def compute_reward(
     penalty_latency = weights["w_u"] * math.log1p(excess)
 
     penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
+    
+    
+    #print("weight_e:", weights["w_e"], " weight_u:", weights["w_u"], " mu:", weights["mu"])
 
     reward = reward_embb - penalty_latency - penalty_reserve
     if return_parts:
@@ -637,7 +640,7 @@ class ResilientDQNEnv:
     ) -> Tuple[float, Dict[str, float]]:
         weights = {
             "w_e": float(getattr(settings, "RES_DQN_W_E", 1.0)),
-            "w_u": float(getattr(settings, "RES_DQN_W_U", 1.5)),
+            "w_u": float(getattr(settings, "RES_DQN_W_U", 1.0)),
             "lambda_latency": float(getattr(settings, "RES_DQN_LAMBDA_LAT", 2.0)),
             "mu": float(getattr(settings, "RES_DQN_MU_RESERVE", 0.5)),
         }

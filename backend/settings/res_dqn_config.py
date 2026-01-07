@@ -83,7 +83,7 @@ except Exception:
 # Reward weights
 try:
     RES_DQN_W_E = float(os.getenv("RES_DQN_W_E", "1.0"))
-    RES_DQN_W_U = float(os.getenv("RES_DQN_W_U", "1.5"))
+    RES_DQN_W_U = float(os.getenv("RES_DQN_W_U", "1.0"))
     RES_DQN_LAMBDA_LAT = float(os.getenv("RES_DQN_LAMBDA_LAT", "2.0"))
     RES_DQN_MU_RESERVE = float(os.getenv("RES_DQN_MU_RESERVE", "0.5"))
 except Exception:
