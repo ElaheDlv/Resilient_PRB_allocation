@@ -514,15 +514,15 @@ class BaseStation:
                 cell.base_dl_prb_quota = base_quota
                 #print(f"Jammer scaling cell {cell.cell_id} quotas to {base_quota}")
                 # Align live quotas to the jammed baseline once; allocator will adjust thereafter.
-                cell.slice_dl_prb_quota = dict(base_quota)
+                #cell.slice_dl_prb_quota = dict(base_quota)
                 cell._jam_was_active = True
             elif not active and getattr(cell, "_jam_was_active", False):
                 # Restore base quotas when coming out of a jam window.
                 cell.base_dl_prb_quota = dict(base_quota)
-                cell.slice_dl_prb_quota = dict(base_quota)
+                #cell.slice_dl_prb_quota = dict(base_quota)
                 cell._jam_was_active = False
             # Do not overwrite live quotas; just reduce effective capacity.
-            cell.jammed_dl_prb = reserved + jam_active
+            #cell.jammed_dl_prb = reserved + jam_active
             cell._effective_max_dl_prb = target_max
             
         #print(f"Jamming active: {active}")

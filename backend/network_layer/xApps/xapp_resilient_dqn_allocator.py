@@ -429,13 +429,15 @@ class ResilientDQNEnv:
             base_e = float(base.get(SL_E, 0) or 0.0)
             base_u = float(base.get(SL_U, 0) or 0.0)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-        cur_e = float(quotas.get(SL_E, base_e) or base_e)
-        cur_u = float(quotas.get(SL_U, base_u) or base_u)
+        # cur_e = float(quotas.get(SL_E, base_e) or base_e)
+        # cur_u = float(quotas.get(SL_U, base_u) or base_u)
+        cur_e = float(quotas.get(SL_E, 0) or 0)
+        cur_u = float(quotas.get(SL_U, 0) or 0)
         base_total = base_e + base_u
         cur_total = cur_e + cur_u
         max_prb = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
         pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
-        print("Base quotas:", base_e, base_u, " Current quotas:", cur_e, cur_u, " Max PRB:", max_prb)
+        #print("Base quotas:", base_e, base_u, " Current quotas:", cur_e, cur_u, " Max PRB:", max_prb)
 
         mask = []
         for de, du in self.actions:
@@ -631,11 +633,15 @@ class ResilientDQNEnv:
                 base = self._base_quota.get(cell.cell_id, {})
                 base_e = float(base.get(SL_E, 0) or 0.0)
                 base_u = float(base.get(SL_U, 0) or 0.0)
+            #print("Base quotas for cell", cell.cell_id, " eMBB:", base_e, " URLLC:", base_u)
             base_total = base_e + base_u
             quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-            cur_e = float(quotas.get(SL_E, base_e) or base_e)
-            cur_u = float(quotas.get(SL_U, base_u) or base_u)
+            # cur_e = float(quotas.get(SL_E, base_e) or base_e)
+            # cur_u = float(quotas.get(SL_U, base_u) or base_u)
+            cur_e = float(quotas.get(SL_E, 0) or 0)
+            cur_u = float(quotas.get(SL_U, 0) or 0)
             cur_total = cur_e + cur_u
+            #print("Current quotas for cell", cell.cell_id, " eMBB:", cur_e, " URLLC:", cur_u)
             eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
             max_prb_phys = eff_max + float(_reserve_from_jammer)
             # Reserve pool is fixed; jamming affects baseline but not available reserve.
@@ -643,23 +649,25 @@ class ResilientDQNEnv:
 
             de, du = action
             # Apply deltas relative to current quotas but never below baseline
-            new_e = max(base_e, cur_e + float(de))
-            new_u = max(base_u, cur_u + float(du))
-            delta_e = new_e - cur_e
-            delta_u = new_u - cur_u
-            delta_sum = delta_e + delta_u
-            avail_extra = max(0.0, capacity - cur_total)
-            if delta_sum > avail_extra and delta_sum > 0:
-                scale = avail_extra / delta_sum
-                delta_e *= scale
-                delta_u *= scale
-            new_e = cur_e + delta_e
-            new_u = cur_u + delta_u
-            total = new_e + new_u
-            if total > capacity and total > 0:
-                scale = capacity / total
-                new_e *= scale
-                new_u *= scale
+            new_e = cur_e + float(de)
+            new_u = cur_u + float(du)
+            # new_e = max(base_e, cur_e + float(de))
+            # new_u = max(base_u, cur_u + float(du))
+            # delta_e = new_e - cur_e
+            # delta_u = new_u - cur_u
+            # delta_sum = delta_e + delta_u
+            # avail_extra = max(0.0, capacity - cur_total)
+            # if delta_sum > avail_extra and delta_sum > 0:
+            #     scale = avail_extra / delta_sum
+            #     delta_e *= scale
+            #     delta_u *= scale
+            # new_e = cur_e + delta_e
+            # new_u = cur_u + delta_u
+            # total = new_e + new_u
+            # if total > capacity and total > 0:
+            #     scale = capacity / total
+            #     new_e *= scale
+            #     new_u *= scale
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
             cell.slice_dl_prb_quota = quotas
 
@@ -1026,6 +1034,7 @@ class xAppResilientDQNAllocator(xAppBase):
             cell = getattr(self._env, "_target_cell", lambda: None)()
             if cell:
                 quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+                #print("Current quotas for cell", cell.cell_id, " eMBB:", quotas.get(SL_E, 0), " URLLC:", quotas.get(SL_U, 0))
                 alloc = dict(getattr(cell, "allocated_dl_prb_by_slice", {}) or {})
                 demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
                 alloc_map = getattr(cell, "prb_ue_allocation_dict", {}) or {}
