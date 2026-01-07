@@ -526,6 +526,7 @@ class BaseStation:
             cell._effective_max_dl_prb = target_max
             
         #print(f"Jamming active: {active}")
+        print("base quota:", cell.base_dl_prb_quota)
 
     def on_ue_application_traffic(self, ue, traffic_data):
         url = traffic_data["url"]

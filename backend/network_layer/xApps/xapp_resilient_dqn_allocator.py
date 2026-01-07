@@ -263,10 +263,10 @@ def compute_reward(
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     #print("eMBB max throughput from obs:", embb_max_throughput)
     
-    #####target = min(base_ach_embb, embb_max_throughput)
+    target = min(base_ach_embb, embb_max_throughput)
     #print("Target throughput for reward computation:", target)
 
-    ####reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
+    #####reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
     reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)))
 
     excess = latency_excess(
@@ -684,8 +684,12 @@ class ResilientDQNEnv:
         jammed_prb = max(0.0, phys_max - effective_max_prb)
         #jammed_prb = max(0.0, max_dl_prb - effective_max_prb)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-        base = self._base_quota.get(cell.cell_id, {})
-        #print("Current quotas:", quotas, " Base quotas:", base)
+        base = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
+        # base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
+        # base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
+        #base = self._base_quota.get(cell.cell_id, {})
+        # print("Base eMBB quota:", base_e, " Base URLLC quota:", base_u)
+        # print("Current quotas:", quotas, " Base quotas:", base)
         base_total = float(sum(base.values()) or 0.0)
         reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
         #print("base total:", base_total, " reserve used:", reserve_used)
