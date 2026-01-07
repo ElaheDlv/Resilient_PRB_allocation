@@ -248,7 +248,7 @@ def compute_reward(
     #ach_urllc = float(obs.get("urllc_achievable_throughput", 0.0) or 0.0)
     #ach_total = ach_embb + ach_urllc
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
-    #print("Base achievable eMBB throughput from obs:", base_ach_embb)
+    print("Base achievable eMBB throughput from obs:", base_ach_embb)
     #base_ach_urllc = float(obs.get("urllc_base_achievable_throughput", 0.0) or 0.0)
     #base_ach_total = base_ach_embb + base_ach_urllc
     # print(
@@ -264,10 +264,10 @@ def compute_reward(
     #print("eMBB max throughput from obs:", embb_max_throughput)
     
     target = min(base_ach_embb, embb_max_throughput)
-    #print("Target throughput for reward computation:", target)
+    print("Target throughput for reward computation:", target)
 
-    #####reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
-    reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)))
+    reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
+    #reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)))
 
     excess = latency_excess(
         obs.get("urllc_latency", 0.0),
@@ -706,10 +706,10 @@ class ResilientDQNEnv:
         #effective_ratio = _safe_div(alloc_total, expected_prb)
         #print("Effective PRB Ratio:", effective_ratio)
 
-        # embb = self._aggregate_slice(cell, SL_E, effective_prb_ratio)
-        # urllc = self._aggregate_slice(cell, SL_U, effective_prb_ratio)
-        embb = self._aggregate_slice(cell, SL_E)
-        urllc = self._aggregate_slice(cell, SL_U)
+        embb = self._aggregate_slice(cell, SL_E, effective_prb_ratio)
+        urllc = self._aggregate_slice(cell, SL_U, effective_prb_ratio)
+        # embb = self._aggregate_slice(cell, SL_E)
+        # urllc = self._aggregate_slice(cell, SL_U)
         return {
             "embb_demand_prb": embb["demand_prb"],
             "urllc_demand_prb": urllc["demand_prb"],
@@ -757,70 +757,74 @@ class ResilientDQNEnv:
     def _target_cell(self):
         return next(iter(self.sim_engine.cell_list.values())) if self.sim_engine else None
 
-    # def _aggregate_slice(self, cell, slice_name: str, effective_prb_ratio: float) -> Dict[str, float]:
-    #     demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
-    #     demand = 0.0
-    #     queue = 0.0
-    #     throughput = 0.0
-    #     #achievable_throughput = 0.0
-    #     base_achievable_throughput = 0.0
-    #     latencies = []
-    #     ues = [
-    #         ue
-    #         for ue in getattr(cell, "connected_ue_list", {}).values()
-    #         if getattr(ue, "slice_type", None) == slice_name
-    #     ]
-    #     ue_count = max(1, len(ues))  # avoid divide-by-zero below
-    #     base_quota = float((self._base_quota.get(cell.cell_id, {}) or {}).get(slice_name, 0.0))
-    #     print(f"Base quota for slice {slice_name}: {base_quota} PRBs")
-    #     #base_prb_per_ue = (base_quota * effective_prb_ratio) / ue_count
-    #     base_prb_per_ue = base_quota / ue_count
-    #     #print(f"Base quota for slice {slice_name}: {base_quota} PRBs, per UE: {base_prb_per_ue} PRBs")
-    #     for ue in ues:
-    #         imsi = getattr(ue, "ue_imsi", None)
-    #         if imsi:
-    #             demand += float(demand_map.get(imsi, 0.0) or 0.0)
-    #         throughput += float(getattr(ue, "served_downlink_bitrate", 0.0) or 0.0)
-    #         #achievable_throughput += float(getattr(ue, "achievable_downlink_bitrate", 0.0) or 0.0)
-    #         queue += float(getattr(ue, "dl_buffer_bytes", 0.0) or 0.0)
-    #         latencies.append(float(getattr(ue, "downlink_latency", 0.0) or 0.0))
-    #         mcs = getattr(ue, "downlink_mcs_data", None) or {}
-    #         mod_order = float(mcs.get("modulation_order", 0.0) or 0.0)
-    #         code_rate = float(mcs.get("target_code_rate", 0.0) or 0.0)
-    #         if mod_order > 0 and code_rate > 0 and base_prb_per_ue > 0:
-    #             base_achievable_throughput += float(estimate_throughput(mod_order, code_rate, base_prb_per_ue))
-    #     latency = float(np.mean(latencies)) if latencies else 0.0
-    #     return {
-    #         "demand_prb": demand,
-    #         "queue": queue,
-    #         "throughput": throughput,
-    #         #"achievable_throughput": achievable_throughput,
-    #         "base_achievable_throughput": base_achievable_throughput,
-    #         "latency": latency,
-    #     }
-        
-    def _aggregate_slice(self, cell, slice_name: str) -> Dict[str, float]:
+    def _aggregate_slice(self, cell, slice_name: str, effective_prb_ratio: float) -> Dict[str, float]:
         demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
         demand = 0.0
         queue = 0.0
         throughput = 0.0
+        #achievable_throughput = 0.0
+        base_achievable_throughput = 0.0
         latencies = []
-        for ue in getattr(cell, "connected_ue_list", {}).values():
-            if getattr(ue, "slice_type", None) != slice_name:
-                continue
+        ues = [
+            ue
+            for ue in getattr(cell, "connected_ue_list", {}).values()
+            if getattr(ue, "slice_type", None) == slice_name
+        ]
+        ue_count = max(1, len(ues))  # avoid divide-by-zero below
+        #base_quota = float(dict(getattr(cell, "base_dl_prb_quota", {}).get(slice_name, 0.0)), float((self._base_quota.get(cell.cell_id, {}) or {}).get(slice_name, 0.0)))
+        #base_quota = float((self._base_quota.get(cell.cell_id, {}) or {}).get(slice_name, 0.0))
+        quota_map = dict(getattr(cell, "base_dl_prb_quota", {}) or self._base_quota.get(cell.cell_id, {}) or {})
+        base_quota = float(quota_map.get(slice_name, 0.0) or 0.0)
+
+        #print(f"Base quota for slice {slice_name}: {base_quota} PRBs")
+        #base_prb_per_ue = (base_quota * effective_prb_ratio) / ue_count
+        base_prb_per_ue = base_quota / ue_count
+        #print(f"Base quota for slice {slice_name}: {base_quota} PRBs, per UE: {base_prb_per_ue} PRBs")
+        for ue in ues:
             imsi = getattr(ue, "ue_imsi", None)
             if imsi:
                 demand += float(demand_map.get(imsi, 0.0) or 0.0)
             throughput += float(getattr(ue, "served_downlink_bitrate", 0.0) or 0.0)
+            #achievable_throughput += float(getattr(ue, "achievable_downlink_bitrate", 0.0) or 0.0)
             queue += float(getattr(ue, "dl_buffer_bytes", 0.0) or 0.0)
             latencies.append(float(getattr(ue, "downlink_latency", 0.0) or 0.0))
+            mcs = getattr(ue, "downlink_mcs_data", None) or {}
+            mod_order = float(mcs.get("modulation_order", 0.0) or 0.0)
+            code_rate = float(mcs.get("target_code_rate", 0.0) or 0.0)
+            if mod_order > 0 and code_rate > 0 and base_prb_per_ue > 0:
+                base_achievable_throughput += float(estimate_throughput(mod_order, code_rate, base_prb_per_ue))
         latency = float(np.mean(latencies)) if latencies else 0.0
         return {
             "demand_prb": demand,
             "queue": queue,
             "throughput": throughput,
+            #"achievable_throughput": achievable_throughput,
+            "base_achievable_throughput": base_achievable_throughput,
             "latency": latency,
         }
+        
+    # def _aggregate_slice(self, cell, slice_name: str) -> Dict[str, float]:
+    #     demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
+    #     demand = 0.0
+    #     queue = 0.0
+    #     throughput = 0.0
+    #     latencies = []
+    #     for ue in getattr(cell, "connected_ue_list", {}).values():
+    #         if getattr(ue, "slice_type", None) != slice_name:
+    #             continue
+    #         imsi = getattr(ue, "ue_imsi", None)
+    #         if imsi:
+    #             demand += float(demand_map.get(imsi, 0.0) or 0.0)
+    #         throughput += float(getattr(ue, "served_downlink_bitrate", 0.0) or 0.0)
+    #         queue += float(getattr(ue, "dl_buffer_bytes", 0.0) or 0.0)
+    #         latencies.append(float(getattr(ue, "downlink_latency", 0.0) or 0.0))
+    #     latency = float(np.mean(latencies)) if latencies else 0.0
+    #     return {
+    #         "demand_prb": demand,
+    #         "queue": queue,
+    #         "throughput": throughput,
+    #         "latency": latency,
+    #     }
 
     def _compute_reward(
         self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]
