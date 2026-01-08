@@ -1,7 +1,7 @@
 """Resilient PRB allocator using a DQN agent with a fixed action/state space.
 
 Action space (resiliency PRB split across eMBB/URLLC):
-RESILIENCY_LEVELS = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+RESILIENCY_LEVELS = [-9, -3, -1, 0, 1, 3, 9]
 TOTAL_RESILIENCY_PRB = 18
 """
 
@@ -157,6 +157,7 @@ def compute_reward(
     """
 
     r_e, r_u = action
+    print("Action taken: eMBB delta PRB:", r_e, " URLLC delta PRB:", r_u)
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)

@@ -21,7 +21,7 @@ import numpy as np
 
 import settings
 from .xapp_base import xAppBase
-from utils import load_raw_packet_csv
+from utils import load_raw_packet_csv, estimate_throughput
 
 SL_E = getattr(settings, "NETWORK_SLICE_EMBB_NAME", "eMBB")
 SL_U = getattr(settings, "NETWORK_SLICE_URLLC_NAME", "URLLC")
@@ -140,6 +140,7 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
         _safe_div(obs.get("urllc_throughput", 0.0), obs.get("urllc_throughput_max", URLLC_THR_MAX)),
         lat_log,
         float(obs.get("effective_prb_ratio", 0.0)),
+        min(1.0, _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)),
         _safe_div(prev_action[0], TOTAL_RESILIENCY_PRB),
         _safe_div(prev_action[1], TOTAL_RESILIENCY_PRB),
     ]
@@ -165,11 +166,10 @@ def compute_reward(
 
     r_e, r_u = action
 
-    # Normalized eMBB throughput keeps scale bounded and sensitive to jamming-induced drops.
-    e_thr = obs.get("embb_throughput", 0.0)
-    e_max = obs.get("embb_throughput_max", EMBB_THR_MAX)
-    thr_ratio = _safe_div(e_thr, e_max)
-    reward_embb = weights["w_e"] * math.log1p(thr_ratio * 15.0)
+    base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
+    embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
+    target = min(base_ach_embb, embb_max_throughput)
+    reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
 
     excess = latency_excess(
         obs.get("urllc_latency", 0.0),
@@ -344,7 +344,7 @@ class ResilientQRDQNEnv:
         for de, du in self.actions:
             new_e = cur_e + de
             new_u = cur_u + du
-            if new_e < base_e_eff or new_u < base_u_eff:
+            if new_e < base_e or new_u < base_u:
                 mask.append(False)
                 continue
             if new_e + new_u > max_prb + 1e-9:
@@ -524,9 +524,13 @@ class ResilientQRDQNEnv:
     def _apply_action(self, action: Tuple[int, int]):
         """Apply resiliency PRBs on top of the snapshot baseline quotas."""
         for cell in self.ric.cell_list.values():
-            base = self._base_quota.get(cell.cell_id, {})
-            base_e = float(base.get(SL_E, 0))
-            base_u = float(base.get(SL_U, 0))
+            base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
+            base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
+            base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
+            if base_e == 0 and base_u == 0:
+                base = self._base_quota.get(cell.cell_id, {})
+                base_e = float(base.get(SL_E, 0) or 0.0)
+                base_u = float(base.get(SL_U, 0) or 0.0)
             base_total = base_e + base_u
             quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
             cur_e = float(quotas.get(SL_E, base_e) or base_e)
@@ -534,27 +538,13 @@ class ResilientQRDQNEnv:
             cur_total = cur_e + cur_u
             eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
             max_prb_phys = eff_max + float(_reserve_from_jammer)
+            # Reserve pool is fixed; jamming affects baseline but not available reserve.
             capacity = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
 
             de, du = action
             # Apply deltas relative to current quotas but never below baseline
-            new_e = max(base_e, cur_e + float(de))
-            new_u = max(base_u, cur_u + float(du))
-            delta_e = new_e - cur_e
-            delta_u = new_u - cur_u
-            delta_sum = delta_e + delta_u
-            avail_extra = max(0.0, capacity - cur_total)
-            if delta_sum > avail_extra and delta_sum > 0:
-                scale = avail_extra / delta_sum
-                delta_e *= scale
-                delta_u *= scale
-            new_e = cur_e + delta_e
-            new_u = cur_u + delta_u
-            total = new_e + new_u
-            if total > capacity and total > 0:
-                scale = capacity / total
-                new_e *= scale
-                new_u *= scale
+            new_e = cur_e + float(de)
+            new_u = cur_u + float(du)
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
             cell.slice_dl_prb_quota = quotas
 
@@ -563,33 +553,38 @@ class ResilientQRDQNEnv:
         if not self.ric or not self.ric.cell_list:
             return self._blank_obs()
         cell = next(iter(self.ric.cell_list.values()))
+        max_dl_prb = float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB))
+        effective_max_prb = float(getattr(cell, "_effective_max_dl_prb", max_dl_prb) or max_dl_prb)
+        phys_max = max_dl_prb - getattr(settings, "JAM_RESERVED_PRBS", 0)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-        base = self._base_quota.get(cell.cell_id, {})
+        base = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
         base_total = float(sum(base.values()) or 0.0)
         reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
-        expected_prb = max(1.0, float(sum(quotas.values()) or 1.0))
-        alloc_total = float(getattr(cell, "allocated_dl_prb", 0.0) or 0.0)
-        effective_ratio = _safe_div(alloc_total, expected_prb)
+        effective_prb_ratio = min(1.0, _safe_div(effective_max_prb, phys_max))
 
-        embb = self._aggregate_slice(cell, SL_E)
-        urllc = self._aggregate_slice(cell, SL_U)
+        embb = self._aggregate_slice(cell, SL_E, effective_prb_ratio)
+        urllc = self._aggregate_slice(cell, SL_U, effective_prb_ratio)
         return {
             "embb_demand_prb": embb["demand_prb"],
             "urllc_demand_prb": urllc["demand_prb"],
-            "max_dl_prb": float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB)),
             "embb_queue": embb["queue"],
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": urllc["queue"],
             "urllc_queue_max": URLLC_QUEUE_MAX,
             "embb_throughput": embb["throughput"],
             "embb_throughput_max": EMBB_THR_MAX,
+            "embb_base_achievable_throughput": embb.get("base_achievable_throughput", 0.0),
             "urllc_throughput": urllc["throughput"],
             "urllc_throughput_max": URLLC_THR_MAX,
+            "urllc_base_achievable_throughput": urllc.get("base_achievable_throughput", 0.0),
             "urllc_latency": urllc["latency"],
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
-            "effective_prb_ratio": effective_ratio,
-            "effective_max_prb": float(getattr(cell, "_effective_max_dl_prb", 0.0) or 0.0),
+            "effective_prb_ratio": effective_prb_ratio,
+            "effective_max_prb": effective_max_prb,
             "reserve_used_prb": reserve_used,
+            "max_dl_prb": max_dl_prb,
+            "jammed_prb": 0.0,
+            "jammed_ratio": 0.0,
         }
 
     def _traces_consumed(self) -> bool:
@@ -614,26 +609,41 @@ class ResilientQRDQNEnv:
     def _target_cell(self):
         return next(iter(self.sim_engine.cell_list.values())) if self.sim_engine else None
 
-    def _aggregate_slice(self, cell, slice_name: str) -> Dict[str, float]:
+    def _aggregate_slice(self, cell, slice_name: str, effective_prb_ratio: float) -> Dict[str, float]:
         demand_map = getattr(cell, "dl_total_prb_demand", {}) or {}
         demand = 0.0
         queue = 0.0
         throughput = 0.0
+        base_achievable_throughput = 0.0
         latencies = []
-        for ue in getattr(cell, "connected_ue_list", {}).values():
-            if getattr(ue, "slice_type", None) != slice_name:
-                continue
+        ues = [
+            ue
+            for ue in getattr(cell, "connected_ue_list", {}).values()
+            if getattr(ue, "slice_type", None) == slice_name
+        ]
+        ue_count = max(1, len(ues))
+        quota_map = dict(getattr(cell, "base_dl_prb_quota", {}) or self._base_quota.get(cell.cell_id, {}) or {})
+        base_quota = float(quota_map.get(slice_name, 0.0) or 0.0)
+        base_prb_per_ue = base_quota / ue_count
+
+        for ue in ues:
             imsi = getattr(ue, "ue_imsi", None)
             if imsi:
                 demand += float(demand_map.get(imsi, 0.0) or 0.0)
             throughput += float(getattr(ue, "served_downlink_bitrate", 0.0) or 0.0)
             queue += float(getattr(ue, "dl_buffer_bytes", 0.0) or 0.0)
             latencies.append(float(getattr(ue, "downlink_latency", 0.0) or 0.0))
+            mcs = getattr(ue, "downlink_mcs_data", None) or {}
+            mod_order = float(mcs.get("modulation_order", 0.0) or 0.0)
+            code_rate = float(mcs.get("target_code_rate", 0.0) or 0.0)
+            if mod_order > 0 and code_rate > 0 and base_prb_per_ue > 0:
+                base_achievable_throughput += float(estimate_throughput(mod_order, code_rate, base_prb_per_ue))
         latency = float(np.mean(latencies)) if latencies else 0.0
         return {
             "demand_prb": demand,
             "queue": queue,
             "throughput": throughput,
+            "base_achievable_throughput": base_achievable_throughput,
             "latency": latency,
         }
 
@@ -660,11 +670,17 @@ class ResilientQRDQNEnv:
             "urllc_queue_max": URLLC_QUEUE_MAX,
             "embb_throughput": 0.0,
             "embb_throughput_max": EMBB_THR_MAX,
+            "embb_base_achievable_throughput": 0.0,
             "urllc_throughput": 0.0,
             "urllc_throughput_max": URLLC_THR_MAX,
+            "urllc_base_achievable_throughput": 0.0,
             "urllc_latency": 0.0,
             "urllc_latency_deadline": URLLC_LATENCY_DEADLINE,
             "effective_prb_ratio": 0.0,
+            "reserve_used_prb": 0.0,
+            "max_dl_prb": DEFAULT_MAX_DL_PRB,
+            "jammed_prb": 0.0,
+            "jammed_ratio": 0.0,
         }
 
 
@@ -733,6 +749,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._hist_reserve_used = deque(maxlen=400)
         self._hist_prb_ratio = deque(maxlen=400)
         self._hist_action_idx = deque(maxlen=400)
+        self._hist_episode_return = deque(maxlen=200)
+        self._hist_episode_idx = deque(maxlen=200)
         # Per-slice and per-UE histories (lightweight, capped)
         self._slice_prb = defaultdict(lambda: deque(maxlen=400))
         self._slice_tx = defaultdict(lambda: deque(maxlen=400))
@@ -813,6 +831,9 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._last_state = next_state
         self._episode_done = bool(done)
         if done:
+            with self._lock:
+                self._hist_episode_idx.append(self._episode_counter)
+                self._hist_episode_return.append(self._episode_return)
             self._episode_counter += 1
             self._reset_episode_trackers()
 
@@ -960,6 +981,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 reserve_used = list(self._hist_reserve_used)
                 prb_ratio = list(self._hist_prb_ratio)
                 action_idx = list(self._hist_action_idx)
+                episode_returns = list(self._hist_episode_return)
+                episode_idx = list(self._hist_episode_idx)
                 slice_prb = {k: list(v) for k, v in self._slice_prb.items()}
                 #slice_tx = {k: list(v) for k, v in self._slice_tx.items()}
                 slice_sat = {k: list(v) for k, v in self._slice_sat.items()}
@@ -1214,6 +1237,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 f"u_thr={obs.get('urllc_throughput', 0.0):.3f}/{obs.get('urllc_throughput_max', URLLC_THR_MAX):.3f}, "
                 f"u_lat={obs.get('urllc_latency', 0.0):.6f}/{obs.get('urllc_latency_deadline', URLLC_LATENCY_DEADLINE):.6f}, "
                 f"eff_prb_ratio={obs.get('effective_prb_ratio', 0.0):.3f}, "
+                f"reserve_used={obs.get('reserve_used_prb', 0.0):.1f}, "
                 f"prev_action=({prev_action[0]:.1f},{prev_action[1]:.1f})"
             )
             norm_names = [
@@ -1225,6 +1249,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 "u_thr_n",
                 "u_lat_n",
                 "eff_ratio_n",
+                "reserve_used_n",
                 "prev_e_n",
                 "prev_u_n",
             ]
@@ -1253,6 +1278,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 f"u_thr={obs.get('urllc_throughput', 0.0):.3f}/{obs.get('urllc_throughput_max', URLLC_THR_MAX):.3f}, "
                 f"u_lat={obs.get('urllc_latency', 0.0):.6f}/{obs.get('urllc_latency_deadline', URLLC_LATENCY_DEADLINE):.6f}, "
                 f"eff_ratio={obs.get('effective_prb_ratio', 0.0):.3f}, "
+                f"reserve_used={obs.get('reserve_used_prb', 0.0):.1f}, "
                 f"prev_action=({prev[0]:.1f},{prev[1]:.1f})"
             )
             norm_names = [
@@ -1264,6 +1290,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 "u_thr_n",
                 "u_lat_n",
                 "eff_n",
+                "reserve_used_n",
                 "prev_e_n",
                 "prev_u_n",
             ]
