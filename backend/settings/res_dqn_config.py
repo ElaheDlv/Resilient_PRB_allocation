@@ -99,3 +99,16 @@ except Exception:
 # TensorBoard logging
 RES_DQN_TB_ENABLE = os.getenv("RES_DQN_TB_ENABLE", "0") in ("1", "true", "True")
 RES_DQN_TB_DIR = os.getenv("RES_DQN_TB_DIR", "backend/tb_logs/res_dqn")
+
+# Checkpointing
+RES_DQN_MODEL_DIR = os.getenv("RES_DQN_MODEL_DIR", "backend/checkpoints/res_dqn")
+try:
+    RES_DQN_SAVE_INTERVAL = int(os.getenv("RES_DQN_SAVE_INTERVAL", "0"))
+except Exception:
+    RES_DQN_SAVE_INTERVAL = 0
+
+# TensorBoard smoothing (window over recent rewards)
+try:
+    RES_DQN_TB_SMOOTH_WIN = int(os.getenv("RES_DQN_TB_SMOOTH_WIN", "200"))
+except Exception:
+    RES_DQN_TB_SMOOTH_WIN = 200

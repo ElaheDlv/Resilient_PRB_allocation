@@ -15,12 +15,14 @@ import random
 import threading
 from collections import defaultdict, deque
 from typing import Dict, Optional
+import os
+from datetime import datetime
 
 import numpy as np
 
 import settings
 from .xapp_base import xAppBase
-from .xapp_resilient_qrdqn_allocator import (
+from .xapp_resilient_dqn_allocator import (
     ACTION_LIST,
     NUM_ACTIONS,
     SL_E,
@@ -32,19 +34,20 @@ from .xapp_resilient_qrdqn_allocator import (
     URLLC_QUEUE_MAX,
     URLLC_LATENCY_DEADLINE,
     build_state,
-    ResilientQRDQNEnv,
-    _QRDQN,
+    ResilientDQNEnv,
+    _DQN,
 )
-
-try:
-    from .xapp_resilient_dqn_allocator import _DQN
-except Exception:
-    _DQN = None
+from .xapp_resilient_qrdqn_allocator import _QRDQN
 
 try:
     import torch
+    try:
+        from torch.utils.tensorboard import SummaryWriter
+    except Exception:
+        SummaryWriter = None
 except Exception:
     torch = None  # type: ignore
+    SummaryWriter = None
 
 TORCH_AVAILABLE = torch is not None
 
@@ -91,7 +94,9 @@ class xAppResilientPolicyValidator(xAppBase):
             getattr(settings, "RES_VALIDATE_DASH_ENABLE", getattr(settings, "RES_QRDQN_DASH_ENABLE", False))
         )
         self.dash_port = int(getattr(settings, "RES_VALIDATE_DASH_PORT", getattr(settings, "RES_QRDQN_DASH_PORT", 5060)))
-        self._env: Optional[ResilientQRDQNEnv] = None
+        self.tb_enable = bool(getattr(settings, "RES_VALIDATE_TB_ENABLE", False))
+        self.tb_dir = (getattr(settings, "RES_VALIDATE_TB_DIR", "") or "").strip()
+        self._env: Optional[ResilientDQNEnv] = None
         self._policy = None
         self._last_state = None
         self._episode_done = False
@@ -127,17 +132,53 @@ class xAppResilientPolicyValidator(xAppBase):
         self._ue_cqi = defaultdict(lambda: deque(maxlen=400))
         self._cell_max_prb = deque(maxlen=400)
         self._cell_eff_prb = deque(maxlen=400)
+        self._tb_writer = None
+        self._episode_return = 0.0
+        self._episode_len = 0
+        self._episode_counter = 0
+
+    def _init_tb(self):
+        if not self.tb_enable:
+            return
+        if SummaryWriter is None:
+            print(f"{self.xapp_id}: tensorboard not available; disable RES_VALIDATE_TB_ENABLE to silence.")
+            return
+        model_path = self.qrdqn_checkpoint if self.policy_mode == "qrdqn" else self.dqn_checkpoint
+        model_tag = os.path.splitext(os.path.basename(model_path))[0] if model_path else self.policy_mode
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        jam_start = getattr(settings, "JAM_CONST_START_OFFSET", None)
+        jam_prbs = getattr(settings, "JAM_RESERVED_PRBS", None)
+        jam_const_prb = getattr(settings, "JAM_CONST_PRBS", None)
+        jam_period = getattr(settings, "JAM_CONST_PERIOD_STEPS", None)
+        jam_duration = getattr(settings, "JAM_CONST_DURATION_STEPS", None)
+        jam_parts = [
+            f"res{jam_prbs}" if jam_prbs is not None else "resNA",
+            f"off{jam_start}" if jam_start is not None else "offNA",
+            f"const{jam_const_prb}" if jam_const_prb is not None else "constNA",
+            f"per{jam_period}" if jam_period is not None else "perNA",
+            f"dur{jam_duration}" if jam_duration is not None else "durNA",
+        ]
+        jam_tag = "_".join(jam_parts)
+        base_dir = self.tb_dir or "runs/res_validator"
+        logdir = os.path.join(base_dir, f"{model_tag}__{ts}__{jam_tag}")
+        try:
+            self._tb_writer = SummaryWriter(logdir)
+            print(f"{self.xapp_id}: tensorboard logging to {logdir}")
+        except Exception as exc:
+            print(f"{self.xapp_id}: failed to init tensorboard at {logdir}: {exc}")
+            self._tb_writer = None
 
     def start(self):
         if not self.enabled:
             print(f"{self.xapp_id}: disabled")
             return
-        self._env = ResilientQRDQNEnv(self.ric)
+        self._env = ResilientDQNEnv(self.ric)
         self._env.register_clear_hook(self._clear_plot_caches)
         self._init_policy()
         self._last_state = self._env.reset()
         if self.dash_enable:
             self._start_dashboard()
+        self._init_tb()
         print(
             f"{self.xapp_id}: mode={self.policy_mode} actions={NUM_ACTIONS} state_dim={len(self._last_state)}"
         )
@@ -157,9 +198,16 @@ class xAppResilientPolicyValidator(xAppBase):
 
         action_idx = self._select_action(self._last_state)
         next_state, reward, done, info = self._env.step(action_idx)
+        self._episode_return += float(reward)
+        self._episode_len += 1
         self._record_metrics(reward, info)
         self._last_state = next_state
         self._episode_done = bool(done)
+        if done:
+            self._tb_log_episode()
+            self._episode_counter += 1
+            self._episode_return = 0.0
+            self._episode_len = 0
 
     # ---------- Policy selection ---------- #
     def _init_policy(self):
@@ -290,6 +338,19 @@ class xAppResilientPolicyValidator(xAppBase):
                 self._cell_max_prb.append(int(getattr(cell, "max_dl_prb", 0) or 0))
                 eff = getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0))
                 self._cell_eff_prb.append(int(eff or 0))
+        # Snapshot state vector and slice satisfaction for TensorBoard
+        prev_action = info.get("prev_action", (0, 0)) if isinstance(info, dict) else (0, 0)
+        try:
+            state_vec = build_state(obs, prev_action)
+        except Exception:
+            state_vec = None
+        sat_map = {}
+        for sl in (SL_E, SL_U):
+            if self._slice_sat.get(sl):
+                sat_map.setdefault(sl, {})["capped"] = float(self._slice_sat[sl][-1])
+            if self._slice_sat_raw.get(sl):
+                sat_map.setdefault(sl, {})["raw"] = float(self._slice_sat_raw[sl][-1])
+        self._tb_log(t, reward, obs, action_idx, action, state_vec, sat_map)
 
     def _start_dashboard(self):
         if not self.dash_enable or not DASH_AVAILABLE:
@@ -532,3 +593,78 @@ class xAppResilientPolicyValidator(xAppBase):
         if eff != max_dl:
             lines.append(f"Jamming: effective PRB={eff}/{max_dl}")
         return "\n".join(lines)
+
+    def _tb_log(self, t, reward, obs, action_idx, action, state_vec=None, sat_map=None):
+        if self._tb_writer is None:
+            return
+        try:
+            self._tb_writer.add_scalar("reward/total", float(reward), global_step=t)
+            self._tb_writer.add_scalar("action/index", float(action_idx) if action_idx is not None else -1, global_step=t)
+            self._tb_writer.add_scalar("action/sum", float(sum(action) if action else 0.0), global_step=t)
+            self._tb_writer.add_scalar(
+                "throughput/embb_mbps", float(obs.get("embb_throughput", 0.0) or 0.0) / 1e6, global_step=t
+            )
+            self._tb_writer.add_scalar(
+                "throughput/urllc_mbps", float(obs.get("urllc_throughput", 0.0) or 0.0) / 1e6, global_step=t
+            )
+            self._tb_writer.add_scalar("latency/urllc", float(obs.get("urllc_latency", 0.0) or 0.0), global_step=t)
+            self._tb_writer.add_scalar("queues/embb_bytes", float(obs.get("embb_queue", 0.0) or 0.0), global_step=t)
+            self._tb_writer.add_scalar("queues/urllc_bytes", float(obs.get("urllc_queue", 0.0) or 0.0), global_step=t)
+            self._tb_writer.add_scalar(
+                "prb/reserve_fraction",
+                float(sum(action) if action else 0.0) / max(1.0, TOTAL_RESILIENCY_PRB),
+                global_step=t,
+            )
+            self._tb_writer.add_scalar("prb/effective_ratio", float(obs.get("effective_prb_ratio", 0.0) or 0.0), global_step=t)
+            # Log raw obs components useful for state reconstruction
+            obs_keys = [
+                "embb_demand_prb",
+                "urllc_demand_prb",
+                "embb_throughput",
+                "urllc_throughput",
+                "embb_queue",
+                "urllc_queue",
+                "embb_base_achievable_throughput",
+                "urllc_base_achievable_throughput",
+                "reserve_used_prb",
+                "effective_max_prb",
+            ]
+            for k in obs_keys:
+                if k in obs:
+                    self._tb_writer.add_scalar(f"obs/{k}", float(obs.get(k, 0.0) or 0.0), global_step=t)
+            # Log normalized state vector components
+            if state_vec is not None:
+                state_names = [
+                    "embb_demand_norm",
+                    "urllc_demand_norm",
+                    "embb_queue_norm",
+                    "urllc_queue_norm",
+                    "embb_thr_norm",
+                    "urllc_thr_norm",
+                    "urllc_lat_excess_norm",
+                    "effective_prb_ratio",
+                    "reserve_used_norm",
+                    "prev_action_e_norm",
+                    "prev_action_u_norm",
+                ]
+                for idx, val in enumerate(state_vec):
+                    name = state_names[idx] if idx < len(state_names) else f"state_{idx}"
+                    self._tb_writer.add_scalar(f"state/{name}", float(val), global_step=t)
+            # Slice satisfaction (capped and raw)
+            if sat_map:
+                for sl, parts in sat_map.items():
+                    if "capped" in parts:
+                        self._tb_writer.add_scalar(f"satisfaction/{sl}_capped", parts["capped"], global_step=t)
+                    if "raw" in parts:
+                        self._tb_writer.add_scalar(f"satisfaction/{sl}_raw", parts["raw"], global_step=t)
+        except Exception:
+            pass
+
+    def _tb_log_episode(self):
+        if self._tb_writer is None:
+            return
+        try:
+            self._tb_writer.add_scalar("episode/return", float(self._episode_return), global_step=self._episode_counter)
+            self._tb_writer.add_scalar("episode/length", float(self._episode_len), global_step=self._episode_counter)
+        except Exception:
+            pass

@@ -119,8 +119,14 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
     prev_action: (r_e_prev, r_u_prev)
     """
     denom_prb = max(1.0, float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)))
-    lat_ratio = _safe_div(obs.get("urllc_latency", 0.0), obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
-    lat_log = min(5.0, math.log1p(max(0.0, lat_ratio)))  # cap extreme spikes
+    # lat_ratio = _safe_div(obs.get("urllc_latency", 0.0), obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
+    # lat_log = min(5.0, math.log1p(max(0.0, lat_ratio)))  # cap extreme spikes
+    # Normalized latency excess
+    latency = float(obs.get("urllc_latency", 0.0))
+    deadline = float(obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
+    excess = max(0.0, latency / deadline - 1.0)
+    lat_excess_norm = excess / (1.0 + excess)
+    
     state = [
         min(1.0, _safe_div(obs.get("embb_demand_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("urllc_demand_prb", 0.0), denom_prb)),
@@ -128,7 +134,8 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
         min(1.0, _safe_div(obs.get("urllc_queue", 0.0), obs.get("urllc_queue_max", URLLC_QUEUE_MAX))),
         _safe_div(obs.get("embb_throughput", 0.0), obs.get("embb_throughput_max", EMBB_THR_MAX)),
         _safe_div(obs.get("urllc_throughput", 0.0), obs.get("urllc_throughput_max", URLLC_THR_MAX)),
-        lat_log,
+        #lat_log,
+        lat_excess_norm,  # new version
         float(obs.get("effective_prb_ratio", 0.0)),
         min(1.0, _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)),
         _safe_div(prev_action[0], TOTAL_RESILIENCY_PRB),
@@ -157,21 +164,55 @@ def compute_reward(
     """
 
     r_e, r_u = action
-    print("Action taken: eMBB delta PRB:", r_e, " URLLC delta PRB:", r_u)
+    #print("Action taken: eMBB delta PRB:", r_e, " URLLC delta PRB:", r_u)
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
-    reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
+    #reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
+    #reward_embb = weights["w_e"] * ((obs.get("embb_throughput", 0.0)/target)-1)
+    reward_embb = weights["w_e"] * (obs.get("embb_throughput", 0.0)/target)
+    #print("reward_embb:", reward_embb)
 
-    excess = latency_excess(
-        obs.get("urllc_latency", 0.0),
-        obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
-    )
-    penalty_latency = weights["w_u"] * math.log1p(excess)
+    # excess = latency_excess(
+    #     obs.get("urllc_latency", 0.0),
+    #     obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
+    # )
+    #penalty_latency = weights["w_u"] * math.log1p(excess)
+    excess = latency_excess(obs.get("urllc_latency", 0.0), URLLC_LATENCY_DEADLINE)
+    penalty_latency = weights["w_u"] * (excess / (1 + excess))
+    #print("excess latency:", excess)
+    #print("penalty_latency:", penalty_latency)
 
-    penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
     
+    #effective_prb_ratio = obs.get("effective_prb_ratio", 1.0)
     
+    # Create a mitigation factor (e.g., an exponential decay)
+    # As excess increases, mitigation_factor goes from 1.0 towards 0.0
+    mitigation_factor = math.exp(-weights.get("lambda_latency", 2.0) * excess)
+    #mitigation_factor = max(0.1, mitigation_factor)  # 
+
+    # Apply the factor to the reserve penalty
+    eff_ratio = obs.get("effective_prb_ratio", 1.0)
+    mu_scaled = weights["mu"] * eff_ratio
+    penalty_reserve = mu_scaled * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
+
+    # Mitigate the penalty based on latency
+    penalty_reserve *= mitigation_factor
+
+    
+    # eff_ratio = obs.get("effective_prb_ratio", 1.0)
+    # #print("effective_prb_ratio:", eff_ratio)
+    # #print("obs.get(\"reserve_used_prb\", 0.0):", obs.get("reserve_used_prb", 0.0))
+    # mu_scaled = weights["mu"] * eff_ratio
+    # penalty_reserve = mu_scaled * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
+
+
+
+    #penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
+    # NEW (Encourages stability):
+    # Use the actual absolute usage from the observation
+    #penalty_reserve = weights["mu"] * (obs.get("reserve_used_prb", 0.0) / TOTAL_RESILIENCY_PRB)
+
     #print("weight_e:", weights["w_e"], " weight_u:", weights["w_u"], " mu:", weights["mu"])
 
     reward = reward_embb - penalty_latency - penalty_reserve
@@ -705,7 +746,11 @@ class xAppResilientDQNAllocator(xAppBase):
         self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
         self.tb_enable = bool(getattr(settings, "RES_DQN_TB_ENABLE", False))
         self.tb_dir = (getattr(settings, "RES_DQN_TB_DIR", "") or "").strip()
+        self.tb_smooth_win = int(getattr(settings, "RES_DQN_TB_SMOOTH_WIN", 200) or 0)
         self._tb_writer = None
+        self.model_dir = (getattr(settings, "RES_DQN_MODEL_DIR", "") or "").strip()
+        self.save_interval = int(getattr(settings, "RES_DQN_SAVE_INTERVAL", 0) or 0)
+        self._last_save_step = -1
         self.dash_enable = bool(getattr(settings, "RES_DQN_DASH_ENABLE", False))
         self.dash_port = int(getattr(settings, "RES_DQN_DASH_PORT", 5060))
         self._dash_app = None
@@ -912,6 +957,8 @@ class xAppResilientDQNAllocator(xAppBase):
                 dcc.Graph(id="throughput-graph"),
                 dcc.Graph(id="lat-graph"),
                 dcc.Graph(id="reward-graph"),
+                dcc.Graph(id="reward-trend-graph"),
+                dcc.Graph(id="episode-return-graph"),
                 dcc.Graph(id="reserve-graph"),
                 dcc.Graph(id="ratio-graph"),
                 dcc.Graph(id="ue-throughput-graph"),
@@ -933,6 +980,8 @@ class xAppResilientDQNAllocator(xAppBase):
             Output("throughput-graph", "figure"),
             Output("lat-graph", "figure"),
             Output("reward-graph", "figure"),
+            Output("reward-trend-graph", "figure"),
+            Output("episode-return-graph", "figure"),
             Output("reserve-graph", "figure"),
             Output("ratio-graph", "figure"),
             Output("ue-throughput-graph", "figure"),
@@ -1018,6 +1067,40 @@ class xAppResilientDQNAllocator(xAppBase):
                 )
             reward_fig.update_layout(title="Reward", xaxis_title="time (s)", yaxis_title="reward")
 
+            # Smoothed view to highlight trend direction.
+            reward_trend_fig = go.Figure()
+            if reward:
+                reward_arr = np.asarray(reward, dtype=float)
+                cum_avg = np.cumsum(reward_arr) / np.arange(1, len(reward_arr) + 1)
+                reward_trend_fig.add_trace(go.Scatter(x=t, y=cum_avg, mode="lines", name="cumulative avg"))
+                window = min(len(reward_arr), min(100, max(5, len(reward_arr) // 5)))
+                if window > 1:
+                    kernel = np.ones(window) / float(window)
+                    rolling = np.convolve(reward_arr, kernel, mode="valid")
+                    reward_trend_fig.add_trace(
+                        go.Scatter(x=t[window - 1 :], y=rolling, mode="lines", name=f"{window}-step avg")
+                    )
+            reward_trend_fig.update_layout(title="Reward trend", xaxis_title="time (s)", yaxis_title="avg reward")
+
+            episode_fig = go.Figure()
+            if episode_idx and episode_returns:
+                episode_fig.add_trace(
+                    go.Scatter(x=episode_idx, y=episode_returns, mode="lines+markers", name="episode return")
+                )
+                window_ep = min(len(episode_returns), min(50, max(2, len(episode_returns) // 5)))
+                if window_ep > 1:
+                    kernel = np.ones(window_ep) / float(window_ep)
+                    rolling_ep = np.convolve(np.asarray(episode_returns, dtype=float), kernel, mode="valid")
+                    episode_fig.add_trace(
+                        go.Scatter(
+                            x=episode_idx[window_ep - 1 :],
+                            y=rolling_ep,
+                            mode="lines",
+                            name=f"{window_ep}-ep avg",
+                        )
+                    )
+            episode_fig.update_layout(title="Episode returns", xaxis_title="episode", yaxis_title="return")
+
             reserve_fig = go.Figure()
             reserve_fig.add_trace(go.Scatter(x=t, y=reserve, mode="lines", name="reserve fraction"))
             if reserve_used:
@@ -1082,6 +1165,8 @@ class xAppResilientDQNAllocator(xAppBase):
                 thr_fig,
                 lat_fig,
                 reward_fig,
+                reward_trend_fig,
+                episode_fig,
                 reserve_fig,
                 ratio_fig,
                 ue_thr_fig,
@@ -1307,6 +1392,12 @@ class xAppResilientDQNAllocator(xAppBase):
             if state is not None:
                 self._tb_writer.add_scalar("reward", reward, step)
                 self._tb_writer.add_scalar("reward_cumulative", self._episode_return, step)
+                # Smoothed reward to make trend visible in TensorBoard
+                if self.tb_smooth_win > 0:
+                    with self._lock:
+                        recent = list(self._hist_reward)[-self.tb_smooth_win :]
+                    if recent:
+                        self._tb_writer.add_scalar("reward_smooth", float(np.mean(recent)), step)
                 self._tb_writer.add_scalar("epsilon", float(self._eps), step)
                 if action_idx is not None:
                     self._tb_writer.add_scalar("action_idx", action_idx, step)
@@ -1367,6 +1458,51 @@ class xAppResilientDQNAllocator(xAppBase):
         except Exception:
             pass
 
+    def _checkpoint_path(self, step: Optional[int] = None) -> str:
+        if not self.model_dir:
+            return ""
+        base = os.path.join(self.model_dir, self.xapp_id)
+        suffix = "_final" if step is None else f"_step{int(step)}"
+        return f"{base}{suffix}.pt"
+
+    def _save_model(self, path: str):
+        if not TORCH_AVAILABLE or self._policy is None or not path:
+            return
+        directory = os.path.dirname(path)
+        if directory:
+            try:
+                os.makedirs(directory, exist_ok=True)
+            except Exception:
+                pass
+        try:
+            torch.save(self._policy.state_dict(), path)
+        except Exception:
+            pass
+
+    def _maybe_save_checkpoint(self, force: bool = False):
+        if not TORCH_AVAILABLE or self._policy is None:
+            return
+        if not self.train:
+            return
+        if force:
+            final_path = self._checkpoint_path(None)
+            self._save_model(final_path)
+            if self._decision_steps > 0:
+                step_path = self._checkpoint_path(self._decision_steps)
+                self._save_model(step_path)
+            return
+        if self.save_interval <= 0:
+            return
+        if self._decision_steps <= 0 or self._decision_steps == self._last_save_step:
+            return
+        if (self._decision_steps % self.save_interval) != 0:
+            return
+        final_path = self._checkpoint_path(None)
+        self._save_model(final_path)
+        step_path = self._checkpoint_path(self._decision_steps)
+        self._save_model(step_path)
+        self._last_save_step = self._decision_steps
+
     def _reset_episode_trackers(self):
         self._episode_return = 0.0
         self._episode_len = 0
@@ -1425,3 +1561,13 @@ class xAppResilientDQNAllocator(xAppBase):
 
         if self._decision_steps > 0 and self._decision_steps % self.target_update == 0:
             self._target.load_state_dict(self._policy.state_dict())
+
+        self._maybe_save_checkpoint()
+
+    def __del__(self):
+        try:
+            self._maybe_save_checkpoint(force=True)
+            if self._tb_writer is not None:
+                self._tb_writer.flush()
+        except Exception:
+            pass

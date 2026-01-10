@@ -723,7 +723,13 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
         self.tb_enable = bool(getattr(settings, "RES_QRDQN_TB_ENABLE", getattr(settings, "RES_DQN_TB_ENABLE", False)))
         self.tb_dir = (getattr(settings, "RES_QRDQN_TB_DIR", getattr(settings, "RES_DQN_TB_DIR", "")) or "").strip()
+        self.tb_smooth_win = int(
+            getattr(settings, "RES_QRDQN_TB_SMOOTH_WIN", getattr(settings, "RES_DQN_TB_SMOOTH_WIN", 200)) or 0
+        )
         self._tb_writer = None
+        self.model_dir = (getattr(settings, "RES_QRDQN_MODEL_DIR", getattr(settings, "RES_DQN_MODEL_DIR", "")) or "").strip()
+        self.save_interval = int(getattr(settings, "RES_QRDQN_SAVE_INTERVAL", getattr(settings, "RES_DQN_SAVE_INTERVAL", 0)) or 0)
+        self._last_save_step = -1
         self.dash_enable = bool(
             getattr(settings, "RES_QRDQN_DASH_ENABLE", getattr(settings, "RES_DQN_DASH_ENABLE", False))
         )
@@ -932,6 +938,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 dcc.Graph(id="throughput-graph"),
                 dcc.Graph(id="lat-graph"),
                 dcc.Graph(id="reward-graph"),
+                dcc.Graph(id="reward-trend-graph"),
+                dcc.Graph(id="episode-return-graph"),
                 dcc.Graph(id="reserve-graph"),
                 dcc.Graph(id="ratio-graph"),
                 dcc.Graph(id="ue-throughput-graph"),
@@ -953,6 +961,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
             Output("throughput-graph", "figure"),
             Output("lat-graph", "figure"),
             Output("reward-graph", "figure"),
+            Output("reward-trend-graph", "figure"),
+            Output("episode-return-graph", "figure"),
             Output("reserve-graph", "figure"),
             Output("ratio-graph", "figure"),
             Output("ue-throughput-graph", "figure"),
@@ -1039,6 +1049,39 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 )
             reward_fig.update_layout(title="Reward", xaxis_title="time (s)", yaxis_title="reward")
 
+            reward_trend_fig = go.Figure()
+            if reward:
+                reward_arr = np.asarray(reward, dtype=float)
+                cum_avg = np.cumsum(reward_arr) / np.arange(1, len(reward_arr) + 1)
+                reward_trend_fig.add_trace(go.Scatter(x=t, y=cum_avg, mode="lines", name="cumulative avg"))
+                window = min(len(reward_arr), min(100, max(5, len(reward_arr) // 5)))
+                if window > 1:
+                    kernel = np.ones(window) / float(window)
+                    rolling = np.convolve(reward_arr, kernel, mode="valid")
+                    reward_trend_fig.add_trace(
+                        go.Scatter(x=t[window - 1 :], y=rolling, mode="lines", name=f"{window}-step avg")
+                    )
+            reward_trend_fig.update_layout(title="Reward trend", xaxis_title="time (s)", yaxis_title="avg reward")
+
+            episode_fig = go.Figure()
+            if episode_idx and episode_returns:
+                episode_fig.add_trace(
+                    go.Scatter(x=episode_idx, y=episode_returns, mode="lines+markers", name="episode return")
+                )
+                window_ep = min(len(episode_returns), min(50, max(2, len(episode_returns) // 5)))
+                if window_ep > 1:
+                    kernel = np.ones(window_ep) / float(window_ep)
+                    rolling_ep = np.convolve(np.asarray(episode_returns, dtype=float), kernel, mode="valid")
+                    episode_fig.add_trace(
+                        go.Scatter(
+                            x=episode_idx[window_ep - 1 :],
+                            y=rolling_ep,
+                            mode="lines",
+                            name=f"{window_ep}-ep avg",
+                        )
+                    )
+            episode_fig.update_layout(title="Episode returns", xaxis_title="episode", yaxis_title="return")
+
             reserve_fig = go.Figure()
             reserve_fig.add_trace(go.Scatter(x=t, y=reserve, mode="lines", name="reserve fraction"))
             if reserve_used:
@@ -1103,6 +1146,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 thr_fig,
                 lat_fig,
                 reward_fig,
+                reward_trend_fig,
+                episode_fig,
                 reserve_fig,
                 ratio_fig,
                 ue_thr_fig,
@@ -1328,6 +1373,11 @@ class xAppResilientQRDQNAllocator(xAppBase):
             if state is not None:
                 self._tb_writer.add_scalar("reward", reward, step)
                 self._tb_writer.add_scalar("reward_cumulative", self._episode_return, step)
+                if self.tb_smooth_win > 0:
+                    with self._lock:
+                        recent = list(self._hist_reward)[-self.tb_smooth_win :]
+                    if recent:
+                        self._tb_writer.add_scalar("reward_smooth", float(np.mean(recent)), step)
                 self._tb_writer.add_scalar("epsilon", float(self._eps), step)
                 if action_idx is not None:
                     self._tb_writer.add_scalar("action_idx", action_idx, step)
@@ -1388,6 +1438,51 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self._tb_writer.flush()
         except Exception:
             pass
+
+    def _checkpoint_path(self, step: Optional[int] = None) -> str:
+        if not self.model_dir:
+            return ""
+        base = os.path.join(self.model_dir, self.xapp_id)
+        suffix = "_final" if step is None else f"_step{int(step)}"
+        return f"{base}{suffix}.pt"
+
+    def _save_model(self, path: str):
+        if not TORCH_AVAILABLE or self._policy is None or not path:
+            return
+        directory = os.path.dirname(path)
+        if directory:
+            try:
+                os.makedirs(directory, exist_ok=True)
+            except Exception:
+                pass
+        try:
+            torch.save(self._policy.state_dict(), path)
+        except Exception:
+            pass
+
+    def _maybe_save_checkpoint(self, force: bool = False):
+        if not TORCH_AVAILABLE or self._policy is None:
+            return
+        if not self.train:
+            return
+        if force:
+            final_path = self._checkpoint_path(None)
+            self._save_model(final_path)
+            if self._decision_steps > 0:
+                step_path = self._checkpoint_path(self._decision_steps)
+                self._save_model(step_path)
+            return
+        if self.save_interval <= 0:
+            return
+        if self._decision_steps <= 0 or self._decision_steps == self._last_save_step:
+            return
+        if (self._decision_steps % self.save_interval) != 0:
+            return
+        final_path = self._checkpoint_path(None)
+        self._save_model(final_path)
+        step_path = self._checkpoint_path(self._decision_steps)
+        self._save_model(step_path)
+        self._last_save_step = self._decision_steps
 
     def _reset_episode_trackers(self):
         self._episode_return = 0.0
@@ -1453,3 +1548,13 @@ class xAppResilientQRDQNAllocator(xAppBase):
 
         if self._decision_steps > 0 and self._decision_steps % self.target_update == 0:
             self._target.load_state_dict(self._policy.state_dict())
+
+        self._maybe_save_checkpoint()
+
+    def __del__(self):
+        try:
+            self._maybe_save_checkpoint(force=True)
+            if self._tb_writer is not None:
+                self._tb_writer.flush()
+        except Exception:
+            pass

@@ -40,3 +40,7 @@ try:
     RES_VALIDATE_DASH_PORT = int(os.getenv("RES_VALIDATE_DASH_PORT", os.getenv("RES_QRDQN_DASH_PORT", "5060")))
 except Exception:
     RES_VALIDATE_DASH_PORT = 5060
+
+# TensorBoard logging
+RES_VALIDATE_TB_ENABLE = os.getenv("RES_VALIDATE_TB_ENABLE", "0") in ("1", "true", "True")
+RES_VALIDATE_TB_DIR = os.getenv("RES_VALIDATE_TB_DIR", "")
