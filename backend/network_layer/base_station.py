@@ -492,6 +492,12 @@ class BaseStation:
             # Scale the jammer's baseline quotas down proportionally if jammed capacity is smaller.
             base_quota = dict(getattr(cell, "_jam_base_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
             total = sum(base_quota.values())
+            base_e = float(base_quota.get(SL_E, 0) or 0.0)
+            base_u = float(base_quota.get(SL_U, 0) or 0.0)
+            #print("base_e:", base_e, "base_u:", base_u)
+            quotas_curr = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            cur_e = float(quotas_curr.get(SL_E, 0) or 0)
+            cur_u = float(quotas_curr.get(SL_U, 0) or 0)
             if total > 0 and target_max < total:
                 scale = target_max / float(total)
                 # Scale proportionally and distribute any remainder to match target_max.
@@ -513,9 +519,29 @@ class BaseStation:
                 base_quota = scaled
                 cell.base_dl_prb_quota = base_quota
                 cell._jam_was_active = True
+                # base_e_new = float(base_quota.get(SL_E, 0) or 0.0)
+                # base_u_new = float(base_quota.get(SL_U, 0) or 0.0)
+                # #print("base_e_new:", base_e_new, "base_u_new:", base_u_new)
+
+                # if base_e_new < cur_e or base_u_new < cur_u:
+                #     cur_e_delta = cur_e - base_e
+                #     cur_u_delta = cur_u - base_u
+                #     print("cur_e_delta:", cur_e_delta, "cur_u_delta:", cur_u_delta)
+                #     # adjust current quotas based on the new base quotas
+                #     # base_e_new = float(base_quota.get(SL_E, 0) or 0.0)
+                #     # base_u_new = float(base_quota.get(SL_U, 0) or 0.0)
+                #     # print("base_e_new:", base_e_new, "base_u_new:", base_u_new)
+                
+                #     cur_e_new = base_e_new + cur_e_delta
+                #     cur_u_new = base_u_new + cur_u_delta
+                #     print("cur_e_new:", cur_e_new, "cur_u_new:", cur_u_new)
+
+                #     quotas = {SL_E: int(round(cur_e_new)), SL_U: int(round(cur_u_new))}
+                #     cell.slice_dl_prb_quota = quotas
+                
                 
 
-                
+
             # ### code for change of the slice dl prb quota during jamming
             # dl_quota = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
             # total_dl = sum(dl_quota.values())
@@ -547,6 +573,22 @@ class BaseStation:
             elif not active and getattr(cell, "_jam_was_active", False):
                 # Restore base quotas when coming out of a jam window.
                 cell.base_dl_prb_quota = dict(base_quota)
+                print('restoring base quota:', base_quota)
+                
+                
+                # if base_e>=cur_e and base_u>=cur_u:
+                #     cur_e_delta = base_e - cur_e 
+                #     cur_u_delta = base_u - cur_u
+                # # adjust current quotas based on the new base quotas
+                # base_e_new = float(base_quota.get(SL_E, 0) or 0.0)
+                # base_u_new = float(base_quota.get(SL_U, 0) or 0.0)
+                
+                # cur_e_new = base_e_new + cur_e_delta
+                # cur_u_new = base_u_new + cur_u_delta
+
+                # quotas = {SL_E: int(round(cur_e_new)), SL_U: int(round(cur_u_new))}
+                # cell.slice_dl_prb_quota = quotas
+                
                 #cell.slice_dl_prb_quota = dict(base_quota)
                 cell._jam_was_active = False
             #     ### restore the slice dl prb quota after jamming

@@ -584,9 +584,9 @@ class ResilientDQNEnv:
             new_u = max(base_u, cur_u + float(du))
             #print(base_e, base_u)
             #print(new_e, new_u)
-            print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
-            if base_e > cur_e or base_u > cur_u:
-                print("Warning: current quota below base quota; adjusting upwards.")
+            # print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
+            # if base_e > cur_e or base_u > cur_u:
+            #     print("Warning: current quota below base quota; adjusting upwards.")
                 #print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
                 # new_e = base_e
                 # new_u = base_u
