@@ -512,15 +512,74 @@ class BaseStation:
                     leftover -= 1
                 base_quota = scaled
                 cell.base_dl_prb_quota = base_quota
+                cell._jam_was_active = True
+                
+
+                
+            # ### code for change of the slice dl prb quota during jamming
+            # dl_quota = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            # total_dl = sum(dl_quota.values())
+            # if total_dl > 0 and target_max < total_dl:
+            #     scale_dl = target_max / float(total_dl)
+            #     # Scale proportionally and distribute any remainder to match target_max.
+            #     scaled_dl = {}
+            #     remainders_dl = []
+            #     for s, v in dl_quota.items():
+            #         raw_dl = v * scale_dl
+            #         down_dl = int(raw_dl)
+            #         scaled_dl[s] = down_dl
+            #         remainders_dl.append((raw_dl - down_dl, s))
+            #     leftover_dl = target_max - sum(scaled_dl.values())
+            #     # Give leftover PRBs to slices with largest fractional remainder.
+            #     remainders_dl.sort(reverse=True)
+            #     for _, s in remainders_dl:
+            #         if leftover_dl <= 0:
+            #             break
+            #         scaled_dl[s] += 1
+            #         leftover_dl -= 1
+            #     dl_quota = scaled_dl
+            #     cell.old_max = target_max
+            #     cell.slice_dl_prb_quota = dl_quota
                 #print(f"Jammer scaling cell {cell.cell_id} quotas to {base_quota}")
                 # Align live quotas to the jammed baseline once; allocator will adjust thereafter.
                 #cell.slice_dl_prb_quota = dict(base_quota)
-                cell._jam_was_active = True
+                #cell._jam_was_active = True
             elif not active and getattr(cell, "_jam_was_active", False):
                 # Restore base quotas when coming out of a jam window.
                 cell.base_dl_prb_quota = dict(base_quota)
                 #cell.slice_dl_prb_quota = dict(base_quota)
                 cell._jam_was_active = False
+            #     ### restore the slice dl prb quota after jamming
+            # elif not active and getattr(cell, "_jam_was_active", True):
+            #     """
+            #     Approximate inverse of proportional down-scaling.
+            #     Preserves current slice ratios.
+            #     """
+            #     if total_dl == 0 or cell.old_max == 0:
+            #         return dict(dl_quota)
+
+            #     scale_up = usable_max / float(cell.old_max)
+
+            #     restored = {}
+            #     remainders = []
+
+            #     for s, v in dl_quota.items():
+            #         raw = v * scale_up
+            #         down = int(raw)
+            #         restored[s] = down
+            #         remainders.append((raw - down, s))
+
+            #         leftover = usable_max - sum(restored.values())
+            #         remainders.sort(reverse=True)
+
+            #     for _, s in remainders:
+            #         if leftover <= 0:
+            #             break
+            #         restored[s] += 1
+            #         leftover -= 1
+            #     cell.slice_dl_prb_quota = restored
+            #     cell._jam_was_active = False
+
             # Do not overwrite live quotas; just reduce effective capacity.
             #cell.jammed_dl_prb = reserved + jam_active
             cell._effective_max_dl_prb = target_max

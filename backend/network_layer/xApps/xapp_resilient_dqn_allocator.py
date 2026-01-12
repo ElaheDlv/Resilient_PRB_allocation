@@ -130,6 +130,8 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
     state = [
         min(1.0, _safe_div(obs.get("embb_demand_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("urllc_demand_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("embb_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("urllc_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("embb_queue", 0.0), obs.get("embb_queue_max", EMBB_QUEUE_MAX))),
         min(1.0, _safe_div(obs.get("urllc_queue", 0.0), obs.get("urllc_queue_max", URLLC_QUEUE_MAX))),
         _safe_div(obs.get("embb_throughput", 0.0), obs.get("embb_throughput_max", EMBB_THR_MAX)),
@@ -568,6 +570,7 @@ class ResilientDQNEnv:
             quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
             cur_e = float(quotas.get(SL_E, 0) or 0)
             cur_u = float(quotas.get(SL_U, 0) or 0)
+            cur_total = cur_e + cur_u
             eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
             max_prb_phys = eff_max + float(_reserve_from_jammer)
             # Reserve pool is fixed; jamming affects baseline but not available reserve.
@@ -575,8 +578,34 @@ class ResilientDQNEnv:
 
             de, du = action
             # Apply deltas relative to current quotas but never below baseline
-            new_e = cur_e + float(de)
-            new_u = cur_u + float(du)
+            # new_e = cur_e + float(de)
+            # new_u = cur_u + float(du)
+            new_e = max(base_e, cur_e + float(de))
+            new_u = max(base_u, cur_u + float(du))
+            #print(base_e, base_u)
+            #print(new_e, new_u)
+            print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
+            if base_e > cur_e or base_u > cur_u:
+                print("Warning: current quota below base quota; adjusting upwards.")
+                #print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
+                # new_e = base_e
+                # new_u = base_u
+            delta_e = new_e - cur_e
+            delta_u = new_u - cur_u
+            delta_sum = delta_e + delta_u
+            avail_extra = max(0.0, capacity - cur_total)
+            if delta_sum > avail_extra and delta_sum > 0:
+                print("Warning: requested quota increase exceeds available capacity; scaling down.")
+                scale = avail_extra / delta_sum
+                delta_e *= scale
+                delta_u *= scale
+            new_e = cur_e + delta_e
+            new_u = cur_u + delta_u
+            total = new_e + new_u
+            if total > capacity and total > 0:
+                scale = capacity / total
+                new_e *= scale
+                new_u *= scale
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
             cell.slice_dl_prb_quota = quotas
 
@@ -599,6 +628,8 @@ class ResilientDQNEnv:
         return {
             "embb_demand_prb": embb["demand_prb"],
             "urllc_demand_prb": urllc["demand_prb"],
+            "embb_prb": float(quotas.get(SL_E, 0.0) or 0.0),
+            "urllc_prb": float(quotas.get(SL_U, 0.0) or 0.0),
             "embb_queue": embb["queue"],
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": urllc["queue"],
@@ -692,6 +723,8 @@ class ResilientDQNEnv:
         return {
             "embb_demand_prb": 0.0,
             "urllc_demand_prb": 0.0,
+            "embb_prb": 0.0,
+            "urllc_prb": 0.0,
             "embb_queue": 0.0,
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": 0.0,
@@ -744,6 +777,7 @@ class xAppResilientDQNAllocator(xAppBase):
         self._episode_len = 0
         self._episode_counter = 0
         self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
+        self._run_tag = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.tb_enable = bool(getattr(settings, "RES_DQN_TB_ENABLE", False))
         self.tb_dir = (getattr(settings, "RES_DQN_TB_DIR", "") or "").strip()
         self.tb_smooth_win = int(getattr(settings, "RES_DQN_TB_SMOOTH_WIN", 200) or 0)
@@ -1295,6 +1329,8 @@ class xAppResilientDQNAllocator(xAppBase):
                 "raw: "
                 f"e_demand={obs.get('embb_demand_prb', 0.0):.3f}, "
                 f"u_demand={obs.get('urllc_demand_prb', 0.0):.3f}, "
+                f"e_prb={obs.get('embb_prb', 0.0):.3f}, "
+                f"u_prb={obs.get('urllc_prb', 0.0):.3f}, "
                 f"e_queue={obs.get('embb_queue', 0.0):.1f}/{obs.get('embb_queue_max', EMBB_QUEUE_MAX):.1f}, "
                 f"u_queue={obs.get('urllc_queue', 0.0):.1f}/{obs.get('urllc_queue_max', URLLC_QUEUE_MAX):.1f}, "
                 f"e_thr={obs.get('embb_throughput', 0.0):.3f}/{obs.get('embb_throughput_max', EMBB_THR_MAX):.3f}, "
@@ -1307,6 +1343,8 @@ class xAppResilientDQNAllocator(xAppBase):
             norm_names = [
                 "e_demand_n",
                 "u_demand_n",
+                "e_prb_n",
+                "u_prb_n",
                 "e_queue_n",
                 "u_queue_n",
                 "e_thr_n",
@@ -1336,6 +1374,8 @@ class xAppResilientDQNAllocator(xAppBase):
                 f"raw: "
                 f"e_demand={obs.get('embb_demand_prb', 0.0):.3f}, "
                 f"u_demand={obs.get('urllc_demand_prb', 0.0):.3f}, "
+                f"e_prb={obs.get('embb_prb', 0.0):.3f}, "
+                f"u_prb={obs.get('urllc_prb', 0.0):.3f}, "
                 f"e_queue={obs.get('embb_queue', 0.0):.1f}/{obs.get('embb_queue_max', EMBB_QUEUE_MAX):.1f}, "
                 f"u_queue={obs.get('urllc_queue', 0.0):.1f}/{obs.get('urllc_queue_max', URLLC_QUEUE_MAX):.1f}, "
                 f"e_thr={obs.get('embb_throughput', 0.0):.3f}/{obs.get('embb_throughput_max', EMBB_THR_MAX):.3f}, "
@@ -1348,6 +1388,8 @@ class xAppResilientDQNAllocator(xAppBase):
             norm_names = [
                 "e_dem_n",
                 "u_dem_n",
+                "e_prb_n",
+                "u_prb_n",
                 "e_q_n",
                 "u_q_n",
                 "e_thr_n",
@@ -1461,7 +1503,7 @@ class xAppResilientDQNAllocator(xAppBase):
     def _checkpoint_path(self, step: Optional[int] = None) -> str:
         if not self.model_dir:
             return ""
-        base = os.path.join(self.model_dir, self.xapp_id)
+        base = os.path.join(self.model_dir, f"{self.xapp_id}_{self._run_tag}")
         suffix = "_final" if step is None else f"_step{int(step)}"
         return f"{base}{suffix}.pt"
 

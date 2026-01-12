@@ -543,8 +543,26 @@ class ResilientQRDQNEnv:
 
             de, du = action
             # Apply deltas relative to current quotas but never below baseline
-            new_e = cur_e + float(de)
-            new_u = cur_u + float(du)
+            # new_e = cur_e + float(de)
+            # new_u = cur_u + float(du)
+            new_e = max(base_e, cur_e + float(de))
+            new_u = max(base_u, cur_u + float(du))
+            #print(new_e, new_u)
+            delta_e = new_e - cur_e
+            delta_u = new_u - cur_u
+            delta_sum = delta_e + delta_u
+            avail_extra = max(0.0, capacity - cur_total)
+            if delta_sum > avail_extra and delta_sum > 0:
+                scale = avail_extra / delta_sum
+                delta_e *= scale
+                delta_u *= scale
+            new_e = cur_e + delta_e
+            new_u = cur_u + delta_u
+            total = new_e + new_u
+            if total > capacity and total > 0:
+                scale = capacity / total
+                new_e *= scale
+                new_u *= scale
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
             cell.slice_dl_prb_quota = quotas
 
@@ -721,6 +739,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._episode_len = 0
         self._episode_counter = 0
         self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
+        self._run_tag = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.tb_enable = bool(getattr(settings, "RES_QRDQN_TB_ENABLE", getattr(settings, "RES_DQN_TB_ENABLE", False)))
         self.tb_dir = (getattr(settings, "RES_QRDQN_TB_DIR", getattr(settings, "RES_DQN_TB_DIR", "")) or "").strip()
         self.tb_smooth_win = int(
@@ -1442,7 +1461,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
     def _checkpoint_path(self, step: Optional[int] = None) -> str:
         if not self.model_dir:
             return ""
-        base = os.path.join(self.model_dir, self.xapp_id)
+        base = os.path.join(self.model_dir, f"{self.xapp_id}_{self._run_tag}")
         suffix = "_final" if step is None else f"_step{int(step)}"
         return f"{base}{suffix}.pt"
 
