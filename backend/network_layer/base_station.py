@@ -485,6 +485,7 @@ class BaseStation:
                 cell._jam_base_quota = base_snapshot
                 cell.base_dl_prb_quota = dict(base_snapshot)
                 cell._jam_was_active = False
+            prev_base_quota = dict(getattr(cell, "base_dl_prb_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
             # Base usable pool excludes reserved PRBs; jam subtracts from the usable pool only.
             usable_max = max(0, int(cell.max_dl_prb) - reserved)
             jam_active = jam_prbs if active else 0
@@ -492,12 +493,51 @@ class BaseStation:
             # Scale the jammer's baseline quotas down proportionally if jammed capacity is smaller.
             base_quota = dict(getattr(cell, "_jam_base_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
             total = sum(base_quota.values())
-            base_e = float(base_quota.get(SL_E, 0) or 0.0)
-            base_u = float(base_quota.get(SL_U, 0) or 0.0)
+            # base_e = float(base_quota.get(SL_E, 0) or 0.0)
+            # base_u = float(base_quota.get(SL_U, 0) or 0.0)
             #print("base_e:", base_e, "base_u:", base_u)
             quotas_curr = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-            cur_e = float(quotas_curr.get(SL_E, 0) or 0)
-            cur_u = float(quotas_curr.get(SL_U, 0) or 0)
+            # cur_e = float(quotas_curr.get(SL_E, 0) or 0)
+            # cur_u = float(quotas_curr.get(SL_U, 0) or 0)
+            def _rebuild_live_quota(new_base):
+                """Keep reserved extras intact while shrinking/expanding the base quota."""
+                extras = {}
+                extra_total = 0
+                for s in set(quotas_curr.keys()) | set(prev_base_quota.keys()):
+                    cur_val = float(quotas_curr.get(s, 0) or 0.0)
+                    prev_base = float(prev_base_quota.get(s, 0) or 0.0)
+                    extra = max(0.0, cur_val - prev_base)
+                    extras[s] = extra
+                    extra_total += extra
+                # Extra capacity cannot exceed the reserved pool; scale down if necessary.
+                extra_budget = min(float(reserved), extra_total)
+                scaled_extras = {s: 0 for s in extras.keys()}
+                if extra_total > 0 and extra_budget > 0:
+                    if extra_total <= extra_budget:
+                        for s, v in extras.items():
+                            scaled_extras[s] = int(round(v))
+                    else:
+                        scale_extra = extra_budget / float(extra_total)
+                        remainders = []
+                        for s, v in extras.items():
+                            raw = v * scale_extra
+                            down = int(raw)
+                            scaled_extras[s] = down
+                            remainders.append((raw - down, s))
+                        leftover_extra = int(round(extra_budget - sum(scaled_extras.values())))
+                        remainders.sort(reverse=True)
+                        for _, s in remainders:
+                            if leftover_extra <= 0:
+                                break
+                            scaled_extras[s] += 1
+                            leftover_extra -= 1
+                # Update live quotas to the jammed base plus reserved extras.
+                new_quota = {}
+                for s in set(new_base.keys()) | set(scaled_extras.keys()):
+                    base_val = int(new_base.get(s, 0) or 0)
+                    extra_val = int(scaled_extras.get(s, 0) or 0)
+                    new_quota[s] = base_val + extra_val
+                cell.slice_dl_prb_quota = new_quota
             if total > 0 and target_max < total:
                 scale = target_max / float(total)
                 # Scale proportionally and distribute any remainder to match target_max.
@@ -519,6 +559,7 @@ class BaseStation:
                 base_quota = scaled
                 cell.base_dl_prb_quota = base_quota
                 cell._jam_was_active = True
+                _rebuild_live_quota(base_quota)
                 # base_e_new = float(base_quota.get(SL_E, 0) or 0.0)
                 # base_u_new = float(base_quota.get(SL_U, 0) or 0.0)
                 # #print("base_e_new:", base_e_new, "base_u_new:", base_u_new)
@@ -591,6 +632,7 @@ class BaseStation:
                 
                 #cell.slice_dl_prb_quota = dict(base_quota)
                 cell._jam_was_active = False
+                _rebuild_live_quota(base_quota)
             #     ### restore the slice dl prb quota after jamming
             # elif not active and getattr(cell, "_jam_was_active", True):
             #     """
