@@ -243,11 +243,12 @@ def compute_reward(
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
     #reward_embb = weights["w_e"] * (obs.get("embb_throughput", 0.0)/target)
-    reward_embb = max(0.0, weights["w_e"] * (target - obs.get("embb_throughput", 0.0)))
+    reward_embb = max(0.0, weights["w_e"] * ((target - obs.get("embb_throughput", 0.0)) / target))
     #print("reward_embb:", reward_embb)
     
     
     #excess = latency_excess(obs.get("urllc_latency", 0.0), URLLC_LATENCY_DEADLINE)
+    #penalty_latency = max(0.0, weights["w_u"] * ((obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE)) / URLLC_LATENCY_DEADLINE)
     penalty_latency = max(0.0, weights["w_u"] * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE))
     #print("penalty_latency:", penalty_latency)
 
@@ -265,8 +266,9 @@ def compute_reward(
     #penalty_reserve = mu_scaled * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
     penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
 
+    r0=2.0  # Base reward to keep things positive
 
-    reward = reward_embb - penalty_latency - penalty_reserve
+    reward = r0 - reward_embb - penalty_latency - penalty_reserve
     if return_parts:
         parts = {
             "reward_embb": float(reward_embb),
@@ -665,8 +667,8 @@ class ResilientDQNEnv:
             #     new_e *= scale
             #     new_u *= scale
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
-            print(f"Applying action to cell {cell.cell_id}: eMBB PRB={quotas[SL_E]}, URLLC PRB={quotas[SL_U]}")
-            print(f"  (Requested deltas: eMBB={de}, URLLC={du})")
+            #print(f"Applying action to cell {cell.cell_id}: eMBB PRB={quotas[SL_E]}, URLLC PRB={quotas[SL_U]}")
+            #print(f"  (Requested deltas: eMBB={de}, URLLC={du})")
             cell.slice_dl_prb_quota = quotas
 
     def _collect_obs(self) -> Dict:
@@ -681,7 +683,7 @@ class ResilientDQNEnv:
         base = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
         base_total = float(sum(base.values()) or 0.0)
         reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
-        print("Reserve used PRBs:", reserve_used)
+        #print("Reserve used PRBs:", reserve_used)
         effective_prb_ratio = min(1.0, _safe_div(effective_max_prb, phys_max))
 
         embb = self._aggregate_slice(cell, SL_E, effective_prb_ratio)
