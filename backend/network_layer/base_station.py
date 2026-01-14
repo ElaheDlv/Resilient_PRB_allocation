@@ -485,6 +485,13 @@ class BaseStation:
                 cell._jam_base_quota = base_snapshot
                 cell.base_dl_prb_quota = dict(base_snapshot)
                 cell._jam_was_active = False
+            elif active and not getattr(cell, "_jam_was_active", False):
+                # Refresh the jammer baseline at the start of a jam window so episode-level
+                # resets don't reuse stale quotas from previous runs.
+                cur_snapshot = dict(cell.slice_dl_prb_quota)
+                if cur_snapshot and cur_snapshot != getattr(cell, "_jam_base_quota", {}):
+                    cell._jam_base_quota = dict(cur_snapshot)
+                    cell.base_dl_prb_quota = dict(cur_snapshot)
             prev_base_quota = dict(getattr(cell, "base_dl_prb_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
             # Base usable pool excludes reserved PRBs; jam subtracts from the usable pool only.
             usable_max = max(0, int(cell.max_dl_prb) - reserved)

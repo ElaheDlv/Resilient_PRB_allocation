@@ -275,6 +275,12 @@ class PRBGymEnv:
                 for sl in quotas:
                     quotas[sl] = int(quotas[sl] * scale)
             cell.slice_dl_prb_quota = quotas
+            # Reset jammer baseline/state at episode boundaries so early jamming uses
+            # the new episode's quotas instead of stale ones.
+            cell._jam_base_quota = dict(quotas)
+            cell.base_dl_prb_quota = dict(quotas)
+            cell._jam_was_active = False
+            cell._effective_max_dl_prb = getattr(cell, "max_dl_prb", max_prb)
 
     def _register_episode_ue(self, imsi: str, slice_name: str, slice_cfg: Dict):
         """Spawn a scripted UE, optionally pinning mobility and attaching traces."""

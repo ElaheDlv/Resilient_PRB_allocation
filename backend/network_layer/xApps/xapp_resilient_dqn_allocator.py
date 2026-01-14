@@ -508,6 +508,11 @@ class ResilientDQNEnv:
             for sl, v in prb_map.items():
                 quotas[sl] = int(v)
             cell.slice_dl_prb_quota = quotas
+            # Reset jammer/base baseline so new episodes start from fresh quotas.
+            cell.base_dl_prb_quota = dict(quotas)
+            cell._jam_base_quota = dict(quotas)
+            cell._jam_was_active = False
+            cell._effective_max_dl_prb = getattr(cell, "max_dl_prb", cell._effective_max_dl_prb)
         self._snapshot_base_quotas()
 
     def _clear_managed_ues(self):
@@ -640,26 +645,28 @@ class ResilientDQNEnv:
             #     print("Warning: current quota below base quota; adjusting upwards.")
                 #print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
                 # new_e = base_e
-                # new_u = base_u
-            delta_e = new_e - cur_e
-            delta_u = new_u - cur_u
-            delta_sum = delta_e + delta_u
-            avail_extra = max(0.0, capacity - cur_total)
-            if delta_sum > avail_extra and delta_sum > 0:
-                print("Warning: requested quota increase exceeds available capacity; scaling down.")
-                scale = avail_extra / delta_sum
-                delta_e *= scale
-                delta_u *= scale
-            new_e = cur_e + delta_e
-            new_u = cur_u + delta_u
-            total = new_e + new_u
-            if total > capacity and total > 0:
-                scale = capacity / total
-                new_e *= scale
-                new_u *= scale
+                # new_u = 
+                
+                
+            # delta_e = new_e - cur_e
+            # delta_u = new_u - cur_u
+            # delta_sum = delta_e + delta_u
+            # avail_extra = max(0.0, capacity - cur_total)
+            # if delta_sum > avail_extra and delta_sum > 0:
+            #     print("Warning: requested quota increase exceeds available capacity; scaling down.")
+            #     scale = avail_extra / delta_sum
+            #     delta_e *= scale
+            #     delta_u *= scale
+            # new_e = cur_e + delta_e
+            # new_u = cur_u + delta_u
+            # total = new_e + new_u
+            # if total > capacity and total > 0:
+            #     scale = capacity / total
+            #     new_e *= scale
+            #     new_u *= scale
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
-            #print(f"Applying action to cell {cell.cell_id}: eMBB PRB={quotas[SL_E]}, URLLC PRB={quotas[SL_U]}")
-            #print(f"  (Requested deltas: eMBB={de}, URLLC={du})")
+            print(f"Applying action to cell {cell.cell_id}: eMBB PRB={quotas[SL_E]}, URLLC PRB={quotas[SL_U]}")
+            print(f"  (Requested deltas: eMBB={de}, URLLC={du})")
             cell.slice_dl_prb_quota = quotas
 
     def _collect_obs(self) -> Dict:
@@ -674,6 +681,7 @@ class ResilientDQNEnv:
         base = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
         base_total = float(sum(base.values()) or 0.0)
         reserve_used = max(0.0, float(sum(quotas.values()) or 0.0) - base_total)
+        print("Reserve used PRBs:", reserve_used)
         effective_prb_ratio = min(1.0, _safe_div(effective_max_prb, phys_max))
 
         embb = self._aggregate_slice(cell, SL_E, effective_prb_ratio)

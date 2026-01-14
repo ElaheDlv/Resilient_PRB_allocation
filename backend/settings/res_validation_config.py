@@ -13,6 +13,13 @@ RES_VALIDATE_ENABLE = os.getenv("RES_VALIDATE_ENABLE", "0") in ("1", "true", "Tr
 # Policy selection: qrdqn | dqn | random | idle
 RES_VALIDATE_POLICY = (os.getenv("RES_VALIDATE_POLICY", "random") or "random").lower()
 
+# Optional RNG seed to make validation reproducible
+try:
+    _seed_raw = os.getenv("RES_VALIDATE_SEED", "")
+    RES_VALIDATE_SEED = None if _seed_raw == "" else int(_seed_raw)
+except Exception:
+    RES_VALIDATE_SEED = None
+
 # Decision cadence (simulation steps between actions)
 try:
     RES_VALIDATE_DECISION_PERIOD = max(

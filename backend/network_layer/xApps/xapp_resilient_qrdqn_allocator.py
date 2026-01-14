@@ -424,6 +424,11 @@ class ResilientQRDQNEnv:
             for sl, v in prb_map.items():
                 quotas[sl] = int(v)
             cell.slice_dl_prb_quota = quotas
+            # Reset jammer/base baseline so new episodes start from fresh quotas.
+            cell.base_dl_prb_quota = dict(quotas)
+            cell._jam_base_quota = dict(quotas)
+            cell._jam_was_active = False
+            cell._effective_max_dl_prb = getattr(cell, "max_dl_prb", cell._effective_max_dl_prb)
         self._snapshot_base_quotas()
 
     def _clear_managed_ues(self):

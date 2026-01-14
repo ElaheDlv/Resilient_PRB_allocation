@@ -77,6 +77,12 @@ class xAppResilientPolicyValidator(xAppBase):
         self.policy_mode = (getattr(settings, "RES_VALIDATE_POLICY", "random") or "random").lower()
         if self.policy_mode not in ("qrdqn", "dqn", "random", "idle"):
             self.policy_mode = "random"
+        seed_raw = getattr(settings, "RES_VALIDATE_SEED", None)
+        try:
+            self.seed = int(seed_raw) if seed_raw not in (None, "") else None
+        except Exception:
+            print(f"{self.xapp_id}: invalid RES_VALIDATE_SEED={seed_raw}; ignoring.")
+            self.seed = None
         self.device = "cuda" if TORCH_AVAILABLE and torch.cuda.is_available() else "cpu"
         self._decision_period = max(
             1,
@@ -168,10 +174,28 @@ class xAppResilientPolicyValidator(xAppBase):
             print(f"{self.xapp_id}: failed to init tensorboard at {logdir}: {exc}")
             self._tb_writer = None
 
+    def _apply_seed(self):
+        if self.seed is None:
+            return
+        random.seed(self.seed)
+        try:
+            np.random.seed(self.seed)
+        except Exception:
+            pass
+        if TORCH_AVAILABLE:
+            try:
+                torch.manual_seed(self.seed)
+                if torch.cuda.is_available():
+                    torch.cuda.manual_seed_all(self.seed)
+            except Exception:
+                pass
+        print(f"{self.xapp_id}: applied validation seed {self.seed}")
+
     def start(self):
         if not self.enabled:
             print(f"{self.xapp_id}: disabled")
             return
+        self._apply_seed()
         self._env = ResilientDQNEnv(self.ric)
         self._env.register_clear_hook(self._clear_plot_caches)
         self._init_policy()
