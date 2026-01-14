@@ -431,6 +431,8 @@ class ResilientDQNEnv:
             new_e = cur_e + de
             new_u = cur_u + du
             if new_e < base_e or new_u < base_u:
+                print("Action would reduce below base quota:", de, du)
+                print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u,"eff_max:", eff_max)
                 mask.append(False)
                 continue
             if new_e + new_u > max_prb + 1e-9:
