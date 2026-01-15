@@ -241,15 +241,21 @@ def compute_reward(
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
-    reward_embb = max(0.0, weights["w_e"] * ((target - obs.get("embb_throughput", 0.0)) / target))
+    reward_embb = max(0.0, weights["w_e"] *(1/1e6) * (target - obs.get("embb_throughput", 0.0)))
     penalty_latency = max(0.0, weights["w_u"] * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE))
     penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
+    
+    #print("reward_embb:", reward_embb, " penalty_latency:", penalty_latency, " penalty_reserve:", penalty_reserve)
 
-    r0=2.0  # Base reward to keep things positive
+
+    r0 = 2.0  # Base reward to keep things positive
 
     reward = r0 - reward_embb - penalty_latency - penalty_reserve
+    #print("Total reward:", reward)
+    
     if return_parts:
         parts = {
+            "reward_base": float(r0),
             "reward_embb": float(reward_embb),
             "penalty_latency": float(penalty_latency),
             "penalty_reserve": float(penalty_reserve),
@@ -774,8 +780,8 @@ class ResilientDQNEnv:
         self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]
     ) -> Tuple[float, Dict[str, float]]:
         weights = {
-            "w_e": float(getattr(settings, "RES_DQN_W_E", 1.5)),
-            "w_u": float(getattr(settings, "RES_DQN_W_U", 2.0)),
+            "w_e": float(getattr(settings, "RES_DQN_W_E", 1.0)),
+            "w_u": float(getattr(settings, "RES_DQN_W_U", 1.0)),
             "lambda_latency": float(getattr(settings, "RES_DQN_LAMBDA_LAT", 2.0)),
             "mu": float(getattr(settings, "RES_DQN_MU_RESERVE", 0.25)),
         }
@@ -838,7 +844,12 @@ class xAppResilientDQNAllocator(xAppBase):
         self._episode_return = 0.0
         self._episode_len = 0
         self._episode_counter = 0
-        self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
+        self._episode_reward_parts = {
+            "reward_base": 0.0,
+            "reward_embb": 0.0,
+            "penalty_latency": 0.0,
+            "penalty_reserve": 0.0,
+        }
         self._run_tag = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.tb_enable = bool(getattr(settings, "RES_DQN_TB_ENABLE", False))
         self.tb_dir = (getattr(settings, "RES_DQN_TB_DIR", "") or "").strip()
@@ -856,6 +867,7 @@ class xAppResilientDQNAllocator(xAppBase):
         # History buffers for quick plotting
         self._t = deque(maxlen=400)
         self._hist_reward = deque(maxlen=400)
+        self._hist_reward_base = deque(maxlen=400)
         self._hist_reward_embb = deque(maxlen=400)
         self._hist_penalty_latency = deque(maxlen=400)
         self._hist_penalty_reserve = deque(maxlen=400)
@@ -972,6 +984,7 @@ class xAppResilientDQNAllocator(xAppBase):
             self._t.append(t)
             self._hist_reward.append(float(reward))
             parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
+            self._hist_reward_base.append(float(parts.get("reward_base", 0.0)))
             self._hist_reward_embb.append(float(parts.get("reward_embb", 0.0)))
             self._hist_penalty_latency.append(float(parts.get("penalty_latency", 0.0)))
             self._hist_penalty_reserve.append(float(parts.get("penalty_reserve", 0.0)))
@@ -1100,6 +1113,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 lat = list(self._hist_latency)
                 deadline = list(self._hist_deadline)
                 reward = list(self._hist_reward)
+                reward_base = list(self._hist_reward_base)
                 reward_embb = list(self._hist_reward_embb)
                 penalty_latency = list(self._hist_penalty_latency)
                 penalty_reserve = list(self._hist_penalty_reserve)
@@ -1142,8 +1156,25 @@ class xAppResilientDQNAllocator(xAppBase):
 
             reward_fig = go.Figure()
             reward_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
+            if reward_base:
+                reward_fig.add_trace(
+                    go.Scatter(
+                        x=t[-len(reward_base):],
+                        y=reward_base,
+                        mode="lines",
+                        name="reward base",
+                        line=dict(dash="dash"),
+                    )
+                )
             if reward_embb:
-                reward_fig.add_trace(go.Scatter(x=t[-len(reward_embb):], y=reward_embb, mode="lines", name="reward embb"))
+                reward_fig.add_trace(
+                    go.Scatter(
+                        x=t[-len(reward_embb):],
+                        y=[-v for v in reward_embb],
+                        mode="lines",
+                        name="embb penalty (neg)",
+                    )
+                )
             if penalty_latency:
                 reward_fig.add_trace(
                     go.Scatter(
@@ -1327,12 +1358,16 @@ class xAppResilientDQNAllocator(xAppBase):
             lines.append(f"Episode: {ep_id if ep_id is not None else 'unknown'} (idx={ep_idx if ep_idx is not None else '?'})")
         parts = snap.get("reward_parts") or {}
         if parts:
-            total = float(parts.get("reward_embb", 0.0)) - float(parts.get("penalty_latency", 0.0)) - float(
-                parts.get("penalty_reserve", 0.0)
+            total = (
+                float(parts.get("reward_base", 0.0))
+                - float(parts.get("reward_embb", 0.0))
+                - float(parts.get("penalty_latency", 0.0))
+                - float(parts.get("penalty_reserve", 0.0))
             )
             lines.append(
                 "Reward parts: "
-                f"total={total:.3f}, embb={float(parts.get('reward_embb', 0.0)):.3f}, "
+                f"total={total:.3f}, base={float(parts.get('reward_base', 0.0)):.3f}, "
+                f"embb_pen={float(parts.get('reward_embb', 0.0)):.3f}, "
                 f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
                 f"reserve_pen={float(parts.get('penalty_reserve', 0.0)):.3f}"
             )
