@@ -264,24 +264,28 @@ class _ReplayBuffer:
         self.buf = []
         self.cap = capacity
 
-    def push(self, s, a, r, ns, d):
+    def push(self, s, a, r, ns, d, next_mask=None):
         if len(self.buf) >= self.cap:
             self.buf.pop(0)
-        self.buf.append((s, a, r, ns, d))
+        if next_mask is None:
+            next_mask = [True] * NUM_ACTIONS
+        self.buf.append((s, a, r, ns, d, next_mask))
 
     def sample(self, batch_size):
         batch_size = min(batch_size, len(self.buf))
         idx = np.random.choice(len(self.buf), batch_size, replace=False)
-        states, actions, rewards, next_states, dones = zip(*[self.buf[i] for i in idx])
+        states, actions, rewards, next_states, dones, next_masks = zip(*[self.buf[i] for i in idx])
         # Collapse to contiguous numpy arrays before torch conversion (avoids slow list-of-arrays warning)
         states = np.asarray(states, dtype=np.float32)
         next_states = np.asarray(next_states, dtype=np.float32)
+        next_masks = np.asarray(next_masks, dtype=np.bool_)
         return (
             torch.from_numpy(states),
             torch.tensor(actions, dtype=torch.long),
             torch.tensor(rewards, dtype=torch.float32),
             torch.from_numpy(next_states),
             torch.tensor(dones, dtype=torch.float32),
+            torch.from_numpy(next_masks),
         )
 
     def __len__(self):
@@ -942,7 +946,8 @@ class xAppResilientDQNAllocator(xAppBase):
             self._episode_reward_parts[k] += float(parts.get(k, 0.0))
         self._record_metrics(reward, info)
         if self.train and self._replay is not None:
-            self._replay.push(self._last_state, action_idx, reward, next_state, float(done))
+            next_mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
+            self._replay.push(self._last_state, action_idx, reward, next_state, float(done), next_mask)
             self._learn()
         self._tb_log(self._last_state, action_idx, reward, info, done=bool(done))
         self._last_state = next_state
@@ -1638,16 +1643,19 @@ class xAppResilientDQNAllocator(xAppBase):
     def _learn(self):
         if self._replay is None or len(self._replay) < self.batch:
             return
-        states, actions, rewards, next_states, dones = self._replay.sample(self.batch)
+        states, actions, rewards, next_states, dones, next_masks = self._replay.sample(self.batch)
         states = states.to(self.device)
         actions = actions.to(self.device)
         rewards = rewards.to(self.device)
         next_states = next_states.to(self.device)
         dones = dones.to(self.device)
+        next_masks = next_masks.to(self.device)
 
         q_pred = self._policy(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         with torch.no_grad():
-            next_q = self._target(next_states).max(1)[0]
+            next_q_all = self._target(next_states)
+            next_q_all = next_q_all.masked_fill(~next_masks, -1e9)
+            next_q = next_q_all.max(1)[0]
             target = rewards + (1 - dones) * self.gamma * next_q
         loss = F.mse_loss(q_pred, target)
         self._optimizer.zero_grad()
