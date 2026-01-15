@@ -237,33 +237,12 @@ def compute_reward(
     weights: dict of reward weights
     """
 
-    r_e, r_u = action
-    #print("Action taken: eMBB delta PRB:", r_e, " URLLC delta PRB:", r_u)
+    #r_e, r_u = action
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
-    #reward_embb = weights["w_e"] * (obs.get("embb_throughput", 0.0)/target)
     reward_embb = max(0.0, weights["w_e"] * ((target - obs.get("embb_throughput", 0.0)) / target))
-    #print("reward_embb:", reward_embb)
-    
-    
-    #excess = latency_excess(obs.get("urllc_latency", 0.0), URLLC_LATENCY_DEADLINE)
-    #penalty_latency = max(0.0, weights["w_u"] * ((obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE)) / URLLC_LATENCY_DEADLINE)
     penalty_latency = max(0.0, weights["w_u"] * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE))
-    #print("penalty_latency:", penalty_latency)
-
-    
-    #effective_prb_ratio = obs.get("effective_prb_ratio", 1.0)
-    
-    # Create a mitigation factor (e.g., an exponential decay)
-    # As excess increases, mitigation_factor goes from 1.0 towards 0.0
-    #mitigation_factor = math.exp(-weights.get("lambda_latency", 2.0) * excess)
-    #mitigation_factor = max(0.1, mitigation_factor)  # 
-
-    # Apply the factor to the reserve penalty
-    #eff_ratio = obs.get("effective_prb_ratio", 1.0)
-    #mu_scaled = weights["mu"] * eff_ratio
-    #penalty_reserve = mu_scaled * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
     penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
 
     r0=2.0  # Base reward to keep things positive
@@ -332,7 +311,7 @@ class ResilientDQNEnv:
     dl_buffer_bytes, served_downlink_bitrate, downlink_latency, slice_dl_prb_quota).
     """
 
-    def __init__(self, ric):
+    def __init__(self, ric, spawn_seed: Optional[int] = None):
         self.ric = ric
         self.sim_engine = getattr(ric, "simulation_engine", None)
         self.decision_period = max(1, int(getattr(settings, "RES_DQN_DECISION_PERIOD", 1)))
@@ -350,6 +329,7 @@ class ResilientDQNEnv:
         self._episode_step_limit = 0
         self._managed_ues: set[str] = set()
         self._trace_cache: Dict[Tuple[str, str, float], list] = {}
+        self._spawn_seed_base = spawn_seed
 
     def register_clear_hook(self, fn):
         self._on_clear = fn
@@ -431,8 +411,8 @@ class ResilientDQNEnv:
             new_e = cur_e + de
             new_u = cur_u + du
             if new_e < base_e or new_u < base_u:
-                print("Action would reduce below base quota:", de, du)
-                print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u,"eff_max:", eff_max)
+                #print("Action would reduce below base quota:", de, du)
+                #print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u,"eff_max:", eff_max)
                 mask.append(False)
                 continue
             if new_e + new_u > max_prb + 1e-9:
@@ -502,7 +482,7 @@ class ResilientDQNEnv:
             cfg = spec["slices"].get(sl, {})
             for i in range(int(cfg.get("ue_count", 0))):
                 imsi = f"DQNIMSI_{spec['id']}_{sl}_{i}"
-                self._register_episode_ue(imsi, sl, cfg)
+                self._register_episode_ue(imsi, sl, cfg, ue_idx=i)
 
     def _apply_initial_prb(self, prb_map):
         if not self.sim_engine:
@@ -530,13 +510,26 @@ class ResilientDQNEnv:
         if callable(self._on_clear):
             self._on_clear()
 
-    def _register_episode_ue(self, imsi, slice_name, cfg):
+    def _register_episode_ue(self, imsi, slice_name, cfg, ue_idx: int = 0):
         if not self.sim_engine:
             return
         max_attempts = 3
         attached = False
+        seed = None
+        if self._spawn_seed_base is not None and self._current_episode is not None:
+            sl_offset = 0 if slice_name == SL_E else 1
+            seed = int(self._spawn_seed_base) + (self._episode_idx + 1) * 100000 + sl_offset * 1000 + int(ue_idx)
+            seed = int(seed % (2**32))
         for _ in range(max_attempts):
-            ok = self.sim_engine.register_ue(imsi, [slice_name], register_slice=slice_name)
+            if seed is None:
+                ok = self.sim_engine.register_ue(imsi, [slice_name], register_slice=slice_name)
+            else:
+                rng_state = random.getstate()
+                random.seed(seed)
+                try:
+                    ok = self.sim_engine.register_ue(imsi, [slice_name], register_slice=slice_name)
+                finally:
+                    random.setstate(rng_state)
             ue = self.sim_engine.ue_list.get(imsi)
             if ok and ue:
                 attached = True
@@ -777,10 +770,10 @@ class ResilientDQNEnv:
         self, obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int]
     ) -> Tuple[float, Dict[str, float]]:
         weights = {
-            "w_e": float(getattr(settings, "RES_DQN_W_E", 1.0)),
-            "w_u": float(getattr(settings, "RES_DQN_W_U", 1.0)),
+            "w_e": float(getattr(settings, "RES_DQN_W_E", 1.5)),
+            "w_u": float(getattr(settings, "RES_DQN_W_U", 2.0)),
             "lambda_latency": float(getattr(settings, "RES_DQN_LAMBDA_LAT", 2.0)),
-            "mu": float(getattr(settings, "RES_DQN_MU_RESERVE", 0.5)),
+            "mu": float(getattr(settings, "RES_DQN_MU_RESERVE", 0.25)),
         }
         return compute_reward(obs, action, prev_action, weights, return_parts=True)
 

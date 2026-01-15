@@ -196,7 +196,7 @@ class xAppResilientPolicyValidator(xAppBase):
             print(f"{self.xapp_id}: disabled")
             return
         self._apply_seed()
-        self._env = ResilientDQNEnv(self.ric)
+        self._env = ResilientDQNEnv(self.ric, spawn_seed=self.seed)
         self._env.register_clear_hook(self._clear_plot_caches)
         self._init_policy()
         self._last_state = self._env.reset()
@@ -267,8 +267,9 @@ class xAppResilientPolicyValidator(xAppBase):
             print(f"{self.xapp_id}: loaded checkpoint {path}")
             return True
         except Exception as exc:
-            print(f"{self.xapp_id}: failed to load checkpoint {path}: {exc}")
-            return False
+            msg = f"{self.xapp_id}: failed to load checkpoint {path}: {exc}"
+            print(msg)
+            raise RuntimeError(msg) from exc
 
     def _select_action(self, state) -> int:
         mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
