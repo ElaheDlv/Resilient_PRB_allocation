@@ -3,6 +3,7 @@
 Supported modes:
  - QR-DQN: load a trained QR-DQN checkpoint and act greedily.
  - DQN: load a trained DQN checkpoint and act greedily.
+ - aggressive: allocate from the reserve pool to offset jammed PRBs.
  - random: sample any valid action uniformly.
  - idle: never borrow/return resiliency PRBs (keeps baseline quotas).
 
@@ -75,7 +76,7 @@ class xAppResilientPolicyValidator(xAppBase):
         super().__init__(ric=ric)
         self.enabled = bool(getattr(settings, "RES_VALIDATE_ENABLE", False))
         self.policy_mode = (getattr(settings, "RES_VALIDATE_POLICY", "random") or "random").lower()
-        if self.policy_mode not in ("qrdqn", "dqn", "random", "idle"):
+        if self.policy_mode not in ("qrdqn", "dqn", "aggressive", "random", "idle"):
             self.policy_mode = "random"
         seed_raw = getattr(settings, "RES_VALIDATE_SEED", None)
         try:
@@ -142,6 +143,7 @@ class xAppResilientPolicyValidator(xAppBase):
         self._episode_return = 0.0
         self._episode_len = 0
         self._episode_counter = 0
+        self._nojam_base = {SL_E: None, SL_U: None}
 
     def _init_tb(self):
         if not self.tb_enable:
@@ -278,6 +280,10 @@ class xAppResilientPolicyValidator(xAppBase):
             return self._idle_idx
         if self.policy_mode == "idle":
             return self._idle_idx if mask[self._idle_idx] else valid_idx[0]
+        if self.policy_mode == "aggressive":
+            obs = self._last_info.get("obs") if isinstance(self._last_info, dict) else {}
+            target_e, target_u = self._aggressive_deltas(obs or {})
+            return self._closest_action(mask, target_e, target_u)
         if self.policy_mode == "random" or self._policy is None:
             return int(random.choice(valid_idx))
         s = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
@@ -292,6 +298,46 @@ class xAppResilientPolicyValidator(xAppBase):
                     q_np[i] = -1e9
             idx = int(np.argmax(q_np))
         return idx if mask[idx] else int(random.choice(valid_idx))
+
+    def _aggressive_deltas(self, obs: Dict) -> Tuple[float, float]:
+        eff_ratio = float(obs.get("effective_prb_ratio", 1.0) or 1.0)
+        base_e = float(obs.get("embb_base_prb", 0.0) or 0.0)
+        base_u = float(obs.get("urllc_base_prb", 0.0) or 0.0)
+        if eff_ratio >= 1.0:
+            if base_e > 0.0 or base_u > 0.0:
+                self._nojam_base[SL_E] = base_e
+                self._nojam_base[SL_U] = base_u
+            return 0.0, 0.0
+        ref_e = self._nojam_base.get(SL_E)
+        ref_u = self._nojam_base.get(SL_U)
+        if ref_e is None or ref_u is None:
+            return 0.0, 0.0
+        need_e = max(0.0, float(ref_e) - base_e)
+        need_u = max(0.0, float(ref_u) - base_u)
+        need_total = need_e + need_u
+        if need_total <= 0.0:
+            return 0.0, 0.0
+        target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total)
+        reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
+        delta_total = target_extra - reserve_used
+        share_e = need_e / need_total
+        share_u = need_u / need_total
+        return delta_total * share_e, delta_total * share_u
+
+    def _closest_action(self, mask, target_e: float, target_u: float) -> int:
+        best_idx = None
+        best_score = None
+        for idx, ok in enumerate(mask):
+            if not ok:
+                continue
+            de, du = ACTION_LIST[idx]
+            score = abs(float(de) - target_e) + abs(float(du) - target_u)
+            if best_score is None or score < best_score:
+                best_score = score
+                best_idx = idx
+        if best_idx is None:
+            return self._idle_idx
+        return int(best_idx)
 
     # ---------- Telemetry / dashboard ---------- #
     def _record_metrics(self, reward: float, info: Optional[Dict]):
@@ -649,6 +695,8 @@ class xAppResilientPolicyValidator(xAppBase):
                 "urllc_throughput",
                 "embb_queue",
                 "urllc_queue",
+                "embb_base_prb",
+                "urllc_base_prb",
                 "embb_base_achievable_throughput",
                 "urllc_base_achievable_throughput",
                 "reserve_used_prb",
@@ -662,6 +710,10 @@ class xAppResilientPolicyValidator(xAppBase):
                 state_names = [
                     "embb_demand_norm",
                     "urllc_demand_norm",
+                    "embb_prb_norm",
+                    "urllc_prb_norm",
+                    "embb_base_prb_norm",
+                    "urllc_base_prb_norm",
                     "embb_queue_norm",
                     "urllc_queue_norm",
                     "embb_thr_norm",

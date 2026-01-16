@@ -546,6 +546,9 @@ class BaseStation:
                     extra_val = int(scaled_extras.get(s, 0) or 0)
                     new_quota[s] = base_val + extra_val
                 cell.slice_dl_prb_quota = new_quota
+                
+                
+                
             if total > 0 and target_max < total:
                 scale = target_max / float(total)
                 # Scale proportionally and distribute any remainder to match target_max.

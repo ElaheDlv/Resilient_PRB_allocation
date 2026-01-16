@@ -10,7 +10,7 @@ import os
 # Toggle validation xApp
 RES_VALIDATE_ENABLE = os.getenv("RES_VALIDATE_ENABLE", "0") in ("1", "true", "True")
 
-# Policy selection: qrdqn | dqn | random | idle
+# Policy selection: qrdqn | dqn | aggressive | random | idle
 RES_VALIDATE_POLICY = (os.getenv("RES_VALIDATE_POLICY", "random") or "random").lower()
 
 # Optional RNG seed to make validation reproducible
