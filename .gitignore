@@ -97,6 +97,7 @@ venv.bak/
 backend/kpi_logs/
 backend/models/
 backend/tb_logs/
+backend/Results/
 wandb/
 
 # Spyder project settings
