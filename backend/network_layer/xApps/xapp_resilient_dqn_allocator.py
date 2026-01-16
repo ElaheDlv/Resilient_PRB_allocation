@@ -153,80 +153,6 @@ def latency_excess(latency: float, deadline: float) -> float:
     return max(0.0, float(latency) / float(deadline) - 1.0)
 
 
-
-
-# def compute_reward(
-#     obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
-# ):
-#     """
-#     obs: simulator outputs after applying the action
-#     action: (r_e, r_u)
-#     prev_action: (r_e_prev, r_u_prev)
-#     weights: dict of reward weights
-#     """
-
-#     r_e, r_u = action
-#     #print("Action taken: eMBB delta PRB:", r_e, " URLLC delta PRB:", r_u)
-#     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
-#     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
-#     target = min(base_ach_embb, embb_max_throughput)
-#     #reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
-#     #reward_embb = weights["w_e"] * ((obs.get("embb_throughput", 0.0)/target)-1)
-#     reward_embb = weights["w_e"] * (obs.get("embb_throughput", 0.0)/target)
-#     #print("reward_embb:", reward_embb)
-
-#     # excess = latency_excess(
-#     #     obs.get("urllc_latency", 0.0),
-#     #     obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
-#     # )
-#     #penalty_latency = weights["w_u"] * math.log1p(excess)
-#     excess = latency_excess(obs.get("urllc_latency", 0.0), URLLC_LATENCY_DEADLINE)
-#     penalty_latency = weights["w_u"] * (excess / (1 + excess))
-#     #print("excess latency:", excess)
-#     #print("penalty_latency:", penalty_latency)
-
-    
-#     #effective_prb_ratio = obs.get("effective_prb_ratio", 1.0)
-    
-#     # Create a mitigation factor (e.g., an exponential decay)
-#     # As excess increases, mitigation_factor goes from 1.0 towards 0.0
-#     mitigation_factor = math.exp(-weights.get("lambda_latency", 2.0) * excess)
-#     #mitigation_factor = max(0.1, mitigation_factor)  # 
-
-#     # Apply the factor to the reserve penalty
-#     eff_ratio = obs.get("effective_prb_ratio", 1.0)
-#     mu_scaled = weights["mu"] * eff_ratio
-#     penalty_reserve = mu_scaled * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
-
-#     # Mitigate the penalty based on latency
-#     penalty_reserve *= mitigation_factor
-
-    
-#     # eff_ratio = obs.get("effective_prb_ratio", 1.0)
-#     # #print("effective_prb_ratio:", eff_ratio)
-#     # #print("obs.get(\"reserve_used_prb\", 0.0):", obs.get("reserve_used_prb", 0.0))
-#     # mu_scaled = weights["mu"] * eff_ratio
-#     # penalty_reserve = mu_scaled * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
-
-
-
-#     #penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
-#     # NEW (Encourages stability):
-#     # Use the actual absolute usage from the observation
-#     #penalty_reserve = weights["mu"] * (obs.get("reserve_used_prb", 0.0) / TOTAL_RESILIENCY_PRB)
-
-#     #print("weight_e:", weights["w_e"], " weight_u:", weights["w_u"], " mu:", weights["mu"])
-
-#     reward = reward_embb - penalty_latency - penalty_reserve
-#     if return_parts:
-#         parts = {
-#             "reward_embb": float(reward_embb),
-#             "penalty_latency": float(penalty_latency),
-#             "penalty_reserve": float(penalty_reserve),
-#         }
-#         return float(reward), parts
-#     return float(reward)
-
 def compute_reward(
     obs: Dict, action: Tuple[int, int], prev_action: Tuple[int, int], weights: Dict, return_parts: bool = False
 ):
@@ -242,13 +168,13 @@ def compute_reward(
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
     reward_embb = max(0.0, weights["w_e"] *(1/1e6) * (target - obs.get("embb_throughput", 0.0)))
-    penalty_latency = max(0.0, weights["w_u"] * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE))
+    penalty_latency = max(0.0, weights["w_u"] * (1000)* (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE))
     penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
     
     #print("reward_embb:", reward_embb, " penalty_latency:", penalty_latency, " penalty_reserve:", penalty_reserve)
 
 
-    r0 = 2.0  # Base reward to keep things positive
+    r0 = 0  # Base reward to keep things positive
 
     reward = r0 - reward_embb - penalty_latency - penalty_reserve
     #print("Total reward:", reward)
@@ -783,7 +709,7 @@ class ResilientDQNEnv:
             "w_e": float(getattr(settings, "RES_DQN_W_E", 1.0)),
             "w_u": float(getattr(settings, "RES_DQN_W_U", 1.0)),
             "lambda_latency": float(getattr(settings, "RES_DQN_LAMBDA_LAT", 2.0)),
-            "mu": float(getattr(settings, "RES_DQN_MU_RESERVE", 0.25)),
+            "mu": float(getattr(settings, "RES_DQN_MU_RESERVE", 0.5)),
         }
         return compute_reward(obs, action, prev_action, weights, return_parts=True)
 

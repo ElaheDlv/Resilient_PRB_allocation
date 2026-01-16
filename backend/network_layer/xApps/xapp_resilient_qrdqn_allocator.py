@@ -129,16 +129,21 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
     prev_action: (r_e_prev, r_u_prev)
     """
     denom_prb = max(1.0, float(obs.get("max_dl_prb", DEFAULT_MAX_DL_PRB)))
-    lat_ratio = _safe_div(obs.get("urllc_latency", 0.0), obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
-    lat_log = min(5.0, math.log1p(max(0.0, lat_ratio)))  # cap extreme spikes
+    # Normalized latency excess
+    latency = float(obs.get("urllc_latency", 0.0))
+    deadline = float(obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
+    excess = max(0.0, latency / deadline - 1.0)
+    lat_excess_norm = excess / (1.0 + excess)
     state = [
         min(1.0, _safe_div(obs.get("embb_demand_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("urllc_demand_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("embb_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("urllc_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("embb_queue", 0.0), obs.get("embb_queue_max", EMBB_QUEUE_MAX))),
         min(1.0, _safe_div(obs.get("urllc_queue", 0.0), obs.get("urllc_queue_max", URLLC_QUEUE_MAX))),
         _safe_div(obs.get("embb_throughput", 0.0), obs.get("embb_throughput_max", EMBB_THR_MAX)),
         _safe_div(obs.get("urllc_throughput", 0.0), obs.get("urllc_throughput_max", URLLC_THR_MAX)),
-        lat_log,
+        lat_excess_norm,
         float(obs.get("effective_prb_ratio", 0.0)),
         min(1.0, _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)),
         _safe_div(prev_action[0], TOTAL_RESILIENCY_PRB),
@@ -164,24 +169,20 @@ def compute_reward(
     weights: dict of reward weights
     """
 
-    r_e, r_u = action
-
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
-    reward_embb = weights["w_e"] * np.log(1 + (obs.get("embb_throughput", 0.0)/target))
-
-    excess = latency_excess(
-        obs.get("urllc_latency", 0.0),
-        obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE),
+    reward_embb = max(0.0, weights["w_e"] * (1 / 1e6) * (target - obs.get("embb_throughput", 0.0)))
+    penalty_latency = max(
+        0.0, weights["w_u"] * 1000 * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE)
     )
-    penalty_latency = weights["w_u"] * math.log1p(excess)
+    penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
 
-    penalty_reserve = weights["mu"] * (r_e + r_u) / TOTAL_RESILIENCY_PRB
-
-    reward = reward_embb - penalty_latency - penalty_reserve
+    r0 = 0
+    reward = r0 - reward_embb - penalty_latency - penalty_reserve
     if return_parts:
         parts = {
+            "reward_base": float(r0),
             "reward_embb": float(reward_embb),
             "penalty_latency": float(penalty_latency),
             "penalty_reserve": float(penalty_reserve),
@@ -196,24 +197,28 @@ class _ReplayBuffer:
         self.buf = []
         self.cap = capacity
 
-    def push(self, s, a, r, ns, d):
+    def push(self, s, a, r, ns, d, next_mask=None):
         if len(self.buf) >= self.cap:
             self.buf.pop(0)
-        self.buf.append((s, a, r, ns, d))
+        if next_mask is None:
+            next_mask = [True] * NUM_ACTIONS
+        self.buf.append((s, a, r, ns, d, next_mask))
 
     def sample(self, batch_size):
         batch_size = min(batch_size, len(self.buf))
         idx = np.random.choice(len(self.buf), batch_size, replace=False)
-        states, actions, rewards, next_states, dones = zip(*[self.buf[i] for i in idx])
+        states, actions, rewards, next_states, dones, next_masks = zip(*[self.buf[i] for i in idx])
         # Collapse to contiguous numpy arrays before torch conversion (avoids slow list-of-arrays warning)
         states = np.asarray(states, dtype=np.float32)
         next_states = np.asarray(next_states, dtype=np.float32)
+        next_masks = np.asarray(next_masks, dtype=np.bool_)
         return (
             torch.from_numpy(states),
             torch.tensor(actions, dtype=torch.long),
             torch.tensor(rewards, dtype=torch.float32),
             torch.from_numpy(next_states),
             torch.tensor(dones, dtype=torch.float32),
+            torch.from_numpy(next_masks),
         )
 
     def __len__(self):
@@ -246,7 +251,7 @@ class ResilientQRDQNEnv:
     dl_buffer_bytes, served_downlink_bitrate, downlink_latency, slice_dl_prb_quota).
     """
 
-    def __init__(self, ric):
+    def __init__(self, ric, spawn_seed: Optional[int] = None):
         self.ric = ric
         self.sim_engine = getattr(ric, "simulation_engine", None)
         self.decision_period = max(
@@ -266,6 +271,7 @@ class ResilientQRDQNEnv:
         self._episode_step_limit = 0
         self._managed_ues: set[str] = set()
         self._trace_cache: Dict[Tuple[str, str, float], list] = {}
+        self._spawn_seed_base = spawn_seed
 
     def register_clear_hook(self, fn):
         self._on_clear = fn
@@ -333,12 +339,12 @@ class ResilientQRDQNEnv:
             base = self._base_quota.get(cell.cell_id, {})
             base_e = float(base.get(SL_E, 0) or 0.0)
             base_u = float(base.get(SL_U, 0) or 0.0)
-        base_total = base_e + base_u
-        max_prb = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-        cur_e = float(quotas.get(SL_E, base_e) or base_e)
-        cur_u = float(quotas.get(SL_U, base_u) or base_u)
+        cur_e = float(quotas.get(SL_E, 0) or 0)
+        cur_u = float(quotas.get(SL_U, 0) or 0)
+        base_total = base_e + base_u
         cur_total = cur_e + cur_u
+        max_prb = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
         pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
         mask = []
         for de, du in self.actions:
@@ -414,7 +420,7 @@ class ResilientQRDQNEnv:
             cfg = spec["slices"].get(sl, {})
             for i in range(int(cfg.get("ue_count", 0))):
                 imsi = f"QRDQNIMSI_{spec['id']}_{sl}_{i}"
-                self._register_episode_ue(imsi, sl, cfg)
+                self._register_episode_ue(imsi, sl, cfg, ue_idx=i)
 
     def _apply_initial_prb(self, prb_map):
         if not self.sim_engine:
@@ -442,13 +448,26 @@ class ResilientQRDQNEnv:
         if callable(self._on_clear):
             self._on_clear()
 
-    def _register_episode_ue(self, imsi, slice_name, cfg):
+    def _register_episode_ue(self, imsi, slice_name, cfg, ue_idx: int = 0):
         if not self.sim_engine:
             return
         max_attempts = 3
         attached = False
+        seed = None
+        if self._spawn_seed_base is not None and self._current_episode is not None:
+            sl_offset = 0 if slice_name == SL_E else 1
+            seed = int(self._spawn_seed_base) + (self._episode_idx + 1) * 100000 + sl_offset * 1000 + int(ue_idx)
+            seed = int(seed % (2**32))
         for _ in range(max_attempts):
-            ok = self.sim_engine.register_ue(imsi, [slice_name], register_slice=slice_name)
+            if seed is None:
+                ok = self.sim_engine.register_ue(imsi, [slice_name], register_slice=slice_name)
+            else:
+                rng_state = random.getstate()
+                random.seed(seed)
+                try:
+                    ok = self.sim_engine.register_ue(imsi, [slice_name], register_slice=slice_name)
+                finally:
+                    random.setstate(rng_state)
             ue = self.sim_engine.ue_list.get(imsi)
             if ok and ue:
                 attached = True
@@ -538,8 +557,8 @@ class ResilientQRDQNEnv:
                 base_u = float(base.get(SL_U, 0) or 0.0)
             base_total = base_e + base_u
             quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-            cur_e = float(quotas.get(SL_E, base_e) or base_e)
-            cur_u = float(quotas.get(SL_U, base_u) or base_u)
+            cur_e = float(quotas.get(SL_E, 0) or 0)
+            cur_u = float(quotas.get(SL_U, 0) or 0)
             cur_total = cur_e + cur_u
             eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
             max_prb_phys = eff_max + float(_reserve_from_jammer)
@@ -552,22 +571,6 @@ class ResilientQRDQNEnv:
             # new_u = cur_u + float(du)
             new_e = max(base_e, cur_e + float(de))
             new_u = max(base_u, cur_u + float(du))
-            #print(new_e, new_u)
-            delta_e = new_e - cur_e
-            delta_u = new_u - cur_u
-            delta_sum = delta_e + delta_u
-            avail_extra = max(0.0, capacity - cur_total)
-            if delta_sum > avail_extra and delta_sum > 0:
-                scale = avail_extra / delta_sum
-                delta_e *= scale
-                delta_u *= scale
-            new_e = cur_e + delta_e
-            new_u = cur_u + delta_u
-            total = new_e + new_u
-            if total > capacity and total > 0:
-                scale = capacity / total
-                new_e *= scale
-                new_u *= scale
             quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
             cell.slice_dl_prb_quota = quotas
 
@@ -590,6 +593,8 @@ class ResilientQRDQNEnv:
         return {
             "embb_demand_prb": embb["demand_prb"],
             "urllc_demand_prb": urllc["demand_prb"],
+            "embb_prb": float(quotas.get(SL_E, 0.0) or 0.0),
+            "urllc_prb": float(quotas.get(SL_U, 0.0) or 0.0),
             "embb_queue": embb["queue"],
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": urllc["queue"],
@@ -606,8 +611,6 @@ class ResilientQRDQNEnv:
             "effective_max_prb": effective_max_prb,
             "reserve_used_prb": reserve_used,
             "max_dl_prb": max_dl_prb,
-            "jammed_prb": 0.0,
-            "jammed_ratio": 0.0,
         }
 
     def _traces_consumed(self) -> bool:
@@ -687,6 +690,8 @@ class ResilientQRDQNEnv:
         return {
             "embb_demand_prb": 0.0,
             "urllc_demand_prb": 0.0,
+            "embb_prb": 0.0,
+            "urllc_prb": 0.0,
             "embb_queue": 0.0,
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": 0.0,
@@ -743,7 +748,12 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._episode_return = 0.0
         self._episode_len = 0
         self._episode_counter = 0
-        self._episode_reward_parts = {"reward_embb": 0.0, "penalty_latency": 0.0, "penalty_reserve": 0.0}
+        self._episode_reward_parts = {
+            "reward_base": 0.0,
+            "reward_embb": 0.0,
+            "penalty_latency": 0.0,
+            "penalty_reserve": 0.0,
+        }
         self._run_tag = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.tb_enable = bool(getattr(settings, "RES_QRDQN_TB_ENABLE", getattr(settings, "RES_DQN_TB_ENABLE", False)))
         self.tb_dir = (getattr(settings, "RES_QRDQN_TB_DIR", getattr(settings, "RES_DQN_TB_DIR", "")) or "").strip()
@@ -765,6 +775,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         # History buffers for quick plotting
         self._t = deque(maxlen=400)
         self._hist_reward = deque(maxlen=400)
+        self._hist_reward_base = deque(maxlen=400)
         self._hist_reward_embb = deque(maxlen=400)
         self._hist_penalty_latency = deque(maxlen=400)
         self._hist_penalty_reserve = deque(maxlen=400)
@@ -855,7 +866,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self._episode_reward_parts[k] += float(parts.get(k, 0.0))
         self._record_metrics(reward, info)
         if self.train and self._replay is not None:
-            self._replay.push(self._last_state, action_idx, reward, next_state, float(done))
+            next_mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
+            self._replay.push(self._last_state, action_idx, reward, next_state, float(done), next_mask)
             self._learn()
         self._tb_log(self._last_state, action_idx, reward, info, done=bool(done))
         self._last_state = next_state
@@ -880,6 +892,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self._t.append(t)
             self._hist_reward.append(float(reward))
             parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
+            self._hist_reward_base.append(float(parts.get("reward_base", 0.0)))
             self._hist_reward_embb.append(float(parts.get("reward_embb", 0.0)))
             self._hist_penalty_latency.append(float(parts.get("penalty_latency", 0.0)))
             self._hist_penalty_reserve.append(float(parts.get("penalty_reserve", 0.0)))
@@ -1008,6 +1021,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 lat = list(self._hist_latency)
                 deadline = list(self._hist_deadline)
                 reward = list(self._hist_reward)
+                reward_base = list(self._hist_reward_base)
                 reward_embb = list(self._hist_reward_embb)
                 penalty_latency = list(self._hist_penalty_latency)
                 penalty_reserve = list(self._hist_penalty_reserve)
@@ -1051,8 +1065,25 @@ class xAppResilientQRDQNAllocator(xAppBase):
 
             reward_fig = go.Figure()
             reward_fig.add_trace(go.Scatter(x=t, y=reward, mode="lines", name="reward"))
+            if reward_base:
+                reward_fig.add_trace(
+                    go.Scatter(
+                        x=t[-len(reward_base):],
+                        y=reward_base,
+                        mode="lines",
+                        name="reward base",
+                        line=dict(dash="dash"),
+                    )
+                )
             if reward_embb:
-                reward_fig.add_trace(go.Scatter(x=t[-len(reward_embb):], y=reward_embb, mode="lines", name="reward embb"))
+                reward_fig.add_trace(
+                    go.Scatter(
+                        x=t[-len(reward_embb):],
+                        y=[-v for v in reward_embb],
+                        mode="lines",
+                        name="embb penalty (neg)",
+                    )
+                )
             if penalty_latency:
                 reward_fig.add_trace(
                     go.Scatter(
@@ -1235,12 +1266,16 @@ class xAppResilientQRDQNAllocator(xAppBase):
             lines.append(f"Episode: {ep_id if ep_id is not None else 'unknown'} (idx={ep_idx if ep_idx is not None else '?'})")
         parts = snap.get("reward_parts") or {}
         if parts:
-            total = float(parts.get("reward_embb", 0.0)) - float(parts.get("penalty_latency", 0.0)) - float(
-                parts.get("penalty_reserve", 0.0)
+            total = (
+                float(parts.get("reward_base", 0.0))
+                - float(parts.get("reward_embb", 0.0))
+                - float(parts.get("penalty_latency", 0.0))
+                - float(parts.get("penalty_reserve", 0.0))
             )
             lines.append(
                 "Reward parts: "
-                f"total={total:.3f}, embb={float(parts.get('reward_embb', 0.0)):.3f}, "
+                f"total={total:.3f}, base={float(parts.get('reward_base', 0.0)):.3f}, "
+                f"embb_pen={float(parts.get('reward_embb', 0.0)):.3f}, "
                 f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
                 f"reserve_pen={float(parts.get('penalty_reserve', 0.0)):.3f}"
             )
@@ -1300,6 +1335,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 "raw: "
                 f"e_demand={obs.get('embb_demand_prb', 0.0):.3f}, "
                 f"u_demand={obs.get('urllc_demand_prb', 0.0):.3f}, "
+                f"e_prb={obs.get('embb_prb', 0.0):.3f}, "
+                f"u_prb={obs.get('urllc_prb', 0.0):.3f}, "
                 f"e_queue={obs.get('embb_queue', 0.0):.1f}/{obs.get('embb_queue_max', EMBB_QUEUE_MAX):.1f}, "
                 f"u_queue={obs.get('urllc_queue', 0.0):.1f}/{obs.get('urllc_queue_max', URLLC_QUEUE_MAX):.1f}, "
                 f"e_thr={obs.get('embb_throughput', 0.0):.3f}/{obs.get('embb_throughput_max', EMBB_THR_MAX):.3f}, "
@@ -1312,6 +1349,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
             norm_names = [
                 "e_demand_n",
                 "u_demand_n",
+                "e_prb_n",
+                "u_prb_n",
                 "e_queue_n",
                 "u_queue_n",
                 "e_thr_n",
@@ -1341,6 +1380,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 f"raw: "
                 f"e_demand={obs.get('embb_demand_prb', 0.0):.3f}, "
                 f"u_demand={obs.get('urllc_demand_prb', 0.0):.3f}, "
+                f"e_prb={obs.get('embb_prb', 0.0):.3f}, "
+                f"u_prb={obs.get('urllc_prb', 0.0):.3f}, "
                 f"e_queue={obs.get('embb_queue', 0.0):.1f}/{obs.get('embb_queue_max', EMBB_QUEUE_MAX):.1f}, "
                 f"u_queue={obs.get('urllc_queue', 0.0):.1f}/{obs.get('urllc_queue_max', URLLC_QUEUE_MAX):.1f}, "
                 f"e_thr={obs.get('embb_throughput', 0.0):.3f}/{obs.get('embb_throughput_max', EMBB_THR_MAX):.3f}, "
@@ -1353,6 +1394,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
             norm_names = [
                 "e_dem_n",
                 "u_dem_n",
+                "e_prb_n",
+                "u_prb_n",
                 "e_q_n",
                 "u_q_n",
                 "e_thr_n",
@@ -1543,15 +1586,17 @@ class xAppResilientQRDQNAllocator(xAppBase):
     def _learn(self):
         if self._replay is None or len(self._replay) < self.batch:
             return
-        states, actions, rewards, next_states, dones = self._replay.sample(self.batch)
+        states, actions, rewards, next_states, dones, next_masks = self._replay.sample(self.batch)
         states = states.to(self.device)
         actions = actions.to(self.device)
         rewards = rewards.to(self.device)
         next_states = next_states.to(self.device)
         dones = dones.to(self.device)
+        next_masks = next_masks.to(self.device)
 
         with torch.no_grad():
             next_q = self._policy(next_states).mean(dim=2)
+            next_q = next_q.masked_fill(~next_masks, -1e9)
             next_actions = torch.argmax(next_q, dim=1)
             next_dist = self._target(next_states)[range(len(next_states)), next_actions]
             target = rewards.unsqueeze(1) + (1 - dones.unsqueeze(1)) * self.gamma * next_dist

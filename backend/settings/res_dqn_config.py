@@ -85,9 +85,9 @@ try:
     RES_DQN_W_E = float(os.getenv("RES_DQN_W_E", "1.0"))
     RES_DQN_W_U = float(os.getenv("RES_DQN_W_U", "1.0"))
     RES_DQN_LAMBDA_LAT = float(os.getenv("RES_DQN_LAMBDA_LAT", "2.0"))
-    RES_DQN_MU_RESERVE = float(os.getenv("RES_DQN_MU_RESERVE", "0.25"))
+    RES_DQN_MU_RESERVE = float(os.getenv("RES_DQN_MU_RESERVE", "0.5"))
 except Exception:
-    RES_DQN_W_E, RES_DQN_W_U, RES_DQN_LAMBDA_LAT, RES_DQN_MU_RESERVE = 1.0, 1.0, 2.0, 0.25
+    RES_DQN_W_E, RES_DQN_W_U, RES_DQN_LAMBDA_LAT, RES_DQN_MU_RESERVE = 1.0, 1.0, 2.0, 0.5
 
 # Telemetry / dashboard
 RES_DQN_DASH_ENABLE = os.getenv("RES_DQN_DASH_ENABLE", "0") in ("1", "true", "True")
