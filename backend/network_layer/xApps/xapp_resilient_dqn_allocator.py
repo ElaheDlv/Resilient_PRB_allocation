@@ -132,8 +132,8 @@ def build_state(obs: Dict, prev_action: Tuple[int, int]) -> np.ndarray:
         min(1.0, _safe_div(obs.get("urllc_demand_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("embb_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("urllc_prb", 0.0), denom_prb)),
-        # min(1.0, _safe_div(obs.get("embb_base_prb", 0.0), denom_prb)),
-        # min(1.0, _safe_div(obs.get("urllc_base_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("embb_base_prb", 0.0), denom_prb)),
+        min(1.0, _safe_div(obs.get("urllc_base_prb", 0.0), denom_prb)),
         min(1.0, _safe_div(obs.get("embb_queue", 0.0), obs.get("embb_queue_max", EMBB_QUEUE_MAX))),
         min(1.0, _safe_div(obs.get("urllc_queue", 0.0), obs.get("urllc_queue_max", URLLC_QUEUE_MAX))),
         _safe_div(obs.get("embb_throughput", 0.0), obs.get("embb_throughput_max", EMBB_THR_MAX)),
@@ -178,7 +178,7 @@ def compute_reward(
     # Higher number = Cheaper PRBs when jammed
     # 1 = Linear discount
     # 5 = Huge discount immediately when jamming starts
-    sensitivity = 10.0
+    sensitivity = 100.0
     
     # Calculate the "Tax Rate"
     # If avail=1.0 -> factor=1.0 (Full Price)
@@ -658,8 +658,8 @@ class ResilientDQNEnv:
             "urllc_demand_prb": urllc["demand_prb"],
             "embb_prb": float(quotas.get(SL_E, 0.0) or 0.0),
             "urllc_prb": float(quotas.get(SL_U, 0.0) or 0.0),
-            # "embb_base_prb": float(base.get(SL_E, 0.0) or 0.0),
-            # "urllc_base_prb": float(base.get(SL_U, 0.0) or 0.0),
+            "embb_base_prb": float(base.get(SL_E, 0.0) or 0.0),
+            "urllc_base_prb": float(base.get(SL_U, 0.0) or 0.0),
             "embb_queue": embb["queue"],
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": urllc["queue"],
@@ -675,7 +675,6 @@ class ResilientDQNEnv:
             "effective_prb_ratio": effective_prb_ratio,
             "effective_max_prb": effective_max_prb,
             "reserve_used_prb": reserve_used,
-            "max_dl_prb": max_dl_prb,
         }
 
     def _traces_consumed(self) -> bool:
@@ -756,8 +755,8 @@ class ResilientDQNEnv:
             "urllc_demand_prb": 0.0,
             "embb_prb": 0.0,
             "urllc_prb": 0.0,
-            # "embb_base_prb": 0.0,
-            # "urllc_base_prb": 0.0,
+            "embb_base_prb": 0.0,
+            "urllc_base_prb": 0.0,
             "embb_queue": 0.0,
             "embb_queue_max": EMBB_QUEUE_MAX,
             "urllc_queue": 0.0,

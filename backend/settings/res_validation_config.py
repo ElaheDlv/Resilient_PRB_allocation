@@ -10,7 +10,7 @@ import os
 # Toggle validation xApp
 RES_VALIDATE_ENABLE = os.getenv("RES_VALIDATE_ENABLE", "0") in ("1", "true", "True")
 
-# Policy selection: qrdqn | dqn | aggressive | random | idle
+# Policy selection: qrdqn | dqn | aggressive | partial | random | idle
 RES_VALIDATE_POLICY = (os.getenv("RES_VALIDATE_POLICY", "random") or "random").lower()
 
 # Optional RNG seed to make validation reproducible
@@ -51,3 +51,9 @@ except Exception:
 # TensorBoard logging
 RES_VALIDATE_TB_ENABLE = os.getenv("RES_VALIDATE_TB_ENABLE", "0") in ("1", "true", "True")
 RES_VALIDATE_TB_DIR = os.getenv("RES_VALIDATE_TB_DIR", "")
+
+# Partial policy factor (fraction of per-slice jammed PRBs to allocate)
+try:
+    RES_VALIDATE_PARTIAL_FACTOR = float(os.getenv("RES_VALIDATE_PARTIAL_FACTOR", "0.5"))
+except Exception:
+    RES_VALIDATE_PARTIAL_FACTOR = 0.5

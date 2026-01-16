@@ -4,6 +4,7 @@ Supported modes:
  - QR-DQN: load a trained QR-DQN checkpoint and act greedily.
  - DQN: load a trained DQN checkpoint and act greedily.
  - aggressive: allocate from the reserve pool to offset jammed PRBs.
+ - partial: allocate a fraction of jammed PRBs from the reserve pool.
  - random: sample any valid action uniformly.
  - idle: never borrow/return resiliency PRBs (keeps baseline quotas).
 
@@ -76,7 +77,7 @@ class xAppResilientPolicyValidator(xAppBase):
         super().__init__(ric=ric)
         self.enabled = bool(getattr(settings, "RES_VALIDATE_ENABLE", False))
         self.policy_mode = (getattr(settings, "RES_VALIDATE_POLICY", "random") or "random").lower()
-        if self.policy_mode not in ("qrdqn", "dqn", "aggressive", "random", "idle"):
+        if self.policy_mode not in ("qrdqn", "dqn", "aggressive", "partial", "random", "idle"):
             self.policy_mode = "random"
         seed_raw = getattr(settings, "RES_VALIDATE_SEED", None)
         try:
@@ -103,6 +104,7 @@ class xAppResilientPolicyValidator(xAppBase):
         self.dash_port = int(getattr(settings, "RES_VALIDATE_DASH_PORT", getattr(settings, "RES_QRDQN_DASH_PORT", 5060)))
         self.tb_enable = bool(getattr(settings, "RES_VALIDATE_TB_ENABLE", False))
         self.tb_dir = (getattr(settings, "RES_VALIDATE_TB_DIR", "") or "").strip()
+        self.partial_factor = float(getattr(settings, "RES_VALIDATE_PARTIAL_FACTOR", 0.5))
         self._env: Optional[ResilientDQNEnv] = None
         self._policy = None
         self._last_state = None
@@ -284,6 +286,10 @@ class xAppResilientPolicyValidator(xAppBase):
             obs = self._last_info.get("obs") if isinstance(self._last_info, dict) else {}
             target_e, target_u = self._aggressive_deltas(obs or {})
             return self._closest_action(mask, target_e, target_u)
+        if self.policy_mode == "partial":
+            obs = self._last_info.get("obs") if isinstance(self._last_info, dict) else {}
+            target_e, target_u = self._partial_deltas(obs or {})
+            return self._closest_action(mask, target_e, target_u)
         if self.policy_mode == "random" or self._policy is None:
             return int(random.choice(valid_idx))
         s = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
@@ -318,6 +324,34 @@ class xAppResilientPolicyValidator(xAppBase):
         if need_total <= 0.0:
             return 0.0, 0.0
         target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total)
+        reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
+        delta_total = target_extra - reserve_used
+        share_e = need_e / need_total
+        share_u = need_u / need_total
+        return delta_total * share_e, delta_total * share_u
+
+    def _partial_deltas(self, obs: Dict) -> Tuple[float, float]:
+        factor = max(0.0, min(1.0, float(self.partial_factor)))
+        if factor <= 0.0:
+            return 0.0, 0.0
+        eff_ratio = float(obs.get("effective_prb_ratio", 1.0) or 1.0)
+        base_e = float(obs.get("embb_base_prb", 0.0) or 0.0)
+        base_u = float(obs.get("urllc_base_prb", 0.0) or 0.0)
+        if eff_ratio >= 1.0:
+            if base_e > 0.0 or base_u > 0.0:
+                self._nojam_base[SL_E] = base_e
+                self._nojam_base[SL_U] = base_u
+            return 0.0, 0.0
+        ref_e = self._nojam_base.get(SL_E)
+        ref_u = self._nojam_base.get(SL_U)
+        if ref_e is None or ref_u is None:
+            return 0.0, 0.0
+        need_e = max(0.0, float(ref_e) - base_e)
+        need_u = max(0.0, float(ref_u) - base_u)
+        need_total = need_e + need_u
+        if need_total <= 0.0:
+            return 0.0, 0.0
+        target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total * factor)
         reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
         delta_total = target_extra - reserve_used
         share_e = need_e / need_total
