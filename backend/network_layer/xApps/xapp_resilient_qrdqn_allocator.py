@@ -172,18 +172,18 @@ def compute_reward(
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
-    reward_embb = max(0.0, weights["w_e"] * (1 / 1e6) * (target - obs.get("embb_throughput", 0.0)))
+    penalty_embb = max(0.0, weights["w_e"] * (1 / 1e6) * (target - obs.get("embb_throughput", 0.0)))
     penalty_latency = max(
         0.0, weights["w_u"] * 1000 * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE)
     )
     penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
 
     r0 = 0
-    reward = r0 - reward_embb - penalty_latency - penalty_reserve
+    reward = r0 - penalty_embb - penalty_latency - penalty_reserve
     if return_parts:
         parts = {
             "reward_base": float(r0),
-            "reward_embb": float(reward_embb),
+            "penalty_embb": float(penalty_embb),
             "penalty_latency": float(penalty_latency),
             "penalty_reserve": float(penalty_reserve),
         }
@@ -750,7 +750,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._episode_counter = 0
         self._episode_reward_parts = {
             "reward_base": 0.0,
-            "reward_embb": 0.0,
+            "penalty_embb": 0.0,
             "penalty_latency": 0.0,
             "penalty_reserve": 0.0,
         }
@@ -776,7 +776,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._t = deque(maxlen=400)
         self._hist_reward = deque(maxlen=400)
         self._hist_reward_base = deque(maxlen=400)
-        self._hist_reward_embb = deque(maxlen=400)
+        self._hist_penalty_embb = deque(maxlen=400)
         self._hist_penalty_latency = deque(maxlen=400)
         self._hist_penalty_reserve = deque(maxlen=400)
         self._hist_action = deque(maxlen=400)
@@ -893,7 +893,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self._hist_reward.append(float(reward))
             parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
             self._hist_reward_base.append(float(parts.get("reward_base", 0.0)))
-            self._hist_reward_embb.append(float(parts.get("reward_embb", 0.0)))
+            self._hist_penalty_embb.append(float(parts.get("penalty_embb", 0.0)))
             self._hist_penalty_latency.append(float(parts.get("penalty_latency", 0.0)))
             self._hist_penalty_reserve.append(float(parts.get("penalty_reserve", 0.0)))
             self._hist_action.append(float(sum(action) if action else 0))
@@ -1022,7 +1022,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 deadline = list(self._hist_deadline)
                 reward = list(self._hist_reward)
                 reward_base = list(self._hist_reward_base)
-                reward_embb = list(self._hist_reward_embb)
+                penalty_embb = list(self._hist_penalty_embb)
                 penalty_latency = list(self._hist_penalty_latency)
                 penalty_reserve = list(self._hist_penalty_reserve)
                 reserve = list(self._hist_reserve)
@@ -1075,11 +1075,11 @@ class xAppResilientQRDQNAllocator(xAppBase):
                         line=dict(dash="dash"),
                     )
                 )
-            if reward_embb:
+            if penalty_embb:
                 reward_fig.add_trace(
                     go.Scatter(
-                        x=t[-len(reward_embb):],
-                        y=[-v for v in reward_embb],
+                        x=t[-len(penalty_embb):],
+                        y=[-v for v in penalty_embb],
                         mode="lines",
                         name="embb penalty (neg)",
                     )
@@ -1268,14 +1268,14 @@ class xAppResilientQRDQNAllocator(xAppBase):
         if parts:
             total = (
                 float(parts.get("reward_base", 0.0))
-                - float(parts.get("reward_embb", 0.0))
+                - float(parts.get("penalty_embb", 0.0))
                 - float(parts.get("penalty_latency", 0.0))
                 - float(parts.get("penalty_reserve", 0.0))
             )
             lines.append(
                 "Reward parts: "
                 f"total={total:.3f}, base={float(parts.get('reward_base', 0.0)):.3f}, "
-                f"embb_pen={float(parts.get('reward_embb', 0.0)):.3f}, "
+                f"embb_pen={float(parts.get('penalty_embb', 0.0)):.3f}, "
                 f"lat_pen=-{float(parts.get('penalty_latency', 0.0)):.3f}, "
                 f"reserve_pen={float(parts.get('penalty_reserve', 0.0)):.3f}"
             )
