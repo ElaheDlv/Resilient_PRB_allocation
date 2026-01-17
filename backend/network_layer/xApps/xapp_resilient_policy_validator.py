@@ -296,8 +296,10 @@ class xAppResilientPolicyValidator(xAppBase):
         with torch.no_grad():
             if self.policy_mode == "dqn":
                 q = self._policy(s)  # type: ignore[call-arg, operator]
-            else:
+            elif self.policy_mode == "qrdqn":
                 q = self._policy(s).mean(dim=2)  # type: ignore[call-arg]
+            else:
+                q = self._policy(s)  # type: ignore[call-arg, operator]
             q_np = q.cpu().numpy().flatten()
             for i, ok in enumerate(mask):
                 if not ok:
@@ -309,54 +311,87 @@ class xAppResilientPolicyValidator(xAppBase):
         eff_ratio = float(obs.get("effective_prb_ratio", 1.0) or 1.0)
         base_e = float(obs.get("embb_base_prb", 0.0) or 0.0)
         base_u = float(obs.get("urllc_base_prb", 0.0) or 0.0)
-        if eff_ratio >= 1.0:
-            if base_e > 0.0 or base_u > 0.0:
-                self._nojam_base[SL_E] = base_e
-                self._nojam_base[SL_U] = base_u
-            return 0.0, 0.0
-        ref_e = self._nojam_base.get(SL_E)
-        ref_u = self._nojam_base.get(SL_U)
-        if ref_e is None or ref_u is None:
-            return 0.0, 0.0
-        need_e = max(0.0, float(ref_e) - base_e)
-        need_u = max(0.0, float(ref_u) - base_u)
-        need_total = need_e + need_u
-        if need_total <= 0.0:
-            return 0.0, 0.0
-        target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total)
+        cur_e = float(obs.get("embb_prb", 0.0) or 0.0)
+        cur_u = float(obs.get("urllc_prb", 0.0) or 0.0)
         reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
-        delta_total = target_extra - reserve_used
-        share_e = need_e / need_total
-        share_u = need_u / need_total
-        return delta_total * share_e, delta_total * share_u
+        if self._nojam_base.get(SL_E) is None or self._nojam_base.get(SL_U) is None:
+            cell = getattr(self._env, "_target_cell", lambda: None)() if self._env else None
+            jam_base = dict(getattr(cell, "_jam_base_quota", {}) or {}) if cell else {}
+            jam_e = jam_base.get(SL_E)
+            jam_u = jam_base.get(SL_U)
+            if (jam_e is not None or jam_u is not None) and (jam_e or jam_u):
+                self._nojam_base[SL_E] = float(jam_e or 0.0)
+                self._nojam_base[SL_U] = float(jam_u or 0.0)
+                
+        if eff_ratio >= 1.0:
+            extra_e = max(0.0, cur_e - base_e)
+            extra_u = max(0.0, cur_u - base_u)
+            extra_total = extra_e + extra_u
+            if reserve_used <= 0.0 or extra_total <= 0.0:
+                return 0.0, 0.0
+            delta_total = -reserve_used
+            share_e = extra_e / extra_total
+            share_u = extra_u / extra_total
+            return delta_total * share_e, delta_total * share_u
+        else:
+            ref_e = self._nojam_base.get(SL_E)
+            ref_u = self._nojam_base.get(SL_U)
+            #print("ref_e: ",ref_e, "ref_u: ",ref_u)
+            if ref_e is None or ref_u is None:
+                return 0.0, 0.0
+            need_e = max(0.0, float(ref_e) - base_e)
+            need_u = max(0.0, float(ref_u) - base_u)
+            need_total = need_e + need_u
+            if need_total <= 0.0:
+                return 0.0, 0.0
+            target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total)
+            delta_total = target_extra - reserve_used
+            share_e = need_e / need_total
+            share_u = need_u / need_total
+            #print("reserve_used",reserve_used)
+            #print("need_total",need_total)
+            #print("share_e: ", share_e, "share_u: ", share_u)
+            #print('delta_total',delta_total)
+            target_e = delta_total * share_e
+            target_u = delta_total * share_u
+            #print("target_e: ", target_e, "target_u: ", target_u)
+            return target_e, target_u
 
-    def _partial_deltas(self, obs: Dict) -> Tuple[float, float]:
-        factor = max(0.0, min(1.0, float(self.partial_factor)))
-        if factor <= 0.0:
-            return 0.0, 0.0
-        eff_ratio = float(obs.get("effective_prb_ratio", 1.0) or 1.0)
-        base_e = float(obs.get("embb_base_prb", 0.0) or 0.0)
-        base_u = float(obs.get("urllc_base_prb", 0.0) or 0.0)
-        if eff_ratio >= 1.0:
-            if base_e > 0.0 or base_u > 0.0:
-                self._nojam_base[SL_E] = base_e
-                self._nojam_base[SL_U] = base_u
-            return 0.0, 0.0
-        ref_e = self._nojam_base.get(SL_E)
-        ref_u = self._nojam_base.get(SL_U)
-        if ref_e is None or ref_u is None:
-            return 0.0, 0.0
-        need_e = max(0.0, float(ref_e) - base_e)
-        need_u = max(0.0, float(ref_u) - base_u)
-        need_total = need_e + need_u
-        if need_total <= 0.0:
-            return 0.0, 0.0
-        target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total * factor)
-        reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
-        delta_total = target_extra - reserve_used
-        share_e = need_e / need_total
-        share_u = need_u / need_total
-        return delta_total * share_e, delta_total * share_u
+    # def _partial_deltas(self, obs: Dict) -> Tuple[float, float]:
+    #     factor = max(0.0, min(1.0, float(self.partial_factor)))
+    #     if factor <= 0.0:
+    #         return 0.0, 0.0
+    #     eff_ratio = float(obs.get("effective_prb_ratio", 1.0) or 1.0)
+    #     base_e = float(obs.get("embb_base_prb", 0.0) or 0.0)
+    #     base_u = float(obs.get("urllc_base_prb", 0.0) or 0.0)
+    #     if self._nojam_base.get(SL_E) is None or self._nojam_base.get(SL_U) is None:
+    #         cell = getattr(self._env, "_target_cell", lambda: None)() if self._env else None
+    #         jam_base = dict(getattr(cell, "_jam_base_quota", {}) or {}) if cell else {}
+    #         jam_e = jam_base.get(SL_E)
+    #         jam_u = jam_base.get(SL_U)
+    #         if (jam_e is not None or jam_u is not None) and (jam_e or jam_u):
+    #             self._nojam_base[SL_E] = float(jam_e or 0.0)
+    #             self._nojam_base[SL_U] = float(jam_u or 0.0)
+    #         if base_e > 0.0 or base_u > 0.0:
+    #             self._nojam_base[SL_E] = base_e
+    #             self._nojam_base[SL_U] = base_u
+    #     if eff_ratio >= 1.0:
+    #         return 0.0, 0.0
+    #     ref_e = self._nojam_base.get(SL_E)
+    #     ref_u = self._nojam_base.get(SL_U)
+    #     if ref_e is None or ref_u is None:
+    #         return 0.0, 0.0
+    #     need_e = max(0.0, float(ref_e) - base_e)
+    #     need_u = max(0.0, float(ref_u) - base_u)
+    #     need_total = need_e + need_u
+    #     if need_total <= 0.0:
+    #         return 0.0, 0.0
+    #     target_extra = min(float(TOTAL_RESILIENCY_PRB), need_total * factor)
+    #     reserve_used = float(obs.get("reserve_used_prb", 0.0) or 0.0)
+    #     delta_total = target_extra - reserve_used
+    #     share_e = need_e / need_total
+    #     share_u = need_u / need_total
+    #     return delta_total * share_e, delta_total * share_u
 
     def _closest_action(self, mask, target_e: float, target_u: float) -> int:
         best_idx = None
@@ -365,12 +400,19 @@ class xAppResilientPolicyValidator(xAppBase):
             if not ok:
                 continue
             de, du = ACTION_LIST[idx]
+            #print("du: ",du, "de: ",de)
             score = abs(float(de) - target_e) + abs(float(du) - target_u)
+            #print("score: ", score)
+            #print("target_e: ", target_e, "target_u: ", target_u)
             if best_score is None or score < best_score:
+                #print("best_score",best_score, " idx ", idx)
                 best_score = score
                 best_idx = idx
         if best_idx is None:
+            #print("here")
             return self._idle_idx
+        if best_idx != 24:
+            print("best_idx: ", best_idx)
         return int(best_idx)
 
     # ---------- Telemetry / dashboard ---------- #

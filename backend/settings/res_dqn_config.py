@@ -110,5 +110,9 @@ except Exception:
 # TensorBoard smoothing (window over recent rewards)
 try:
     RES_DQN_TB_SMOOTH_WIN = int(os.getenv("RES_DQN_TB_SMOOTH_WIN", "200"))
+
+    # Optional in-process eval during training (0 disables)
+    RES_DQN_EVAL_INTERVAL = int(os.getenv("RES_DQN_EVAL_INTERVAL", "0"))
+    RES_DQN_EVAL_EPISODES = int(os.getenv("RES_DQN_EVAL_EPISODES", "1"))
 except Exception:
     RES_DQN_TB_SMOOTH_WIN = 200

@@ -174,11 +174,21 @@ def compute_reward(
     base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
     embb_max_throughput = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
     target = min(base_ach_embb, embb_max_throughput)
-    penalty_embb = max(0.0, weights["w_e"] * (1 / 1e6) * (target - obs.get("embb_throughput", 0.0)))
-    penalty_latency = max(
-        0.0, weights["w_u"] * 1000 * (obs.get("urllc_latency", 0.0) - URLLC_LATENCY_DEADLINE)
-    )
-    penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
+    # 1. Calculate the Latency Excess (in ms)
+    latency_ms = obs.get("urllc_latency", 0.0) * 1000.0
+    deadline_ms = URLLC_LATENCY_DEADLINE * 1000.0
+    excess_ms = max(0.0, latency_ms - deadline_ms)
+    # 2. Apply Logarithmic Penalty
+    penalty_latency = weights["w_u"] * math.log1p(excess_ms)
+
+    # Same for eMBB
+    gap_mbps = max(0.0, target - obs.get("embb_throughput", 0.0)) / 1e6
+    penalty_embb = weights["w_e"] * math.log1p(gap_mbps)
+
+    if excess_ms > 1 or gap_mbps > 1:
+        penalty_reserve = 0
+    else:
+        penalty_reserve = weights["mu"] * _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
 
     r0 = 0
     reward = r0 - penalty_embb - penalty_latency - penalty_reserve
@@ -760,6 +770,12 @@ class xAppResilientQRDQNAllocator(xAppBase):
             "penalty_latency": 0.0,
             "penalty_reserve": 0.0,
         }
+        self._episode_violation_latency = 0
+        self._episode_violation_embb = 0
+        self._episode_latency_excess_ms = []
+        self._episode_embb_gap_mbps = []
+        self._episode_effective_prb_ratio = []
+        self._episode_reserve_used_ratio = []
         self._run_tag = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.tb_enable = bool(getattr(settings, "RES_QRDQN_TB_ENABLE", getattr(settings, "RES_DQN_TB_ENABLE", False)))
         self.tb_dir = (getattr(settings, "RES_QRDQN_TB_DIR", getattr(settings, "RES_DQN_TB_DIR", "")) or "").strip()
@@ -767,6 +783,13 @@ class xAppResilientQRDQNAllocator(xAppBase):
             getattr(settings, "RES_QRDQN_TB_SMOOTH_WIN", getattr(settings, "RES_DQN_TB_SMOOTH_WIN", 200)) or 0
         )
         self._tb_writer = None
+        self.eval_interval = max(
+            0, int(getattr(settings, "RES_QRDQN_EVAL_INTERVAL", getattr(settings, "RES_DQN_EVAL_INTERVAL", 0)) or 0)
+        )
+        self.eval_episodes = max(
+            1, int(getattr(settings, "RES_QRDQN_EVAL_EPISODES", getattr(settings, "RES_DQN_EVAL_EPISODES", 1)) or 1)
+        )
+        self._eval_counter = 0
         self.model_dir = (getattr(settings, "RES_QRDQN_MODEL_DIR", getattr(settings, "RES_DQN_MODEL_DIR", "")) or "").strip()
         self.save_interval = int(getattr(settings, "RES_QRDQN_SAVE_INTERVAL", getattr(settings, "RES_DQN_SAVE_INTERVAL", 0)) or 0)
         self._last_save_step = -1
@@ -883,6 +906,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 self._hist_episode_idx.append(self._episode_counter)
                 self._hist_episode_return.append(self._episode_return)
             self._episode_counter += 1
+            if self._should_eval():
+                self._run_eval()
             self._reset_episode_trackers()
 
     # ---------- Telemetry / dashboard ---------- #
@@ -914,6 +939,23 @@ class xAppResilientQRDQNAllocator(xAppBase):
             self._hist_reserve.append(float(sum(action) if action else 0) / max(1.0, TOTAL_RESILIENCY_PRB))
             self._hist_reserve_used.append(float(obs.get("reserve_used_prb", 0.0) or 0.0))
             self._hist_prb_ratio.append(float(obs.get("effective_prb_ratio", 0.0) or 0.0))
+            latency = float(obs.get("urllc_latency", 0.0) or 0.0)
+            deadline = float(obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
+            excess_ms = max(0.0, (latency - deadline) * 1000.0)
+            self._episode_latency_excess_ms.append(excess_ms)
+            if excess_ms > 0.0:
+                self._episode_violation_latency += 1
+            base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
+            embb_max = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
+            target = min(base_ach_embb, embb_max)
+            gap_mbps = max(0.0, target - float(obs.get("embb_throughput", 0.0) or 0.0)) / 1e6
+            self._episode_embb_gap_mbps.append(gap_mbps)
+            if gap_mbps > 0.0:
+                self._episode_violation_embb += 1
+            self._episode_effective_prb_ratio.append(float(obs.get("effective_prb_ratio", 0.0) or 0.0))
+            self._episode_reserve_used_ratio.append(
+                _safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB)
+            )
             # Slice metrics from current cell
             cell = getattr(self._env, "_target_cell", lambda: None)()
             if cell:
@@ -1475,6 +1517,8 @@ class xAppResilientQRDQNAllocator(xAppBase):
                     reserve_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
                 self._tb_writer.add_scalar("capacity/effective_prb", cell_eff, step)
                 self._tb_writer.add_scalar("capacity/physical_max_prb", cell_max, step)
+                if cell_max > 0:
+                    self._tb_writer.add_scalar("capacity/effective_prb_ratio", float(cell_eff / cell_max), step)
                 self._tb_writer.add_scalar("capacity/base_total_prb", base_total, step)
                 self._tb_writer.add_scalar("capacity/reserve_pool_prb", TOTAL_RESILIENCY_PRB, step)
                 self._tb_writer.add_scalar("capacity/reserve_used_prb", reserve_used, step)
@@ -1505,6 +1549,48 @@ class xAppResilientQRDQNAllocator(xAppBase):
                 self._tb_writer.add_scalar("episode_length", self._episode_len, ep_idx)
                 for name, val in self._episode_reward_parts.items():
                     self._tb_writer.add_scalar(f"episode_reward_parts/{name}", val, ep_idx)
+                ep_len = max(1, self._episode_len)
+                self._tb_writer.add_scalar(
+                    "episode/penalty_embb_mean", self._episode_reward_parts.get("penalty_embb", 0.0) / ep_len, ep_idx
+                )
+                self._tb_writer.add_scalar(
+                    "episode/penalty_latency_mean",
+                    self._episode_reward_parts.get("penalty_latency", 0.0) / ep_len,
+                    ep_idx,
+                )
+                self._tb_writer.add_scalar(
+                    "episode/penalty_reserve_mean",
+                    self._episode_reward_parts.get("penalty_reserve", 0.0) / ep_len,
+                    ep_idx,
+                )
+                self._tb_writer.add_scalar(
+                    "episode/violation_rate_latency", float(self._episode_violation_latency) / ep_len, ep_idx
+                )
+                self._tb_writer.add_scalar(
+                    "episode/violation_rate_embb", float(self._episode_violation_embb) / ep_len, ep_idx
+                )
+                if self._episode_latency_excess_ms:
+                    p90 = float(np.percentile(self._episode_latency_excess_ms, 90))
+                    p95 = float(np.percentile(self._episode_latency_excess_ms, 95))
+                    self._tb_writer.add_scalar("episode/latency_excess_ms_p90", p90, ep_idx)
+                    self._tb_writer.add_scalar("episode/latency_excess_ms_p95", p95, ep_idx)
+                if self._episode_embb_gap_mbps:
+                    p90 = float(np.percentile(self._episode_embb_gap_mbps, 90))
+                    p95 = float(np.percentile(self._episode_embb_gap_mbps, 95))
+                    self._tb_writer.add_scalar("episode/embb_gap_mbps_p90", p90, ep_idx)
+                    self._tb_writer.add_scalar("episode/embb_gap_mbps_p95", p95, ep_idx)
+                if self._episode_effective_prb_ratio:
+                    self._tb_writer.add_scalar(
+                        "episode/mean_effective_prb_ratio",
+                        float(np.mean(self._episode_effective_prb_ratio)),
+                        ep_idx,
+                    )
+                if self._episode_reserve_used_ratio:
+                    self._tb_writer.add_scalar(
+                        "episode/mean_reserve_used_ratio",
+                        float(np.mean(self._episode_reserve_used_ratio)),
+                        ep_idx,
+                    )
             except Exception:
                 pass
         try:
@@ -1562,6 +1648,12 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._episode_len = 0
         for k in self._episode_reward_parts:
             self._episode_reward_parts[k] = 0.0
+        self._episode_violation_latency = 0
+        self._episode_violation_embb = 0
+        self._episode_latency_excess_ms = []
+        self._episode_embb_gap_mbps = []
+        self._episode_effective_prb_ratio = []
+        self._episode_reserve_used_ratio = []
 
     def _init_agent(self):
         in_dim = len(build_state(self._env._blank_obs(), (0, 0)))  # type: ignore[arg-type]
@@ -1572,12 +1664,14 @@ class xAppResilientQRDQNAllocator(xAppBase):
         self._optimizer = optim.Adam(self._policy.parameters(), lr=self.lr)
         self._replay = _ReplayBuffer(capacity=self.buffer_cap)
 
-    def _select_action(self, state: np.ndarray) -> int:
+    def _select_action(self, state: np.ndarray, epsilon: Optional[float] = None) -> int:
         mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
         valid_idx = [i for i, ok in enumerate(mask) if ok]
         if not valid_idx:
             return 0
-        if self.train and random.random() < self._eps:
+        if epsilon is None:
+            epsilon = self._eps if self.train else 0.0
+        if epsilon > 0.0 and random.random() < epsilon:
             return int(random.choice(valid_idx))
         s = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         with torch.no_grad():
@@ -1588,6 +1682,117 @@ class xAppResilientQRDQNAllocator(xAppBase):
                     q_np[i] = -1e9
             idx = int(np.argmax(q_np))
         return idx
+
+    def _should_eval(self) -> bool:
+        return self.eval_interval > 0 and (self._episode_counter % self.eval_interval) == 0
+
+    def _log_eval_episode(
+        self,
+        episode_return: float,
+        episode_len: int,
+        reward_parts: Dict[str, float],
+        violation_latency: int,
+        violation_embb: int,
+        latency_excess_ms: List[float],
+        embb_gap_mbps: List[float],
+        effective_prb_ratio: List[float],
+        reserve_used_ratio: List[float],
+    ):
+        if self._tb_writer is None:
+            return
+        ep_idx = self._eval_counter
+        ep_len = max(1, int(episode_len))
+        try:
+            self._tb_writer.add_scalar("eval/episode_return", float(episode_return), ep_idx)
+            self._tb_writer.add_scalar("eval/episode_length", ep_len, ep_idx)
+            self._tb_writer.add_scalar("eval/penalty_embb_mean", reward_parts.get("penalty_embb", 0.0) / ep_len, ep_idx)
+            self._tb_writer.add_scalar(
+                "eval/penalty_latency_mean", reward_parts.get("penalty_latency", 0.0) / ep_len, ep_idx
+            )
+            self._tb_writer.add_scalar(
+                "eval/penalty_reserve_mean", reward_parts.get("penalty_reserve", 0.0) / ep_len, ep_idx
+            )
+            self._tb_writer.add_scalar("eval/violation_rate_latency", float(violation_latency) / ep_len, ep_idx)
+            self._tb_writer.add_scalar("eval/violation_rate_embb", float(violation_embb) / ep_len, ep_idx)
+            if latency_excess_ms:
+                self._tb_writer.add_scalar("eval/latency_excess_ms_p90", float(np.percentile(latency_excess_ms, 90)), ep_idx)
+                self._tb_writer.add_scalar("eval/latency_excess_ms_p95", float(np.percentile(latency_excess_ms, 95)), ep_idx)
+            if embb_gap_mbps:
+                self._tb_writer.add_scalar("eval/embb_gap_mbps_p90", float(np.percentile(embb_gap_mbps, 90)), ep_idx)
+                self._tb_writer.add_scalar("eval/embb_gap_mbps_p95", float(np.percentile(embb_gap_mbps, 95)), ep_idx)
+            if effective_prb_ratio:
+                self._tb_writer.add_scalar(
+                    "eval/mean_effective_prb_ratio", float(np.mean(effective_prb_ratio)), ep_idx
+                )
+            if reserve_used_ratio:
+                self._tb_writer.add_scalar(
+                    "eval/mean_reserve_used_ratio", float(np.mean(reserve_used_ratio)), ep_idx
+                )
+        except Exception:
+            pass
+
+    def _run_eval(self):
+        if self._env is None:
+            return
+        for _ in range(max(1, self.eval_episodes)):
+            state = self._env.reset()
+            done = False
+            ep_return = 0.0
+            ep_len = 0
+            parts_accum = {
+                "reward_base": 0.0,
+                "penalty_embb": 0.0,
+                "penalty_latency": 0.0,
+                "penalty_reserve": 0.0,
+            }
+            violation_latency = 0
+            violation_embb = 0
+            latency_excess_ms = []
+            embb_gap_mbps = []
+            effective_prb_ratio = []
+            reserve_used_ratio = []
+            while not done:
+                if hasattr(self._env, "ready") and not self._env.ready():
+                    break
+                action_idx = self._select_action(state, epsilon=0.0)
+                next_state, reward, done, info = self._env.step(action_idx)
+                ep_return += float(reward)
+                ep_len += 1
+                info = info or {}
+                obs = info.get("obs") if isinstance(info, dict) else {}
+                parts = info.get("reward_parts", {}) if isinstance(info, dict) else {}
+                for k in parts_accum:
+                    parts_accum[k] += float(parts.get(k, 0.0))
+                latency = float(obs.get("urllc_latency", 0.0) or 0.0)
+                deadline = float(obs.get("urllc_latency_deadline", URLLC_LATENCY_DEADLINE))
+                excess_ms = max(0.0, (latency - deadline) * 1000.0)
+                latency_excess_ms.append(excess_ms)
+                if excess_ms > 0.0:
+                    violation_latency += 1
+                base_ach_embb = float(obs.get("embb_base_achievable_throughput", 0.0) or 0.0)
+                embb_max = float(obs.get("embb_throughput_max", EMBB_THR_MAX))
+                target = min(base_ach_embb, embb_max)
+                gap_mbps = max(0.0, target - float(obs.get("embb_throughput", 0.0) or 0.0)) / 1e6
+                embb_gap_mbps.append(gap_mbps)
+                if gap_mbps > 0.0:
+                    violation_embb += 1
+                effective_prb_ratio.append(float(obs.get("effective_prb_ratio", 0.0) or 0.0))
+                reserve_used_ratio.append(_safe_div(obs.get("reserve_used_prb", 0.0), TOTAL_RESILIENCY_PRB))
+                state = next_state
+            self._log_eval_episode(
+                ep_return,
+                ep_len,
+                parts_accum,
+                violation_latency,
+                violation_embb,
+                latency_excess_ms,
+                embb_gap_mbps,
+                effective_prb_ratio,
+                reserve_used_ratio,
+            )
+            self._eval_counter += 1
+        self._last_state = None
+        self._episode_done = True
 
     def _learn(self):
         if self._replay is None or len(self._replay) < self.batch:

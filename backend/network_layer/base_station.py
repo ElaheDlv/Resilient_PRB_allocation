@@ -1,4 +1,5 @@
 import time
+import random
 import settings
 from .cell import Cell
 from .edge_server import EdgeServer
@@ -421,7 +422,13 @@ class BaseStation:
         except Exception:
             pass
         # Apply optional jamming window (sample jammer for testing)
-        self._apply_constant_jamming()
+        jam_var_period = int(getattr(settings, "JAM_VAR_PERIOD_STEPS", -1))
+        jam_var_powers = list(getattr(settings, "JAM_VAR_PRBS_LIST", []) or [])
+        jam_var_duty = list(getattr(settings, "JAM_VAR_DUTY_LIST", []) or [])
+        if jam_var_period > 0 and jam_var_powers and jam_var_duty:
+            self.apply_variable_jamming_from_settings()
+        else:
+            self._apply_constant_jamming()
         # Tick DL replayers (enqueue arrivals) before cells serve
         try:
             self.tick_dl_replay(delta_time)
@@ -681,6 +688,193 @@ class BaseStation:
             
         #print(f"Jamming active: {active}")
         #print("base quota:", cell.base_dl_prb_quota)
+
+    def apply_variable_jamming(
+        self,
+        power_list,
+        duty_list,
+        period_steps,
+        power_policy="random",
+        duty_policy="per_episode",
+        episode_steps=0,
+        start_offset=0,
+        rng=None,
+    ):
+        """Variable jammer with per-window power and per-episode duty cycle."""
+        if rng is None:
+            rng = random
+        try:
+            period = int(period_steps)
+        except Exception:
+            return False
+        if period <= 0 or not power_list or not duty_list:
+            return False
+
+        power_list = [int(x) for x in power_list]
+        duty_list = [float(x) for x in duty_list]
+
+        sim_step = int(getattr(self.simulation_engine, "sim_step", 0))
+        offset = max(0, int(start_offset))
+        before_offset = sim_step < offset
+        rel = sim_step - offset
+        if rel < 0:
+            rel = 0
+        period_idx = rel // period
+        pos_in_period = rel % period
+
+        if episode_steps and int(episode_steps) > 0:
+            episode_idx = rel // int(episode_steps)
+        else:
+            episode_idx = 0
+
+        state = getattr(self, "_jam_var_state", None)
+        if state is None:
+            state = {
+                "power_idx": 0,
+                "duty_idx": 0,
+                "last_period_idx": None,
+                "last_episode_idx": None,
+                "current_power": None,
+                "current_duty": None,
+            }
+            setattr(self, "_jam_var_state", state)
+
+        power_policy = str(power_policy).lower()
+        duty_policy = str(duty_policy).lower()
+
+        if state.get("last_period_idx") != period_idx:
+            state["last_period_idx"] = period_idx
+            if power_policy == "increasing":
+                state["power_idx"] = (state.get("power_idx", 0) + 1) % len(power_list)
+            elif power_policy == "decreasing":
+                state["power_idx"] = (state.get("power_idx", 0) - 1) % len(power_list)
+            elif power_policy == "cycle":
+                state["power_idx"] = int(period_idx % len(power_list))
+            elif power_policy == "fixed":
+                state["power_idx"] = 0
+            else:
+                state["power_idx"] = rng.randint(0, len(power_list) - 1)
+            state["current_power"] = power_list[state["power_idx"]]
+
+        if state.get("last_episode_idx") != episode_idx:
+            state["last_episode_idx"] = episode_idx
+            if duty_policy == "cycle_per_episode":
+                state["duty_idx"] = int(episode_idx % len(duty_list))
+            elif duty_policy == "fixed":
+                state["duty_idx"] = 0
+            else:
+                state["duty_idx"] = rng.randint(0, len(duty_list) - 1)
+            state["current_duty"] = duty_list[state["duty_idx"]]
+
+        duty = float(state.get("current_duty", duty_list[0]) or 0.0)
+        duty = max(0.0, min(1.0, duty))
+        duration = int(round(period * duty))
+        active = (not before_offset) and duration > 0 and pos_in_period < duration
+        jam_prbs = int(state.get("current_power", power_list[0]) or 0)
+
+        reserved = max(0, int(getattr(settings, "JAM_RESERVED_PRBS", 0)))
+        for cell in self.cell_list.values():
+            # Persist the initial per-slice quotas as the jammer's reference (set once).
+            if not hasattr(cell, "_jam_base_quota"):
+                base_snapshot = dict(cell.slice_dl_prb_quota)
+                cell._jam_base_quota = base_snapshot
+                cell.base_dl_prb_quota = dict(base_snapshot)
+                cell._jam_was_active = False
+            elif active and not getattr(cell, "_jam_was_active", False):
+                cur_snapshot = dict(cell.slice_dl_prb_quota)
+                # if cur_snapshot and cur_snapshot != getattr(cell, "_jam_base_quota", {}):
+                #     cell._jam_base_quota = dict(cur_snapshot)
+                #     cell.base_dl_prb_quota = dict(cur_snapshot)
+            prev_base_quota = dict(getattr(cell, "base_dl_prb_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
+            usable_max = max(0, int(cell.max_dl_prb) - reserved)
+            jam_active = jam_prbs if active else 0
+            target_max = max(0, usable_max - jam_active)
+            base_quota = dict(getattr(cell, "_jam_base_quota", getattr(cell, "slice_dl_prb_quota", {})) or {})
+            total = sum(base_quota.values())
+            quotas_curr = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
+            def _rebuild_live_quota(new_base):
+                extras = {}
+                extra_total = 0
+                for s in set(quotas_curr.keys()) | set(prev_base_quota.keys()):
+                    cur_val = float(quotas_curr.get(s, 0) or 0.0)
+                    prev_base = float(prev_base_quota.get(s, 0) or 0.0)
+                    extra = max(0.0, cur_val - prev_base)
+                    extras[s] = extra
+                    extra_total += extra
+                extra_budget = min(float(reserved), extra_total)
+                scaled_extras = {s: 0 for s in extras.keys()}
+                if extra_total > 0 and extra_budget > 0:
+                    if extra_total <= extra_budget:
+                        for s, v in extras.items():
+                            scaled_extras[s] = int(round(v))
+                    else:
+                        scale_extra = extra_budget / float(extra_total)
+                        remainders = []
+                        for s, v in extras.items():
+                            raw = v * scale_extra
+                            down = int(raw)
+                            scaled_extras[s] = down
+                            remainders.append((raw - down, s))
+                        leftover_extra = int(round(extra_budget - sum(scaled_extras.values())))
+                        remainders.sort(reverse=True)
+                        for _, s in remainders:
+                            if leftover_extra <= 0:
+                                break
+                            scaled_extras[s] += 1
+                            leftover_extra -= 1
+                new_quota = {}
+                for s in set(new_base.keys()) | set(scaled_extras.keys()):
+                    base_val = int(new_base.get(s, 0) or 0)
+                    extra_val = int(scaled_extras.get(s, 0) or 0)
+                    new_quota[s] = base_val + extra_val
+                cell.slice_dl_prb_quota = new_quota
+
+            if total > 0 and target_max < total:
+                scale = target_max / float(total)
+                scaled = {}
+                remainders = []
+                for s, v in base_quota.items():
+                    raw = v * scale
+                    down = int(raw)
+                    scaled[s] = down
+                    remainders.append((raw - down, s))
+                leftover = target_max - sum(scaled.values())
+                remainders.sort(reverse=True)
+                for _, s in remainders:
+                    if leftover <= 0:
+                        break
+                    scaled[s] += 1
+                    leftover -= 1
+                base_quota = scaled
+                cell.base_dl_prb_quota = base_quota
+                cell._jam_was_active = True
+                _rebuild_live_quota(base_quota)
+            elif not active and getattr(cell, "_jam_was_active", False):
+                cell.base_dl_prb_quota = dict(base_quota)
+                cell._jam_was_active = False
+                _rebuild_live_quota(base_quota)
+            cell._effective_max_dl_prb = target_max
+        return True
+
+    def apply_variable_jamming_from_settings(self, rng=None):
+        """Apply variable jamming using settings-based parameters."""
+        power_list = list(getattr(settings, "JAM_VAR_PRBS_LIST", []) or [])
+        duty_list = list(getattr(settings, "JAM_VAR_DUTY_LIST", []) or [])
+        period_steps = int(getattr(settings, "JAM_VAR_PERIOD_STEPS", -1))
+        power_policy = str(getattr(settings, "JAM_VAR_POWER_POLICY", "random"))
+        duty_policy = str(getattr(settings, "JAM_VAR_DUTY_POLICY", "per_episode"))
+        episode_steps = int(getattr(settings, "JAM_VAR_EPISODE_STEPS", 0))
+        start_offset = int(getattr(settings, "JAM_VAR_START_OFFSET", 0))
+        return self.apply_variable_jamming(
+            power_list=power_list,
+            duty_list=duty_list,
+            period_steps=period_steps,
+            power_policy=power_policy,
+            duty_policy=duty_policy,
+            episode_steps=episode_steps,
+            start_offset=start_offset,
+            rng=rng,
+        )
 
     def on_ue_application_traffic(self, ue, traffic_data):
         url = traffic_data["url"]

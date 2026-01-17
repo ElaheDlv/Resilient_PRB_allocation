@@ -139,3 +139,52 @@ try:
     JAM_RESERVED_PRBS = int(os.getenv("JAM_RESERVED_PRBS", "0"))
 except Exception:
     JAM_RESERVED_PRBS = 0
+
+# ---------------------------
+# Jamming (variable jammer)
+# ---------------------------
+def _parse_int_list(raw, default=None):
+    if raw is None:
+        return list(default or [])
+    if isinstance(raw, (list, tuple)):
+        return [int(x) for x in raw]
+    parts = [p.strip() for p in str(raw).split(",") if p.strip()]
+    out = []
+    for p in parts:
+        try:
+            out.append(int(p))
+        except Exception:
+            pass
+    return out if out else list(default or [])
+
+def _parse_float_list(raw, default=None):
+    if raw is None:
+        return list(default or [])
+    if isinstance(raw, (list, tuple)):
+        return [float(x) for x in raw]
+    parts = [p.strip() for p in str(raw).split(",") if p.strip()]
+    out = []
+    for p in parts:
+        try:
+            out.append(float(p))
+        except Exception:
+            pass
+    return out if out else list(default or [])
+
+try:
+    JAM_VAR_PERIOD_STEPS = int(os.getenv("JAM_VAR_PERIOD_STEPS", "-1"))
+except Exception:
+    JAM_VAR_PERIOD_STEPS = -1
+try:
+    JAM_VAR_START_OFFSET = int(os.getenv("JAM_VAR_START_OFFSET", "0"))
+except Exception:
+    JAM_VAR_START_OFFSET = 0
+try:
+    JAM_VAR_EPISODE_STEPS = int(os.getenv("JAM_VAR_EPISODE_STEPS", "0"))
+except Exception:
+    JAM_VAR_EPISODE_STEPS = 0
+
+JAM_VAR_PRBS_LIST = _parse_int_list(os.getenv("JAM_VAR_PRBS_LIST", ""), default=[])
+JAM_VAR_DUTY_LIST = _parse_float_list(os.getenv("JAM_VAR_DUTY_LIST", ""), default=[])
+JAM_VAR_POWER_POLICY = os.getenv("JAM_VAR_POWER_POLICY", "random")
+JAM_VAR_DUTY_POLICY = os.getenv("JAM_VAR_DUTY_POLICY", "per_episode")
