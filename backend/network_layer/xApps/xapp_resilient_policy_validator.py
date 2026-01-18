@@ -98,6 +98,7 @@ class xAppResilientPolicyValidator(xAppBase):
         )
         self.qrdqn_checkpoint = (getattr(settings, "RES_VALIDATE_QRDQN_MODEL", "") or "").strip()
         self.dqn_checkpoint = (getattr(settings, "RES_VALIDATE_DQN_MODEL", "") or "").strip()
+        self.config_path = (getattr(settings, "RES_VALIDATE_CONFIG_PATH", "") or "").strip()
         self.dash_enable = bool(
             getattr(settings, "RES_VALIDATE_DASH_ENABLE", getattr(settings, "RES_QRDQN_DASH_ENABLE", False))
         )
@@ -199,6 +200,8 @@ class xAppResilientPolicyValidator(xAppBase):
         if not self.enabled:
             print(f"{self.xapp_id}: disabled")
             return
+        if self.config_path:
+            setattr(settings, "PRB_GYM_CONFIG_PATH", self.config_path)
         self._apply_seed()
         self._env = ResilientDQNEnv(self.ric, spawn_seed=self.seed)
         self._env.register_clear_hook(self._clear_plot_caches)

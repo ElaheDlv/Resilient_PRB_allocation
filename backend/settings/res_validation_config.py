@@ -38,6 +38,9 @@ except Exception:
 RES_VALIDATE_QRDQN_MODEL = os.getenv("RES_VALIDATE_QRDQN_MODEL", "")
 RES_VALIDATE_DQN_MODEL = os.getenv("RES_VALIDATE_DQN_MODEL", "")
 
+# Optional episode catalog override for validation runs
+RES_VALIDATE_CONFIG_PATH = os.getenv("RES_VALIDATE_CONFIG_PATH", "").strip()
+
 # Dashboard controls (reuses QR-DQN defaults)
 RES_VALIDATE_DASH_ENABLE = os.getenv(
     "RES_VALIDATE_DASH_ENABLE",

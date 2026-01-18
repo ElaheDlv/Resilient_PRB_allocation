@@ -284,6 +284,16 @@ class ResilientQRDQNEnv:
         self._managed_ues: set[str] = set()
         self._trace_cache: Dict[Tuple[str, str, float], list] = {}
         self._spawn_seed_base = spawn_seed
+        self._jam_var_defaults = {
+            "JAM_VAR_PERIOD_STEPS": int(getattr(settings, "JAM_VAR_PERIOD_STEPS", -1)),
+            "JAM_VAR_START_OFFSET": int(getattr(settings, "JAM_VAR_START_OFFSET", 0)),
+            "JAM_VAR_EPISODE_STEPS": int(getattr(settings, "JAM_VAR_EPISODE_STEPS", 0)),
+            "JAM_VAR_PRBS_LIST": list(getattr(settings, "JAM_VAR_PRBS_LIST", []) or []),
+            "JAM_VAR_DUTY_LIST": list(getattr(settings, "JAM_VAR_DUTY_LIST", []) or []),
+            "JAM_VAR_POWER_POLICY": str(getattr(settings, "JAM_VAR_POWER_POLICY", "random")),
+            "JAM_VAR_DUTY_POLICY": str(getattr(settings, "JAM_VAR_DUTY_POLICY", "per_episode")),
+            "JAM_RESERVED_PRBS": int(getattr(settings, "JAM_RESERVED_PRBS", 0)),
+        }
 
     def register_clear_hook(self, fn):
         self._on_clear = fn
@@ -417,16 +427,21 @@ class ResilientQRDQNEnv:
         slices = entry.get("slices") or {}
         if SL_E not in slices or SL_U not in slices:
             return None
+        jam_var = entry.get("jam_var") or entry.get("jamming_var") or entry.get("jamming")
+        if not isinstance(jam_var, dict):
+            jam_var = None
         return {
             "id": entry.get("id") or f"episode_{idx}",
             "duration_steps": int(entry.get("duration_steps", 0) or 0),
             "freeze_mobility": bool(entry.get("freeze_mobility", True)),
             "initial_prb": entry.get("initial_prb", {}),
             "slices": slices,
+            "jam_var": jam_var,
         }
 
     def _deploy_episode(self, spec: Dict):
         self._clear_managed_ues()
+        self._apply_episode_jamming(spec)
         self._apply_initial_prb(spec.get("initial_prb", {}))
         for sl in (SL_E, SL_U):
             cfg = spec["slices"].get(sl, {})
@@ -448,6 +463,94 @@ class ResilientQRDQNEnv:
             cell._jam_was_active = False
             cell._effective_max_dl_prb = getattr(cell, "max_dl_prb", cell._effective_max_dl_prb)
         self._snapshot_base_quotas()
+
+    def _apply_episode_jamming(self, spec: Dict):
+        self._apply_jam_settings(self._jam_var_defaults)
+        jam_cfg = spec.get("jam_var")
+        if not isinstance(jam_cfg, dict):
+            return
+        overrides = self._parse_jam_var_cfg(jam_cfg)
+        if overrides:
+            self._apply_jam_settings(overrides)
+
+    def _apply_jam_settings(self, values: Dict[str, object]):
+        for key, value in values.items():
+            setattr(settings, key, value)
+
+    def _parse_jam_var_cfg(self, jam_cfg: Dict) -> Dict[str, object]:
+        def _pick(*keys):
+            for key in keys:
+                if key in jam_cfg:
+                    return jam_cfg.get(key)
+            return None
+
+        overrides: Dict[str, object] = {}
+        period = _pick("JAM_VAR_PERIOD_STEPS", "period_steps")
+        start = _pick("JAM_VAR_START_OFFSET", "start_offset")
+        episode = _pick("JAM_VAR_EPISODE_STEPS", "episode_steps")
+        prbs = _pick("JAM_VAR_PRBS_LIST", "prbs_list", "power_list")
+        duty = _pick("JAM_VAR_DUTY_LIST", "duty_list")
+        power_policy = _pick("JAM_VAR_POWER_POLICY", "power_policy")
+        duty_policy = _pick("JAM_VAR_DUTY_POLICY", "duty_policy")
+        reserved = _pick("JAM_RESERVED_PRBS", "reserved_prbs")
+
+        if period is not None:
+            overrides["JAM_VAR_PERIOD_STEPS"] = self._coerce_int(period, self._jam_var_defaults["JAM_VAR_PERIOD_STEPS"])
+        if start is not None:
+            overrides["JAM_VAR_START_OFFSET"] = self._coerce_int(start, self._jam_var_defaults["JAM_VAR_START_OFFSET"])
+        if episode is not None:
+            overrides["JAM_VAR_EPISODE_STEPS"] = self._coerce_int(
+                episode, self._jam_var_defaults["JAM_VAR_EPISODE_STEPS"]
+            )
+        if prbs is not None:
+            parsed = self._parse_int_list(prbs)
+            if parsed is not None:
+                overrides["JAM_VAR_PRBS_LIST"] = parsed
+        if duty is not None:
+            parsed = self._parse_float_list(duty)
+            if parsed is not None:
+                overrides["JAM_VAR_DUTY_LIST"] = parsed
+        if power_policy is not None:
+            overrides["JAM_VAR_POWER_POLICY"] = str(power_policy)
+        if duty_policy is not None:
+            overrides["JAM_VAR_DUTY_POLICY"] = str(duty_policy)
+        if reserved is not None:
+            overrides["JAM_RESERVED_PRBS"] = self._coerce_int(reserved, self._jam_var_defaults["JAM_RESERVED_PRBS"])
+        return overrides
+
+    def _coerce_int(self, value, default):
+        try:
+            return int(value)
+        except Exception:
+            return default
+
+    def _parse_int_list(self, raw):
+        if raw is None:
+            return None
+        if isinstance(raw, (list, tuple)):
+            return [int(x) for x in raw]
+        parts = [p.strip() for p in str(raw).split(",") if p.strip()]
+        out = []
+        for p in parts:
+            try:
+                out.append(int(p))
+            except Exception:
+                continue
+        return out if out else None
+
+    def _parse_float_list(self, raw):
+        if raw is None:
+            return None
+        if isinstance(raw, (list, tuple)):
+            return [float(x) for x in raw]
+        parts = [p.strip() for p in str(raw).split(",") if p.strip()]
+        out = []
+        for p in parts:
+            try:
+                out.append(float(p))
+            except Exception:
+                continue
+        return out if out else None
 
     def _clear_managed_ues(self):
         if self.sim_engine:
