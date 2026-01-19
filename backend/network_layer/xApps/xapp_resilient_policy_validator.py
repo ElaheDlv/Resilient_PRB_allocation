@@ -200,6 +200,14 @@ class xAppResilientPolicyValidator(xAppBase):
         if not self.enabled:
             print(f"{self.xapp_id}: disabled")
             return
+        if self.policy_mode == "dqn" and not self.dqn_checkpoint:
+            print(f"{self.xapp_id}: missing RES_VALIDATE_DQN_MODEL; exiting validation.")
+            self.enabled = False
+            return
+        if self.policy_mode == "qrdqn" and not self.qrdqn_checkpoint:
+            print(f"{self.xapp_id}: missing RES_VALIDATE_QRDQN_MODEL; exiting validation.")
+            self.enabled = False
+            return
         if self.config_path:
             setattr(settings, "PRB_GYM_CONFIG_PATH", self.config_path)
         self._apply_seed()
