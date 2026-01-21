@@ -47,7 +47,7 @@ try:
     RES_DQN_EMBB_QUEUE_MAX = float(os.getenv("RES_DQN_EMBB_QUEUE_MAX", "1200000"))
     RES_DQN_URLLC_QUEUE_MAX = float(os.getenv("RES_DQN_URLLC_QUEUE_MAX", "5200000"))
 except Exception:
-    RES_DQN_EMBB_QUEUE_MAX, RES_DQN_URLLC_QUEUE_MAX = 1200000.0, 520000.0
+    RES_DQN_EMBB_QUEUE_MAX, RES_DQN_URLLC_QUEUE_MAX = 1200000.0, 5200000.0
 try:
     RES_DQN_EMBB_THR_MAX = float(os.getenv("RES_DQN_EMBB_THR_MAX", "9.6e7"))
     RES_DQN_URLLC_THR_MAX = float(os.getenv("RES_DQN_URLLC_THR_MAX", "4.16e7"))
@@ -74,7 +74,7 @@ try:
 except Exception:
     RES_DQN_GAMMA, RES_DQN_LR, RES_DQN_BATCH, RES_DQN_BUFFER, RES_DQN_TARGET_UPDATE = (
         0.99,
-        1e-3,
+        1e-4,
         64,
         100000,
         2000,

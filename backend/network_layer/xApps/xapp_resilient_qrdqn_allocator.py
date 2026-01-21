@@ -1919,7 +1919,7 @@ class xAppResilientQRDQNAllocator(xAppBase):
         tau = (torch.arange(n_atoms, device=self.device, dtype=torch.float32) + 0.5) / float(max(1, n_atoms))
         diff = target.unsqueeze(1) - dist.unsqueeze(2)
         huber = torch.where(diff.abs() < 1.0, 0.5 * diff.pow(2), diff.abs() - 0.5)
-        loss = (torch.abs(tau.unsqueeze(0) - (diff.detach() < 0).float()) * huber).mean()
+        loss = (torch.abs(tau.view(1, n_atoms, 1) - (diff.detach() < 0).float()) * huber).mean()
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()

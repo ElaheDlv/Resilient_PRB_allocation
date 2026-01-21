@@ -67,7 +67,7 @@ except Exception:
     RES_QRDQN_EPS_START, RES_QRDQN_EPS_END, RES_QRDQN_EPS_DECAY = 1.0, 0.05, 20000
 try:
     RES_QRDQN_GAMMA = float(os.getenv("RES_QRDQN_GAMMA", "0.99"))
-    RES_QRDQN_LR = float(os.getenv("RES_QRDQN_LR", "1e-3"))
+    RES_QRDQN_LR = float(os.getenv("RES_QRDQN_LR", "1e-4"))
     RES_QRDQN_BATCH = int(os.getenv("RES_QRDQN_BATCH", "64"))
     RES_QRDQN_BUFFER = int(os.getenv("RES_QRDQN_BUFFER", "100000"))
     RES_QRDQN_TARGET_UPDATE = int(os.getenv("RES_QRDQN_TARGET_UPDATE", "2000"))
@@ -75,7 +75,7 @@ try:
 except Exception:
     RES_QRDQN_GAMMA, RES_QRDQN_LR, RES_QRDQN_BATCH, RES_QRDQN_BUFFER, RES_QRDQN_TARGET_UPDATE, RES_QRDQN_ATOMS = (
         0.99,
-        1e-3,
+        1e-4,
         64,
         100000,
         2000,
@@ -85,11 +85,11 @@ except Exception:
 # Reward weights
 try:
     RES_QRDQN_W_E = float(os.getenv("RES_QRDQN_W_E", "1.0"))
-    RES_QRDQN_W_U = float(os.getenv("RES_QRDQN_W_U", "1.5"))
+    RES_QRDQN_W_U = float(os.getenv("RES_QRDQN_W_U", "1.0"))
     RES_QRDQN_LAMBDA_LAT = float(os.getenv("RES_QRDQN_LAMBDA_LAT", "2.0"))
     RES_QRDQN_MU_RESERVE = float(os.getenv("RES_QRDQN_MU_RESERVE", "0.5"))
 except Exception:
-    RES_QRDQN_W_E, RES_QRDQN_W_U, RES_QRDQN_LAMBDA_LAT, RES_QRDQN_MU_RESERVE = 1.0, 1.5, 2.0, 0.5
+    RES_QRDQN_W_E, RES_QRDQN_W_U, RES_QRDQN_LAMBDA_LAT, RES_QRDQN_MU_RESERVE = 1.0, 1.0, 2.0, 0.5
 
 # Telemetry / dashboard
 RES_QRDQN_DASH_ENABLE = os.getenv("RES_QRDQN_DASH_ENABLE", "0") in ("1", "true", "True")
