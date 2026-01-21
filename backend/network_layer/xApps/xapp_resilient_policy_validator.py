@@ -334,7 +334,7 @@ class xAppResilientPolicyValidator(xAppBase):
                 self._nojam_base[SL_E] = float(jam_e or 0.0)
                 self._nojam_base[SL_U] = float(jam_u or 0.0)
                 
-        if eff_ratio >= 1.0:
+        if eff_ratio >= 1.0: ## when there is off part of the jamming period to return the reserved to the pool
             extra_e = max(0.0, cur_e - base_e)
             extra_u = max(0.0, cur_u - base_u)
             extra_total = extra_e + extra_u
