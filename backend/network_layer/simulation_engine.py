@@ -79,7 +79,7 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
         self._spawn_cell_idx = 0
         logger.info("Network reset complete.")
 
-    def network_setup(self):
+    def network_setup(self, xapp_classes=None):
         self.core_network = CoreNetwork(self)
 
         # init base station list
@@ -97,7 +97,7 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
         # for the moment, the ric must be initialized after the core network and the base stations.
         # so that the xApps can subscribe information from the base stations.
         self.ric = RIC(self)
-        self.ric.load_xApps()
+        self.ric.load_xApps(xapp_classes=xapp_classes)
 
     def spawn_random_ue(self):
         ue_operation_region = get_random_ue_operational_region()

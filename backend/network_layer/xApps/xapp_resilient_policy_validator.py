@@ -40,6 +40,7 @@ from .xapp_resilient_dqn_allocator import (
     _DQN,
 )
 from .xapp_resilient_qrdqn_allocator import _QRDQN
+from network_layer.resilient_interval import CausalInterval
 
 try:
     import torch
@@ -212,6 +213,7 @@ class xAppResilientPolicyValidator(xAppBase):
             setattr(settings, "PRB_GYM_CONFIG_PATH", self.config_path)
         self._apply_seed()
         self._env = ResilientDQNEnv(self.ric, spawn_seed=self.seed)
+        self._causal_interval = CausalInterval(self._env, self._decision_period, build_state)
         self._env.register_clear_hook(self._clear_plot_caches)
         self._init_policy()
         self._last_state = self._env.reset()
@@ -224,6 +226,9 @@ class xAppResilientPolicyValidator(xAppBase):
 
     def step(self):
         if not self.enabled or self._env is None:
+            return
+        if self._env.causal:
+            self._step_causal()
             return
         self._global_step += 1
         if self._global_step % self._decision_period != 0:
@@ -247,6 +252,35 @@ class xAppResilientPolicyValidator(xAppBase):
             self._episode_counter += 1
             self._episode_return = 0.0
             self._episode_len = 0
+
+    def _step_causal(self):
+        self._global_step += 1
+        if self._env.exhausted:
+            return
+        if self._episode_done:
+            self._last_state = self._env.reset()
+            self._episode_done = False
+            self._last_info = {}
+        if self._env.exhausted or not self._env.ready():
+            return
+        transition = self._causal_interval.observe()
+        if transition is not None:
+            self._episode_return += transition.reward
+            self._episode_len += 1
+            self._record_metrics(transition.reward, transition.info)
+            if transition.done:
+                self._tb_log_episode()
+                self._episode_counter += 1
+                self._episode_return = 0.0
+                self._episode_len = 0
+                self._episode_done = True
+                self._env._clear_managed_ues()
+                return
+        if self._causal_interval.pending is None:
+            obs = self._env._collect_obs()
+            self._last_info = {"obs": obs}
+            self._last_state = build_state(obs, self._env.prev_action)
+            self._causal_interval.begin(self._select_action(self._last_state))
 
     # ---------- Policy selection ---------- #
     def _init_policy(self):
@@ -290,7 +324,7 @@ class xAppResilientPolicyValidator(xAppBase):
         mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
         valid_idx = [i for i, ok in enumerate(mask) if ok]
         if not valid_idx:
-            return self._idle_idx
+            raise AssertionError("No physically feasible reserve action")
         if self.policy_mode == "idle":
             return self._idle_idx if mask[self._idle_idx] else valid_idx[0]
         if self.policy_mode == "aggressive":

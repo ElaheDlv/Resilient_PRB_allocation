@@ -58,6 +58,7 @@ parser.add_argument("--ws-host", type=str, help="WebSocket server host (default 
 parser.add_argument("--ws-port", type=int, help="WebSocket server port (default 8763)")
 parser.add_argument("--dash-port", type=int, help="Port for the live KPI dashboard (default 8059)")
 parser.add_argument("--steps", type=int, default=120, help="Headless: number of steps to run")
+parser.add_argument("--unpaced", action="store_true", help="Headless only: omit wall-clock sleeps")
 parser.add_argument("--sim-step", type=float, help="Simulation step duration in seconds (default 1.0)")
 parser.add_argument(
     "--sim-seed",
@@ -237,6 +238,8 @@ parser.add_argument(
     help="Initial downlink PRB quota per slice (format SLICE=PRBs or SLICE:PRBs). Repeatable.",
 )
 args, unknown = parser.parse_known_args()
+if args.unpaced and args.mode != "headless":
+    parser.error("--unpaced is only available with --mode headless")
 
 if args.preset:
     os.environ["RAN_TOPOLOGY_PRESET"] = args.preset
@@ -622,7 +625,8 @@ async def main():
         for _ in range(args.steps):
             eng.sim_step += 1
             eng.step(settings.SIM_STEP_TIME_DEFAULT)
-            await asyncio.sleep(settings.SIM_STEP_TIME_DEFAULT)
+            if not args.unpaced:
+                await asyncio.sleep(settings.SIM_STEP_TIME_DEFAULT)
         print(f"Headless run completed. BS: {list(eng.base_station_list.keys())}, Cells: {list(eng.cell_list.keys())}")
         # Optional trace replay summary
         try:

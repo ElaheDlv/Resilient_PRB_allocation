@@ -30,9 +30,18 @@ class RIC:
     def ue_list(self):
         return self.simulation_engine.ue_list
 
-    def load_xApps(self):
+    def load_xApps(self, xapp_classes=None):
         # dynamically load xApps from the xApp directory
         self.xapp_list = {}
+
+        if xapp_classes is not None:
+            # Explicit offline selection avoids importing unrelated UI/AI xApps.
+            for cls in xapp_classes:
+                instance = cls(ric=self)
+                self.xapp_list[instance.xapp_id] = instance
+            for instance in self.xapp_list.values():
+                instance.start()
+            return
 
         xapp_classes = []
         xapps_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "xApps"))

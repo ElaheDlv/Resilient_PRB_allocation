@@ -7,6 +7,7 @@ import logging
 import base64
 from utils.traffic_trace import estimate_trace_period
 from collections import deque
+from .queue_measurements import QueueMeasurements
 
 
 
@@ -58,6 +59,10 @@ class BaseStation:
         self._time_s = 0.0
         # Jammer hook: number of DL PRBs jammed for this BS's cells (set per-step).
         self._jam_const_prbs = 0
+        self.queue_measurements = (
+            QueueMeasurements(getattr(settings, "PHASE0_MEASUREMENT_PATH", ""))
+            if getattr(settings, "PHASE0_MEASUREMENTS", False) else None
+        )
 
     def __repr__(self):
         return f"BS {self.bs_id}"
@@ -111,6 +116,8 @@ class BaseStation:
         if limit > 0:
             space = max(0, limit - cur)
             if space <= 0:
+                if self.queue_measurements is not None:
+                    self.queue_measurements.arrival(ue_imsi, self._time_s, int(nbytes), 0)
                 return 0
             if add > space:
                 if getattr(settings, "TRACE_DEBUG", False):
@@ -127,6 +134,8 @@ class BaseStation:
         q = self._dl_buf_queue.setdefault(ue_imsi, deque())
         if add > 0:
             q.append((self._time_s, add))
+        if self.queue_measurements is not None:
+            self.queue_measurements.arrival(ue_imsi, self._time_s, int(nbytes), add)
         return add
 
     def pull_dl_bytes(self, ue_imsi: str, cap_bytes: int) -> int:
@@ -160,6 +169,8 @@ class BaseStation:
             # Preserve previous delay if nothing was served
             self._dl_last_delay_s.setdefault(ue_imsi, 0.0)
 
+        if self.queue_measurements is not None:
+            self.queue_measurements.service(ue_imsi, self._time_s, take)
         return take
 
     def get_dl_buf_bytes(self, ue_imsi: str) -> int:
@@ -259,6 +270,8 @@ class BaseStation:
         return ue_reg_data.copy()
 
     def handle_deregistration_request(self, ue):
+        if self.queue_measurements is not None:
+            self.queue_measurements.finalize(ue.ue_imsi, self._time_s)
         self.core_network.handle_deregistration_request(ue)
         # Release radio resources where the UE was anchored (if any).
         cell = getattr(ue, "current_cell", None)
@@ -437,6 +450,9 @@ class BaseStation:
         # then update cells (serving, scheduling)
         for cell in self.cell_list.values():
             cell.step(delta_time)
+            if self.queue_measurements is not None:
+                for imsi in cell.connected_ue_list:
+                    self.queue_measurements.sample(imsi, self._time_s)
 
         # reset RIC control actions
         self.ric_control_actions = []

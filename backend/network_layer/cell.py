@@ -2,6 +2,8 @@ import math
 import logging
 import settings
 from utils import dist_between, estimate_throughput
+from .proportional_scheduler import proportional_allocation
+from .prb_accounting import require, validate_quotas
 
 
 class Cell:
@@ -243,6 +245,8 @@ class Cell:
 
     def allocate_prb(self):
         # QoS-aware Proportional Fair Scheduling (PFS)
+        validate_quotas(self, self.slice_dl_prb_quota,
+                        int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18)))
 
         # reset PRB allocation for all UEs
         for ue in self.connected_ue_list.values():
@@ -326,6 +330,14 @@ class Cell:
             ue_ids = ues_by_slice.get(s, [])
             if not ue_ids or quota <= 0:
                 continue
+            if getattr(settings, "PRB_UE_SCHEDULER", "legacy") == "proportional_wc":
+                useful = {uid: ue_prb_requirements.get(uid, {}).get("backlog_prbs", 0)
+                          for uid in ue_ids}
+                grants = proportional_allocation(useful, quota, self.prb_per_ue_cap)
+                for uid, grant in grants.items():
+                    self.prb_ue_allocation_dict[uid]["downlink"] = grant
+                self.allocated_dl_prb_by_slice[s] = sum(grants.values())
+                continue
             demands = {uid: ue_prb_requirements.get(uid, {}).get("dl_required_prbs", 0) for uid in ue_ids}
             total_demand = sum(demands.values())
             # Baseline: guarantee at least 1 PRB to each UE if possible
@@ -357,6 +369,11 @@ class Cell:
                 current_alloc = self.prb_ue_allocation_dict[ue_imsi]["downlink"]
                 if current_alloc > self.prb_per_ue_cap:
                     self.prb_ue_allocation_dict[ue_imsi]["downlink"] = self.prb_per_ue_cap
+
+        for s, quota in self.slice_dl_prb_quota.items():
+            allocated = sum(self.prb_ue_allocation_dict[uid]["downlink"]
+                            for uid in ues_by_slice.get(s, []))
+            require(allocated <= quota, f"UE allocation exceeds slice {s} quota")
 
         # # Logging
         # for ue_imsi, allocation in self.prb_ue_allocation_dict.items():

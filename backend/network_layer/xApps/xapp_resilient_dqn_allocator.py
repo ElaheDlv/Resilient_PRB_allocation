@@ -22,6 +22,8 @@ import numpy as np
 import settings
 from .xapp_base import xAppBase
 from utils import load_raw_packet_csv, estimate_throughput
+from network_layer.prb_accounting import quota_limits, validate_quotas
+from network_layer.resilient_interval import CausalInterval
 
 SL_E = getattr(settings, "NETWORK_SLICE_EMBB_NAME", "eMBB")
 SL_U = getattr(settings, "NETWORK_SLICE_URLLC_NAME", "URLLC")
@@ -304,6 +306,10 @@ class ResilientDQNEnv:
         self._managed_ues: set[str] = set()
         self._trace_cache: Dict[Tuple[str, str, float], list] = {}
         self._spawn_seed_base = spawn_seed
+        self.causal = getattr(settings, "RES_DQN_TRANSITION_MODE", "legacy") == "causal"
+        if self.causal and len(self.ric.cell_list) != 1:
+            raise ValueError("Phase 0 causal execution supports exactly one cell")
+        self.exhausted = False
         self._jam_var_defaults = {
             "JAM_VAR_PERIOD_STEPS": int(getattr(settings, "JAM_VAR_PERIOD_STEPS", -1)),
             "JAM_VAR_START_OFFSET": int(getattr(settings, "JAM_VAR_START_OFFSET", 0)),
@@ -325,6 +331,9 @@ class ResilientDQNEnv:
 
         self._episode_idx += 1
         if self._episode_idx >= len(self._episodes):
+            if self.causal:
+                self._clear_managed_ues()
+                self.exhausted = True
             return build_state(self._blank_obs(), self.prev_action)
 
         self._current_episode = self._episodes[self._episode_idx]
@@ -372,43 +381,13 @@ class ResilientDQNEnv:
         cell = self._target_cell()
         if cell is None:
             return [True] * len(self.actions)
-        # Jammer reports effective PRBs excluding reserved+jam; add reserved back to get usable capacity for reserve pool.
-        eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
-        max_prb_phys = eff_max + float(_reserve_from_jammer)
-        base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
-        base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
-        base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
-        if base_e == 0 and base_u == 0:
-            base = self._base_quota.get(cell.cell_id, {})
-            base_e = float(base.get(SL_E, 0) or 0.0)
-            base_u = float(base.get(SL_U, 0) or 0.0)
-        quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-        cur_e = float(quotas.get(SL_E, 0) or 0)
-        cur_u = float(quotas.get(SL_U, 0) or 0)
-        base_total = base_e + base_u
-        cur_total = cur_e + cur_u
-        max_prb = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
-        pool_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
-
-        mask = []
-        for de, du in self.actions:
-            new_e = cur_e + de
-            new_u = cur_u + du
-            if new_e < base_e or new_u < base_u:
-                #print("Action would reduce below base quota:", de, du)
-                #print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u,"eff_max:", eff_max)
-                mask.append(False)
-                continue
-            if new_e + new_u > max_prb + 1e-9:
-                mask.append(False)
-                continue
-            # Do not return more to the pool than currently borrowed
-            pool_return = max(0.0, -float(de)) + max(0.0, -float(du))
-            if pool_return > pool_used + 1e-9:
-                mask.append(False)
-                continue
-            mask.append(True)
-        return mask
+        base, cap = quota_limits(cell, TOTAL_RESILIENCY_PRB,
+                                 self._base_quota.get(cell.cell_id, {}))
+        quotas = cell.slice_dl_prb_quota
+        return [all(quotas.get(s, 0) + delta >= base.get(s, 0)
+                    for s, delta in ((SL_E, de), (SL_U, du)))
+                and sum(quotas.values()) + de + du <= cap
+                for de, du in self.actions]
 
     # ---------- Helpers ---------- #
     def _snapshot_base_quotas(self):
@@ -466,6 +445,8 @@ class ResilientDQNEnv:
     def _deploy_episode(self, spec: Dict):
         self._clear_managed_ues()
         self._apply_episode_jamming(spec)
+        if self.causal and int(getattr(settings, "JAM_RESERVED_PRBS", 0)) != TOTAL_RESILIENCY_PRB:
+            raise ValueError("Causal mode requires matching fixed jammer/controller reserve sizes")
         self._apply_initial_prb(spec.get("initial_prb", {}))
         for sl in (SL_E, SL_U):
             cfg = spec["slices"].get(sl, {})
@@ -616,6 +597,16 @@ class ResilientDQNEnv:
             print(f"[TRACE] Failed to register {imsi} after {max_attempts} attempts; skipping.")
             return
         ue = self.sim_engine.ue_list[imsi]
+        budgets = cfg.get("queue_budgets_s", {})
+        budget = budgets.get(str(ue_idx), cfg.get("queue_budget_s"))
+        if budget is not None:
+            budget = float(budget)
+            if not math.isfinite(budget) or budget <= 0:
+                raise ValueError("queue_budget_s must be positive finite seconds")
+        ue.queue_budget_s = budget
+        measurements = getattr(ue.current_bs, "queue_measurements", None)
+        if measurements is not None:
+            measurements.set_budget(imsi, budget)
         if self._current_episode and self._current_episode.get("freeze_mobility", True):
             ue.speed_mps = 0
             try:
@@ -686,61 +677,15 @@ class ResilientDQNEnv:
 
     def _apply_action(self, action: Tuple[int, int]):
         """Apply resiliency PRBs on top of the snapshot baseline quotas."""
+        updates = []
         for cell in self.ric.cell_list.values():
-            base_dl_prb_quota = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
-            base_e = float(base_dl_prb_quota.get(SL_E, 0) or 0.0)
-            base_u = float(base_dl_prb_quota.get(SL_U, 0) or 0.0)
-            if base_e == 0 and base_u == 0:
-                base = self._base_quota.get(cell.cell_id, {})
-                base_e = float(base.get(SL_E, 0) or 0.0)
-                base_u = float(base.get(SL_U, 0) or 0.0)
-            base_total = base_e + base_u
-            quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
-            cur_e = float(quotas.get(SL_E, 0) or 0)
-            cur_u = float(quotas.get(SL_U, 0) or 0)
-            cur_total = cur_e + cur_u
-            eff_max = float(getattr(cell, "_effective_max_dl_prb", getattr(cell, "max_dl_prb", 0)) or 0.0)
-            max_prb_phys = eff_max + float(_reserve_from_jammer)
-            # Reserve pool is fixed; jamming affects baseline but not available reserve.
-            capacity = min(max_prb_phys, base_total + TOTAL_RESILIENCY_PRB)
-
             de, du = action
-            # Apply deltas relative to current quotas but never below baseline
-            # new_e = cur_e + float(de)
-            # new_u = cur_u + float(du)
-            #print(f"Applying action to cell {cell.cell_id}: eMBB PRB={quotas[SL_E]}, URLLC PRB={quotas[SL_U]}")
-
-            new_e = max(base_e, cur_e + float(de))
-            new_u = max(base_u, cur_u + float(du))
-            #print(base_e, base_u)
-            #print(new_e, new_u)
-            # print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
-            # if base_e > cur_e or base_u > cur_u:
-            #     print("Warning: current quota below base quota; adjusting upwards.")
-                #print(" base_e:", base_e, " base_u:", base_u, " cur_e:", cur_e, " cur_u:", cur_u)
-                # new_e = base_e
-                # new_u = 
-                
-                
-            # delta_e = new_e - cur_e
-            # delta_u = new_u - cur_u
-            # delta_sum = delta_e + delta_u
-            # avail_extra = max(0.0, capacity - cur_total)
-            # if delta_sum > avail_extra and delta_sum > 0:
-            #     print("Warning: requested quota increase exceeds available capacity; scaling down.")
-            #     scale = avail_extra / delta_sum
-            #     delta_e *= scale
-            #     delta_u *= scale
-            # new_e = cur_e + delta_e
-            # new_u = cur_u + delta_u
-            # total = new_e + new_u
-            # if total > capacity and total > 0:
-            #     scale = capacity / total
-            #     new_e *= scale
-            #     new_u *= scale
-            quotas = {SL_E: int(round(new_e)), SL_U: int(round(new_u))}
-            #print(f"Applying action to cell {cell.cell_id}: eMBB PRB={quotas[SL_E]}, URLLC PRB={quotas[SL_U]}")
-            #print(f"  (Requested deltas: eMBB={de}, URLLC={du})")
+            quotas = {SL_E: cell.slice_dl_prb_quota.get(SL_E, 0) + de,
+                      SL_U: cell.slice_dl_prb_quota.get(SL_U, 0) + du}
+            validate_quotas(cell, quotas, TOTAL_RESILIENCY_PRB,
+                            self._base_quota.get(cell.cell_id, {}))
+            updates.append((cell, quotas))
+        for cell, quotas in updates:
             cell.slice_dl_prb_quota = quotas
 
     def _collect_obs(self) -> Dict:
@@ -749,7 +694,8 @@ class ResilientDQNEnv:
             return self._blank_obs()
         cell = next(iter(self.ric.cell_list.values()))
         max_dl_prb = float(getattr(cell, "max_dl_prb", DEFAULT_MAX_DL_PRB))
-        effective_max_prb = float(getattr(cell, "_effective_max_dl_prb", max_dl_prb) or max_dl_prb)
+        effective = getattr(cell, "_effective_max_dl_prb", None)
+        effective_max_prb = float(max_dl_prb if effective is None else effective)
         phys_max = max_dl_prb - getattr(settings, "JAM_RESERVED_PRBS", 0)
         quotas = dict(getattr(cell, "slice_dl_prb_quota", {}) or {})
         base = dict(getattr(cell, "base_dl_prb_quota", {}) or {})
@@ -989,6 +935,9 @@ class xAppResilientDQNAllocator(xAppBase):
             self.enabled = False
             return
         self._env = ResilientDQNEnv(self.ric)
+        self._causal_interval = CausalInterval(self._env, self._decision_period, build_state)
+        if self._env.causal and self.eval_interval:
+            raise ValueError("Causal mode requires external simulator-driven evaluation; set RES_DQN_EVAL_INTERVAL=0")
         self._sim_dt = self._detect_sim_dt()
         # Clear plots when env wipes managed UEs
         self._env.register_clear_hook(self._clear_plot_caches)
@@ -1003,6 +952,9 @@ class xAppResilientDQNAllocator(xAppBase):
 
     def step(self):
         if not self.enabled or self._env is None:
+            return
+        if self._env.causal:
+            self._step_causal()
             return
         self._global_step += 1
         # Only act every decision_period steps
@@ -1052,6 +1004,43 @@ class xAppResilientDQNAllocator(xAppBase):
             if self._should_eval():
                 self._run_eval()
             self._reset_episode_trackers()
+
+    def _step_causal(self):
+        self._global_step += 1
+        if self._env.exhausted:
+            return
+        if self._episode_done:
+            self._last_state = self._env.reset()
+            self._episode_done = False
+            self._reset_episode_trackers()
+        if self._env.exhausted or not self._env.ready():
+            return
+        transition = self._causal_interval.observe()
+        if transition is not None:
+            self._episode_return += transition.reward
+            self._episode_len += 1
+            for key, value in transition.info["reward_parts"].items():
+                self._episode_reward_parts[key] += value
+            self._record_metrics(transition.reward, transition.info)
+            if self.train:
+                self._replay.push(transition.state, transition.action_idx, transition.reward,
+                                  transition.next_state, float(transition.done), transition.next_mask)
+                self._learn()
+            self._tb_log(transition.state, transition.action_idx, transition.reward,
+                         transition.info, done=transition.done)
+            if transition.done:
+                self._episode_counter += 1
+                self._episode_done = True
+                self._env._clear_managed_ues()
+                return
+        if self._causal_interval.pending is None:
+            self._decision_steps += 1
+            elapsed = self._decision_steps - 1
+            fraction = max(0.0, (self.eps_decay-elapsed) / max(1, self.eps_decay))
+            self._eps = self.eps_end + (self.eps_start-self.eps_end)*fraction if self.train else 0.0
+            obs = self._env._collect_obs()
+            self._last_state = build_state(obs, self._env.prev_action)
+            self._causal_interval.begin(self._select_action(self._last_state))
 
     # ---------- Telemetry / dashboard ---------- #
     def _record_metrics(self, reward: float, info: Optional[Dict]):
@@ -1655,7 +1644,7 @@ class xAppResilientDQNAllocator(xAppBase):
                 base_total = 0.0
                 reserve_used = 0.0
                 if cell:
-                    base_total = float(sum((self._base_quota.get(getattr(cell, "cell_id", ""), {}) or {}).values()))
+                    base_total = float(sum((getattr(cell, "base_dl_prb_quota", {}) or {}).values()))
                     cur_quota = getattr(cell, "slice_dl_prb_quota", {}) or {}
                     cur_total = float(sum(cur_quota.values()) or 0.0)
                     reserve_used = max(0.0, min(TOTAL_RESILIENCY_PRB, cur_total - base_total))
@@ -1811,7 +1800,7 @@ class xAppResilientDQNAllocator(xAppBase):
         mask = getattr(self._env, "_action_mask", lambda: [True] * NUM_ACTIONS)()
         valid_idx = [i for i, ok in enumerate(mask) if ok]
         if not valid_idx:
-            return 0
+            raise AssertionError("No physically feasible reserve action")
         if epsilon is None:
             epsilon = self._eps if self.train else 0.0
         if epsilon > 0.0 and random.random() < epsilon:

@@ -1,8 +1,5 @@
 import json
 import asyncio
-from agents import ItemHelpers
-from openai.types.responses import ResponseTextDeltaEvent, ResponseFunctionToolCall
-from agents import Runner
 
 
 class WebSocketSingleton:
@@ -111,6 +108,10 @@ async def stream_agent_chat(
     Handles both 'network_user_chat' and 'network_engineer_chat' commands by streaming events
     and dispatching each event type to its own helper function.
     """
+    # Offline simulation does not require the optional agent SDK.
+    from agents import ItemHelpers, Runner
+    from openai.types.responses import ResponseTextDeltaEvent, ResponseFunctionToolCall
+
     chat_agent_streamer = Runner.run_streamed(agent_func, data)
     async for event in chat_agent_streamer.stream_events():
         if event.type == "raw_response_event" and isinstance(

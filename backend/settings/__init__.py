@@ -13,3 +13,4 @@ from .res_gym_config import *
 from .res_dqn_config import *
 from .res_qrdqn_config import *
 from .res_validation_config import *
+from .phase0_config import *
