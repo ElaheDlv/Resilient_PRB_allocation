@@ -1,9 +1,11 @@
 import math
 import logging
+import time
 import settings
 from utils import dist_between, estimate_throughput
 from .proportional_scheduler import proportional_allocation
 from .prb_accounting import require, validate_quotas
+from .deadline_scheduler import QueueView, deadline_allocation
 
 
 class Cell:
@@ -33,6 +35,8 @@ class Cell:
         # KPI exposure: per-UE requested DL PRBs in the current allocation round
         # Map: {ue_imsi: required_dl_prbs}
         self.dl_total_prb_demand = {}
+        self._deadline_starvation_ticks = {}
+        self.last_scheduler_stats = {}
         # Static per-slice DL PRB quotas (absolute PRBs per slice)
         # Initialized from settings.RAN_SLICE_DL_PRB_SPLIT_DEFAULT
         self.slice_dl_prb_quota = self._init_slice_quota()
@@ -245,6 +249,7 @@ class Cell:
 
     def allocate_prb(self):
         # QoS-aware Proportional Fair Scheduling (PFS)
+        self.last_scheduler_stats = {}
         validate_quotas(self, self.slice_dl_prb_quota,
                         int(getattr(settings, "RES_DQN_TOTAL_RESILIENCY_PRB", 18)))
 
@@ -328,15 +333,35 @@ class Cell:
 
         for s, quota in self.slice_dl_prb_quota.items():
             ue_ids = ues_by_slice.get(s, [])
-            if not ue_ids or quota <= 0:
-                continue
-            if getattr(settings, "PRB_UE_SCHEDULER", "legacy") == "proportional_wc":
+            mode = getattr(settings, "PRB_UE_SCHEDULER", "legacy")
+            if mode in {"proportional_wc", "deadline_slack"}:
+                started = time.perf_counter_ns()
                 useful = {uid: ue_prb_requirements.get(uid, {}).get("backlog_prbs", 0)
                           for uid in ue_ids}
-                grants = proportional_allocation(useful, quota, self.prb_per_ue_cap)
+                if mode == "deadline_slack" and s == settings.NETWORK_SLICE_URLLC_NAME:
+                    bs = self.base_station
+                    views = {uid: QueueView(bs.get_dl_buf_bytes(uid),
+                        ue_prb_requirements.get(uid, {}).get("dl_throughput_per_prb", 0)*sim_dt/8,
+                        getattr(self.connected_ue_list[uid], "queue_budget_s", None),
+                        bs._dl_buf_queue.get(uid, ())) for uid in ue_ids}
+                    grants = deadline_allocation(views, quota, bs._time_s, sim_dt,
+                        self._deadline_starvation_ticks,
+                        getattr(settings, "DEADLINE_STARVATION_TICKS", 5), self.prb_per_ue_cap)
+                    for uid, view in views.items():
+                        served = int(grants[uid]*view.bytes_per_prb) if view.bytes_per_prb > 0 else 0
+                        self._deadline_starvation_ticks[uid] = (
+                            self._deadline_starvation_ticks.get(uid, 0)+1
+                            if view.queued_bytes > 0 and view.bytes_per_prb > 0 and served == 0 else 0)
+                else:
+                    grants = proportional_allocation(useful, quota, self.prb_per_ue_cap)
+                elapsed = time.perf_counter_ns()-started
                 for uid, grant in grants.items():
                     self.prb_ue_allocation_dict[uid]["downlink"] = grant
                 self.allocated_dl_prb_by_slice[s] = sum(grants.values())
+                self.last_scheduler_stats[s] = dict(mode=mode, quota=quota,
+                    allocated=sum(grants.values()), unused=quota-sum(grants.values()), elapsed_ns=elapsed)
+                continue
+            if not ue_ids or quota <= 0:
                 continue
             demands = {uid: ue_prb_requirements.get(uid, {}).get("dl_required_prbs", 0) for uid in ue_ids}
             total_demand = sum(demands.values())
@@ -461,6 +486,7 @@ class Cell:
                 ue.downlink_latency = 0.0
 
     def deregister_ue(self, ue):
+        self._deadline_starvation_ticks.pop(ue.ue_imsi, None)
         if ue.ue_imsi in self.prb_ue_allocation_dict:
             del self.prb_ue_allocation_dict[ue.ue_imsi]
             print(f"Cell {self.cell_id}: Released resources for UE {ue.ue_imsi}")

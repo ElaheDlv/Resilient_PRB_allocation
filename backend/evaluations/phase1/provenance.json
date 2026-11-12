@@ -1,0 +1,25 @@
+{
+  "base_commit": "4f6e0e6",
+  "branch": "phase1/deadline-aware-ue-scheduler",
+  "code_sha256": {
+    "backend/network_layer/base_station.py": "5729ae142646a9fa8724145da581754432dd04e3403d3845e80851aca5999d12",
+    "backend/network_layer/cell.py": "c6901d40ff83d13a3e8e28073dfe372b5f7f898610bf0f2dac71b65ce1480fdf",
+    "backend/network_layer/deadline_scheduler.py": "528098b232989cce3779b1fb10df6ba380525547c211873b97a616d5e1114375",
+    "backend/network_layer/phase1_metrics.py": "e6d9d401b024d3a132fa6784222aed950e8722c4332490020057f2c4c4c22276",
+    "backend/network_layer/queue_measurements.py": "42596054471ef8e0d2be92febba6d71e14b8152cbfa1ff497dcb90c076701066",
+    "backend/network_layer/simulation_engine.py": "15777a7a5cd701acbc8f11847d57ad853f3f32dc2a2159fb44734a5465f69885",
+    "backend/network_layer/ue.py": "90e0cacd9b7bfdd5fde866e57417f86fb8216ca29920180e342f4e61b3692ca2",
+    "backend/network_layer/ue_budgets.py": "aa242c0f6f32bc0525b0fecbb40448e1dc1fb6d50f98845d0789688e87789ce7",
+    "backend/network_layer/xApps/xapp_resilient_dqn_allocator.py": "634ec18387808c0eba2f9ce93228ab97eedc9f39a2e53f5beca81613358e0544",
+    "backend/network_layer/xApps/xapp_resilient_policy_validator.py": "560ad5657d4b70e81fef90bada993dc74bdddc535e43d14e97f60b33d5488b12",
+    "backend/settings/phase0_config.py": "d1832df52c6a071dc4a6ee2f558c5c0fee2485b9aa8789239082aa1c8bc662d6",
+    "backend/tests/test_phase1.py": "03a0dc6dec0ff36e96fa7f69283820719b958dcd0aa2f897affcc0689c8fbc2d",
+    "backend/tools/phase0_evaluate.py": "0a21a754d5e29f9da945e2510f94d3045a359465db43d3cabee33a7b128e6e84",
+    "backend/tools/phase1_pilot.py": "a18d098190501bd2b9655070dfbf1d70e0c04b2f787d684c204be4b64bc4cd28"
+  },
+  "note": "Original traffic and checkpoint files are referenced by their existing repository paths; no generators or radio models were changed.",
+  "trace_sha256": {
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  }
+}

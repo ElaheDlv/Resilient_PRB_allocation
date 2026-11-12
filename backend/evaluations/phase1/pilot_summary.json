@@ -1,0 +1,934 @@
+{
+  "seeds": [
+    1234,
+    2345,
+    3456
+  ],
+  "steps": 5000,
+  "urllc_ues": 8,
+  "budget_classes_s": {
+    "tight": 0.002,
+    "relaxed": 0.01
+  },
+  "budget_seed": 2026,
+  "fixed_reserve": [
+    0,
+    3
+  ],
+  "per_ue_cap": null,
+  "input_catalog": "backend/assets/episodes/test_config/gym_from_testing_config_1ms_10s_8UE_jam_fixed_10.json",
+  "source_sha256": "2b73a452c027b3fc2ab847c9b80a1452b5ad955b111b2bfa89d06fd30c8bdb1d",
+  "checkpoint": "backend/checkpoints/res_dqn/xAppResilientDQNAllocator_20260123_215931_final.pt",
+  "pair_checks": [
+    {
+      "severity": 0,
+      "seed": 1234,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 0,
+      "seed": 1234,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 0,
+      "seed": 2345,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 0,
+      "seed": 2345,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 0,
+      "seed": 3456,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 0,
+      "seed": 3456,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": false
+    },
+    {
+      "severity": 10,
+      "seed": 1234,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 10,
+      "seed": 1234,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 10,
+      "seed": 2345,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 10,
+      "seed": 2345,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 10,
+      "seed": 3456,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 10,
+      "seed": 3456,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": false
+    },
+    {
+      "severity": 20,
+      "seed": 1234,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 20,
+      "seed": 1234,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": false
+    },
+    {
+      "severity": 20,
+      "seed": 2345,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 20,
+      "seed": 2345,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 20,
+      "seed": 3456,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 20,
+      "seed": 3456,
+      "policy": "dqn",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": false
+    }
+  ],
+  "groups": {
+    "j0_fixed_proportional_wc": {
+      "runs": 3,
+      "batch_failure_lower": 0.0,
+      "batch_failure_upper": 3.3333333333333335e-05,
+      "completed_batch_late": 0.0,
+      "served_byte_late": 0.0,
+      "hol_violation": 0.0,
+      "longest_violation_ms": 0.0,
+      "mean_violation_ms": 0.0,
+      "embb_mbps": 94.70840159999992,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 57.66666666666304,
+      "unused_urllc_prbs": 5.333333333333563,
+      "worst_ue_failure": 0.0,
+      "scheduler_mean_us": 5.670199133333333,
+      "scheduler_p95_us": 8.700333333333333,
+      "wall_seconds": 2.0286179090229175,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        }
+      },
+      "recovery_windows": []
+    },
+    "j0_fixed_deadline_slack": {
+      "runs": 3,
+      "batch_failure_lower": 0.0,
+      "batch_failure_upper": 1.6666666666666667e-05,
+      "completed_batch_late": 0.0,
+      "served_byte_late": 0.0,
+      "hol_violation": 0.0,
+      "longest_violation_ms": 0.0,
+      "mean_violation_ms": 0.0,
+      "embb_mbps": 94.70840159999992,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 57.66666666666304,
+      "unused_urllc_prbs": 5.333333333333563,
+      "worst_ue_failure": 0.0,
+      "scheduler_mean_us": 167.84707853333333,
+      "scheduler_p95_us": 206.86033333333333,
+      "wall_seconds": 2.870484314082811,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        }
+      },
+      "recovery_windows": []
+    },
+    "j0_dqn_proportional_wc": {
+      "runs": 3,
+      "batch_failure_lower": 0.0,
+      "batch_failure_upper": 0.0,
+      "completed_batch_late": 0.0,
+      "served_byte_late": 0.0,
+      "hol_violation": 0.0,
+      "longest_violation_ms": 0.0,
+      "mean_violation_ms": 0.0,
+      "embb_mbps": 94.95512319999992,
+      "mean_reserve_prbs": 1.8595333333333979,
+      "allocated_urllc_prbs": 57.94153333333156,
+      "unused_urllc_prbs": 3.5433333333333255,
+      "worst_ue_failure": 0.0,
+      "scheduler_mean_us": 5.1685396,
+      "scheduler_p95_us": 6.816666666666666,
+      "wall_seconds": 2.065425838343799,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        }
+      },
+      "recovery_windows": []
+    },
+    "j0_dqn_deadline_slack": {
+      "runs": 3,
+      "batch_failure_lower": 0.0,
+      "batch_failure_upper": 8.333333333333334e-06,
+      "completed_batch_late": 0.0,
+      "served_byte_late": 0.0,
+      "hol_violation": 0.0,
+      "longest_violation_ms": 0.0,
+      "mean_violation_ms": 0.0,
+      "embb_mbps": 94.97632266666658,
+      "mean_reserve_prbs": 1.9162000000000827,
+      "allocated_urllc_prbs": 57.9549333333315,
+      "unused_urllc_prbs": 3.553466666666658,
+      "worst_ue_failure": 0.0,
+      "scheduler_mean_us": 166.27671800000002,
+      "scheduler_p95_us": 203.06033333333332,
+      "wall_seconds": 2.9147251546382904,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        }
+      },
+      "recovery_windows": []
+    },
+    "j10_fixed_proportional_wc": {
+      "runs": 3,
+      "batch_failure_lower": 0.0,
+      "batch_failure_upper": 4.9999999999999996e-05,
+      "completed_batch_late": 0.0,
+      "served_byte_late": 0.0,
+      "hol_violation": 0.0,
+      "longest_violation_ms": 0.0,
+      "mean_violation_ms": 0.0,
+      "embb_mbps": 93.93881226666659,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 57.16666666666426,
+      "unused_urllc_prbs": 4.3333333333335435,
+      "worst_ue_failure": 0.0,
+      "scheduler_mean_us": 5.604909666666667,
+      "scheduler_p95_us": 8.260666666666667,
+      "wall_seconds": 2.0633021815835186,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ]
+    },
+    "j10_fixed_deadline_slack": {
+      "runs": 3,
+      "batch_failure_lower": 0.006375,
+      "batch_failure_upper": 0.006408333333333333,
+      "completed_batch_late": 0.006375637563756376,
+      "served_byte_late": 0.00018747639958286214,
+      "hol_violation": 0.0,
+      "longest_violation_ms": 0.0,
+      "mean_violation_ms": 0.0,
+      "embb_mbps": 93.93881226666659,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 57.16666666666426,
+      "unused_urllc_prbs": 4.3333333333335435,
+      "worst_ue_failure": 0.009866666666666668,
+      "scheduler_mean_us": 166.9086948,
+      "scheduler_p95_us": 202.31666666666666,
+      "wall_seconds": 2.9031317259650677,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.005916666666666666,
+          "served_byte_late": 0.000165311291007335,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.006833333333333334,
+          "served_byte_late": 0.00020964102564102565,
+          "hol_violation": 0.0
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ]
+    },
+    "j10_dqn_proportional_wc": {
+      "runs": 3,
+      "batch_failure_lower": 0.0358,
+      "batch_failure_upper": 0.03581666666666667,
+      "completed_batch_late": 0.03580179008950447,
+      "served_byte_late": 0.03172138457556995,
+      "hol_violation": 0.02869166666666666,
+      "longest_violation_ms": 223.33333333333348,
+      "mean_violation_ms": 76.51111111111116,
+      "embb_mbps": 94.61583359999992,
+      "mean_reserve_prbs": 3.52326666666667,
+      "allocated_urllc_prbs": 57.46093333333147,
+      "unused_urllc_prbs": 3.5343999999999265,
+      "worst_ue_failure": 0.07206666666666667,
+      "scheduler_mean_us": 5.827092333333334,
+      "scheduler_p95_us": 8.419666666666666,
+      "wall_seconds": 2.1082094412607453,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0,
+          "served_byte_late": 0.0,
+          "hol_violation": 0.0
+        },
+        "tight": {
+          "batch_failure_lower": 0.0716,
+          "served_byte_late": 0.06344266666666666,
+          "hol_violation": 0.05738333333333332
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.04200000000000026,
+          "censored": false,
+          "end_s": 3.801,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ]
+    },
+    "j10_dqn_deadline_slack": {
+      "runs": 3,
+      "batch_failure_lower": 0.0028833333333333332,
+      "batch_failure_upper": 0.0029,
+      "completed_batch_late": 0.0028834775072086936,
+      "served_byte_late": 0.000345154509912519,
+      "hol_violation": 6.66666666666666e-05,
+      "longest_violation_ms": 0.6666666666666666,
+      "mean_violation_ms": 0.380952380952381,
+      "embb_mbps": 94.77422559999991,
+      "mean_reserve_prbs": 4.134599999999932,
+      "allocated_urllc_prbs": 57.77113333333171,
+      "unused_urllc_prbs": 3.5955333333332553,
+      "worst_ue_failure": 0.0031999999999999997,
+      "scheduler_mean_us": 166.94488113333333,
+      "scheduler_p95_us": 205.938,
+      "wall_seconds": 2.9891958679848663,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.0029333333333333334,
+          "served_byte_late": 0.00036800141539005917,
+          "hol_violation": 8.333333333333326e-05
+        },
+        "tight": {
+          "batch_failure_lower": 0.0028333333333333335,
+          "served_byte_late": 0.0003223076923076923,
+          "hol_violation": 4.999999999999996e-05
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ]
+    },
+    "j20_fixed_proportional_wc": {
+      "runs": 3,
+      "batch_failure_lower": 0.31393333333333334,
+      "batch_failure_upper": 0.31427499999999997,
+      "completed_batch_late": 0.3142399359102744,
+      "served_byte_late": 0.3125543431941515,
+      "hol_violation": 0.31059999999999244,
+      "longest_violation_ms": 1647.9999999999952,
+      "mean_violation_ms": 887.4285714285506,
+      "embb_mbps": 93.17564586666658,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 56.49999999999609,
+      "unused_urllc_prbs": 3.4999999999999973,
+      "worst_ue_failure": 0.3308,
+      "scheduler_mean_us": 6.619660933333333,
+      "scheduler_p95_us": 9.867666666666667,
+      "wall_seconds": 2.1950087925263992,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.2972166666666667,
+          "served_byte_late": 0.2949214593926667,
+          "hol_violation": 0.2918499999999862
+        },
+        "tight": {
+          "batch_failure_lower": 0.33065,
+          "served_byte_late": 0.3301875706145062,
+          "hol_violation": 0.3293499999999987
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ]
+    },
+    "j20_fixed_deadline_slack": {
+      "runs": 3,
+      "batch_failure_lower": 0.32584166666666664,
+      "batch_failure_upper": 0.3263166666666667,
+      "completed_batch_late": 0.3262954892679139,
+      "served_byte_late": 0.32287652836550923,
+      "hol_violation": 0.32189999999999613,
+      "longest_violation_ms": 821.3333333332798,
+      "mean_violation_ms": 138.4516129032243,
+      "embb_mbps": 93.17564586666658,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 56.49999999999609,
+      "unused_urllc_prbs": 3.4999999999999973,
+      "worst_ue_failure": 0.326,
+      "scheduler_mean_us": 165.01854546666667,
+      "scheduler_p95_us": 205.98233333333334,
+      "wall_seconds": 3.009420679959779,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.32578333333333337,
+          "served_byte_late": 0.32298874568395025,
+          "hol_violation": 0.3217333333333295
+        },
+        "tight": {
+          "batch_failure_lower": 0.3259,
+          "served_byte_late": 0.3227644962787903,
+          "hol_violation": 0.3220666666666629
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 1.221,
+          "censored": false,
+          "end_s": 2.48,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ]
+    },
+    "j20_dqn_proportional_wc": {
+      "runs": 3,
+      "batch_failure_lower": 0.19635833333333333,
+      "batch_failure_upper": 0.19644999999999999,
+      "completed_batch_late": 0.1963976128559045,
+      "served_byte_late": 0.18932146397702285,
+      "hol_violation": 0.18433333333332028,
+      "longest_violation_ms": 515.3333333333135,
+      "mean_violation_ms": 230.4166666666505,
+      "embb_mbps": 95.39803839999992,
+      "mean_reserve_prbs": 6.730866666666755,
+      "allocated_urllc_prbs": 56.5573999999992,
+      "unused_urllc_prbs": 2.870866666666598,
+      "worst_ue_failure": 0.24553333333333335,
+      "scheduler_mean_us": 5.9820020000000005,
+      "scheduler_p95_us": 8.516,
+      "wall_seconds": 2.174302280958121,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.14851666666666666,
+          "served_byte_late": 0.1453407341213049,
+          "hol_violation": 0.1423166666666583
+        },
+        "tight": {
+          "batch_failure_lower": 0.2442,
+          "served_byte_late": 0.23330229194474683,
+          "hol_violation": 0.22634999999998226
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.7960000000000003,
+          "censored": false,
+          "end_s": 2.055,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.947000000000001,
+          "censored": false,
+          "end_s": 4.706,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ]
+    },
+    "j20_dqn_deadline_slack": {
+      "runs": 3,
+      "batch_failure_lower": 0.07108333333333333,
+      "batch_failure_upper": 0.07115,
+      "completed_batch_late": 0.07109044237757109,
+      "served_byte_late": 0.05476583985589975,
+      "hol_violation": 0.05161666666666665,
+      "longest_violation_ms": 109.00000000000007,
+      "mean_violation_ms": 3.8591900311526506,
+      "embb_mbps": 94.25775786666658,
+      "mean_reserve_prbs": 5.824799999999992,
+      "allocated_urllc_prbs": 57.18199999999888,
+      "unused_urllc_prbs": 2.757466666666592,
+      "worst_ue_failure": 0.07186666666666668,
+      "scheduler_mean_us": 169.42381866666668,
+      "scheduler_p95_us": 213.96033333333335,
+      "wall_seconds": 3.0932663289519646,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.07055,
+          "served_byte_late": 0.05438344491271433,
+          "hol_violation": 0.05121666666666666
+        },
+        "tight": {
+          "batch_failure_lower": 0.07161666666666668,
+          "served_byte_late": 0.055148230769230776,
+          "hol_violation": 0.052016666666666656
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.02499999999999991,
+          "censored": false,
+          "end_s": 1.284,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ]
+    }
+  }
+}

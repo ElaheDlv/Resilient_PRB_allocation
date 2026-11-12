@@ -21,10 +21,12 @@ if str(BACKEND) not in sys.path:
 def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
                    transitions="legacy", scheduler="legacy", paced=False,
                    measurements=False, steps=10000, period=10, dt=0.001,
-                   stop_after_episodes=1, event_path=""):
+                   stop_after_episodes=1, event_path="", phase1=False,
+                   fixed_reserve=(0, 0), per_ue_cap=None):
     # settings are imported once. For another configuration use a fresh process.
     if "settings" in sys.modules:
         raise RuntimeError("Use a fresh process for each evaluation configuration")
+    measurements = measurements or phase1
     os.environ.update(RAN_TOPOLOGY_PRESET="simple", SIM_FREEZE_MOBILITY="1",
         SIM_STEP_TIME_DEFAULT=str(dt), UE_SPAWN_RADIUS_M="400", UE_DEFAULT_MAX_COUNT="100",
         PRB_GYM_CONFIG_PATH=str(config), RES_VALIDATE_CONFIG_PATH=str(config),
@@ -34,6 +36,7 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
         RES_VALIDATE_TB_ENABLE="0", RES_DQN_TRANSITION_MODE=transitions,
         PRB_UE_SCHEDULER=scheduler, PHASE0_MEASUREMENTS="1" if measurements else "0",
         PHASE0_MEASUREMENT_PATH=str(event_path),
+        RES_VALIDATE_FIXED_E=str(fixed_reserve[0]), RES_VALIDATE_FIXED_U=str(fixed_reserve[1]),
         JAM_RESERVED_PRBS="18", RES_DQN_TOTAL_RESILIENCY_PRB="18")
     import numpy as np
     import torch
@@ -48,6 +51,13 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
     engine = SimulationEngine()
     engine.reset_network()
     engine.network_setup(xapp_classes=[xAppResilientPolicyValidator])
+    for cell in engine.cell_list.values():
+        cell.prb_per_ue_cap = per_ue_cap
+    observer = None
+    if phase1:
+        from network_layer.phase1_metrics import Phase1Metrics
+        observer = Phase1Metrics()
+        engine.after_service_observer = observer.observe
     app = next(iter(engine.ric.xapp_list.values()))
     digest = hashlib.sha256()
     records = []
@@ -83,7 +93,7 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
             bs.queue_measurements.close()
     pending = getattr(app, "_causal_interval", None)
     pending = pending.pending if pending is not None else None
-    return dict(seed=seed, transitions=transitions, scheduler=scheduler, paced=paced,
+    result = dict(seed=seed, transitions=transitions, scheduler=scheduler, paced=paced,
         policy=policy, steps=engine.sim_step, simulation_seconds=engine.sim_step*dt,
         python_version=sys.version.split()[0], numpy_version=np.__version__,
         torch_version=torch.__version__, device=app.device, torch_threads=torch.get_num_threads(),
@@ -93,15 +103,23 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
         unfinished_control_interval_ticks=pending["ticks"] if pending else 0,
         checkpoint_sha256=hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest() if checkpoint else None,
         config_sha256=hashlib.sha256(Path(config).read_bytes()).hexdigest())
+    if observer is not None:
+        result["phase1"] = observer.finish(reports)
+        result["fixed_reserve"] = list(fixed_reserve) if policy == "fixed" else None
+    return result
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
-    parser.add_argument("--policy", choices=["idle", "random", "aggressive", "dqn", "qrdqn"], default="idle")
+    parser.add_argument("--policy", choices=["idle", "random", "aggressive", "dqn", "qrdqn", "fixed"], default="idle")
     parser.add_argument("--checkpoint", default="")
     parser.add_argument("--transitions", choices=["legacy", "causal"], default="legacy")
-    parser.add_argument("--scheduler", choices=["legacy", "proportional_wc"], default="legacy")
+    parser.add_argument("--scheduler", choices=["legacy", "proportional_wc", "deadline_slack"], default="legacy")
+    parser.add_argument("--phase1-metrics", action="store_true")
+    parser.add_argument("--fixed-e", type=int, default=0)
+    parser.add_argument("--fixed-u", type=int, default=0)
+    parser.add_argument("--per-ue-cap", type=int)
     parser.add_argument("--seed", type=int, default=1234)
     parser.add_argument("--paced", action="store_true")
     parser.add_argument("--measurements", action="store_true")
@@ -117,9 +135,10 @@ def main():
     result = run_evaluation(args.config, policy=args.policy, checkpoint=args.checkpoint,
         transitions=args.transitions, scheduler=args.scheduler, seed=args.seed, paced=args.paced,
         measurements=args.measurements, steps=args.steps, period=args.period, dt=args.dt,
-        stop_after_episodes=args.episodes, event_path=args.events)
+        stop_after_episodes=args.episodes, event_path=args.events, phase1=args.phase1_metrics,
+        fixed_reserve=(args.fixed_e,args.fixed_u),per_ue_cap=args.per_ue_cap)
     Path(args.output).write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({k: v for k, v in result.items() if k not in {"samples", "batch_measurements"}}, indent=2))
+    print(json.dumps({k: v for k, v in result.items() if k not in {"samples", "batch_measurements", "phase1"}}, indent=2))
 
 
 if __name__ == "__main__":

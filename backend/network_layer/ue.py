@@ -46,6 +46,7 @@ class UE:
         self.qos_profile = None
         # Optional BS queue-residence budget; measurement only, in seconds.
         self.queue_budget_s = None
+        self.queue_budget_class = None
         self.connected = False
 
         self.downlink_bitrate = 0

@@ -1,0 +1,302 @@
+{
+  "seeds": [
+    1234
+  ],
+  "steps": 5000,
+  "urllc_ues": 12,
+  "budget_classes_s": {
+    "tight": 0.002,
+    "relaxed": 0.01
+  },
+  "budget_seed": 2026,
+  "fixed_reserve": [
+    0,
+    3
+  ],
+  "per_ue_cap": null,
+  "input_catalog": "backend/assets/episodes/test_config/gym_from_testing_config_1ms_10s_8UE_jam_fixed_10.json",
+  "source_sha256": "2b73a452c027b3fc2ab847c9b80a1452b5ad955b111b2bfa89d06fd30c8bdb1d",
+  "checkpoint": null,
+  "pair_checks": [
+    {
+      "severity": 0,
+      "seed": 1234,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 10,
+      "seed": 1234,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    },
+    {
+      "severity": 20,
+      "seed": 1234,
+      "policy": "fixed",
+      "same_exogenous": true,
+      "same_budgets": true,
+      "same_quotas": true
+    }
+  ],
+  "groups": {
+    "j0_fixed_proportional_wc": {
+      "runs": 1,
+      "batch_failure_lower": 0.9923666666666666,
+      "batch_failure_upper": 0.9937666666666667,
+      "completed_batch_late": 0.9925680106511933,
+      "served_byte_late": 0.9918621047046986,
+      "hol_violation": 0.9913166666666637,
+      "longest_violation_ms": 4981.999999999998,
+      "mean_violation_ms": 4956.583333333323,
+      "embb_mbps": 95.99999999999991,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 62.99999999999361,
+      "unused_urllc_prbs": 0.0,
+      "worst_ue_failure": 0.9974,
+      "scheduler_mean_us": 10.753054599999999,
+      "scheduler_p95_us": 14.961,
+      "wall_seconds": 2.9515415329951793,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.9874,
+          "served_byte_late": 0.9868680103763812,
+          "hol_violation": 0.9863333333333287
+        },
+        "tight": {
+          "batch_failure_lower": 0.9973333333333333,
+          "served_byte_late": 0.9968750296667614,
+          "hol_violation": 0.9962999999999986
+        }
+      },
+      "recovery_windows": []
+    },
+    "j0_fixed_deadline_slack": {
+      "runs": 1,
+      "batch_failure_lower": 0.9937666666666667,
+      "batch_failure_upper": 0.9951666666666666,
+      "completed_batch_late": 0.9942454608592122,
+      "served_byte_late": 0.992999883955573,
+      "hol_violation": 0.9927499999999975,
+      "longest_violation_ms": 4965.999999999993,
+      "mean_violation_ms": 3503.823529411759,
+      "embb_mbps": 95.99999999999991,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 62.99999999999361,
+      "unused_urllc_prbs": 0.0,
+      "worst_ue_failure": 0.9942,
+      "scheduler_mean_us": 265.19096360000003,
+      "scheduler_p95_us": 320.549,
+      "wall_seconds": 4.280674339970574,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.9937666666666667,
+          "served_byte_late": 0.993883941916452,
+          "hol_violation": 0.9926666666666641
+        },
+        "tight": {
+          "batch_failure_lower": 0.9937666666666667,
+          "served_byte_late": 0.9921176095080692,
+          "hol_violation": 0.9928333333333309
+        }
+      },
+      "recovery_windows": []
+    },
+    "j10_fixed_proportional_wc": {
+      "runs": 1,
+      "batch_failure_lower": 0.9939666666666667,
+      "batch_failure_upper": 0.9953666666666666,
+      "completed_batch_late": 0.9943383161582013,
+      "served_byte_late": 0.9936851184406045,
+      "hol_violation": 0.993133333333331,
+      "longest_violation_ms": 4987.0,
+      "mean_violation_ms": 4965.66666666666,
+      "embb_mbps": 95.99998559999992,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 61.499999999997264,
+      "unused_urllc_prbs": 0.0,
+      "worst_ue_failure": 0.998,
+      "scheduler_mean_us": 11.613759400000001,
+      "scheduler_p95_us": 16.459,
+      "wall_seconds": 3.1314278638456017,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.9900333333333333,
+          "served_byte_late": 0.9898427620469654,
+          "hol_violation": 0.9891333333333296
+        },
+        "tight": {
+          "batch_failure_lower": 0.9979,
+          "served_byte_late": 0.9975278581203351,
+          "hol_violation": 0.9971333333333323
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ]
+    },
+    "j10_fixed_deadline_slack": {
+      "runs": 1,
+      "batch_failure_lower": 0.99485,
+      "batch_failure_upper": 0.99625,
+      "completed_batch_late": 0.995426271496524,
+      "served_byte_late": 0.9944181084320277,
+      "hol_violation": 0.994099999999998,
+      "longest_violation_ms": 4971.999999999995,
+      "mean_violation_ms": 3976.399999999996,
+      "embb_mbps": 95.99998559999992,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 61.499999999997264,
+      "unused_urllc_prbs": 0.0,
+      "worst_ue_failure": 0.9952,
+      "scheduler_mean_us": 260.449007,
+      "scheduler_p95_us": 311.377,
+      "wall_seconds": 4.401207396993414,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.9948,
+          "served_byte_late": 0.9953416377477693,
+          "hol_violation": 0.9940333333333312
+        },
+        "tight": {
+          "batch_failure_lower": 0.9949,
+          "served_byte_late": 0.9934963816067514,
+          "hol_violation": 0.9941666666666646
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ]
+    },
+    "j20_fixed_proportional_wc": {
+      "runs": 1,
+      "batch_failure_lower": 0.9949,
+      "batch_failure_upper": 0.9963,
+      "completed_batch_late": 0.9953638926594968,
+      "served_byte_late": 0.9948542646670965,
+      "hol_violation": 0.9942333333333314,
+      "longest_violation_ms": 4988.0,
+      "mean_violation_ms": 4971.1666666666615,
+      "embb_mbps": 95.99916799999991,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 59.99999999999382,
+      "unused_urllc_prbs": 0.0,
+      "worst_ue_failure": 0.9984,
+      "scheduler_mean_us": 10.940884400000002,
+      "scheduler_p95_us": 16.099,
+      "wall_seconds": 3.242005961947143,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.9916,
+          "served_byte_late": 0.9917230615750121,
+          "hol_violation": 0.9909666666666636
+        },
+        "tight": {
+          "batch_failure_lower": 0.9982,
+          "served_byte_late": 0.9979824977699973,
+          "hol_violation": 0.997499999999999
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ]
+    },
+    "j20_fixed_deadline_slack": {
+      "runs": 1,
+      "batch_failure_lower": 0.9956666666666667,
+      "batch_failure_upper": 0.9970666666666667,
+      "completed_batch_late": 0.9963331041523429,
+      "served_byte_late": 0.9953324247353449,
+      "hol_violation": 0.9949499999999982,
+      "longest_violation_ms": 4975.999999999996,
+      "mean_violation_ms": 3979.799999999997,
+      "embb_mbps": 95.99916799999991,
+      "mean_reserve_prbs": 3.000000000000089,
+      "allocated_urllc_prbs": 59.99999999999382,
+      "unused_urllc_prbs": 0.0,
+      "worst_ue_failure": 0.996,
+      "scheduler_mean_us": 260.4576404,
+      "scheduler_p95_us": 311.375,
+      "wall_seconds": 4.58959827083163,
+      "classes": {
+        "relaxed": {
+          "batch_failure_lower": 0.9955666666666667,
+          "served_byte_late": 0.9962926034468279,
+          "hol_violation": 0.9949333333333317
+        },
+        "tight": {
+          "batch_failure_lower": 0.9957666666666667,
+          "served_byte_late": 0.9943741822827687,
+          "hol_violation": 0.9949666666666649
+        }
+      },
+      "recovery_windows": [
+        {
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ]
+    }
+  }
+}

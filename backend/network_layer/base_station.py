@@ -452,7 +452,7 @@ class BaseStation:
             cell.step(delta_time)
             if self.queue_measurements is not None:
                 for imsi in cell.connected_ue_list:
-                    self.queue_measurements.sample(imsi, self._time_s)
+                    self.queue_measurements.sample(imsi, self._time_s, float(delta_time))
 
         # reset RIC control actions
         self.ric_control_actions = []

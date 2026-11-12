@@ -78,8 +78,12 @@ class xAppResilientPolicyValidator(xAppBase):
         super().__init__(ric=ric)
         self.enabled = bool(getattr(settings, "RES_VALIDATE_ENABLE", False))
         self.policy_mode = (getattr(settings, "RES_VALIDATE_POLICY", "random") or "random").lower()
-        if self.policy_mode not in ("qrdqn", "dqn", "aggressive", "partial", "random", "idle"):
+        if self.policy_mode not in ("qrdqn", "dqn", "aggressive", "partial", "random", "idle", "fixed"):
             self.policy_mode = "random"
+        self.fixed_reserve = (int(os.getenv("RES_VALIDATE_FIXED_E", "0")),
+                              int(os.getenv("RES_VALIDATE_FIXED_U", "0")))
+        if min(self.fixed_reserve) < 0 or sum(self.fixed_reserve) > TOTAL_RESILIENCY_PRB:
+            raise ValueError("Fixed reserve allocations must be nonnegative and fit the pool")
         seed_raw = getattr(settings, "RES_VALIDATE_SEED", None)
         try:
             self.seed = int(seed_raw) if seed_raw not in (None, "") else None
@@ -217,6 +221,7 @@ class xAppResilientPolicyValidator(xAppBase):
         self._env.register_clear_hook(self._clear_plot_caches)
         self._init_policy()
         self._last_state = self._env.reset()
+        self._initialize_fixed_reserve()
         if self.dash_enable:
             self._start_dashboard()
         self._init_tb()
@@ -235,6 +240,7 @@ class xAppResilientPolicyValidator(xAppBase):
             return
         if self._last_state is None or self._episode_done:
             self._last_state = self._env.reset()
+            self._initialize_fixed_reserve()
             self._episode_done = False
             return
         if hasattr(self._env, "ready") and not self._env.ready():
@@ -259,6 +265,7 @@ class xAppResilientPolicyValidator(xAppBase):
             return
         if self._episode_done:
             self._last_state = self._env.reset()
+            self._initialize_fixed_reserve()
             self._episode_done = False
             self._last_info = {}
         if self._env.exhausted or not self._env.ready():
@@ -283,6 +290,12 @@ class xAppResilientPolicyValidator(xAppBase):
             self._causal_interval.begin(self._select_action(self._last_state))
 
     # ---------- Policy selection ---------- #
+    def _initialize_fixed_reserve(self):
+        if self.policy_mode != "fixed" or self._env.exhausted:
+            return
+        self._env._apply_action(self.fixed_reserve)
+        self._last_state = build_state(self._env._collect_obs(), self._env.prev_action)
+
     def _init_policy(self):
         if self.policy_mode in ("qrdqn", "dqn") and not TORCH_AVAILABLE:
             print(f"{self.xapp_id}: torch not available; falling back to random policy.")
@@ -325,7 +338,7 @@ class xAppResilientPolicyValidator(xAppBase):
         valid_idx = [i for i, ok in enumerate(mask) if ok]
         if not valid_idx:
             raise AssertionError("No physically feasible reserve action")
-        if self.policy_mode == "idle":
+        if self.policy_mode in {"idle", "fixed"}:
             return self._idle_idx if mask[self._idle_idx] else valid_idx[0]
         if self.policy_mode == "aggressive":
             obs = self._last_info.get("obs") if isinstance(self._last_info, dict) else {}

@@ -24,6 +24,7 @@ from .xapp_base import xAppBase
 from utils import load_raw_packet_csv, estimate_throughput
 from network_layer.prb_accounting import quota_limits, validate_quotas
 from network_layer.resilient_interval import CausalInterval
+from network_layer.ue_budgets import budget_assignment
 
 SL_E = getattr(settings, "NETWORK_SLICE_EMBB_NAME", "eMBB")
 SL_U = getattr(settings, "NETWORK_SLICE_URLLC_NAME", "URLLC")
@@ -597,16 +598,13 @@ class ResilientDQNEnv:
             print(f"[TRACE] Failed to register {imsi} after {max_attempts} attempts; skipping.")
             return
         ue = self.sim_engine.ue_list[imsi]
-        budgets = cfg.get("queue_budgets_s", {})
-        budget = budgets.get(str(ue_idx), cfg.get("queue_budget_s"))
-        if budget is not None:
-            budget = float(budget)
-            if not math.isfinite(budget) or budget <= 0:
-                raise ValueError("queue_budget_s must be positive finite seconds")
+        budget, budget_class = budget_assignment(cfg, int(cfg.get("ue_count", 0)),
+                                                 self._current_episode["id"])[ue_idx]
         ue.queue_budget_s = budget
+        ue.queue_budget_class = budget_class
         measurements = getattr(ue.current_bs, "queue_measurements", None)
         if measurements is not None:
-            measurements.set_budget(imsi, budget)
+            measurements.set_budget(imsi, budget, budget_class)
         if self._current_episode and self._current_episode.get("freeze_mobility", True):
             ue.speed_mps = 0
             try:
