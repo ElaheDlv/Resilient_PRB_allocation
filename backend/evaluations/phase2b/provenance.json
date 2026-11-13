@@ -1,0 +1,27 @@
+{
+  "base_commit": "afa52254bd50b4c7c81f0c26670affb9371ffefd",
+  "unchanged_protected_source_sha256": {
+    "backend/network_layer/xApps/xapp_resilient_dqn_allocator.py": "634ec18387808c0eba2f9ce93228ab97eedc9f39a2e53f5beca81613358e0544",
+    "backend/network_layer/resilient_interval.py": "6017cb42e86f170c5c0cb9e360e213186459183d4597d7056578223bcea092ee",
+    "backend/network_layer/joint_control.py": "cfeae45758ffd43e9efbd2bd4f08a5023ce56787636834e389ee4a5ad41d7fb3",
+    "backend/network_layer/deadline_risk.py": "a6722cb87cbbfe4bf6fa9218ab6917e5b3ff226aff3858de480e13e654d6782e",
+    "backend/network_layer/ue_telemetry.py": "4c2781c1185270f2442e00498715df10278e95426981b97b4e3f99260e90f36f",
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/queue_measurements.py": "7c21a8a2b6006152e3b99c2707573b142213b22e8fd718e0c4625fbee9eac577",
+    "backend/network_layer/simulation_engine.py": "ad2849c00c46ce3c6934da58f6bf285c8ab7d22d2e4c8cca90ff076096bd9861",
+    "backend/network_layer/cell.py": "0e55268a8a4bb46308c66595b1f1c8cdd9be63b6937162d2541bb9f1d53ec8c2",
+    "backend/settings/res_dqn_config.py": "00c7e3af8330b34ea14b52f902c328c65f3d68ad247c27a7a45ce310b16b222c"
+  },
+  "versions": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "torch": "2.10.0+cu128"
+  },
+  "trace_sha256": {
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  },
+  "checkpoint_sha256": "09cf30c7166e224613ec475d8f5a0003f37ef9dcb1a31e82fa4e7c436d23573f",
+  "checkpoint_note": "CPU functional smoke only; not a converged policy or exact interrupted-training resume file."
+}

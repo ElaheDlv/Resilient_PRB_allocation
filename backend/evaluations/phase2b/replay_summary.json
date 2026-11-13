@@ -1,0 +1,30 @@
+{
+  "exact_fields_matched": [
+    "trajectory_sha256",
+    "final_parameter_sha256",
+    "losses",
+    "first_examples",
+    "last_examples",
+    "episode_summaries",
+    "reward_sum",
+    "checkpoint_run_metadata"
+  ],
+  "trajectory_sha256": "b49713c9f15e3c46746ba5748bfbabfb958035079e74c0fe4f448141b4e90dcb",
+  "final_parameter_sha256": "53a802eece624f5ec06279da7eee59a66d22746cce2c22263ed5e6c8404962fe",
+  "transitions": 299,
+  "updates": 284,
+  "reward_sum": -120.03161420103095,
+  "loss_range": [
+    0.008983327075839043,
+    0.21641899645328522
+  ],
+  "terminal": {
+    "unresolved_batches": 71,
+    "unresolved_bytes": 43798,
+    "terminal_unresolved_charges": 36
+  },
+  "first_run_loop_seconds": 4.194354922045022,
+  "replay_loop_seconds": 4.194363418035209,
+  "causal_examples_verified": true,
+  "independent_terminal_failure_union_verified": true
+}
