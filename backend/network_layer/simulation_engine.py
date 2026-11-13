@@ -34,6 +34,8 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
 
         self.logs = []
         self.after_service_observer = None
+        self.before_service_observer = None
+        self.in_ric_callback = False
         # cache loaded traces by file path
         self._trace_cache = {}
         # Track UEs that still need a trace attachment (e.g., awaiting slice info)
@@ -67,6 +69,8 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
 
     def reset_network(self):
         self.after_service_observer = None
+        self.before_service_observer = None
+        self.in_ric_callback = False
         logger.info("Resetting network...")
         self.base_station_list = {}
         self.cell_list = {}
@@ -449,7 +453,11 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
 
     def step_ric(self, delta_time):
         if self.ric is not None:
-            self.ric.step(delta_time)
+            self.in_ric_callback = True
+            try:
+                self.ric.step(delta_time)
+            finally:
+                self.in_ric_callback = False
         else:
             logger.warning("RIC is not initialized. Skipping RIC step.")
 
@@ -479,6 +487,8 @@ class SimulationEngine(metaclass=utils.SingletonMeta):
 
         # dynamically allocate resources for UEs
         logger.info("Stepping through Base Stations...")
+        if self.before_service_observer is not None:
+            self.before_service_observer(self, delta_time)
         self.step_BSs(delta_time)
         if self.after_service_observer is not None:
             self.after_service_observer(self, delta_time)

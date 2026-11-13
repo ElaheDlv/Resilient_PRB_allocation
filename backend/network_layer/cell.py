@@ -39,6 +39,7 @@ class Cell:
         self._deadline_starvation_ticks = {}
         self._fair_service_credit = FairServiceCredit()
         self.last_scheduler_stats = {}
+        self._joint_urllc_mode = None
         # Static per-slice DL PRB quotas (absolute PRBs per slice)
         # Initialized from settings.RAN_SLICE_DL_PRB_SPLIT_DEFAULT
         self.slice_dl_prb_quota = self._init_slice_quota()
@@ -50,6 +51,10 @@ class Cell:
 
     def __repr__(self):
         return f"Cell({self.cell_id}, base_station={self.base_station.bs_id}, frequency_band={self.frequency_band}, carrier_frequency_MHz={self.carrier_frequency_MHz})"
+
+    @property
+    def urllc_scheduler_mode(self):
+        return self._joint_urllc_mode
 
     @property
     def allocated_dl_prb(self):
@@ -336,6 +341,8 @@ class Cell:
         for s, quota in self.slice_dl_prb_quota.items():
             ue_ids = ues_by_slice.get(s, [])
             mode = getattr(settings, "PRB_UE_SCHEDULER", "legacy")
+            if s == settings.NETWORK_SLICE_URLLC_NAME and self._joint_urllc_mode is not None:
+                mode = self._joint_urllc_mode.allocator
             if mode in {"proportional_wc", "deadline_slack", "deadline_feasible", "deadline_fair"}:
                 started = time.perf_counter_ns()
                 useful = {uid: ue_prb_requirements.get(uid, {}).get("backlog_prbs", 0)
@@ -362,6 +369,15 @@ class Cell:
                             if view.queued_bytes > 0 and view.bytes_per_prb > 0 and served == 0 else 0)
                 else:
                     grants = proportional_allocation(useful, quota, self.prb_per_ue_cap)
+                    # Maintain causal guard history while joint control uses P;
+                    # returning to F must not reuse stale exclusion ages.
+                    if s == settings.NETWORK_SLICE_URLLC_NAME and self._joint_urllc_mode is not None:
+                        for uid in ue_ids:
+                            rate = ue_prb_requirements.get(uid, {}).get("dl_throughput_per_prb", 0)*sim_dt/8
+                            served = int(grants[uid]*rate) if rate > 0 else 0
+                            self._deadline_starvation_ticks[uid] = (
+                                self._deadline_starvation_ticks.get(uid, 0)+1
+                                if self.base_station.get_dl_buf_bytes(uid)>0 and rate>0 and served==0 else 0)
                 elapsed = time.perf_counter_ns()-started
                 diagnostic = getattr(self, "allocation_diagnostic", None)
                 if diagnostic is not None and s == settings.NETWORK_SLICE_URLLC_NAME:

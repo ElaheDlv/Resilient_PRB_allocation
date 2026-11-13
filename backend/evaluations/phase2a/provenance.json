@@ -1,0 +1,29 @@
+{
+  "base_commit": "1a292808271c2c7be6da61196fffd8c5d0967174",
+  "base_contains": {
+    "4f6e0e6": true,
+    "cb35202": true,
+    "6bce0d8": true
+  },
+  "protected_files_identical_to_base_sha256": {
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/xApps/xapp_resilient_dqn_allocator.py": "634ec18387808c0eba2f9ce93228ab97eedc9f39a2e53f5beca81613358e0544",
+    "backend/network_layer/resilient_interval.py": "6017cb42e86f170c5c0cb9e360e213186459183d4597d7056578223bcea092ee",
+    "backend/settings/res_dqn_config.py": "00c7e3af8330b34ea14b52f902c328c65f3d68ad247c27a7a45ce310b16b222c",
+    "backend/network_layer/base_station.py": "5729ae142646a9fa8724145da581754432dd04e3403d3845e80851aca5999d12",
+    "backend/network_layer/ue.py": "90e0cacd9b7bfdd5fde866e57417f86fb8216ca29920180e342f4e61b3692ca2"
+  },
+  "trace_sha256": {
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  },
+  "trace_note": "Runtime input CSVs are not Git-tracked at the integration base; hashes identify the evaluated inputs. Saved trajectory matches provide the checked regression evidence.",
+  "configuration_sha256": "1761f79153aa47fc1e8b44d523d841e1c44400b803e78f480e206e1c969dba4b",
+  "versions": {
+    "python_version": "3.13.5",
+    "numpy_version": "2.1.3",
+    "torch_version": "2.10.0+cu128"
+  },
+  "checkpoint_note": "Checkpoint files were not rewritten; original DQN implementation/configuration are byte-identical. No retraining or new checkpoint was produced."
+}

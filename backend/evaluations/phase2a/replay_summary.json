@@ -1,0 +1,27 @@
+{
+  "exact_fields_matched": [
+    "history",
+    "intervals",
+    "service_history",
+    "trajectory_sha256",
+    "physical_trajectory_sha256"
+  ],
+  "trajectory_sha256": "d93a206f1d34e52ff6d47a9d8f4e720ef1cbfffe63c64628d7256586a6673c41",
+  "physical_trajectory_sha256": "7b32ec81c8893d93aee6ee25b120b8439d90617becc8a32f30bb18028406f7c5",
+  "elapsed_seconds": 1.945261438144371,
+  "steps": 3000,
+  "commands": 300,
+  "completed_intervals": 300,
+  "final_pending_interval": {
+    "start_step": 3000,
+    "ticks": 0,
+    "served_bytes": 0,
+    "configuration": {
+      "quotas": {
+        "URLLC": 54,
+        "eMBB": 126
+      },
+      "mode": "PROPORTIONAL"
+    }
+  }
+}

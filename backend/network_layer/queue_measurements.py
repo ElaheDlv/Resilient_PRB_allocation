@@ -6,6 +6,7 @@
 
 from collections import defaultdict, deque
 from dataclasses import dataclass
+from types import MappingProxyType
 import json
 import math
 
@@ -60,6 +61,7 @@ class QueueMeasurements:
             partially_admitted_completed_batches=0, offered_batches=0,
             fully_admitted_on_time_batches=0, fully_admitted_late_batches=0))
         self.event_sink = None
+        self._listeners = []
         self.events = deque(maxlen=256)
         self.closed = []
         self._next_id = 0
@@ -76,8 +78,18 @@ class QueueMeasurements:
         self.events.append(event)
         if self.event_sink is not None:
             self.event_sink(event)
+        for listener in tuple(self._listeners):
+            listener(MappingProxyType(event))
         if self._file:
             self._file.write(json.dumps(event, allow_nan=False) + "\n")
+
+    def add_listener(self, listener):
+        if listener not in self._listeners:
+            self._listeners.append(listener)
+
+    def remove_listener(self, listener):
+        if listener in self._listeners:
+            self._listeners.remove(listener)
 
     def arrival(self, imsi, now, offered, accepted):
         total = self.totals[imsi]
