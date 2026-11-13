@@ -1,0 +1,112 @@
+{
+  "version": "phase2c3-matched-v1",
+  "base_commit": "64a861ec1cb5040e85c991ea20c8667df7ca178f",
+  "methods": [
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+  ],
+  "network_seeds": [
+    12026,
+    22026
+  ],
+  "episode_intervals": 300,
+  "training_order": [
+    "training_feasible_seed49164288_j0",
+    "training_contested_seed49156096_j10",
+    "training_overloaded_seed49160192_j20",
+    "training_contested_seed49176576_j20",
+    "training_overloaded_seed49168384_j0",
+    "training_feasible_seed49184768_j10",
+    "training_overloaded_seed49160192_j10",
+    "training_feasible_seed49164288_j20",
+    "training_contested_seed49156096_j0"
+  ],
+  "checkpoint_after_episodes": [
+    3,
+    6,
+    9
+  ],
+  "transitions_per_learner": 2691,
+  "training_config": {
+    "replay_capacity": 2048,
+    "batch_size": 32,
+    "gamma": 0.99,
+    "learning_rate": 0.0001,
+    "target_every": 100
+  },
+  "exploration": {
+    "start": 1.0,
+    "end": 0.05,
+    "decay_fraction": 0.8
+  },
+  "rule_release_ratio": 0.5,
+  "rule_release_decisions": 2,
+  "aggregate_selection": "Unchanged workload_feasibility.checkpoint_key; balanced nine strata; earlier checkpoint final tie.",
+  "fairness_selection": "Worst-UE-first: swap first two aggregate ranking terms; all remaining tie breaks unchanged. No SLA threshold.",
+  "tradeoff": "Report both selections and every aggregate/worst checkpoint point; do not pick a preferred criterion after seeing outcomes.",
+  "budget_basis": "Same nine episodes/2691 interactions per network as C1. Eight learners, 72 training and 432 validation episodes total. No automatic extension.",
+  "training_coverage": "Nine of 18 frozen entries per learner, identical for both network seeds and all methods. Two placements represented per regime; nine strata once.",
+  "resources": {
+    "cpus": [
+      6,
+      7,
+      11,
+      14
+    ],
+    "warning_gib": 2.0,
+    "stop_gib": 2.5,
+    "minimum_available_gib": 4.0,
+    "cuda": false,
+    "workers": 1,
+    "dataloader_workers": 0,
+    "library_threads": 1,
+    "hard_memory_limit": false
+  },
+  "input_sha256": {
+    "backend/evaluations/phase2c2/configs/training_contested_seed49156096_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/training_contested_seed49156096_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/training_contested_seed49156096_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/training_contested_seed49176576_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/training_contested_seed49176576_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/training_contested_seed49176576_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/training_feasible_seed49164288_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/training_feasible_seed49164288_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/training_feasible_seed49164288_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/training_feasible_seed49184768_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/training_feasible_seed49184768_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/training_feasible_seed49184768_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/training_overloaded_seed49160192_j0.json": "87870091724d2258300bf405a928b6d9de049db6a4db960c62a03d21f805bae0",
+    "backend/evaluations/phase2c2/configs/training_overloaded_seed49160192_j10.json": "5504a34936e6d901b1c2ccc10d35bce40504851f5fde6e297f8df659a358ee4d",
+    "backend/evaluations/phase2c2/configs/training_overloaded_seed49160192_j20.json": "c02501433905e61b73208ba6c1b98e78684b85a1b367e664ed40d2a1c3a7ead2",
+    "backend/evaluations/phase2c2/configs/training_overloaded_seed49168384_j0.json": "bd47051d71191d6790e0a1d583a3ee283a583166b8b102bbc2521c19b46ee713",
+    "backend/evaluations/phase2c2/configs/training_overloaded_seed49168384_j10.json": "add86420452a22c89e3c8b6616c1df44ccfb0ef1538cd434c32449526273cdeb",
+    "backend/evaluations/phase2c2/configs/training_overloaded_seed49168384_j20.json": "6f55520a734e4cc07e8e0d8e283ab6361a6418fda1e6a8b231a51a2da6322a49",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j0.json": "487c3fba687de4bfda70c249ca13f947ce05336be3726744ed4a478cfbcd3a82",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j10.json": "faab8381abe2c8fe92132f0731d48de7754daef237ae7206943e83f3928a1a32",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j20.json": "4a35d3128e17f1a3d1a3420d11270c81590a83b441fd5e610b64003238f0eb8e",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j0.json": "ba302d1cafd78d1ca9e5ef2771dc07c3e2c7a500a9288b9e85eb9d8a3bb1e8ac",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j10.json": "4fac8e9415f0bdaef1e2c161a23306e838cad6ab8f80d8e4765b2901bd7fecef",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j20.json": "8e6a229e9d97b40d9c9a4e9a0b126d36eaa01267fb6d81b68427276d5f34ddbe",
+    "backend/evaluations/phase2c2/traces/urllc_seed49160192_overloaded.csv": "8f5cc12fbb8a670c747ed1f7856f8ed9c7bc3571c49844be12ea36388608ca1c",
+    "backend/evaluations/phase2c2/traces/urllc_seed49168384_overloaded.csv": "18bce6b5175ae29a45916750271eb4e335c8e60b4965ab8daeef60fae5cded84",
+    "backend/evaluations/phase2c2/traces/urllc_seed53252096_overloaded.csv": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+    "backend/evaluations/phase2c2/traces/urllc_seed53256192_overloaded.csv": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+    "backend/evaluations/phase2c2/training_manifest.json": "44d204a7eac8ec0192f751af34dd882b79131d7032a9efe5a71334d4092f940f",
+    "backend/evaluations/phase2c2/validation_manifest.json": "33e4778710cfe37a3a7b73dc7f963fd12d7bf2c0881413e2763a8a79935d7c3d",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  }
+}

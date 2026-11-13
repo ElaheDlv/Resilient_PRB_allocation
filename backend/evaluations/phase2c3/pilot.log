@@ -1,0 +1,136 @@
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 1, "transitions": 299, "reward": -3.9233333333333333, "seconds": 3.3372009268496186}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 2, "transitions": 598, "reward": -3.3766666666666674, "seconds": 3.3835429449100047}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 3, "transitions": 897, "reward": -375.033809441581, "seconds": 6.751731181982905}
+{"stage": "validation", "method": "A1", "seed": 12026, "episode": 3, "aggregate_percent": 42.13356481481482, "worst_percent": 43.10370370370371}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 4, "transitions": 1196, "reward": -14.619324169530362, "seconds": 3.4684783718548715}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 5, "transitions": 1495, "reward": -374.2236660137459, "seconds": 6.561513860942796}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 6, "transitions": 1794, "reward": -3.7660313888888868, "seconds": 3.599360141903162}
+{"stage": "validation", "method": "A1", "seed": 12026, "episode": 6, "aggregate_percent": 33.068518518518516, "worst_percent": 33.26296296296296}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 7, "transitions": 2093, "reward": -373.6540091638029, "seconds": 6.852737659821287}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 8, "transitions": 2392, "reward": -4.112222222222222, "seconds": 3.482221382204443}
+{"stage": "training", "method": "A1", "seed": 12026, "episode": 9, "transitions": 2691, "reward": -4.13, "seconds": 3.467690087854862}
+{"stage": "validation", "method": "A1", "seed": 12026, "episode": 9, "aggregate_percent": 38.30486111111111, "worst_percent": 40.52222222222222}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 1, "transitions": 299, "reward": -3.963333333333335, "seconds": 3.395522511797026}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 2, "transitions": 598, "reward": -3.8852777777777785, "seconds": 3.4842812940478325}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 3, "transitions": 897, "reward": -374.4545999971363, "seconds": 6.968459263909608}
+{"stage": "validation", "method": "A1", "seed": 22026, "episode": 3, "aggregate_percent": 44.77268518518518, "worst_percent": 48.37407407407407}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 4, "transitions": 1196, "reward": -7.153336197021748, "seconds": 3.373443834017962}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 5, "transitions": 1495, "reward": -374.92797545818956, "seconds": 6.474999560043216}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 6, "transitions": 1794, "reward": -4.416083333333335, "seconds": 3.515358569100499}
+{"stage": "validation", "method": "A1", "seed": 22026, "episode": 6, "aggregate_percent": 43.59884259259259, "worst_percent": 45.71666666666667}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 7, "transitions": 2093, "reward": -373.87956471935837, "seconds": 6.9809294019360095}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 8, "transitions": 2392, "reward": -3.7688888888888887, "seconds": 3.4946466139517725}
+{"stage": "training", "method": "A1", "seed": 22026, "episode": 9, "transitions": 2691, "reward": -4.256666666666662, "seconds": 3.4709192488808185}
+{"stage": "validation", "method": "A1", "seed": 22026, "episode": 9, "aggregate_percent": 37.71018518518518, "worst_percent": 38.30925925925926}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 1, "transitions": 299, "reward": -3.9111111111111083, "seconds": 3.9803603298496455}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 2, "transitions": 598, "reward": -3.6133333333333324, "seconds": 4.14658840210177}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 3, "transitions": 897, "reward": -150.95580746277213, "seconds": 7.070933174109086}
+{"stage": "validation", "method": "A2", "seed": 12026, "episode": 3, "aggregate_percent": 14.397916666666665, "worst_percent": 54.05740740740741}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 4, "transitions": 1196, "reward": -41.04672596754058, "seconds": 4.240423490060493}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 5, "transitions": 1495, "reward": -187.90647116838494, "seconds": 7.519385340157896}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 6, "transitions": 1794, "reward": -4.630717499999999, "seconds": 4.100702418014407}
+{"stage": "validation", "method": "A2", "seed": 12026, "episode": 6, "aggregate_percent": 12.461805555555555, "worst_percent": 38.13703703703703}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 7, "transitions": 2093, "reward": -149.9104352806415, "seconds": 6.954018248943612}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 8, "transitions": 2392, "reward": -4.527777777777773, "seconds": 4.01078826515004}
+{"stage": "training", "method": "A2", "seed": 12026, "episode": 9, "transitions": 2691, "reward": -4.872222222222216, "seconds": 4.177246100036427}
+{"stage": "validation", "method": "A2", "seed": 12026, "episode": 9, "aggregate_percent": 12.733796296296296, "worst_percent": 43.22592592592592}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 1, "transitions": 299, "reward": -3.880000000000003, "seconds": 3.9433411830104887}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 2, "transitions": 598, "reward": -3.825555555555558, "seconds": 4.133257950888947}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 3, "transitions": 897, "reward": -151.27701551832766, "seconds": 6.9246750918682665}
+{"stage": "validation", "method": "A2", "seed": 22026, "episode": 3, "aggregate_percent": 14.449537037037036, "worst_percent": 54.47037037037037}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 4, "transitions": 1196, "reward": -30.396111111111118, "seconds": 4.255953904939815}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 5, "transitions": 1495, "reward": -187.91303728808722, "seconds": 7.242420278955251}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 6, "transitions": 1794, "reward": -3.8362149999999966, "seconds": 4.161578019848093}
+{"stage": "validation", "method": "A2", "seed": 22026, "episode": 6, "aggregate_percent": 11.336805555555555, "worst_percent": 41.257407407407406}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 7, "transitions": 2093, "reward": -150.1924054982815, "seconds": 7.096925218123943}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 8, "transitions": 2392, "reward": -4.8344444444444505, "seconds": 4.253496647812426}
+{"stage": "training", "method": "A2", "seed": 22026, "episode": 9, "transitions": 2691, "reward": -5.027777777777759, "seconds": 4.2553525131661445}
+{"stage": "validation", "method": "A2", "seed": 22026, "episode": 9, "aggregate_percent": 13.647222222222222, "worst_percent": 47.03703703703704}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 1, "transitions": 299, "reward": -1.420000000000001, "seconds": 3.7390108900144696}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 2, "transitions": 598, "reward": -3.1377777777777704, "seconds": 3.911135859088972}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 3, "transitions": 897, "reward": -299.2947480526909, "seconds": 7.46128896297887}
+{"stage": "validation", "method": "A3", "seed": 12026, "episode": 3, "aggregate_percent": 17.932175925925925, "worst_percent": 45.84814814814815}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 4, "transitions": 1196, "reward": -4.816111111111098, "seconds": 3.926644884981215}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 5, "transitions": 1495, "reward": -270.1569885137457, "seconds": 7.292831077938899}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 6, "transitions": 1794, "reward": -3.4327161111111164, "seconds": 3.8393359119072556}
+{"stage": "validation", "method": "A3", "seed": 12026, "episode": 6, "aggregate_percent": 18.251157407407405, "worst_percent": 48.17777777777778}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 7, "transitions": 2093, "reward": -235.36623138602542, "seconds": 7.44102296512574}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 8, "transitions": 2392, "reward": -4.551111111111103, "seconds": 3.8184752170927823}
+{"stage": "training", "method": "A3", "seed": 12026, "episode": 9, "transitions": 2691, "reward": -1.0700000000000007, "seconds": 3.984156060963869}
+{"stage": "validation", "method": "A3", "seed": 12026, "episode": 9, "aggregate_percent": 18.987499999999997, "worst_percent": 49.13333333333333}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 1, "transitions": 299, "reward": -1.330000000000001, "seconds": 3.6028408450074494}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 2, "transitions": 598, "reward": -3.357777777777765, "seconds": 3.7087100502103567}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 3, "transitions": 897, "reward": -298.80224805269097, "seconds": 7.205397635931149}
+{"stage": "validation", "method": "A3", "seed": 22026, "episode": 3, "aggregate_percent": 17.52523148148148, "worst_percent": 48.129629629629626}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 4, "transitions": 1196, "reward": -5.308611111111094, "seconds": 3.9323148319963366}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 5, "transitions": 1495, "reward": -268.48948851374575, "seconds": 7.329691439168528}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 6, "transitions": 1794, "reward": -3.042716111111113, "seconds": 3.839063005056232}
+{"stage": "validation", "method": "A3", "seed": 22026, "episode": 6, "aggregate_percent": 17.477777777777778, "worst_percent": 48.13333333333333}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 7, "transitions": 2093, "reward": -222.26373138602546, "seconds": 7.469633936882019}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 8, "transitions": 2392, "reward": -4.5611111111110985, "seconds": 3.8226327570155263}
+{"stage": "training", "method": "A3", "seed": 22026, "episode": 9, "transitions": 2691, "reward": -0.7500000000000004, "seconds": 3.938058505067602}
+{"stage": "validation", "method": "A3", "seed": 22026, "episode": 9, "aggregate_percent": 15.315972222222221, "worst_percent": 45.85740740740741}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 1, "transitions": 299, "reward": -5.45555555555555, "seconds": 3.631160774966702}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 2, "transitions": 598, "reward": -4.854444444444443, "seconds": 3.790343896020204}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 3, "transitions": 897, "reward": -319.1314149971366, "seconds": 6.990269620902836}
+{"stage": "validation", "method": "A4", "seed": 12026, "episode": 3, "aggregate_percent": 22.96990740740741, "worst_percent": 36.611111111111114}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 4, "transitions": 1196, "reward": -12.223333333333343, "seconds": 3.9112839268054813}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 5, "transitions": 1495, "reward": -285.4429162915235, "seconds": 6.440690203104168}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 6, "transitions": 1794, "reward": -5.385596388888887, "seconds": 3.952781794127077}
+{"stage": "validation", "method": "A4", "seed": 12026, "episode": 6, "aggregate_percent": 13.215046296296295, "worst_percent": 44.26111111111111}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 7, "transitions": 2093, "reward": -246.47095360824738, "seconds": 6.851718144025654}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 8, "transitions": 2392, "reward": -5.209999999999993, "seconds": 3.9207817330025136}
+{"stage": "training", "method": "A4", "seed": 12026, "episode": 9, "transitions": 2691, "reward": -4.477777777777776, "seconds": 3.8937525709625334}
+{"stage": "validation", "method": "A4", "seed": 12026, "episode": 9, "aggregate_percent": 20.882175925925925, "worst_percent": 35.72777777777778}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 1, "transitions": 299, "reward": -5.513333333333333, "seconds": 3.6481401820201427}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 2, "transitions": 598, "reward": -5.349999999999995, "seconds": 3.7565592450555414}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 3, "transitions": 897, "reward": -302.8838766638029, "seconds": 6.865557566983625}
+{"stage": "validation", "method": "A4", "seed": 22026, "episode": 3, "aggregate_percent": 24.58888888888889, "worst_percent": 36.91111111111111}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 4, "transitions": 1196, "reward": -40.04785796105382, "seconds": 3.942612607963383}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 5, "transitions": 1495, "reward": -300.7610829581904, "seconds": 6.817387971794233}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 6, "transitions": 1794, "reward": -4.963011944444442, "seconds": 4.008983385050669}
+{"stage": "validation", "method": "A4", "seed": 22026, "episode": 6, "aggregate_percent": 26.00810185185185, "worst_percent": 45.07222222222222}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 7, "transitions": 2093, "reward": -270.30456471935844, "seconds": 6.68970464495942}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 8, "transitions": 2392, "reward": -4.542222222222216, "seconds": 3.993288709083572}
+{"stage": "training", "method": "A4", "seed": 22026, "episode": 9, "transitions": 2691, "reward": -5.045555555555555, "seconds": 3.886959539959207}
+{"stage": "validation", "method": "A4", "seed": 22026, "episode": 9, "aggregate_percent": 21.5962962962963, "worst_percent": 38.76481481481481}
+{
+  "command": [
+    "python",
+    "backend/tools/phase2c3_pilot.py",
+    "run"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 138.81,
+  "peak_aggregate_rss_bytes": 768229376,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15298560,
+  "samples": 46199,
+  "assigned_cpu_busy_percent_before": {
+    "6": 27.78,
+    "7": 5.26,
+    "11": 10.0,
+    "14": 21.05
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24105336 kB",
+  "elapsed_seconds": 2337.76201692014,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}

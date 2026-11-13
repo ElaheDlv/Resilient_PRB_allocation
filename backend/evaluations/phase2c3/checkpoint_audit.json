@@ -1,0 +1,10 @@
+{
+  "checkpoints_verified": 24,
+  "validation_fingerprints_verified": 432,
+  "fresh_scenarios_executed": 0,
+  "pools_used": [
+    "training",
+    "validation"
+  ],
+  "training_resume_supported": false
+}

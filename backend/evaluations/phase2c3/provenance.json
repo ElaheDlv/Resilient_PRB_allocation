@@ -1,0 +1,28 @@
+{
+  "base_commit": "64a861ec1cb5040e85c991ea20c8667df7ca178f",
+  "source_sha256": {
+    "backend/network_layer/matched_control.py": "ad23576ab61156ae2bfb03556303665ec10e5fa26e99e6425ec9765f848cd910",
+    "backend/tools/phase2c1_pilot.py": "87188faa63396bd984855fd6b20760a8a1289e365bf1385bbc5a55e3ebe12283",
+    "backend/tools/phase2c3_pilot.py": "1ae9e832d2ef7820aca0d2909e70c882662ce4da795d27b81d23beede8548c94",
+    "backend/tools/phase2c3_report.py": "ff3d8c19756cc00258c4f4e3d9cf66f444e2090f7991c75a8ae687574e5e6262",
+    "backend/tests/test_phase2c3.py": "7553ebac70c7b9963f27baf339250599d56b0f9c38191bbf4718a7299176eb07"
+  },
+  "protocol_sha256": "b88d1c15e53ba980a2d502d664f10a1590c7cd123fb2acf1d2fd1244713e65b8",
+  "raw_data_sha256": {
+    "training.jsonl.gz": "e082f2449c22aad4db4d724aa80db5277a351ae86e372db078669c3279227312",
+    "validation.jsonl.gz": "f7231a1c3753655ddebd57d2fafe55a847f9529735892c99ccd20d821b704406",
+    "updates.csv": "d292b4e1249023d1bbfe8430807509bd8cba8ac4fd5dea16f132dbc5c70cc299"
+  },
+  "original_trace_sha256": {
+    "embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  },
+  "embb_trace_matches_prior_c2_provenance": true,
+  "frozen_c2_files_unmodified": true,
+  "frozen_future_holdout_evaluations": 0,
+  "training_episodes": 72,
+  "validation_episodes": 432,
+  "interactions_per_learner": 2691,
+  "optimizer_updates_per_learner": 2660,
+  "manuscript_experiment_reproduction_claimed": false
+}

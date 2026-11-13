@@ -72,7 +72,7 @@ def make_agent(method, protocol):
 
 
 def run_episode(method, severity, seed, protocol, *, agent=None, train=False, rule_entry=1.25, intervals=None,
-                catalog_override=None, after_service=None):
+                catalog_override=None, after_service=None, app_class=None):
     import numpy as np
     import torch
     import settings
@@ -88,7 +88,7 @@ def run_episode(method, severity, seed, protocol, *, agent=None, train=False, ru
         path=Path(tmp)/'catalog.json';path.write_text(json.dumps(catalog))
         settings.PRB_GYM_CONFIG_PATH=str(path)
         engine=SimulationEngine();engine.reset_network()
-        engine.network_setup(xapp_classes=[partial(xAppPairedPilot,method=method,agent=agent,
+        engine.network_setup(xapp_classes=[partial(app_class or xAppPairedPilot,method=method,agent=agent,
             scenario_seed=seed,train=train,rule_entry=rule_entry,
             rule_release_ratio=protocol['rule_release_ratio'],
             rule_release_decisions=protocol['rule_release_decisions'],

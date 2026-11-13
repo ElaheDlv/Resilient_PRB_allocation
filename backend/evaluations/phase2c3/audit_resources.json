@@ -1,0 +1,40 @@
+{
+  "command": [
+    "python",
+    "backend/tools/phase2c3_pilot.py",
+    "audit"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 118.58,
+  "peak_aggregate_rss_bytes": 732581888,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 14770176,
+  "samples": 40,
+  "assigned_cpu_busy_percent_before": {
+    "6": 5.56,
+    "7": 5.26,
+    "11": 5.26,
+    "14": 20.0
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24475876 kB",
+  "elapsed_seconds": 1.9756778730079532,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}
