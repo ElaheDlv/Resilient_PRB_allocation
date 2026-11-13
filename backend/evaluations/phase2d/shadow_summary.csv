@@ -1,0 +1,4 @@
+regime,n,p_strictly_better,f_strictly_better,chosen_strictly_worse,switch_to_strictly_worse,missed_immediate_opportunities
+feasible,3588,0,0,0,0,0
+contested,3588,11,2036,97,67,461
+overloaded,3588,0,3562,432,408,1629

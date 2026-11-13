@@ -1,0 +1,387 @@
+{
+  "version": "phase2d-nonlearning-v1",
+  "base_commit": "eafcea7",
+  "episode_intervals": 300,
+  "replays": [
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53264384_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53264384_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53264384_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53276672_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53276672_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53276672_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53284864_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53284864_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53284864_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53256192_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53256192_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53256192_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "selection": "fairness"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53284864_j20",
+      "selection": "fairness"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53264384_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53264384_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53264384_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53276672_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53276672_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53276672_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53260288_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53260288_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53284864_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53284864_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53284864_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53252096_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53252096_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53256192_j0",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53256192_j10",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53256192_j20",
+      "selection": "aggregate"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 3,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "selection": "fairness"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 3,
+      "scenario_id": "validation_contested_seed53284864_j20",
+      "selection": "fairness"
+    },
+    {
+      "method": "A1",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "selection": "harm_comparator"
+    },
+    {
+      "method": "A2",
+      "network_seed": 22026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "selection": "harm_comparator"
+    }
+  ],
+  "prototype_scenarios": [
+    "validation_feasible_seed53264384_j20",
+    "validation_feasible_seed53276672_j20",
+    "validation_contested_seed53260288_j0",
+    "validation_contested_seed53260288_j10",
+    "validation_contested_seed53260288_j20",
+    "validation_contested_seed53284864_j0",
+    "validation_contested_seed53284864_j10",
+    "validation_contested_seed53284864_j20",
+    "validation_overloaded_seed53252096_j20",
+    "validation_overloaded_seed53256192_j20"
+  ],
+  "prototype_specs": [
+    "P",
+    "F",
+    "OLD035",
+    "G0",
+    "G025",
+    "G05",
+    "G1"
+  ],
+  "fractions": {
+    "OLD035": 0.35,
+    "G0": 0.0,
+    "G025": 0.25,
+    "G05": 0.5,
+    "G1": 1.0
+  },
+  "reserve_controller": "Unchanged ReactiveReserve for all seven nonlearning policies; physical pool18.",
+  "window_s": 0.1,
+  "minimum_matured": 20,
+  "starvation_limit_ticks": 3,
+  "budget": "42 checkpoint replays + 70 nonlearning episodes. No DQN updates, tuning, holdout, adaptive parameters or automatic extension.",
+  "development_only": true,
+  "selection": "All lambda results retained. No best-lambda optimization or final-test claims.",
+  "risk_saturation_epsilon": 1e-12,
+  "shadow_scope": "First serviced tick after each RIC command; same current queues/rates/quota and prior starvation ages; immediate timely completions only.",
+  "resources": {
+    "cpus": [
+      6,
+      7,
+      11,
+      14
+    ],
+    "warning_gib": 2,
+    "stop_gib": 2.5,
+    "minimum_available_gib": 4,
+    "numerical_threads": 1,
+    "workers": 1,
+    "cuda": false,
+    "hard_memory_cap": false
+  },
+  "input_sha256": {
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j0.json": "487c3fba687de4bfda70c249ca13f947ce05336be3726744ed4a478cfbcd3a82",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j10.json": "faab8381abe2c8fe92132f0731d48de7754daef237ae7206943e83f3928a1a32",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j20.json": "4a35d3128e17f1a3d1a3420d11270c81590a83b441fd5e610b64003238f0eb8e",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j0.json": "ba302d1cafd78d1ca9e5ef2771dc07c3e2c7a500a9288b9e85eb9d8a3bb1e8ac",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j10.json": "4fac8e9415f0bdaef1e2c161a23306e838cad6ab8f80d8e4765b2901bd7fecef",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j20.json": "8e6a229e9d97b40d9c9a4e9a0b126d36eaa01267fb6d81b68427276d5f34ddbe",
+    "backend/evaluations/phase2c2/traces/urllc_seed53252096_overloaded.csv": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+    "backend/evaluations/phase2c2/traces/urllc_seed53256192_overloaded.csv": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+    "backend/evaluations/phase2c2/validation_manifest.json": "33e4778710cfe37a3a7b73dc7f963fd12d7bf2c0881413e2763a8a79935d7c3d",
+    "backend/evaluations/phase2c3/checkpoints/A1_seed12026_ep6.pt": "e60dfce74aa9542704e32eae611806d38d40895de3781d9e9e67061d2da5b9fd",
+    "backend/evaluations/phase2c3/checkpoints/A2_seed22026_ep6.pt": "4e0c699250c9b784a91b7facbcac033e7288cbf14deba97d9c86ade206173dd6",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed12026_ep6.pt": "4430938fe9a898b3250bf8850a580743b055ef5653218430165438a9f81052f6",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed12026_ep9.pt": "c7d96ddf7b39532535f238e271c1162d10f9f89f93fbaa027e59587463c34a44",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed22026_ep3.pt": "f26b6ae39381fef4f4134e2433e34fd4624aefa80df751e2a9f5db5753391d52",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed22026_ep9.pt": "4d097fa1ee1d99900d4bfd0f32ab064b7f2965269252a19195ccb46a449e0e44",
+    "backend/evaluations/phase2c3/protocol.json": "b88d1c15e53ba980a2d502d664f10a1590c7cd123fb2acf1d2fd1244713e65b8",
+    "backend/evaluations/phase2c3/selection.json": "f7bd94ef46b79cd90b80e0437c3999131f3487af8819f91cc2f08aefc9c30445",
+    "backend/evaluations/phase2c3/validation.jsonl.gz": "f7231a1c3753655ddebd57d2fafe55a847f9529735892c99ccd20d821b704406",
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  }
+}

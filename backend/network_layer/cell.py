@@ -358,7 +358,9 @@ class Cell:
                         credits, entitlements = self._fair_service_credit.prepare(views, quota, self.prb_per_ue_cap)
                         fair_args = dict(fair_credits=credits, fair_entitlements=entitlements,
                                          fair_fraction=settings.DEADLINE_FAIR_FRACTION)
-                    grants = deadline_allocation(views, quota, bs._time_s, sim_dt,
+                    # Optional isolated research allocator; absent in all P/F defaults.
+                    allocator = getattr(self, "experimental_urllc_allocator", deadline_allocation)
+                    grants = allocator(views, quota, bs._time_s, sim_dt,
                         self._deadline_starvation_ticks,
                         getattr(settings, "DEADLINE_STARVATION_TICKS", 5), self.prb_per_ue_cap,
                         feasibility=mode in {"deadline_feasible", "deadline_fair"}, **fair_args)

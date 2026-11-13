@@ -1,0 +1,9 @@
+{
+  "replayed_checkpoints_runs": 42,
+  "prototype_runs": 70,
+  "paired_scenarios": 10,
+  "all_reserve_trajectories_identical": true,
+  "all_replay_controls_and_outcomes_match": true,
+  "dqn_updates": 0,
+  "cuda_initialized": false
+}

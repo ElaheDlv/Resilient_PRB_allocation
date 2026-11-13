@@ -1,0 +1,4 @@
+regime,decisions,f_choices,switches,switches_with_identical_condition_vector,valid_worst_decisions,saturated_worst_decisions
+feasible,3588,2446,1205,552,3480,0
+contested,3588,2695,1093,0,3480,853
+overloaded,3588,3142,828,0,3480,3468

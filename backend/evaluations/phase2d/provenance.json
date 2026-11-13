@@ -1,0 +1,37 @@
+{
+  "base_commit": "eafcea7",
+  "protocol_sha256": "d04f8e6465a41968da68ddd9e2a61d35edb4c4ba41d93764ddd445cb394699f7",
+  "final_implementation_sha256": {
+    "backend/network_layer/cell.py": "8329782169068801465ed48ab401c1ffefa65c5e72dfd6fc8e0ef25c279b5bc7",
+    "backend/network_layer/feasibility_gated_fairness.py": "db368db77e2039ffbe229426b1003522cd0ea60382df994fd5bd496e0171be19",
+    "backend/tools/phase2d_study.py": "56ebc9e6a78c2557a82d4124246a48fda2e3eb80a9db353e9dc7517d300897fb",
+    "backend/tools/phase2d_report.py": "f12e6cd4ae5b788fe61f8cf47a0eb0bcae312a8af180ab546b69bfb3cb155006",
+    "backend/tests/test_phase2d.py": "aa9d4d7bea15795335d50cd1edb212a20adec508e757935eeb4a2edadb36d54a"
+  },
+  "unchanged_protected_sha256": {
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/network_layer/fair_service_credit.py": "ab97efa54c15652c5bedfc02c0683b514fe0ea2fe1fd6f54b3d043c225c8861c",
+    "backend/network_layer/joint_dqn_agent.py": "e259e9424259d4a73a81b256fc517b00c866ef803c2cae80060d817b00155807",
+    "backend/network_layer/joint_dqn_schema.py": "e1c5c884547dc5c6be24a421e13b98bb584e5605b69836ed2aeb795b6299cd73",
+    "backend/network_layer/joint_control.py": "cfeae45758ffd43e9efbd2bd4f08a5023ce56787636834e389ee4a5ad41d7fb3",
+    "backend/network_layer/joint_reward.py": "224b95d363c849650653b65d3c138ea607e546b9603cb3f78987683647f88317",
+    "backend/network_layer/deadline_risk.py": "a6722cb87cbbfe4bf6fa9218ab6917e5b3ff226aff3858de480e13e654d6782e",
+    "backend/network_layer/base_station.py": "5729ae142646a9fa8724145da581754432dd04e3403d3845e80851aca5999d12"
+  },
+  "raw_data_sha256": {
+    "runs.jsonl.gz": "cc07e96c097185e049eb6dd3464afb50e66dfd16924dec8f61000ba7d9fc364d",
+    "decisions.jsonl.gz": "ca3225d020e96234469252b98d09b20f908f8bba9b3af174ba633efcec26deda",
+    "shadows.jsonl.gz": "68e03192c308e67abfd84ab187fb1919e92f313fc8704b4a86733cdb217f8e38",
+    "ue_windows.csv.gz": "64809f50907b61a6451aab4a6a399157a2add3dd676cd668f1ba52324634cb8a",
+    "harm_ticks.csv.gz": "c28bcb9f3fbef42ee449a9bbc15265e9031bd726f830ff9ea6b013ed2dd9379d",
+    "interval_outcomes.csv.gz": "d7e4f83a1ad1d95676098f1fe87e43ef8c4a514a837d7b0a765192a4e9613cb9"
+  },
+  "input_hashes_verified": true,
+  "c2_c3_artifacts_unchanged": true,
+  "dqn_training_updates": 0,
+  "checkpoint_replays": 42,
+  "nonlearning_episodes": 70,
+  "future_model_holdout_evaluations": 0,
+  "formatting": "Lossless CSV compression; private unused segment-streak accumulators discarded from episode records. Consecutive window spans are reported from separate10ms samples only."
+}
