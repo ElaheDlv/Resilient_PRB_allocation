@@ -1,0 +1,18 @@
+{
+  "elapsed_seconds": 0.11537616490386426,
+  "protocol_sha256": "f894f903f885b534930b5313435262b74559539edc784b016fefc45639097f6a",
+  "source_trace_sha256": {
+    "embb": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "urllc": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  },
+  "source_traces_unchanged": true,
+  "cpus": [
+    7,
+    8,
+    10,
+    15
+  ],
+  "cuda_visible_devices": "",
+  "neural_models_created": 0,
+  "optimizer_updates": 0
+}

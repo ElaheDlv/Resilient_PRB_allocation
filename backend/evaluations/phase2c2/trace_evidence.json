@@ -1,0 +1,381 @@
+{
+  "selection": "Largest per-UE B2-minus-B1 increase in validation contested severe cases; explanatory only",
+  "cases": [
+    {
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "method": "B1",
+      "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+      "known_failure_percent": 0.0,
+      "resource": {
+        "prbs": 11.338,
+        "capacity_bytes_per_prb": 57.362788865546456,
+        "fluid_prbs": 11.331387696710314
+      },
+      "outcomes": {
+        "offered": 3000,
+        "on_time": 2998,
+        "known_failed": 0,
+        "unresolved_not_due": 2,
+        "unfinished_overdue": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0006666666666666666
+      },
+      "recovery": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.053999999999999826,
+          "censored": false,
+          "end_s": 1.313,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "exogenous_sha256": "991236382809db7866fdae8923d8a02b0a09d9ce0c68a6041232435f6ad15641",
+      "quota_sha256": "c7cf7da7aafb2222716b9b23d8e28dc5ab66cf2071378ee5e630299be49675f9",
+      "segments": {
+        "on_initial": {
+          "ticks": 1249,
+          "offered_bytes": 811850,
+          "served_bytes": 809091,
+          "granted_prbs": 14122,
+          "overflow_bytes": 0,
+          "hol_violating_ticks": 0,
+          "max_hol_s": 0.0039999999999995595,
+          "current_no_service_ticks": 0,
+          "max_no_service_ticks": 0
+        },
+        "off": {
+          "ticks": 1250,
+          "offered_bytes": 812500,
+          "served_bytes": 815226,
+          "granted_prbs": 14228,
+          "overflow_bytes": 0,
+          "hol_violating_ticks": 0,
+          "max_hol_s": 0.0039999999999995595,
+          "current_no_service_ticks": 0,
+          "max_no_service_ticks": 0
+        },
+        "on_after_off": {
+          "ticks": 501,
+          "offered_bytes": 325650,
+          "served_bytes": 324506,
+          "granted_prbs": 5664,
+          "overflow_bytes": 0,
+          "hol_violating_ticks": 0,
+          "max_hol_s": 0.0009999999999998899,
+          "current_no_service_ticks": 0,
+          "max_no_service_ticks": 0
+        }
+      },
+      "frames": [
+        {
+          "step": 242,
+          "segment": "on_initial",
+          "quota": 59,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 630,
+            "grant": 11,
+            "queued_bytes": 1237,
+            "hol_s": 0.0010000000000000009,
+            "late_hol": false
+          }
+        },
+        {
+          "step": 1249,
+          "segment": "on_initial",
+          "quota": 59,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 688,
+            "grant": 12,
+            "queued_bytes": 2759,
+            "hol_s": 0.0039999999999995595,
+            "late_hol": false
+          }
+        },
+        {
+          "step": 1250,
+          "segment": "off",
+          "quota": 65,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 688,
+            "grant": 12,
+            "queued_bytes": 2721,
+            "hol_s": 0.0039999999999995595,
+            "late_hol": false
+          }
+        },
+        {
+          "step": 1260,
+          "segment": "off",
+          "quota": 62,
+          "reserve": 6,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 688,
+            "grant": 12,
+            "queued_bytes": 2341,
+            "hol_s": 0.0029999999999996696,
+            "late_hol": false
+          }
+        },
+        {
+          "step": 2499,
+          "segment": "off",
+          "quota": 60,
+          "reserve": 0,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 630,
+            "grant": 11,
+            "queued_bytes": 33,
+            "hol_s": 0.0,
+            "late_hol": false
+          }
+        },
+        {
+          "step": 2500,
+          "segment": "on_after_off",
+          "quota": 54,
+          "reserve": 0,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 573,
+            "grant": 10,
+            "queued_bytes": 110,
+            "hol_s": 0.0,
+            "late_hol": false
+          }
+        },
+        {
+          "step": 3000,
+          "segment": "on_after_off",
+          "quota": 59,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 688,
+            "grant": 12,
+            "queued_bytes": 1177,
+            "hol_s": 0.0009999999999998899,
+            "late_hol": false
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "method": "B2",
+      "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+      "known_failure_percent": 76.86666666666667,
+      "resource": {
+        "prbs": 8.333333333333334,
+        "capacity_bytes_per_prb": 57.362788865546456,
+        "fluid_prbs": 11.331387696710314
+      },
+      "outcomes": {
+        "offered": 3000,
+        "on_time": 683,
+        "known_failed": 2306,
+        "unresolved_not_due": 11,
+        "unfinished_overdue": 787,
+        "failure_fraction_lower": 0.7686666666666667,
+        "failure_fraction_upper": 0.7723333333333333
+      },
+      "recovery": [
+        {
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ],
+      "exogenous_sha256": "991236382809db7866fdae8923d8a02b0a09d9ce0c68a6041232435f6ad15641",
+      "quota_sha256": "c7cf7da7aafb2222716b9b23d8e28dc5ab66cf2071378ee5e630299be49675f9",
+      "segments": {
+        "on_initial": {
+          "ticks": 1249,
+          "offered_bytes": 811850,
+          "served_bytes": 658492,
+          "granted_prbs": 11493,
+          "overflow_bytes": 0,
+          "hol_violating_ticks": 555,
+          "max_hol_s": 0.23499999999997412,
+          "current_no_service_ticks": 0,
+          "max_no_service_ticks": 3
+        },
+        "off": {
+          "ticks": 1250,
+          "offered_bytes": 812500,
+          "served_bytes": 574517,
+          "granted_prbs": 10035,
+          "overflow_bytes": 0,
+          "hol_violating_ticks": 1250,
+          "max_hol_s": 0.6019999999999339,
+          "current_no_service_ticks": 0,
+          "max_no_service_ticks": 0
+        },
+        "on_after_off": {
+          "ticks": 501,
+          "offered_bytes": 325650,
+          "served_bytes": 198894,
+          "granted_prbs": 3472,
+          "overflow_bytes": 0,
+          "hol_violating_ticks": 501,
+          "max_hol_s": 0.7969999999999122,
+          "current_no_service_ticks": 0,
+          "max_no_service_ticks": 0
+        }
+      },
+      "frames": [
+        {
+          "step": 695,
+          "segment": "on_initial",
+          "quota": 59,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 0,
+            "grant": 0,
+            "queued_bytes": 7161,
+            "hol_s": 0.01100000000000001,
+            "late_hol": true
+          }
+        },
+        {
+          "step": 1249,
+          "segment": "on_initial",
+          "quota": 59,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 401,
+            "grant": 7,
+            "queued_bytes": 153358,
+            "hol_s": 0.23499999999997412,
+            "late_hol": true
+          }
+        },
+        {
+          "step": 1250,
+          "segment": "off",
+          "quota": 65,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 745,
+            "grant": 13,
+            "queued_bytes": 153263,
+            "hol_s": 0.23499999999997412,
+            "late_hol": true
+          }
+        },
+        {
+          "step": 1260,
+          "segment": "off",
+          "quota": 62,
+          "reserve": 6,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 573,
+            "grant": 10,
+            "queued_bytes": 154033,
+            "hol_s": 0.235999999999974,
+            "late_hol": true
+          }
+        },
+        {
+          "step": 2499,
+          "segment": "off",
+          "quota": 60,
+          "reserve": 0,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 458,
+            "grant": 8,
+            "queued_bytes": 391341,
+            "hol_s": 0.6019999999999339,
+            "late_hol": true
+          }
+        },
+        {
+          "step": 2500,
+          "segment": "on_after_off",
+          "quota": 54,
+          "reserve": 0,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 114,
+            "grant": 2,
+            "queued_bytes": 391877,
+            "hol_s": 0.6019999999999339,
+            "late_hol": true
+          }
+        },
+        {
+          "step": 3000,
+          "segment": "on_after_off",
+          "quota": 59,
+          "reserve": 18,
+          "ue": {
+            "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+            "budget_s": 0.01,
+            "capacity_bytes_per_prb_tick": 57.362788865546214,
+            "offered_bytes": 650,
+            "served_bytes": 401,
+            "grant": 7,
+            "queued_bytes": 518097,
+            "hol_s": 0.7969999999999122,
+            "late_hol": true
+          }
+        }
+      ]
+    }
+  ]
+}

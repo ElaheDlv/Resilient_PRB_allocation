@@ -1,6 +1,7 @@
 """Sequential reproducible training/validation/test pilot; no automatic budget growth."""
 
 import argparse
+import copy
 import gc
 from functools import partial
 import hashlib
@@ -70,14 +71,16 @@ def make_agent(method, protocol):
     return (JointDQNAgent if method=='P' else LegacyPilotAgent)(cfg)
 
 
-def run_episode(method, severity, seed, protocol, *, agent=None, train=False, rule_entry=1.25, intervals=None):
+def run_episode(method, severity, seed, protocol, *, agent=None, train=False, rule_entry=1.25, intervals=None,
+                catalog_override=None, after_service=None):
     import numpy as np
     import torch
     import settings
     from network_layer.simulation_engine import SimulationEngine
     from network_layer.pilot_control import xAppPairedPilot
     # Same catalog identity and fresh episode index for every paired controller.
-    catalog=json.loads((ROOT/f'backend/evaluations/phase1/main_scenarios/scenario_j{severity}.json').read_text())
+    catalog=(copy.deepcopy(catalog_override) if catalog_override is not None else
+             json.loads((ROOT/f'backend/evaluations/phase1/main_scenarios/scenario_j{severity}.json').read_text()))
     catalog['episodes'][0]['duration_steps']=intervals or protocol['episode_intervals']
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
     before=agent.fingerprint() if agent else None
@@ -91,6 +94,12 @@ def run_episode(method, severity, seed, protocol, *, agent=None, train=False, ru
             rule_release_decisions=protocol['rule_release_decisions'],
             exploration=partial(epsilon_schedule,protocol))])
         app=next(iter(engine.ric.xapp_list.values()))
+        if after_service is not None:
+            previous_observer=engine.after_service_observer
+            def observe(engine, dt):
+                previous_observer(engine, dt)
+                after_service(engine, dt)
+            engine.after_service_observer=observe
         started=time.perf_counter()
         for _ in range(catalog['episodes'][0]['duration_steps']*10):
             engine.sim_step+=1;engine.step(.001)

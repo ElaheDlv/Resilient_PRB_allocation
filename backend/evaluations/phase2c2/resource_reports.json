@@ -1,0 +1,751 @@
+{
+  "completed_guard_reports": {
+    "phase2c2-artifact-replay-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "summarize",
+        "--output",
+        "/tmp/phase2c2-artifact-replay",
+        "--plots"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.74,
+      "peak_aggregate_rss_bytes": 133828608,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14753792,
+      "samples": 15,
+      "assigned_cpu_busy_percent_before": {
+        "7": 5.88,
+        "8": 10.53,
+        "10": 0.0,
+        "15": 10.53
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24601292 kB",
+      "elapsed_seconds": 0.7093043029308319,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-compatibility-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "compatibility",
+        "--output",
+        "/tmp/phase2c2-v2"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 138.14,
+      "peak_aggregate_rss_bytes": 853479424,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14946304,
+      "samples": 558,
+      "assigned_cpu_busy_percent_before": {
+        "7": 5.56,
+        "8": 15.79,
+        "10": 20.0,
+        "15": 10.53
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24790700 kB",
+      "elapsed_seconds": 28.18429997097701,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-final-module-resources": {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "backend/tests/test_phase2c2.py"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.76,
+      "peak_aggregate_rss_bytes": 777351168,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14929920,
+      "samples": 61,
+      "assigned_cpu_busy_percent_before": {
+        "7": 5.56,
+        "8": 15.79,
+        "10": 5.26,
+        "15": 10.53
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24683308 kB",
+      "elapsed_seconds": 3.0400584579911083,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-final-tests-resources": {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "backend/tests/test_phase2c2.py"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.64,
+      "peak_aggregate_rss_bytes": 774176768,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14987264,
+      "samples": 58,
+      "assigned_cpu_busy_percent_before": {
+        "7": 5.26,
+        "8": 10.53,
+        "10": 10.0,
+        "15": 15.0
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24935120 kB",
+      "elapsed_seconds": 2.8892242261208594,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-freeze-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "freeze",
+        "--output",
+        "/tmp/phase2c2-run"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.77,
+      "peak_aggregate_rss_bytes": 685780992,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14700544,
+      "samples": 39,
+      "assigned_cpu_busy_percent_before": {
+        "7": 22.22,
+        "8": 15.79,
+        "10": 30.0,
+        "15": 10.53
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24737244 kB",
+      "elapsed_seconds": 1.9233990609645844,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-initial-tests-resources": {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "backend/tests/test_phase2c2.py"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.71,
+      "peak_aggregate_rss_bytes": 51261440,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14622720,
+      "samples": 8,
+      "assigned_cpu_busy_percent_before": {
+        "7": 20.0,
+        "8": 16.67,
+        "10": 21.05,
+        "15": 21.05
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24717920 kB",
+      "elapsed_seconds": 0.3551915348507464,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 1,
+      "attempt_note": "Initial test subprocess import path failure, fixed and retested; not a physical study failure."
+    },
+    "phase2c2-nonlearning-tests-resources": {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "backend/tests/test_phase0.py",
+        "backend/tests/test_phase1.py",
+        "backend/tests/test_phase11.py",
+        "backend/tests/test_phase12.py",
+        "backend/tests/test_phase2c2.py",
+        "-k",
+        "not trainer and not training"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 138.05,
+      "peak_aggregate_rss_bytes": 1384890368,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 15323136,
+      "samples": 1198,
+      "assigned_cpu_busy_percent_before": {
+        "7": 15.79,
+        "8": 26.32,
+        "10": 21.05,
+        "15": 25.0
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   25022608 kB",
+      "elapsed_seconds": 60.62304567103274,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-probe-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "probe",
+        "--output",
+        "/tmp/phase2c2-run"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.82,
+      "peak_aggregate_rss_bytes": 743084032,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14901248,
+      "samples": 265,
+      "assigned_cpu_busy_percent_before": {
+        "7": 0.0,
+        "8": 11.11,
+        "10": 5.26,
+        "15": 22.22
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24593340 kB",
+      "elapsed_seconds": 13.369794716127217,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-tests-resources": {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "backend/tests/test_phase2c2.py"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 137.8,
+      "peak_aggregate_rss_bytes": 822538240,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14954496,
+      "samples": 61,
+      "assigned_cpu_busy_percent_before": {
+        "7": 26.32,
+        "8": 21.05,
+        "10": 15.79,
+        "15": 36.84
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   24706608 kB",
+      "elapsed_seconds": 3.039774770149961,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-v2-freeze-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "freeze",
+        "--output",
+        "/tmp/phase2c2-v2"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 99.04,
+      "peak_aggregate_rss_bytes": 36597760,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14630912,
+      "samples": 5,
+      "assigned_cpu_busy_percent_before": {
+        "7": 15.79,
+        "8": 10.53,
+        "10": 10.53,
+        "15": 15.0
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   25040328 kB",
+      "elapsed_seconds": 0.20331638399511576,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-v2-probe-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "probe",
+        "--output",
+        "/tmp/phase2c2-v2"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 138.57,
+      "peak_aggregate_rss_bytes": 742023168,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14942208,
+      "samples": 260,
+      "assigned_cpu_busy_percent_before": {
+        "7": 15.79,
+        "8": 55.0,
+        "10": 22.22,
+        "15": 28.57
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   25042328 kB",
+      "elapsed_seconds": 13.112889972049743,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-v2-reference-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "reference",
+        "--output",
+        "/tmp/phase2c2-v2"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 157.15,
+      "peak_aggregate_rss_bytes": 875147264,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 15310848,
+      "samples": 14338,
+      "assigned_cpu_busy_percent_before": {
+        "7": 5.26,
+        "8": 5.56,
+        "10": 15.0,
+        "15": 11.11
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   25024364 kB",
+      "elapsed_seconds": 725.3843554139603,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-v2-summary-resources": {
+      "command": [
+        "python",
+        "backend/tools/phase2c2_design.py",
+        "--stage",
+        "summarize",
+        "--output",
+        "/tmp/phase2c2-v2",
+        "--plots"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 118.26,
+      "peak_aggregate_rss_bytes": 131944448,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14663680,
+      "samples": 14,
+      "assigned_cpu_busy_percent_before": {
+        "7": 15.79,
+        "8": 16.67,
+        "10": 35.0,
+        "15": 30.0
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   25203900 kB",
+      "elapsed_seconds": 0.6589033640921116,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    },
+    "phase2c2-v2-tests-resources": {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "backend/tests/test_phase2c2.py"
+      ],
+      "cpus": [
+        7,
+        8,
+        10,
+        15
+      ],
+      "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+      "peak_process_group_cpu_percent": 138.28,
+      "peak_aggregate_rss_bytes": 774582272,
+      "sampling_period_s": 0.05,
+      "guard_rss_bytes": 14938112,
+      "samples": 61,
+      "assigned_cpu_busy_percent_before": {
+        "7": 5.26,
+        "8": 5.56,
+        "10": 0.0,
+        "15": 15.0
+      },
+      "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+      "memory_limit_hard_enforced": false,
+      "monitored_stop_threshold_bytes": 2684354560,
+      "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+      "numerical_threads_per_process": 1,
+      "dataloader_workers": 0,
+      "cuda_visible_devices": "",
+      "available_ram_before": "MemAvailable:   25430392 kB",
+      "elapsed_seconds": 3.03913750895299,
+      "stopped_for_memory": false,
+      "warning_threshold_bytes": 2147483648,
+      "warning_triggered": false,
+      "stop_reason": null,
+      "minimum_available_gib": 4.0,
+      "exit_code": 0
+    }
+  },
+  "cpus": [
+    7,
+    8,
+    10,
+    15
+  ],
+  "maximum_retained_sampled_rss_bytes": 1384890368,
+  "maximum_retained_sampled_cpu_percent": 157.15,
+  "retired_interrupted_run": {
+    "reason": "Source-level independence failure: adjacent base seeds reuse 7/8 URLLC and 7/8 eMBB registration seeds; pools 1000 apart also reuse cross-slice streams.",
+    "version": "v1 retired, not final scenario pools",
+    "completed_reference_records": 149,
+    "full_reference_job_interrupted": true,
+    "interruption_exit_code": 130,
+    "peak_memory_report_available": false,
+    "replacement_reason_not_based_on_policy_performance": true,
+    "v1_membership_frozen_before_references": true,
+    "neural_models_created": 0,
+    "optimizer_updates": 0,
+    "incomplete_jsonl_records": 0,
+    "C1_seeds3101_3102_shared_URLLC_positions": 7,
+    "legacy_adjacent_shared_registration_streams": 14,
+    "replacement_seed_stride": 4096,
+    "source_model_unchanged": true,
+    "memory_warning_logged": false,
+    "completed_episode_loop_seconds": 579.7696267771535,
+    "frozen_manifest_sha256": {
+      "training": "ad4aad4120aa8514c9a4c1f85d501b77bfd4eeb8835ebc055b17921868e9bc82",
+      "validation": "87aaf1d4f68d4fcacf2e18a3e9d94c8a99e3d1fa9f4bc859bba9343350561578",
+      "future_holdout": "15b21a152d3c41e06ca89ce3916c60ffa6fa5a5c4c4796f9ea7958b5ce86a140"
+    },
+    "retired_selected_seeds": {
+      "training": [
+        {
+          "regime": "feasible",
+          "seed": 12018,
+          "variant": "original"
+        },
+        {
+          "regime": "feasible",
+          "seed": 12019,
+          "variant": "original"
+        },
+        {
+          "regime": "contested",
+          "seed": 12001,
+          "variant": "original"
+        },
+        {
+          "regime": "contested",
+          "seed": 12002,
+          "variant": "original"
+        },
+        {
+          "regime": "overloaded",
+          "seed": 12003,
+          "variant": "phase12_scaled"
+        },
+        {
+          "regime": "overloaded",
+          "seed": 12004,
+          "variant": "phase12_scaled"
+        }
+      ],
+      "validation": [
+        {
+          "regime": "feasible",
+          "seed": 13002,
+          "variant": "original"
+        },
+        {
+          "regime": "feasible",
+          "seed": 13005,
+          "variant": "original"
+        },
+        {
+          "regime": "contested",
+          "seed": 13008,
+          "variant": "original"
+        },
+        {
+          "regime": "contested",
+          "seed": 13009,
+          "variant": "original"
+        },
+        {
+          "regime": "overloaded",
+          "seed": 13001,
+          "variant": "phase12_scaled"
+        },
+        {
+          "regime": "overloaded",
+          "seed": 13003,
+          "variant": "phase12_scaled"
+        }
+      ],
+      "future_holdout": [
+        {
+          "regime": "feasible",
+          "seed": 14007,
+          "variant": "original"
+        },
+        {
+          "regime": "feasible",
+          "seed": 14008,
+          "variant": "original"
+        },
+        {
+          "regime": "contested",
+          "seed": 14003,
+          "variant": "original"
+        },
+        {
+          "regime": "contested",
+          "seed": 14004,
+          "variant": "original"
+        },
+        {
+          "regime": "overloaded",
+          "seed": 14001,
+          "variant": "phase12_scaled"
+        },
+        {
+          "regime": "overloaded",
+          "seed": 14002,
+          "variant": "phase12_scaled"
+        }
+      ]
+    }
+  },
+  "retired_final_peak_unavailable": true,
+  "memory_hard_limit_enforced": false,
+  "warning_gib": 2,
+  "stop_gib": 2.5,
+  "system_available_stop_gib": 4,
+  "heavy_workers": 1,
+  "dataloader_workers": 0,
+  "parallel_jobs": false,
+  "neural_models_created": 0,
+  "checkpoint_evaluations": 0,
+  "optimizer_updates": 0,
+  "artifact_replay_data_exact": true
+}

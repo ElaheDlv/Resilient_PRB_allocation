@@ -1,0 +1,46 @@
+{
+  "episodes": [
+    {
+      "id": "phase1_pilot",
+      "duration_steps": 300,
+      "freeze_mobility": true,
+      "initial_prb": {
+        "eMBB": 140,
+        "URLLC": 60
+      },
+      "slices": {
+        "eMBB": {
+          "ue_count": 8,
+          "trace": "backend/notebooks/Resilient_data/embb_dl.csv",
+          "trace_speedup": 1.0,
+          "ue_ip": "10.0.1.1",
+          "trace_bin": 0.001
+        },
+        "URLLC": {
+          "ue_count": 8,
+          "trace": "@scenario/traces/urllc_seed53252096_overloaded.csv",
+          "trace_speedup": 1.0,
+          "ue_ip": "10.0.2.1",
+          "trace_bin": 0.001,
+          "queue_budget_classes_s": {
+            "tight": 0.002,
+            "relaxed": 0.01
+          },
+          "queue_budget_assignment_seed": 2026
+        }
+      },
+      "jam_var": {
+        "period_steps": 2500,
+        "prbs_list": [
+          0
+        ],
+        "duty_list": [
+          0.5
+        ],
+        "duty_policy": "fixed",
+        "episode_steps": 0,
+        "power_policy": "fixed"
+      }
+    }
+  ]
+}

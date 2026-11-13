@@ -1,0 +1,2294 @@
+{
+  "schema": "phase2c2-scenarios-v1",
+  "pool": "future_holdout",
+  "status": "frozen_before_reference_characterization",
+  "model_evaluations": 0,
+  "entries": [
+    {
+      "id": "future_holdout_feasible_seed57356288_j0",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "seed": 57356288,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_feasible_seed57356288_j0.json",
+      "seed_index": 14003,
+      "registration_streams": [
+        57456288,
+        57456289,
+        57456290,
+        57456291,
+        57456292,
+        57456293,
+        57456294,
+        57456295,
+        57457288,
+        57457289,
+        57457290,
+        57457291,
+        57457292,
+        57457293,
+        57457294,
+        57457295
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 50.41682693393591,
+        "integer_one_tick_prbs": 53,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 62629.56739962543,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -4816.432600374566,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 62679.984226559376,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -34820.015773440624,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_feasible_seed57356288_j10",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "seed": 57356288,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_feasible_seed57356288_j10.json",
+      "seed_index": 14003,
+      "registration_streams": [
+        57456288,
+        57456289,
+        57456290,
+        57456291,
+        57456292,
+        57456293,
+        57456294,
+        57456295,
+        57457288,
+        57457289,
+        57457290,
+        57457291,
+        57457292,
+        57457293,
+        57457294,
+        57457295
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 50.41682693393591,
+        "integer_one_tick_prbs": 53,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 62629.56739962543,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -4816.432600374566,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 62679.984226559376,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -34820.015773440624,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_feasible_seed57356288_j20",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "seed": 57356288,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_feasible_seed57356288_j20.json",
+      "seed_index": 14003,
+      "registration_streams": [
+        57456288,
+        57456289,
+        57456290,
+        57456291,
+        57456292,
+        57456293,
+        57456294,
+        57456295,
+        57457288,
+        57457289,
+        57457290,
+        57457291,
+        57457292,
+        57457293,
+        57457294,
+        57457295
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 50.41682693393591,
+        "integer_one_tick_prbs": 53,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 62629.56739962543,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -4816.432600374566,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 62679.984226559376,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -34820.015773440624,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_feasible_seed57368576_j0",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "seed": 57368576,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_feasible_seed57368576_j0.json",
+      "seed_index": 14006,
+      "registration_streams": [
+        57468576,
+        57468577,
+        57468578,
+        57468579,
+        57468580,
+        57468581,
+        57468582,
+        57468583,
+        57469576,
+        57469577,
+        57469578,
+        57469579,
+        57469580,
+        57469581,
+        57469582,
+        57469583
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 51.68668752581919,
+        "integer_one_tick_prbs": 54,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 64188.07700175793,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -3257.922998242073,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 64239.763689283755,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -33260.236310716245,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_feasible_seed57368576_j10",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "seed": 57368576,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_feasible_seed57368576_j10.json",
+      "seed_index": 14006,
+      "registration_streams": [
+        57468576,
+        57468577,
+        57468578,
+        57468579,
+        57468580,
+        57468581,
+        57468582,
+        57468583,
+        57469576,
+        57469577,
+        57469578,
+        57469579,
+        57469580,
+        57469581,
+        57469582,
+        57469583
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 51.68668752581919,
+        "integer_one_tick_prbs": 54,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 64188.07700175793,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -3257.922998242073,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 64239.763689283755,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -33260.236310716245,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_feasible_seed57368576_j20",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "seed": 57368576,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_feasible_seed57368576_j20.json",
+      "seed_index": 14006,
+      "registration_streams": [
+        57468576,
+        57468577,
+        57468578,
+        57468579,
+        57468580,
+        57468581,
+        57468582,
+        57468583,
+        57469576,
+        57469577,
+        57469578,
+        57469579,
+        57469580,
+        57469581,
+        57469582,
+        57469583
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 51.68668752581919,
+        "integer_one_tick_prbs": 54,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 64188.07700175793,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -3257.922998242073,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 64239.763689283755,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -33260.236310716245,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_contested_seed57360384_j0",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "seed": 57360384,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_contested_seed57360384_j0.json",
+      "seed_index": 14004,
+      "registration_streams": [
+        57460384,
+        57460385,
+        57460386,
+        57460387,
+        57460388,
+        57460389,
+        57460390,
+        57460391,
+        57461384,
+        57461385,
+        57461386,
+        57461387,
+        57461388,
+        57461389,
+        57461390,
+        57461391
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 58.03354294984015,
+        "integer_one_tick_prbs": 63,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 72068.75435552935,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 4622.754355529352,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 72126.78789847919,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -25373.21210152081,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_contested_seed57360384_j10",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "seed": 57360384,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_contested_seed57360384_j10.json",
+      "seed_index": 14004,
+      "registration_streams": [
+        57460384,
+        57460385,
+        57460386,
+        57460387,
+        57460388,
+        57460389,
+        57460390,
+        57460391,
+        57461384,
+        57461385,
+        57461386,
+        57461387,
+        57461388,
+        57461389,
+        57461390,
+        57461391
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 58.03354294984015,
+        "integer_one_tick_prbs": 63,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 72068.75435552935,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 4622.754355529352,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 72126.78789847919,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -25373.21210152081,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_contested_seed57360384_j20",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "seed": 57360384,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_contested_seed57360384_j20.json",
+      "seed_index": 14004,
+      "registration_streams": [
+        57460384,
+        57460385,
+        57460386,
+        57460387,
+        57460388,
+        57460389,
+        57460390,
+        57460391,
+        57461384,
+        57461385,
+        57461386,
+        57461387,
+        57461388,
+        57461389,
+        57461390,
+        57461391
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 58.03354294984015,
+        "integer_one_tick_prbs": 63,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 72068.75435552935,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 4622.754355529352,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 72126.78789847919,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -25373.21210152081,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_contested_seed57380864_j0",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "seed": 57380864,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_contested_seed57380864_j0.json",
+      "seed_index": 14009,
+      "registration_streams": [
+        57480864,
+        57480865,
+        57480866,
+        57480867,
+        57480868,
+        57480869,
+        57480870,
+        57480871,
+        57481864,
+        57481865,
+        57481866,
+        57481867,
+        57481868,
+        57481869,
+        57481870,
+        57481871
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 59.2964884190716,
+        "integer_one_tick_prbs": 62,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 73666.04852291828,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 6220.048522918281,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 73725.34501133735,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -23774.654988662645,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_contested_seed57380864_j10",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "seed": 57380864,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_contested_seed57380864_j10.json",
+      "seed_index": 14009,
+      "registration_streams": [
+        57480864,
+        57480865,
+        57480866,
+        57480867,
+        57480868,
+        57480869,
+        57480870,
+        57480871,
+        57481864,
+        57481865,
+        57481866,
+        57481867,
+        57481868,
+        57481869,
+        57481870,
+        57481871
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 59.2964884190716,
+        "integer_one_tick_prbs": 62,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 73666.04852291828,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 6220.048522918281,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 73725.34501133735,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -23774.654988662645,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_contested_seed57380864_j20",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "seed": 57380864,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/future_holdout_contested_seed57380864_j20.json",
+      "seed_index": 14009,
+      "registration_streams": [
+        57480864,
+        57480865,
+        57480866,
+        57480867,
+        57480868,
+        57480869,
+        57480870,
+        57480871,
+        57481864,
+        57481865,
+        57481866,
+        57481867,
+        57481868,
+        57481869,
+        57481870,
+        57481871
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 59.2964884190716,
+        "integer_one_tick_prbs": 62,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 73666.04852291828,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 6220.048522918281,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 73725.34501133735,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -23774.654988662645,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "future_holdout_overloaded_seed57348096_j0",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "seed": 57348096,
+      "severity": 0,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 1106,
+      "catalog": "configs/future_holdout_overloaded_seed57348096_j0.json",
+      "seed_index": 14001,
+      "registration_streams": [
+        57448096,
+        57448097,
+        57448098,
+        57448099,
+        57448100,
+        57448101,
+        57448102,
+        57448103,
+        57449096,
+        57449097,
+        57449098,
+        57449099,
+        57449100,
+        57449101,
+        57449102,
+        57449103
+      ],
+      "trace": "@scenario/traces/urllc_seed57348096_overloaded.csv",
+      "trace_sha256": "61e212f0945af2ce9cf86e45394eb38179981ccb9d749c7599c474df8316925f",
+      "certificate": {
+        "batch_bytes": 1106,
+        "fluid_prbs": 85.77214263738838,
+        "integer_one_tick_prbs": 90,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 9.477688888888888,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 7.108266666666667,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 15.84629465020576,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 8.45500225846926,
+            "integer_prbs": 9,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 15.84629465020576,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 11.638405526770294,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 7.108266666666667,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 10.291923329515082,
+            "integer_prbs": 11,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106485.86136733818,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39039.86136733818,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106571.63350997557,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9071.633509975567,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "future_holdout_overloaded_seed57348096_j10",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "seed": 57348096,
+      "severity": 10,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 1106,
+      "catalog": "configs/future_holdout_overloaded_seed57348096_j10.json",
+      "seed_index": 14001,
+      "registration_streams": [
+        57448096,
+        57448097,
+        57448098,
+        57448099,
+        57448100,
+        57448101,
+        57448102,
+        57448103,
+        57449096,
+        57449097,
+        57449098,
+        57449099,
+        57449100,
+        57449101,
+        57449102,
+        57449103
+      ],
+      "trace": "@scenario/traces/urllc_seed57348096_overloaded.csv",
+      "trace_sha256": "61e212f0945af2ce9cf86e45394eb38179981ccb9d749c7599c474df8316925f",
+      "certificate": {
+        "batch_bytes": 1106,
+        "fluid_prbs": 85.77214263738838,
+        "integer_one_tick_prbs": 90,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 9.477688888888888,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 7.108266666666667,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 15.84629465020576,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 8.45500225846926,
+            "integer_prbs": 9,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 15.84629465020576,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 11.638405526770294,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 7.108266666666667,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 10.291923329515082,
+            "integer_prbs": 11,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106485.86136733818,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39039.86136733818,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106571.63350997557,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9071.633509975567,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "future_holdout_overloaded_seed57348096_j20",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "seed": 57348096,
+      "severity": 20,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 1106,
+      "catalog": "configs/future_holdout_overloaded_seed57348096_j20.json",
+      "seed_index": 14001,
+      "registration_streams": [
+        57448096,
+        57448097,
+        57448098,
+        57448099,
+        57448100,
+        57448101,
+        57448102,
+        57448103,
+        57449096,
+        57449097,
+        57449098,
+        57449099,
+        57449100,
+        57449101,
+        57449102,
+        57449103
+      ],
+      "trace": "@scenario/traces/urllc_seed57348096_overloaded.csv",
+      "trace_sha256": "61e212f0945af2ce9cf86e45394eb38179981ccb9d749c7599c474df8316925f",
+      "certificate": {
+        "batch_bytes": 1106,
+        "fluid_prbs": 85.77214263738838,
+        "integer_one_tick_prbs": 90,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 9.477688888888888,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 7.108266666666667,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 15.84629465020576,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 8.45500225846926,
+            "integer_prbs": 9,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 15.84629465020576,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 11.638405526770294,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 7.108266666666667,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 10.291923329515082,
+            "integer_prbs": 11,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106485.86136733818,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39039.86136733818,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106571.63350997557,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9071.633509975567,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "future_holdout_overloaded_seed57352192_j0",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "seed": 57352192,
+      "severity": 0,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 819,
+      "catalog": "configs/future_holdout_overloaded_seed57352192_j0.json",
+      "seed_index": 14002,
+      "registration_streams": [
+        57452192,
+        57452193,
+        57452194,
+        57452195,
+        57452196,
+        57452197,
+        57452198,
+        57452199,
+        57453192,
+        57453193,
+        57453194,
+        57453195,
+        57453196,
+        57453197,
+        57453198,
+        57453199
+      ],
+      "trace": "@scenario/traces/urllc_seed57352192_overloaded.csv",
+      "trace_sha256": "a80a1a7d961bae90a8b88fabd257c1411df527631f7660ba5eef69f69f0106d6",
+      "certificate": {
+        "batch_bytes": 819,
+        "fluid_prbs": 85.69993305272035,
+        "integer_one_tick_prbs": 88,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 9.989996396396396,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.277548497854077,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 8.618312953367877,
+            "integer_prbs": 9,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 7.621234364261168,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 9.989996396396396,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106400.22772083186,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 38954.227720831856,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106485.92765388457,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 8985.927653884573,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "future_holdout_overloaded_seed57352192_j10",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "seed": 57352192,
+      "severity": 10,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 819,
+      "catalog": "configs/future_holdout_overloaded_seed57352192_j10.json",
+      "seed_index": 14002,
+      "registration_streams": [
+        57452192,
+        57452193,
+        57452194,
+        57452195,
+        57452196,
+        57452197,
+        57452198,
+        57452199,
+        57453192,
+        57453193,
+        57453194,
+        57453195,
+        57453196,
+        57453197,
+        57453198,
+        57453199
+      ],
+      "trace": "@scenario/traces/urllc_seed57352192_overloaded.csv",
+      "trace_sha256": "a80a1a7d961bae90a8b88fabd257c1411df527631f7660ba5eef69f69f0106d6",
+      "certificate": {
+        "batch_bytes": 819,
+        "fluid_prbs": 85.69993305272035,
+        "integer_one_tick_prbs": 88,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 9.989996396396396,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.277548497854077,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 8.618312953367877,
+            "integer_prbs": 9,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 7.621234364261168,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 9.989996396396396,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106400.22772083186,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 38954.227720831856,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106485.92765388457,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 8985.927653884573,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "future_holdout_overloaded_seed57352192_j20",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "seed": 57352192,
+      "severity": 20,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 819,
+      "catalog": "configs/future_holdout_overloaded_seed57352192_j20.json",
+      "seed_index": 14002,
+      "registration_streams": [
+        57452192,
+        57452193,
+        57452194,
+        57452195,
+        57452196,
+        57452197,
+        57452198,
+        57452199,
+        57453192,
+        57453193,
+        57453194,
+        57453195,
+        57453196,
+        57453197,
+        57453198,
+        57453199
+      ],
+      "trace": "@scenario/traces/urllc_seed57352192_overloaded.csv",
+      "trace_sha256": "a80a1a7d961bae90a8b88fabd257c1411df527631f7660ba5eef69f69f0106d6",
+      "certificate": {
+        "batch_bytes": 819,
+        "fluid_prbs": 85.69993305272035,
+        "integer_one_tick_prbs": 88,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 9.989996396396396,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.277548497854077,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 8.618312953367877,
+            "integer_prbs": 9,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 7.621234364261168,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.73428148148148,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 9.989996396396396,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106400.22772083186,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 38954.227720831856,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106485.92765388457,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 8985.927653884573,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    }
+  ]
+}

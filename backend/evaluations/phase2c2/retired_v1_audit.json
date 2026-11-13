@@ -1,0 +1,122 @@
+{
+  "reason": "Source-level independence failure: adjacent base seeds reuse 7/8 URLLC and 7/8 eMBB registration seeds; pools 1000 apart also reuse cross-slice streams.",
+  "version": "v1 retired, not final scenario pools",
+  "completed_reference_records": 149,
+  "full_reference_job_interrupted": true,
+  "interruption_exit_code": 130,
+  "peak_memory_report_available": false,
+  "replacement_reason_not_based_on_policy_performance": true,
+  "v1_membership_frozen_before_references": true,
+  "neural_models_created": 0,
+  "optimizer_updates": 0,
+  "incomplete_jsonl_records": 0,
+  "C1_seeds3101_3102_shared_URLLC_positions": 7,
+  "legacy_adjacent_shared_registration_streams": 14,
+  "replacement_seed_stride": 4096,
+  "source_model_unchanged": true,
+  "memory_warning_logged": false,
+  "completed_episode_loop_seconds": 579.7696267771535,
+  "frozen_manifest_sha256": {
+    "training": "ad4aad4120aa8514c9a4c1f85d501b77bfd4eeb8835ebc055b17921868e9bc82",
+    "validation": "87aaf1d4f68d4fcacf2e18a3e9d94c8a99e3d1fa9f4bc859bba9343350561578",
+    "future_holdout": "15b21a152d3c41e06ca89ce3916c60ffa6fa5a5c4c4796f9ea7958b5ce86a140"
+  },
+  "retired_selected_seeds": {
+    "training": [
+      {
+        "regime": "feasible",
+        "seed": 12018,
+        "variant": "original"
+      },
+      {
+        "regime": "feasible",
+        "seed": 12019,
+        "variant": "original"
+      },
+      {
+        "regime": "contested",
+        "seed": 12001,
+        "variant": "original"
+      },
+      {
+        "regime": "contested",
+        "seed": 12002,
+        "variant": "original"
+      },
+      {
+        "regime": "overloaded",
+        "seed": 12003,
+        "variant": "phase12_scaled"
+      },
+      {
+        "regime": "overloaded",
+        "seed": 12004,
+        "variant": "phase12_scaled"
+      }
+    ],
+    "validation": [
+      {
+        "regime": "feasible",
+        "seed": 13002,
+        "variant": "original"
+      },
+      {
+        "regime": "feasible",
+        "seed": 13005,
+        "variant": "original"
+      },
+      {
+        "regime": "contested",
+        "seed": 13008,
+        "variant": "original"
+      },
+      {
+        "regime": "contested",
+        "seed": 13009,
+        "variant": "original"
+      },
+      {
+        "regime": "overloaded",
+        "seed": 13001,
+        "variant": "phase12_scaled"
+      },
+      {
+        "regime": "overloaded",
+        "seed": 13003,
+        "variant": "phase12_scaled"
+      }
+    ],
+    "future_holdout": [
+      {
+        "regime": "feasible",
+        "seed": 14007,
+        "variant": "original"
+      },
+      {
+        "regime": "feasible",
+        "seed": 14008,
+        "variant": "original"
+      },
+      {
+        "regime": "contested",
+        "seed": 14003,
+        "variant": "original"
+      },
+      {
+        "regime": "contested",
+        "seed": 14004,
+        "variant": "original"
+      },
+      {
+        "regime": "overloaded",
+        "seed": 14001,
+        "variant": "phase12_scaled"
+      },
+      {
+        "regime": "overloaded",
+        "seed": 14002,
+        "variant": "phase12_scaled"
+      }
+    ]
+  }
+}

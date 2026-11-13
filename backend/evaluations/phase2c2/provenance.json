@@ -1,0 +1,61 @@
+{
+  "base_commit": "b2007c36488eecea95975667b6b2af8cadef53aa",
+  "protocol_sha256": "f894f903f885b534930b5313435262b74559539edc784b016fefc45639097f6a",
+  "unchanged_protected_source_sha256": {
+    "backend/network_layer/joint_dqn_agent.py": "e259e9424259d4a73a81b256fc517b00c866ef803c2cae80060d817b00155807",
+    "backend/network_layer/joint_dqn_schema.py": "e1c5c884547dc5c6be24a421e13b98bb584e5605b69836ed2aeb795b6299cd73",
+    "backend/network_layer/joint_reward.py": "224b95d363c849650653b65d3c138ea607e546b9603cb3f78987683647f88317",
+    "backend/network_layer/pilot_control.py": "c0edc0cd47c7b40134e127f4a4ed209f54db84e156171c50140f98304732f37d",
+    "backend/network_layer/xApps/xapp_joint_deadline_dqn.py": "ac96ee758f3fa5060998dace0c1927fef3c9eeab48db5a516f484894441bad85",
+    "backend/network_layer/xApps/xapp_resilient_dqn_allocator.py": "634ec18387808c0eba2f9ce93228ab97eedc9f39a2e53f5beca81613358e0544",
+    "backend/network_layer/xApps/xapp_resilient_policy_validator.py": "560ad5657d4b70e81fef90bada993dc74bdddc535e43d14e97f60b33d5488b12",
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/ue.py": "90e0cacd9b7bfdd5fde866e57417f86fb8216ca29920180e342f4e61b3692ca2",
+    "backend/network_layer/cell.py": "0e55268a8a4bb46308c66595b1f1c8cdd9be63b6937162d2541bb9f1d53ec8c2",
+    "backend/network_layer/base_station.py": "5729ae142646a9fa8724145da581754432dd04e3403d3845e80851aca5999d12",
+    "backend/network_layer/queue_measurements.py": "7c21a8a2b6006152e3b99c2707573b142213b22e8fd718e0c4625fbee9eac577",
+    "backend/network_layer/resilient_interval.py": "6017cb42e86f170c5c0cb9e360e213186459183d4597d7056578223bcea092ee",
+    "backend/network_layer/ue_budgets.py": "aa242c0f6f32bc0525b0fecbb40448e1dc1fb6d50f98845d0789688e87789ce7",
+    "backend/network_layer/deadline_risk.py": "a6722cb87cbbfe4bf6fa9218ab6917e5b3ff226aff3858de480e13e654d6782e",
+    "backend/settings/res_dqn_config.py": "00c7e3af8330b34ea14b52f902c328c65f3d68ad247c27a7a45ce310b16b222c",
+    "backend/tools/phase12_study.py": "8526e4e6610c91daa432cb1ba6ca624a986acf7d2d4fc95658352d7e70be65d7"
+  },
+  "implementation_sha256": {
+    "backend/tools/phase2c1_pilot.py": "13019c1d3cfaa8192fc5bceaca7626de7cf4f151ae34ad8efa5c54a429b94a49",
+    "backend/tools/phase2c2_design.py": "42d95c620f3137d370fdf0f68c7b5f4bfcc3a7155b1a432bc9b2d808e6ea3056",
+    "backend/network_layer/workload_feasibility.py": "152d972adf3891087a7f5c2a7dd939ad23320681f886415307731b38c5de1a51",
+    "backend/tests/test_phase2c2.py": "f84c8bde2e64791fab81de24ff6dfc81f91a54b514188249c8861faa5cf6651b"
+  },
+  "original_trace_sha256": {
+    "embb": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "urllc": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  },
+  "scaled_trace_sha256": {
+    "backend/evaluations/phase2c2/traces/urllc_seed49160192_overloaded.csv": "8f5cc12fbb8a670c747ed1f7856f8ed9c7bc3571c49844be12ea36388608ca1c",
+    "backend/evaluations/phase2c2/traces/urllc_seed49168384_overloaded.csv": "18bce6b5175ae29a45916750271eb4e335c8e60b4965ab8daeef60fae5cded84",
+    "backend/evaluations/phase2c2/traces/urllc_seed53252096_overloaded.csv": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+    "backend/evaluations/phase2c2/traces/urllc_seed53256192_overloaded.csv": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+    "backend/evaluations/phase2c2/traces/urllc_seed57348096_overloaded.csv": "61e212f0945af2ce9cf86e45394eb38179981ccb9d749c7599c474df8316925f",
+    "backend/evaluations/phase2c2/traces/urllc_seed57352192_overloaded.csv": "a80a1a7d961bae90a8b88fabd257c1411df527631f7660ba5eef69f69f0106d6"
+  },
+  "frozen_manifest_sha256": {
+    "training": "44d204a7eac8ec0192f751af34dd882b79131d7032a9efe5a71334d4092f940f",
+    "validation": "33e4778710cfe37a3a7b73dc7f963fd12d7bf2c0881413e2763a8a79935d7c3d",
+    "future_holdout": "2d563221b3c5a37c4767d278fe7db597fd3b62869b39a5ae3d6080d064f6eeb6"
+  },
+  "selected_registration_seeds_unique": 288,
+  "original_probe_registration_seeds_unique": 1152,
+  "selected_placement_seeds": 18,
+  "scenario_configs": 54,
+  "reference_episodes": 162,
+  "all_triplets_paired": true,
+  "all_B1_B2_resource_trajectories_identical": true,
+  "coverage_gates_passed": 18,
+  "neural_models_created": 0,
+  "checkpoint_evaluations": 0,
+  "optimizer_updates": 0,
+  "scope": "Final v2 reference characterization only; retired correlated v1 excluded; future-model holdout reference-seen, model-unseen.",
+  "reference_records_gzip_sha256": "6c5dc82912c8a10463921478a3a9450a93d4f09fc9fde2a3a01bdfa82f64cf5c",
+  "compressed_artifact_analysis_reproduced_exactly": true
+}

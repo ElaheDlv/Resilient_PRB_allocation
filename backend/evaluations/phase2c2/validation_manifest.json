@@ -1,0 +1,2294 @@
+{
+  "schema": "phase2c2-scenarios-v1",
+  "pool": "validation",
+  "status": "frozen_before_reference_characterization",
+  "model_evaluations": 0,
+  "entries": [
+    {
+      "id": "validation_feasible_seed53264384_j0",
+      "pool": "validation",
+      "regime": "feasible",
+      "seed": 53264384,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_feasible_seed53264384_j0.json",
+      "seed_index": 13004,
+      "registration_streams": [
+        53364384,
+        53364385,
+        53364386,
+        53364387,
+        53364388,
+        53364389,
+        53364390,
+        53364391,
+        53365384,
+        53365385,
+        53365386,
+        53365387,
+        53365388,
+        53365389,
+        53365390,
+        53365391
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 48.67770250593909,
+        "integer_one_tick_prbs": 53,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 60490.248045432054,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -6955.751954567946,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 60538.925747937996,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -36961.074252062004,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_feasible_seed53264384_j10",
+      "pool": "validation",
+      "regime": "feasible",
+      "seed": 53264384,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_feasible_seed53264384_j10.json",
+      "seed_index": 13004,
+      "registration_streams": [
+        53364384,
+        53364385,
+        53364386,
+        53364387,
+        53364388,
+        53364389,
+        53364390,
+        53364391,
+        53365384,
+        53365385,
+        53365386,
+        53365387,
+        53365388,
+        53365389,
+        53365390,
+        53365391
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 48.67770250593909,
+        "integer_one_tick_prbs": 53,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 60490.248045432054,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -6955.751954567946,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 60538.925747937996,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -36961.074252062004,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_feasible_seed53264384_j20",
+      "pool": "validation",
+      "regime": "feasible",
+      "seed": 53264384,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_feasible_seed53264384_j20.json",
+      "seed_index": 13004,
+      "registration_streams": [
+        53364384,
+        53364385,
+        53364386,
+        53364387,
+        53364388,
+        53364389,
+        53364390,
+        53364391,
+        53365384,
+        53365385,
+        53365386,
+        53365387,
+        53365388,
+        53365389,
+        53365390,
+        53365391
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 48.67770250593909,
+        "integer_one_tick_prbs": 53,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 7.9285685685685685,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 4.969033877038896,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 60490.248045432054,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -6955.751954567946,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 60538.925747937996,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -36961.074252062004,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_feasible_seed53276672_j0",
+      "pool": "validation",
+      "regime": "feasible",
+      "seed": 53276672,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_feasible_seed53276672_j0.json",
+      "seed_index": 13007,
+      "registration_streams": [
+        53376672,
+        53376673,
+        53376674,
+        53376675,
+        53376676,
+        53376677,
+        53376678,
+        53376679,
+        53377672,
+        53377673,
+        53377674,
+        53377675,
+        53377676,
+        53377677,
+        53377678,
+        53377679
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 48.22382464017476,
+        "integer_one_tick_prbs": 54,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 59916.936420838574,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -7529.063579161426,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 59965.16024547875,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -37534.83975452125,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_feasible_seed53276672_j10",
+      "pool": "validation",
+      "regime": "feasible",
+      "seed": 53276672,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_feasible_seed53276672_j10.json",
+      "seed_index": 13007,
+      "registration_streams": [
+        53376672,
+        53376673,
+        53376674,
+        53376675,
+        53376676,
+        53376677,
+        53376678,
+        53376679,
+        53377672,
+        53377673,
+        53377674,
+        53377675,
+        53377676,
+        53377677,
+        53377678,
+        53377679
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 48.22382464017476,
+        "integer_one_tick_prbs": 54,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 59916.936420838574,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -7529.063579161426,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 59965.16024547875,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -37534.83975452125,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_feasible_seed53276672_j20",
+      "pool": "validation",
+      "regime": "feasible",
+      "seed": 53276672,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_feasible_seed53276672_j20.json",
+      "seed_index": 13007,
+      "registration_streams": [
+        53376672,
+        53376673,
+        53376674,
+        53376675,
+        53376676,
+        53376677,
+        53376678,
+        53376679,
+        53377672,
+        53377673,
+        53377674,
+        53377675,
+        53377676,
+        53377677,
+        53377678,
+        53377679
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 48.22382464017476,
+        "integer_one_tick_prbs": 54,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 59916.936420838574,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": -7529.063579161426,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 59965.16024547875,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -37534.83975452125,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": true,
+        "contested": false,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_contested_seed53260288_j0",
+      "pool": "validation",
+      "regime": "contested",
+      "seed": 53260288,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_contested_seed53260288_j0.json",
+      "seed_index": 13003,
+      "registration_streams": [
+        53360288,
+        53360289,
+        53360290,
+        53360291,
+        53360292,
+        53360293,
+        53360294,
+        53360295,
+        53361288,
+        53361289,
+        53361290,
+        53361291,
+        53361292,
+        53361293,
+        53361294,
+        53361295
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 59.08678774049609,
+        "integer_one_tick_prbs": 64,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 73417.70593573076,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 5971.705935730759,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 73476.79272347126,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -24023.207276528745,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_contested_seed53260288_j10",
+      "pool": "validation",
+      "regime": "contested",
+      "seed": 53260288,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_contested_seed53260288_j10.json",
+      "seed_index": 13003,
+      "registration_streams": [
+        53360288,
+        53360289,
+        53360290,
+        53360291,
+        53360292,
+        53360293,
+        53360294,
+        53360295,
+        53361288,
+        53361289,
+        53361290,
+        53361291,
+        53361292,
+        53361293,
+        53361294,
+        53361295
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 59.08678774049609,
+        "integer_one_tick_prbs": 64,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 73417.70593573076,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 5971.705935730759,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 73476.79272347126,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -24023.207276528745,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_contested_seed53260288_j20",
+      "pool": "validation",
+      "regime": "contested",
+      "seed": 53260288,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_contested_seed53260288_j20.json",
+      "seed_index": 13003,
+      "registration_streams": [
+        53360288,
+        53360289,
+        53360290,
+        53360291,
+        53360292,
+        53360293,
+        53360294,
+        53360295,
+        53361288,
+        53361289,
+        53361290,
+        53361291,
+        53361292,
+        53361293,
+        53361294,
+        53361295
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 59.08678774049609,
+        "integer_one_tick_prbs": 64,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 6.048598701794578,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 145.25341386554624,
+            "fluid_prbs": 4.4749378531073445,
+            "integer_prbs": 5,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 11.331387696709585,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 6.83993091537133,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 73417.70593573076,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 5971.705935730759,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 73476.79272347126,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -24023.207276528745,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_contested_seed53284864_j0",
+      "pool": "validation",
+      "regime": "contested",
+      "seed": 53284864,
+      "severity": 0,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_contested_seed53284864_j0.json",
+      "seed_index": 13009,
+      "registration_streams": [
+        53384864,
+        53384865,
+        53384866,
+        53384867,
+        53384868,
+        53384869,
+        53384870,
+        53384871,
+        53385864,
+        53385865,
+        53385866,
+        53385867,
+        53385868,
+        53385869,
+        53385870,
+        53385871
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 58.139450955878516,
+        "integer_one_tick_prbs": 63,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 72233.57082877532,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 4787.570828775322,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 72291.71027973121,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -25208.28972026879,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_contested_seed53284864_j10",
+      "pool": "validation",
+      "regime": "contested",
+      "seed": 53284864,
+      "severity": 10,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_contested_seed53284864_j10.json",
+      "seed_index": 13009,
+      "registration_streams": [
+        53384864,
+        53384865,
+        53384866,
+        53384867,
+        53384868,
+        53384869,
+        53384870,
+        53384871,
+        53385864,
+        53385865,
+        53385866,
+        53385867,
+        53385868,
+        53385869,
+        53385870,
+        53385871
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 58.139450955878516,
+        "integer_one_tick_prbs": 63,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 72233.57082877532,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 4787.570828775322,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 72291.71027973121,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -25208.28972026879,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_contested_seed53284864_j20",
+      "pool": "validation",
+      "regime": "contested",
+      "seed": 53284864,
+      "severity": 20,
+      "traffic_variant": "original",
+      "batch_bytes": 650,
+      "catalog": "configs/validation_contested_seed53284864_j20.json",
+      "seed_index": 13009,
+      "registration_streams": [
+        53384864,
+        53384865,
+        53384866,
+        53384867,
+        53384868,
+        53384869,
+        53384870,
+        53384871,
+        53385864,
+        53385865,
+        53385866,
+        53385867,
+        53385868,
+        53385869,
+        53385870,
+        53385871
+      ],
+      "trace": "backend/notebooks/Resilient_data/urllc_dl.csv",
+      "trace_sha256": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+      "certificate": {
+        "batch_bytes": 650,
+        "fluid_prbs": 58.139450955878516,
+        "integer_one_tick_prbs": 63,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 9.312921810699587,
+            "integer_prbs": 10,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 5.570070323488045,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 4.177552742616034,
+            "integer_prbs": 5,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 72233.57082877532,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 4787.570828775322,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 72291.71027973121,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": -25208.28972026879,
+          "zero_miss_impossible": false,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": true,
+        "overloaded": false
+      }
+    },
+    {
+      "id": "validation_overloaded_seed53252096_j0",
+      "pool": "validation",
+      "regime": "overloaded",
+      "seed": 53252096,
+      "severity": 0,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 912,
+      "catalog": "configs/validation_overloaded_seed53252096_j0.json",
+      "seed_index": 13001,
+      "registration_streams": [
+        53352096,
+        53352097,
+        53352098,
+        53352099,
+        53352100,
+        53352101,
+        53352102,
+        53352103,
+        53353096,
+        53353097,
+        53353098,
+        53353099,
+        53353100,
+        53353101,
+        53353102,
+        53353103
+      ],
+      "trace": "@scenario/traces/urllc_seed53252096_overloaded.csv",
+      "trace_sha256": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+      "certificate": {
+        "batch_bytes": 912,
+        "fluid_prbs": 85.76153003932383,
+        "integer_one_tick_prbs": 90,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 11.124391591591591,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 5.8614278481012665,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 5.8614278481012665,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 7.8152371308016875,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 15.898808583690988,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106491.25543937832,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39045.25543937832,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106577.01696941764,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9077.016969417644,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "validation_overloaded_seed53252096_j10",
+      "pool": "validation",
+      "regime": "overloaded",
+      "seed": 53252096,
+      "severity": 10,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 912,
+      "catalog": "configs/validation_overloaded_seed53252096_j10.json",
+      "seed_index": 13001,
+      "registration_streams": [
+        53352096,
+        53352097,
+        53352098,
+        53352099,
+        53352100,
+        53352101,
+        53352102,
+        53352103,
+        53353096,
+        53353097,
+        53353098,
+        53353099,
+        53353100,
+        53353101,
+        53353102,
+        53353103
+      ],
+      "trace": "@scenario/traces/urllc_seed53252096_overloaded.csv",
+      "trace_sha256": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+      "certificate": {
+        "batch_bytes": 912,
+        "fluid_prbs": 85.76153003932383,
+        "integer_one_tick_prbs": 90,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 11.124391591591591,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 5.8614278481012665,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 5.8614278481012665,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 7.8152371308016875,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 15.898808583690988,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106491.25543937832,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39045.25543937832,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106577.01696941764,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9077.016969417644,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "validation_overloaded_seed53252096_j20",
+      "pool": "validation",
+      "regime": "overloaded",
+      "seed": 53252096,
+      "severity": 20,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 912,
+      "catalog": "configs/validation_overloaded_seed53252096_j20.json",
+      "seed_index": 13001,
+      "registration_streams": [
+        53352096,
+        53352097,
+        53352098,
+        53352099,
+        53352100,
+        53352101,
+        53352102,
+        53352103,
+        53353096,
+        53353097,
+        53353098,
+        53353099,
+        53353100,
+        53353101,
+        53353102,
+        53353103
+      ],
+      "trace": "@scenario/traces/urllc_seed53252096_overloaded.csv",
+      "trace_sha256": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+      "certificate": {
+        "batch_bytes": 912,
+        "fluid_prbs": 85.76153003932383,
+        "integer_one_tick_prbs": 90,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 11.124391591591591,
+            "integer_prbs": 12,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 5.8614278481012665,
+            "integer_prbs": 6,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 155.59348739495798,
+            "fluid_prbs": 5.8614278481012665,
+            "integer_prbs": 6,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 116.69511554621849,
+            "fluid_prbs": 7.8152371308016875,
+            "integer_prbs": 8,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 15.898808583690988,
+            "integer_prbs": 16,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 13.066745679012344,
+            "integer_prbs": 14,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106491.25543937832,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39045.25543937832,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106577.01696941764,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9077.016969417644,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "validation_overloaded_seed53256192_j0",
+      "pool": "validation",
+      "regime": "overloaded",
+      "seed": 53256192,
+      "severity": 0,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 831,
+      "catalog": "configs/validation_overloaded_seed53256192_j0.json",
+      "seed_index": 13002,
+      "registration_streams": [
+        53356192,
+        53356193,
+        53356194,
+        53356195,
+        53356196,
+        53356197,
+        53356198,
+        53356199,
+        53357192,
+        53357193,
+        53357194,
+        53357195,
+        53357196,
+        53357197,
+        53357198,
+        53357199
+      ],
+      "trace": "@scenario/traces/urllc_seed53256192_overloaded.csv",
+      "trace_sha256": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+      "certificate": {
+        "batch_bytes": 831,
+        "fluid_prbs": 85.75248945458264,
+        "integer_one_tick_prbs": 89,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 7.73290080183276,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 10.13636996996997,
+            "integer_prbs": 11,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.486743347639486,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.90621234567901,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.486743347639486,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.90621234567901,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 8.74458860103627,
+            "integer_prbs": 9,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 6.352718695106651,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106483.99405162479,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39037.99405162479,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106569.74654107937,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9069.746541079367,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "validation_overloaded_seed53256192_j10",
+      "pool": "validation",
+      "regime": "overloaded",
+      "seed": 53256192,
+      "severity": 10,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 831,
+      "catalog": "configs/validation_overloaded_seed53256192_j10.json",
+      "seed_index": 13002,
+      "registration_streams": [
+        53356192,
+        53356193,
+        53356194,
+        53356195,
+        53356196,
+        53356197,
+        53356198,
+        53356199,
+        53357192,
+        53357193,
+        53357194,
+        53357195,
+        53357196,
+        53357197,
+        53357198,
+        53357199
+      ],
+      "trace": "@scenario/traces/urllc_seed53256192_overloaded.csv",
+      "trace_sha256": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+      "certificate": {
+        "batch_bytes": 831,
+        "fluid_prbs": 85.75248945458264,
+        "integer_one_tick_prbs": 89,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 7.73290080183276,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 10.13636996996997,
+            "integer_prbs": 11,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.486743347639486,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.90621234567901,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.486743347639486,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.90621234567901,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 8.74458860103627,
+            "integer_prbs": 9,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 6.352718695106651,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106483.99405162479,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39037.99405162479,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106569.74654107937,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9069.746541079367,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    },
+    {
+      "id": "validation_overloaded_seed53256192_j20",
+      "pool": "validation",
+      "regime": "overloaded",
+      "seed": 53256192,
+      "severity": 20,
+      "traffic_variant": "phase12_scaled",
+      "batch_bytes": 831,
+      "catalog": "configs/validation_overloaded_seed53256192_j20.json",
+      "seed_index": 13002,
+      "registration_streams": [
+        53356192,
+        53356193,
+        53356194,
+        53356195,
+        53356196,
+        53356197,
+        53356198,
+        53356199,
+        53357192,
+        53357193,
+        53357194,
+        53357195,
+        53357196,
+        53357197,
+        53357198,
+        53357199
+      ],
+      "trace": "@scenario/traces/urllc_seed53256192_overloaded.csv",
+      "trace_sha256": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+      "certificate": {
+        "batch_bytes": 831,
+        "fluid_prbs": 85.75248945458264,
+        "integer_one_tick_prbs": 89,
+        "per_ue": {
+          "DQNIMSI_phase1_pilot_URLLC_0": {
+            "bytes_per_prb_tick": 107.46290703781513,
+            "fluid_prbs": 7.73290080183276,
+            "integer_prbs": 8,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_1": {
+            "bytes_per_prb_tick": 81.98201155462185,
+            "fluid_prbs": 10.13636996996997,
+            "integer_prbs": 11,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_2": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.486743347639486,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_3": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.90621234567901,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_4": {
+            "bytes_per_prb_tick": 57.362788865546214,
+            "fluid_prbs": 14.486743347639486,
+            "integer_prbs": 15,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_5": {
+            "bytes_per_prb_tick": 69.79549632352942,
+            "fluid_prbs": 11.90621234567901,
+            "integer_prbs": 12,
+            "budget_s": 0.002
+          },
+          "DQNIMSI_phase1_pilot_URLLC_6": {
+            "bytes_per_prb_tick": 95.03019957983193,
+            "fluid_prbs": 8.74458860103627,
+            "integer_prbs": 9,
+            "budget_s": 0.01
+          },
+          "DQNIMSI_phase1_pilot_URLLC_7": {
+            "bytes_per_prb_tick": 130.81013655462183,
+            "fluid_prbs": 6.352718695106651,
+            "integer_prbs": 7,
+            "budget_s": 0.002
+          }
+        },
+        "baseline_on_bound": {
+          "ticks": 1249,
+          "quota": 54,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1246
+          },
+          "required_prb_ticks": 106483.99405162479,
+          "available_prb_ticks": 67446,
+          "excess_prb_ticks": 39037.99405162479,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "full_pool_off_bound": {
+          "ticks": 1250,
+          "quota": 78,
+          "due_batches": {
+            "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+            "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+            "DQNIMSI_phase1_pilot_URLLC_7": 1247
+          },
+          "required_prb_ticks": 106569.74654107937,
+          "available_prb_ticks": 97500,
+          "excess_prb_ticks": 9069.746541079367,
+          "zero_miss_impossible": true,
+          "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+        },
+        "feasible": false,
+        "contested": false,
+        "overloaded": true
+      }
+    }
+  ]
+}

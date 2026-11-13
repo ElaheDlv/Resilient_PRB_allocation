@@ -1,0 +1,62 @@
+{
+  "reference_episodes": [
+    {
+      "method": "B0",
+      "seed": 3101,
+      "severity": 0,
+      "matches": true
+    },
+    {
+      "method": "B0",
+      "seed": 3101,
+      "severity": 10,
+      "matches": true
+    },
+    {
+      "method": "B0",
+      "seed": 3101,
+      "severity": 20,
+      "matches": true
+    },
+    {
+      "method": "B1",
+      "seed": 3101,
+      "severity": 0,
+      "matches": true
+    },
+    {
+      "method": "B1",
+      "seed": 3101,
+      "severity": 10,
+      "matches": true
+    },
+    {
+      "method": "B1",
+      "seed": 3101,
+      "severity": 20,
+      "matches": true
+    },
+    {
+      "method": "B2",
+      "seed": 3101,
+      "severity": 0,
+      "matches": true
+    },
+    {
+      "method": "B2",
+      "seed": 3101,
+      "severity": 10,
+      "matches": true
+    },
+    {
+      "method": "B2",
+      "seed": 3101,
+      "severity": 20,
+      "matches": true
+    }
+  ],
+  "all_match": true,
+  "new_measurement_hooks_default_disabled": true,
+  "models_created": 0,
+  "optimizer_updates": 0
+}

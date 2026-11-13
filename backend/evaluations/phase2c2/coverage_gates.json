@@ -1,0 +1,387 @@
+{
+  "reference_characterization_complete": true,
+  "ready_for_next_bounded_learning": true,
+  "gates": [
+    {
+      "scenario_id": "training_feasible_seed49164288_j20",
+      "pool": "training",
+      "regime": "feasible",
+      "passed": true,
+      "reference_failure_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "training_feasible_seed49184768_j20",
+      "pool": "training",
+      "regime": "feasible",
+      "passed": true,
+      "reference_failure_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "training_contested_seed49156096_j20",
+      "pool": "training",
+      "regime": "contested",
+      "passed": true,
+      "reference_failure_percent": [
+        56.69166666666666,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        67.93333333333334,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "training_contested_seed49176576_j20",
+      "pool": "training",
+      "regime": "contested",
+      "passed": true,
+      "reference_failure_percent": [
+        81.17916666666667,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        88.86666666666667,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "training_overloaded_seed49160192_j20",
+      "pool": "training",
+      "regime": "overloaded",
+      "passed": true,
+      "reference_failure_percent": [
+        99.4375,
+        99.40833333333333,
+        37.30416666666667
+      ],
+      "reference_worst_percent": [
+        99.8,
+        99.8,
+        99.53333333333333
+      ],
+      "recovered": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "scenario_id": "training_overloaded_seed49168384_j20",
+      "pool": "training",
+      "regime": "overloaded",
+      "passed": true,
+      "reference_failure_percent": [
+        99.4375,
+        99.4,
+        37.28333333333333
+      ],
+      "reference_worst_percent": [
+        99.8,
+        99.8,
+        99.43333333333332
+      ],
+      "recovered": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "scenario_id": "validation_feasible_seed53264384_j20",
+      "pool": "validation",
+      "regime": "feasible",
+      "passed": true,
+      "reference_failure_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "validation_feasible_seed53276672_j20",
+      "pool": "validation",
+      "regime": "feasible",
+      "passed": true,
+      "reference_failure_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "pool": "validation",
+      "regime": "contested",
+      "passed": true,
+      "reference_failure_percent": [
+        97.66666666666667,
+        17.958333333333336,
+        9.608333333333334
+      ],
+      "reference_worst_percent": [
+        99.23333333333333,
+        37.0,
+        76.86666666666667
+      ],
+      "recovered": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "scenario_id": "validation_contested_seed53284864_j20",
+      "pool": "validation",
+      "regime": "contested",
+      "passed": true,
+      "reference_failure_percent": [
+        97.27916666666667,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        99.06666666666666,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "pool": "validation",
+      "regime": "overloaded",
+      "passed": true,
+      "reference_failure_percent": [
+        99.4375,
+        99.39583333333334,
+        37.27916666666667
+      ],
+      "reference_worst_percent": [
+        99.8,
+        99.8,
+        99.43333333333332
+      ],
+      "recovered": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "scenario_id": "validation_overloaded_seed53256192_j20",
+      "pool": "validation",
+      "regime": "overloaded",
+      "passed": true,
+      "reference_failure_percent": [
+        99.4375,
+        99.40416666666667,
+        37.27916666666667
+      ],
+      "reference_worst_percent": [
+        99.8,
+        99.8,
+        99.43333333333332
+      ],
+      "recovered": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "scenario_id": "future_holdout_feasible_seed57356288_j20",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "passed": true,
+      "reference_failure_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "future_holdout_feasible_seed57368576_j20",
+      "pool": "future_holdout",
+      "regime": "feasible",
+      "passed": true,
+      "reference_failure_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "future_holdout_contested_seed57360384_j20",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "passed": true,
+      "reference_failure_percent": [
+        97.15,
+        0.0,
+        0.0
+      ],
+      "reference_worst_percent": [
+        99.06666666666666,
+        0.0,
+        0.0
+      ],
+      "recovered": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "scenario_id": "future_holdout_contested_seed57380864_j20",
+      "pool": "future_holdout",
+      "regime": "contested",
+      "passed": true,
+      "reference_failure_percent": [
+        97.79166666666667,
+        32.645833333333336,
+        11.1
+      ],
+      "reference_worst_percent": [
+        99.26666666666667,
+        66.23333333333333,
+        88.8
+      ],
+      "recovered": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "scenario_id": "future_holdout_overloaded_seed57348096_j20",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "passed": true,
+      "reference_failure_percent": [
+        99.43333333333332,
+        99.41666666666666,
+        37.275000000000006
+      ],
+      "reference_worst_percent": [
+        99.8,
+        99.8,
+        99.4
+      ],
+      "recovered": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "scenario_id": "future_holdout_overloaded_seed57352192_j20",
+      "pool": "future_holdout",
+      "regime": "overloaded",
+      "passed": true,
+      "reference_failure_percent": [
+        99.45,
+        99.41250000000001,
+        37.266666666666666
+      ],
+      "reference_worst_percent": [
+        99.83333333333333,
+        99.83333333333333,
+        99.4
+      ],
+      "recovered": [
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "model_holdout_status": "reference-characterized, model-unseen; membership frozen before reference runs",
+  "learned_model_evaluations": 0,
+  "optimizer_updates": 0
+}

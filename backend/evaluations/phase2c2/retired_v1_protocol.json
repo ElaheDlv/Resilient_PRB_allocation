@@ -1,0 +1,71 @@
+{
+  "version": "phase2c2-design-v1",
+  "base_commit": "b2007c3",
+  "seed_blocks": {
+    "training": [
+      12001,
+      12024
+    ],
+    "validation": [
+      13001,
+      13024
+    ],
+    "future_holdout": [
+      14001,
+      14024
+    ]
+  },
+  "seeds_per_regime_per_pool": 2,
+  "regimes": [
+    "feasible",
+    "contested",
+    "overloaded"
+  ],
+  "severities": [
+    0,
+    10,
+    20
+  ],
+  "methods": [
+    "B0",
+    "B1",
+    "B2"
+  ],
+  "calibration_intervals": 2,
+  "diagnostic_intervals": 300,
+  "budget_classes_s": {
+    "tight": 0.002,
+    "relaxed": 0.01
+  },
+  "physical_reserve_prbs": 18,
+  "original_urllc_batch_bytes": 650,
+  "quota_urllc_on": 54,
+  "quota_urllc_off": 60,
+  "optimistic_full_pool_on": 72,
+  "optimistic_full_pool_off": 78,
+  "selection": "Use exogenous diagnostics only. First qualifying unused original seeds in ascending order; if missing, first unused seed with Phase1.2 scaled copy. Freeze before full reference characterization. No replacement after outcomes.",
+  "feasible_definition": "sum ceil(bytes/capacity_per_prb_tick) <=54; positive static rates; periodic one-ms arrivals; from-empty one-tick certificate.",
+  "contested_definition": "Due-work demand over first 1249-ms ON window exceeds baseline 54*ticks, but one-tick integer demand <=72 and fluid demand <60. Baseline impossibility and optimistic full-pool constructive capacity certificate.",
+  "overloaded_definition": "Due-work demand even over a 1250-ms OFF/no-jam window exceeds 78*ticks; impossibility despite optimistic entire reserve to URLLC.",
+  "scaled_targets": {
+    "feasible_fluid_prbs": 32.4,
+    "contested_fluid_prbs": 56.7,
+    "overloaded_fluid_prbs": 85.8
+  },
+  "fallback": "Only if original seeds lack a regime. Reuse Phase1.2 length-column scaling on a generated copy, never overwrite source CSVs. Preserve all timestamps, periodicity, channels and budgets.",
+  "reference_gate": "Feasible: B0/B1/B2 zero known failures. Contested: >=1 percentage-point aggregate or worst-UE separation among references, or different recovery outcomes. Overloaded: positive full-pool necessary-bound deficit and observed known failures. Do not replace failed-gate held-out candidates; report not-ready.",
+  "scope": "72 short exogenous probes, freeze 18 placement seeds / 54 scenario configs, characterize 162 paired reference episodes. No model creation, checkpoint loading, optimizer updates, DQN evaluation or training.",
+  "resources": {
+    "cpus": [
+      7,
+      8,
+      10,
+      15
+    ],
+    "warning_gib": 2,
+    "stop_gib": 2.5,
+    "minimum_available_gib": 4,
+    "cuda": false,
+    "parallel_workers": 1
+  }
+}
