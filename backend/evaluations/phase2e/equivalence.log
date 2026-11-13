@@ -1,0 +1,50 @@
+{"stage": "equivalence", "scenario": "validation_feasible_seed53264384_j20", "pairs": 1, "exact": true}
+{"stage": "equivalence", "scenario": "validation_feasible_seed53276672_j20", "pairs": 2, "exact": true}
+{"stage": "equivalence", "scenario": "validation_contested_seed53260288_j0", "pairs": 3, "exact": true}
+{"stage": "equivalence", "scenario": "validation_contested_seed53260288_j10", "pairs": 4, "exact": true}
+{"stage": "equivalence", "scenario": "validation_contested_seed53260288_j20", "pairs": 5, "exact": true}
+{"stage": "equivalence", "scenario": "validation_contested_seed53284864_j0", "pairs": 6, "exact": true}
+{"stage": "equivalence", "scenario": "validation_contested_seed53284864_j10", "pairs": 7, "exact": true}
+{"stage": "equivalence", "scenario": "validation_contested_seed53284864_j20", "pairs": 8, "exact": true}
+{"stage": "equivalence", "scenario": "validation_overloaded_seed53252096_j20", "pairs": 9, "exact": true}
+{"stage": "equivalence", "scenario": "validation_overloaded_seed53256192_j20", "pairs": 10, "exact": true}
+{
+  "command": [
+    "python",
+    "backend/tools/phase2e_study.py",
+    "equivalence"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 137.88,
+  "peak_aggregate_rss_bytes": 785059840,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15368192,
+  "samples": 2075,
+  "assigned_cpu_busy_percent_before": {
+    "6": 5.26,
+    "7": 5.0,
+    "11": 9.52,
+    "14": 0.0
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   26249008 kB",
+  "elapsed_seconds": 105.16555479518138,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}

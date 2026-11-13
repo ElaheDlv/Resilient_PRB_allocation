@@ -1,0 +1,105 @@
+{
+  "version": "phase2e-independent-v1",
+  "base_commit": "fbafd09",
+  "candidate_indices": [
+    15001,
+    15024
+  ],
+  "seed_stride": 4096,
+  "prior_index_blocks": {
+    "training": [
+      12001,
+      12024
+    ],
+    "validation": [
+      13001,
+      13024
+    ],
+    "future_holdout": [
+      14001,
+      14024
+    ]
+  },
+  "placements_per_regime": 3,
+  "severities": [
+    0,
+    10,
+    20
+  ],
+  "episode_intervals": 300,
+  "probe_intervals": 2,
+  "regimes": [
+    "feasible",
+    "contested",
+    "overloaded"
+  ],
+  "overload_fluid_target": 85.8,
+  "selection": "First three unused original650-byte seeds satisfying existing exogenous certificates for feasible, then contested; first three remaining for overload using the existing C2 85.8-fluid-PRB length-scaling definition. No outcome-based replacement; no automatic extension if coverage is short.",
+  "profile_scenarios": [
+    "validation_feasible_seed53264384_j20",
+    "validation_contested_seed53260288_j20",
+    "validation_overloaded_seed53252096_j20"
+  ],
+  "equivalence_scenarios": [
+    "validation_feasible_seed53264384_j20",
+    "validation_feasible_seed53276672_j20",
+    "validation_contested_seed53260288_j0",
+    "validation_contested_seed53260288_j10",
+    "validation_contested_seed53260288_j20",
+    "validation_contested_seed53284864_j0",
+    "validation_contested_seed53284864_j10",
+    "validation_contested_seed53284864_j20",
+    "validation_overloaded_seed53252096_j20",
+    "validation_overloaded_seed53256192_j20"
+  ],
+  "algorithm": "Unchanged Phase2D ExperimentalFairAllocator fraction=1, legacy=False; same100ms service window,20 matured batches, credit/gate equations and fallback.",
+  "independent_policies": [
+    "P",
+    "F",
+    "G1"
+  ],
+  "independent_original_checks": "Original G1 replay on all selected contested j20 entries; compare with optimized independent runs.",
+  "budget": "24 exogenous20ms probes; 6 profiling episodes;20 existing-scenario equivalence episodes; at most81 independent P/F/G1 episodes and3 independent original checks. Max110 full3-second episodes. No learning or automatic growth.",
+  "interpretation": "Report each placement and paired differences, not a tuned coefficient or a pooled-sample significance claim. No application-supported acceptable-loss SLA exists; quantify trade-offs explicitly. Necessary1ms timing benchmark: report all-tick and nonterminal p95/p99/max/exceedances, not a hard real-time guarantee.",
+  "timing_scope": "Wall and process-CPU around entire engine.step: includes physics/traffic, all scheduling, reference RIC, telemetry/metrics and G1 post-service updates. Excludes setup/reset, post-timer audit hashing/CSV export. Also allocator+G1-update transaction timings. Profiling runs excluded from independent timing evidence.",
+  "resources": {
+    "cpus": [
+      6,
+      7,
+      11,
+      14
+    ],
+    "warning_gib": 2,
+    "stop_gib": 2.5,
+    "minimum_available_gib": 4,
+    "threads": 1,
+    "workers": 1,
+    "cuda": false,
+    "hard_memory_cap": false
+  },
+  "input_sha256": {
+    "backend/evaluations/phase1/main_scenarios/scenario_j0.json": "ee24e28ee55bb9bc55d4636603e14b402465fb3dcae854c5ffb3a059122550f4",
+    "backend/evaluations/phase1/main_scenarios/scenario_j10.json": "edc6c251e8035a2ff77b8e4e31dbb69de1981e1a8170d5dedce22ecff7279e6a",
+    "backend/evaluations/phase1/main_scenarios/scenario_j20.json": "1761f79153aa47fc1e8b44d523d841e1c44400b803e78f480e206e1c969dba4b",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53284864_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53276672_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j20.json": "4a35d3128e17f1a3d1a3420d11270c81590a83b441fd5e610b64003238f0eb8e",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53256192_j20.json": "8e6a229e9d97b40d9c9a4e9a0b126d36eaa01267fb6d81b68427276d5f34ddbe",
+    "backend/evaluations/phase2c2/discovery_protocol.json": "f894f903f885b534930b5313435262b74559539edc784b016fefc45639097f6a",
+    "backend/evaluations/phase2c2/traces/urllc_seed53252096_overloaded.csv": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+    "backend/evaluations/phase2c2/traces/urllc_seed53256192_overloaded.csv": "6dec2fb35c422bb9c8559eb6d0aeaa53f74510e16bf03250d3640d45fc46b943",
+    "backend/evaluations/phase2c2/validation_manifest.json": "33e4778710cfe37a3a7b73dc7f963fd12d7bf2c0881413e2763a8a79935d7c3d",
+    "backend/evaluations/phase2d/protocol.json": "d04f8e6465a41968da68ddd9e2a61d35edb4c4ba41d93764ddd445cb394699f7",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/feasibility_gated_fairness.py": "db368db77e2039ffbe229426b1003522cd0ea60382df994fd5bd496e0171be19",
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  }
+}

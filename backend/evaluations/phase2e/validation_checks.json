@@ -1,0 +1,8 @@
+{
+  "independent_episodes": 81,
+  "independent_scenarios": 27,
+  "independent_original_equivalence_checks": 3,
+  "all_quota_trajectories_identical": true,
+  "all_allocation_service_outcomes_equivalent": true,
+  "dqn_updates": 0
+}

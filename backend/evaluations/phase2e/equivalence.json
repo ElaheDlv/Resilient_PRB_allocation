@@ -1,0 +1,6 @@
+{
+  "exact": true,
+  "pairs": 10,
+  "physical_ticks_per_implementation": 30000,
+  "per_ue_allocations_checked": true
+}

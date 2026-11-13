@@ -1,0 +1,121 @@
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j0", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1839.545}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j0", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2104.165}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j0", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2096.234}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j10", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1885.817}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j10", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2053.155}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j10", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2107.721}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j20", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1901.674}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j20", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2086.258}
+{"stage": "independent", "scenario": "independent_feasible_seed61444096_j20", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2192.459}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j0", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1857.089}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j0", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2032.616}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j0", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2084.13}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j10", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1880.091}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j10", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2074.693}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j10", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2078.533}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j20", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1922.313}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j20", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2077.407}
+{"stage": "independent", "scenario": "independent_feasible_seed61489152_j20", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2105.87}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j0", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1868.486}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j0", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2075.135}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j0", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2118.468}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j10", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1894.672}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j10", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2075.537}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j10", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2099.735}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j20", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1894.866}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j20", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2074.04}
+{"stage": "independent", "scenario": "independent_feasible_seed61505536_j20", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2125.999}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j0", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1870.823}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j0", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2123.916}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j0", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2094.579}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j10", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1881.404}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j10", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2091.617}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j10", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2143.162}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j20", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1930.702}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j20", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2130.772}
+{"stage": "independent", "scenario": "independent_contested_seed61448192_j20", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2152.421}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j0", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1909.134}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j0", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2220.465}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j0", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2542.152}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j10", "policy": "P", "failed": 0.857375, "worst": 0.9583333333333334, "tick_p99_us": 1966.093}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j10", "policy": "F", "failed": 0.11566666666666667, "worst": 0.9253333333333333, "tick_p99_us": 2443.775}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j10", "policy": "G1", "failed": 0.35404166666666664, "worst": 0.917, "tick_p99_us": 2505.243}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j20", "policy": "P", "failed": 0.8851666666666667, "worst": 0.9853333333333333, "tick_p99_us": 1947.25}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j20", "policy": "F", "failed": 0.11645833333333333, "worst": 0.9316666666666666, "tick_p99_us": 2429.165}
+{"stage": "independent", "scenario": "independent_contested_seed61460480_j20", "policy": "G1", "failed": 0.37845833333333334, "worst": 0.9323333333333333, "tick_p99_us": 2471.453}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j0", "policy": "P", "failed": 0.0, "worst": 0.0, "tick_p99_us": 1939.245}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j0", "policy": "F", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2220.889}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j0", "policy": "G1", "failed": 0.0, "worst": 0.0, "tick_p99_us": 2560.305}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j10", "policy": "P", "failed": 0.8725833333333334, "worst": 0.9613333333333334, "tick_p99_us": 1992.141}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j10", "policy": "F", "failed": 0.117, "worst": 0.936, "tick_p99_us": 2627.485}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j10", "policy": "G1", "failed": 0.3722083333333333, "worst": 0.9363333333333334, "tick_p99_us": 2531.823}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j20", "policy": "P", "failed": 0.8982916666666667, "worst": 0.987, "tick_p99_us": 1998.812}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j20", "policy": "F", "failed": 0.11816666666666667, "worst": 0.9453333333333334, "tick_p99_us": 2658.639}
+{"stage": "independent", "scenario": "independent_contested_seed61476864_j20", "policy": "G1", "failed": 0.38116666666666665, "worst": 0.9486666666666667, "tick_p99_us": 2543.518}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j0", "policy": "P", "failed": 0.9931666666666666, "worst": 0.9976666666666667, "tick_p99_us": 4897.837}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j0", "policy": "F", "failed": 0.24845833333333334, "worst": 0.994, "tick_p99_us": 4288.486}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j0", "policy": "G1", "failed": 0.24845833333333334, "worst": 0.994, "tick_p99_us": 4345.348}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j10", "policy": "P", "failed": 0.993625, "worst": 0.998, "tick_p99_us": 4910.88}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j10", "policy": "F", "failed": 0.24854166666666666, "worst": 0.9943333333333333, "tick_p99_us": 4306.862}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j10", "policy": "G1", "failed": 0.24854166666666666, "worst": 0.9943333333333333, "tick_p99_us": 4339.46}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j20", "policy": "P", "failed": 0.9940416666666667, "worst": 0.998, "tick_p99_us": 4957.704}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j20", "policy": "F", "failed": 0.24870833333333334, "worst": 0.995, "tick_p99_us": 4355.767}
+{"stage": "independent", "scenario": "independent_overloaded_seed61452288_j20", "policy": "G1", "failed": 0.24870833333333334, "worst": 0.995, "tick_p99_us": 4445.311}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j0", "policy": "P", "failed": 0.993125, "worst": 0.9976666666666667, "tick_p99_us": 4747.538}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j0", "policy": "F", "failed": 0.3722916666666667, "worst": 0.993, "tick_p99_us": 5198.539}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j0", "policy": "G1", "failed": 0.3722916666666667, "worst": 0.993, "tick_p99_us": 5241.933}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j10", "policy": "P", "failed": 0.9935416666666667, "worst": 0.998, "tick_p99_us": 4816.059}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j10", "policy": "F", "failed": 0.3724166666666667, "worst": 0.9933333333333333, "tick_p99_us": 5317.396}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j10", "policy": "G1", "failed": 0.3724166666666667, "worst": 0.9933333333333333, "tick_p99_us": 5325.473}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j20", "policy": "P", "failed": 0.994, "worst": 0.998, "tick_p99_us": 4875.239}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j20", "policy": "F", "failed": 0.3727083333333333, "worst": 0.994, "tick_p99_us": 5396.045}
+{"stage": "independent", "scenario": "independent_overloaded_seed61456384_j20", "policy": "G1", "failed": 0.3727083333333333, "worst": 0.994, "tick_p99_us": 5341.995}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j0", "policy": "P", "failed": 0.9932083333333334, "worst": 0.9976666666666667, "tick_p99_us": 5093.07}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j0", "policy": "F", "failed": 0.3722916666666667, "worst": 0.993, "tick_p99_us": 5828.575}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j0", "policy": "G1", "failed": 0.3722916666666667, "worst": 0.993, "tick_p99_us": 5832.155}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j10", "policy": "P", "failed": 0.9935833333333334, "worst": 0.998, "tick_p99_us": 5198.043}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j10", "policy": "F", "failed": 0.3724166666666667, "worst": 0.9933333333333333, "tick_p99_us": 5789.954}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j10", "policy": "G1", "failed": 0.3724166666666667, "worst": 0.9933333333333333, "tick_p99_us": 5997.404}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j20", "policy": "P", "failed": 0.9940416666666667, "worst": 0.998, "tick_p99_us": 5229.327}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j20", "policy": "F", "failed": 0.496875, "worst": 0.994, "tick_p99_us": 6050.644}
+{"stage": "independent", "scenario": "independent_overloaded_seed61464576_j20", "policy": "G1", "failed": 0.496875, "worst": 0.994, "tick_p99_us": 6088.118}
+{
+  "command": [
+    "python",
+    "backend/tools/phase2e_study.py",
+    "evaluate"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 138.81,
+  "peak_aggregate_rss_bytes": 863162368,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15372288,
+  "samples": 7219,
+  "assigned_cpu_busy_percent_before": {
+    "6": 5.26,
+    "7": 0.0,
+    "11": 10.53,
+    "14": 11.11
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   26058572 kB",
+  "elapsed_seconds": 365.94901263411157,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}

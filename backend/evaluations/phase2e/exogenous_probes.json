@@ -1,0 +1,5810 @@
+[
+  {
+    "seed": 61444096,
+    "seed_index": 15001,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_1": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_2": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_3": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_4": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_5": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 81.98201155462185
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 50.60031962129229,
+      "integer_one_tick_prbs": 54,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 62843.22548121419,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -4602.774518785809,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 62893.82580083549,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -34606.17419916451,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": true,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          826.5896231260717,
+          1270.8255938964437
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          705.2484455383053,
+          1174.95990389576
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          954.7469396364046,
+          1106.354100923722
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          1019.7256680622775,
+          870.0721924166313
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          987.8236923348743,
+          842.2185771428944
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 13,
+        "position": [
+          1163.2403597820762,
+          911.8960089661543
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1348.7382973881608,
+          871.2834602327639
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          653.577334557239,
+          1004.165485799532
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61448192,
+    "seed_index": 15002,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_1": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_2": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_5": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_6": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_7": 130.81013655462183
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 56.83104975147348,
+      "integer_one_tick_prbs": 59,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 70600.31805963464,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 3154.3180596346356,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 70657.14910938611,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -26842.85089061389,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          1028.1238413395213,
+          659.2822122166108
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          742.7226577382532,
+          1158.1222190752087
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 12,
+        "position": [
+          1126.8740836962443,
+          1189.9520021700223
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1361.4996038351776,
+          912.505783291272
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          729.3575603503197,
+          810.4689900403351
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1346.1491792873064,
+          1130.8199404156655
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 13,
+        "position": [
+          1191.1116326877298,
+          1082.6651901853527
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 13,
+        "position": [
+          1194.878925225566,
+          992.1709730501813
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61452288,
+    "seed_index": 15003,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_1": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_2": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_5": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_6": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_7": 145.25341386554624
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 51.193569241563495,
+      "integer_one_tick_prbs": 55,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 63602.197243867966,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -3843.802756132034,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 63653.39081310953,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -33846.60918689047,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          748.595298450906,
+          1048.2036672153054
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 13,
+        "position": [
+          866.2822775746197,
+          1141.4497688236263
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          1319.4658533823472,
+          954.6850187055081
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1290.6384931648774,
+          1254.717739317107
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1091.9304848906868,
+          870.5561793745426
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          909.3661041118638,
+          1337.884639880695
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 13,
+        "position": [
+          1147.9222648665111,
+          851.1809629601603
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 14,
+        "position": [
+          879.1836127948619,
+          880.5888499439244
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61456384,
+    "seed_index": 15004,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_1": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_2": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_3": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_4": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_5": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_6": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_7": 81.98201155462185
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 63.62089177041356,
+      "integer_one_tick_prbs": 69,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 78982.40514636142,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 11536.405146361416,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 79046.02603813184,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -18453.973961868163,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          877.0984469757232,
+          927.9943796910703
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          718.7462018678282,
+          757.2944594515476
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          938.4018059207505,
+          613.5739747690056
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          1076.6075835217543,
+          751.271327434006
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          746.6793375220739,
+          710.3134542121646
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          1052.4295678921735,
+          1019.1887801364767
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          602.5443163301993,
+          1017.3823341729881
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          1093.0517541082158,
+          687.5834042164489
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61460480,
+    "seed_index": 15005,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_2": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_3": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_4": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_7": 81.98201155462185
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 59.781511614561595,
+      "integer_one_tick_prbs": 63,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 74246.72331177228,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 6800.723311772279,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 74306.50482338684,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -23193.495176613156,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1313.795141666741,
+          1197.361760587564
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1352.2712492612018,
+          937.0685420357581
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1263.555599944596,
+          860.8038248789303
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 12,
+        "position": [
+          987.2649096777662,
+          1212.4446275735006
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          720.6833683614914,
+          830.6388638729835
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          787.0344543024926,
+          1194.726199873647
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          1269.9274292139664,
+          1029.8306600526953
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          965.6166963241113,
+          1334.142337977157
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61464576,
+    "seed_index": 15006,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_1": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_2": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_3": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_4": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 68.31153547204516,
+      "integer_one_tick_prbs": 73,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 84802.01197313782,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 17356.01197313782,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 84870.32350860987,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -12629.676491390128,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          1263.5988695904264,
+          713.1940357498836
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          998.3693174356631,
+          1269.4939175899633
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          956.1625095070253,
+          1358.4085720972412
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          702.2554527062134,
+          909.1963387222609
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1053.0712612816615,
+          1364.6678463957176
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          789.6163247542021,
+          1236.0538212723982
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1193.8488135060343,
+          669.2638837746426
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          785.9855521904005,
+          688.0066711401944
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61468672,
+    "seed_index": 15007,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_1": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_2": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_5": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_6": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 53.36811761585376,
+      "integer_one_tick_prbs": 58,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 66330.55369556106,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -1115.4463044389413,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 66383.92181317692,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -31116.078186823084,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          983.9391697219148,
+          1131.4364676760622
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          762.4390898833228,
+          935.426635632597
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 12,
+        "position": [
+          793.1511236952267,
+          1123.9465365239812
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1093.1594747847469,
+          1358.7190995510377
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          885.2336425204375,
+          911.3584589580388
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          808.8601368302009,
+          1258.1457177383277
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          718.4065980669991,
+          1132.9589673361252
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1338.493344847991,
+          1080.6051962120762
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61472768,
+    "seed_index": 15008,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_2": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_3": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_4": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_7": 107.46290703781513
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 54.15052592183507,
+      "integer_one_tick_prbs": 59,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 67229.59919743304,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -216.40080256696092,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 67283.74972335488,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -30216.25027664512,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1318.34843696183,
+          825.7619550115193
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          787.2110693176681,
+          1180.3239642253398
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          862.3841172697951,
+          764.6286904246604
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          975.0696911018313,
+          1064.1838369455213
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1089.667677870396,
+          1348.5492836673836
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          719.7588145617106,
+          1099.487760126286
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 12,
+        "position": [
+          911.8200985692441,
+          1209.1778567885324
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          1185.7099197259763,
+          834.0428193402869
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61476864,
+    "seed_index": 15009,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_2": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_3": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_4": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_5": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 59.88783992606833,
+      "integer_one_tick_prbs": 65,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 74389.43258735466,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 6943.432587354662,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 74449.32042728073,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -23050.679572719266,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1337.8664253223044,
+          1187.7676583509005
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 12,
+        "position": [
+          1083.8057646639063,
+          1217.834943444276
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          860.5610081318581,
+          784.3193782069777
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          763.6150718995004,
+          823.2799700108259
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1090.556983999908,
+          974.8746322519186
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1045.5207658068198,
+          617.4410568301972
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          954.232736197082,
+          1348.125366457861
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          655.2431724895856,
+          928.7431652378128
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61480960,
+    "seed_index": 15010,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_1": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_2": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_3": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_4": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_5": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_6": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_7": 81.98201155462185
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 54.23434445660982,
+      "integer_one_tick_prbs": 56,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 67378.414429026,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -67.58557097399898,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 67432.64877348261,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -30067.351226517392,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1313.5672589957792,
+          1058.9463238472745
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          734.720525691541,
+          1131.3538892652716
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1045.7822347480228,
+          1011.8541536676144
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          894.284484193756,
+          728.7178296189477
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          815.0336231575487,
+          772.4938068486827
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          832.232206757203,
+          1292.0980835059984
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1211.0679199560102,
+          794.6291634409387
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          1250.5118099730157,
+          1200.2198940363787
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61485056,
+    "seed_index": 15011,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_2": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_3": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_4": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_5": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_6": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_7": 95.03019957983193
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 56.16975137669952,
+      "integer_one_tick_prbs": 61,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 69734.21587004443,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 2288.215870044427,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 69790.38562142114,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -27709.61437857886,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1279.1308682434592,
+          1220.9656151334357
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1365.9928719384927,
+          1024.4149517935211
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1066.4211636670616,
+          1010.3337392031858
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          1018.4636131776317,
+          996.1419946665701
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          687.543649569921,
+          945.2718638069963
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          942.2401873987875,
+          1059.337011925704
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          1345.2500989294044,
+          1179.4929907361125
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          684.7605694380627,
+          970.7814324496916
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61489152,
+    "seed_index": 15012,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_1": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_2": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_3": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_4": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_5": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_6": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_7": 130.81013655462183
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 40.13784478815698,
+      "integer_one_tick_prbs": 45,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 49841.80552522442,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -17604.194474775577,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 49881.94337001258,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -47618.05662998742,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": true,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1090.562364460528,
+          881.2607497270833
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 12,
+        "position": [
+          784.7068545387576,
+          893.454531873382
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          713.5442972530302,
+          1125.6759740216291
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          920.4601430964894,
+          900.9333075084993
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          920.4047994833307,
+          745.0418300747268
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          947.1724229571897,
+          1112.4079048901142
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1146.9281163106552,
+          1032.9745025987484
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 13,
+        "position": [
+          793.0481600785331,
+          982.354974952996
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61493248,
+    "seed_index": 15013,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_1": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_2": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_3": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_4": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_5": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_6": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_7": 95.03019957983193
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 54.78554705541461,
+      "integer_one_tick_prbs": 59,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 68035.53928796714,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 589.5392879671417,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 68090.32483502256,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -29409.675164977438,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 13,
+        "position": [
+          805.472595682264,
+          1054.6116893337978
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          897.7538532394195,
+          1062.1658890092906
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          1295.1243668956406,
+          868.1129589100045
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          976.9046742899981,
+          1247.4203004602673
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          1253.895217797952,
+          1299.9947764535116
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          614.4567196754655,
+          999.3082962454611
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1094.9545054774599,
+          1069.8607848249396
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          1275.4722249019449,
+          1158.094776187382
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61497344,
+    "seed_index": 15014,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_2": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_3": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_4": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_7": 155.59348739495798
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 55.56795536139592,
+      "integer_one_tick_prbs": 60,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 68969.40966730271,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 1523.4096673027088,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 69024.97762266411,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -28475.02237733589,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1082.4886917370345,
+          625.0299988308266
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 13,
+        "position": [
+          883.1225714065367,
+          829.7681808054386
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1122.6086709180317,
+          1257.8214941147494
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          1257.2125369126013,
+          975.9660788509055
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          1195.5973016380315,
+          824.1596152295145
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          941.7561194427904,
+          1271.5062646384565
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          626.825208732016,
+          1140.6403040505845
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          1113.8146229617405,
+          891.3852302226877
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61501440,
+    "seed_index": 15015,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_1": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_2": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_3": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_4": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_5": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 95.03019957983193
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 56.02233144986806,
+      "integer_one_tick_prbs": 61,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 69614.0919785538,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 2168.091978553799,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 69670.11431000367,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -27829.88568999633,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          896.8943862807185,
+          1013.7537332407499
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          717.3548325402631,
+          1222.5784939755029
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          784.7951265251108,
+          828.3777220417666
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          1224.380462965071,
+          821.1478628739701
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1121.768540907611,
+          994.9038639594854
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1307.918098283114,
+          779.9912803565528
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          797.1069768651847,
+          1296.0182536786265
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          1182.9271675263633,
+          765.4162509722927
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61505536,
+    "seed_index": 15016,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_1": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_2": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_3": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_4": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 95.03019957983193
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 50.09737936063612,
+      "integer_one_tick_prbs": 54,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 62214.18283555267,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -5231.817164447333,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 62264.280214913306,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -35235.719785086694,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": true,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 14,
+        "position": [
+          1162.4571667337484,
+          1051.444304545726
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          1250.627521991348,
+          1059.922113119309
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          991.9149432238231,
+          951.6813719371324
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 14,
+        "position": [
+          876.5041058068591,
+          1132.9549683441267
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          1142.0556862828996,
+          1301.4149837629525
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          916.7665924643567,
+          1300.760658868314
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          878.5636690244689,
+          671.0312559976725
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          696.253844081398,
+          1096.7554271476365
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61509632,
+    "seed_index": 15017,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_1": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_2": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_3": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_4": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_5": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_6": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_7": 107.46290703781513
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 59.27700383675287,
+      "integer_one_tick_prbs": 64,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 73620.81961157756,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 6174.8196115775645,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 73680.09661541431,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -23819.90338458569,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1138.4565688836633,
+          1031.370484565787
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          1053.9812079447408,
+          912.7346493641809
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          651.3360230723592,
+          1164.9463124311465
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 7,
+        "position": [
+          656.6221355576249,
+          795.1659901463473
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 13,
+        "position": [
+          954.7109114246207,
+          1189.577204673018
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          675.1810674003357,
+          987.642480167885
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          634.4131985756272,
+          1156.5814573507591
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 11,
+        "position": [
+          1168.0741317530951,
+          800.6752034835247
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61513728,
+    "seed_index": 15018,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_2": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_3": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_4": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_5": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_6": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 52.272985145473065,
+      "integer_one_tick_prbs": 57,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 64912.398356670004,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -2533.6016433299956,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 64964.67134181548,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -32535.328658184517,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          760.9531372436347,
+          704.0047232105769
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 14,
+        "position": [
+          836.8720904412228,
+          1059.0912455819407
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          1139.7238852309792,
+          782.145713481759
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          803.0958634095545,
+          1245.9357871599698
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1134.624193154942,
+          1087.8704806136016
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          955.3956820605604,
+          1019.0372352207785
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          779.1917655818088,
+          1241.56303994565
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1106.4525170766499,
+          1331.474306701293
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61517824,
+    "seed_index": 15019,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_1": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_2": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_3": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_4": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 53.994145591862576,
+      "integer_one_tick_prbs": 58,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 67064.49401468226,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -381.5059853177372,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 67118.48816027414,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -30381.511839725863,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 7,
+        "position": [
+          753.0073444123207,
+          689.3159204444946
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          1113.5908203880258,
+          723.6270535067708
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1110.7790393497953,
+          1122.6809095612814
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 14,
+        "position": [
+          1010.3546347593643,
+          1181.6008088940343
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1237.9393164017843,
+          814.6366475734272
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          716.1800364966014,
+          1110.8919361880191
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1076.8489329542929,
+          1032.1032934259551
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          739.449572928201,
+          735.3858226970507
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61521920,
+    "seed_index": 15020,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_1": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_2": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_5": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_6": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 56.335284205984394,
+      "integer_one_tick_prbs": 60,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 69980.22846524377,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 2534.2284652437665,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 70036.56374944976,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -27463.436250550236,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1372.9178649052876,
+          997.7381392470805
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          1086.476915563493,
+          860.6900521393075
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          724.7468315003866,
+          934.0718844602014
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1182.7194314554001,
+          1309.735520105719
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 12,
+        "position": [
+          927.9054976855405,
+          1199.7583842757085
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          1029.7964567428692,
+          1317.0551188560376
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 13,
+        "position": [
+          1193.5005055435004,
+          987.0518852102164
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          854.6853549558169,
+          1319.5907192972134
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61526016,
+    "seed_index": 15021,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_1": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_2": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 81.98201155462185,
+      "DQNIMSI_phase1_pilot_URLLC_5": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_6": 130.81013655462183,
+      "DQNIMSI_phase1_pilot_URLLC_7": 155.59348739495798
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 55.53745717522418,
+      "integer_one_tick_prbs": 60,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 130.81013655462183,
+          "fluid_prbs": 4.969033877038896,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 68973.59865666452,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 1527.5986566645151,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 69029.13611383975,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -28470.863886160252,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": true,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          745.7077734845267,
+          1008.1813010213756
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          655.9826303445489,
+          937.3313036488574
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          835.7751962547484,
+          1324.3513918416268
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1290.4922066462436,
+          1219.516673669795
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 9,
+        "position": [
+          1287.2154072678768,
+          1174.9008805399806
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 14,
+        "position": [
+          864.0966352277169,
+          1098.9081746868776
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 130.81013655462183,
+        "capacity_max": 130.81013655462183,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 13,
+        "position": [
+          1076.1670585707946,
+          804.2711768586216
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          872.5979355001803,
+          1041.503198874499
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61530112,
+    "seed_index": 15022,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_1": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_2": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_3": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_4": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_5": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 81.98201155462185
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 61.31328478352407,
+      "integer_one_tick_prbs": 65,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 76148.06608138891,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": 8702.066081388912,
+        "zero_miss_impossible": true,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 76209.37936617245,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -21290.62063382755,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 12,
+        "position": [
+          1231.344582824041,
+          1040.360792973712
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          972.553258858551,
+          982.8911184642212
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          683.1247921544282,
+          1000.9334203713247
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          780.8940473105647,
+          1219.3718329275775
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          1263.101838302319,
+          731.6544045803603
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 7,
+        "position": [
+          1398.5609627850708,
+          982.4110855719538
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 8,
+        "position": [
+          827.293729208331,
+          667.7694622789163
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          668.5008472955487,
+          933.8718089595628
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61534208,
+    "seed_index": 15023,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_1": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_2": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_5": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_6": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_7": 81.98201155462185
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 51.98384404459357,
+      "integer_one_tick_prbs": 55,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 81.98201155462185,
+          "fluid_prbs": 7.9285685685685685,
+          "integer_prbs": 8,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 64593.210860151856,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -2852.7891398481443,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 64645.19470419645,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -32854.80529580355,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1246.283165254256,
+          801.8239088717573
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 10,
+        "position": [
+          758.4186699208749,
+          816.3983466734195
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          901.8658470460983,
+          873.7474220088604
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          756.0027324237353,
+          701.958149335403
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          1280.0481389013016,
+          1026.515986745885
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 12,
+        "position": [
+          785.5115457907572,
+          914.2828171041862
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 14,
+        "position": [
+          1005.1107538090768,
+          1179.4730833028932
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 81.98201155462185,
+        "capacity_max": 81.98201155462185,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 9,
+        "position": [
+          705.4411202894761,
+          1148.244443469775
+        ]
+      }
+    }
+  },
+  {
+    "seed": 61538304,
+    "seed_index": 15024,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 145.25341386554624,
+      "DQNIMSI_phase1_pilot_URLLC_1": 116.69511554621849,
+      "DQNIMSI_phase1_pilot_URLLC_2": 107.46290703781513,
+      "DQNIMSI_phase1_pilot_URLLC_3": 57.362788865546214,
+      "DQNIMSI_phase1_pilot_URLLC_4": 95.03019957983193,
+      "DQNIMSI_phase1_pilot_URLLC_5": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_6": 155.59348739495798,
+      "DQNIMSI_phase1_pilot_URLLC_7": 69.79549632352942
+    },
+    "budgets": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_1": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_2": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_3": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_4": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_5": 0.002,
+      "DQNIMSI_phase1_pilot_URLLC_6": 0.01,
+      "DQNIMSI_phase1_pilot_URLLC_7": 0.002
+    },
+    "certificate": {
+      "batch_bytes": 650,
+      "fluid_prbs": 51.93295278640254,
+      "integer_one_tick_prbs": 57,
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "bytes_per_prb_tick": 145.25341386554624,
+          "fluid_prbs": 4.4749378531073445,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "bytes_per_prb_tick": 116.69511554621849,
+          "fluid_prbs": 5.570070323488045,
+          "integer_prbs": 6,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "bytes_per_prb_tick": 107.46290703781513,
+          "fluid_prbs": 6.048598701794578,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "bytes_per_prb_tick": 57.362788865546214,
+          "fluid_prbs": 11.331387696709585,
+          "integer_prbs": 12,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "bytes_per_prb_tick": 95.03019957983193,
+          "fluid_prbs": 6.83993091537133,
+          "integer_prbs": 7,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.002
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "bytes_per_prb_tick": 155.59348739495798,
+          "fluid_prbs": 4.177552742616034,
+          "integer_prbs": 5,
+          "budget_s": 0.01
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "bytes_per_prb_tick": 69.79549632352942,
+          "fluid_prbs": 9.312921810699587,
+          "integer_prbs": 10,
+          "budget_s": 0.002
+        }
+      },
+      "baseline_on_bound": {
+        "ticks": 1249,
+        "quota": 54,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1246,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1238,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1246
+        },
+        "required_prb_ticks": 64536.13101015445,
+        "available_prb_ticks": 67446,
+        "excess_prb_ticks": -2909.8689898455486,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "full_pool_off_bound": {
+        "ticks": 1250,
+        "quota": 78,
+        "due_batches": {
+          "DQNIMSI_phase1_pilot_URLLC_0": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_1": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_2": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_3": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_4": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_5": 1247,
+          "DQNIMSI_phase1_pilot_URLLC_6": 1239,
+          "DQNIMSI_phase1_pilot_URLLC_7": 1247
+        },
+        "required_prb_ticks": 64588.063962940854,
+        "available_prb_ticks": 97500,
+        "excess_prb_ticks": -32911.936037059146,
+        "zero_miss_impossible": false,
+        "endpoint": "strictly due; equality-at-end arrivals conservatively excluded"
+      },
+      "feasible": false,
+      "contested": false,
+      "overloaded": false
+    },
+    "exogenous": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "capacity_min": 145.25341386554624,
+        "capacity_max": 145.25341386554624,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 14,
+        "position": [
+          1114.459697480504,
+          864.1064197103154
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "capacity_min": 116.69511554621849,
+        "capacity_max": 116.69511554621849,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 12,
+        "position": [
+          996.2223800061172,
+          772.5552192140485
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "capacity_min": 107.46290703781513,
+        "capacity_max": 107.46290703781513,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 11,
+        "position": [
+          944.5276857955233,
+          759.2559384401388
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "capacity_min": 57.362788865546214,
+        "capacity_max": 57.362788865546214,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 7,
+        "position": [
+          1396.2165387619168,
+          1020.3789840828391
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "capacity_min": 95.03019957983193,
+        "capacity_max": 95.03019957983193,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 10,
+        "position": [
+          723.5443160521125,
+          1151.9498489777577
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 15,
+        "position": [
+          993.717358280585,
+          977.2665812920412
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "capacity_min": 155.59348739495798,
+        "capacity_max": 155.59348739495798,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "cqi": 15,
+        "position": [
+          1018.3638199611888,
+          1044.4111872716667
+        ]
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "capacity_min": 69.79549632352942,
+        "capacity_max": 69.79549632352942,
+        "arrival_bytes_min": 650,
+        "arrival_bytes_max": 650,
+        "arrival_batches_min": 1,
+        "arrival_batches_max": 1,
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "cqi": 8,
+        "position": [
+          1363.8222759225637,
+          1016.3386014741427
+        ]
+      }
+    }
+  }
+]

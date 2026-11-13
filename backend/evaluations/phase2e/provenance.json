@@ -1,0 +1,49 @@
+{
+  "base_commit": "fbafd09",
+  "algorithm": "Phase2D G1 lambda=1, unchanged",
+  "final_implementation_sha256": {
+    "backend/network_layer/equivalent_g1.py": "fc711b4cf8c9595a621633d979ce95f0c70967ee201b4d8e1e8150ced75631e7",
+    "backend/tools/phase2e_study.py": "bc1958e80f8688559c450bb72c78c819d11545ea89498d34db22366384adf7b7",
+    "backend/tools/phase2e_report.py": "abc606d4581f45a70650fbcc9a08a89c7b80500c8a400ac84271152b4a39ff9b",
+    "backend/tests/test_phase2e.py": "6ba516a8322a3030529f9ac98e6cadbc1dc8f82d97c82eb3643e178de8741cb3"
+  },
+  "unchanged_protected_sha256": {
+    "backend/network_layer/feasibility_gated_fairness.py": "db368db77e2039ffbe229426b1003522cd0ea60382df994fd5bd496e0171be19",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/network_layer/fair_service_credit.py": "ab97efa54c15652c5bedfc02c0683b514fe0ea2fe1fd6f54b3d043c225c8861c",
+    "backend/network_layer/joint_dqn_agent.py": "e259e9424259d4a73a81b256fc517b00c866ef803c2cae80060d817b00155807",
+    "backend/network_layer/joint_dqn_schema.py": "e1c5c884547dc5c6be24a421e13b98bb584e5605b69836ed2aeb795b6299cd73",
+    "backend/network_layer/joint_reward.py": "224b95d363c849650653b65d3c138ea607e546b9603cb3f78987683647f88317",
+    "backend/network_layer/joint_control.py": "cfeae45758ffd43e9efbd2bd4f08a5023ce56787636834e389ee4a5ad41d7fb3",
+    "backend/network_layer/ue_telemetry.py": "4c2781c1185270f2442e00498715df10278e95426981b97b4e3f99260e90f36f",
+    "backend/network_layer/cell.py": "8329782169068801465ed48ab401c1ffefa65c5e72dfd6fc8e0ef25c279b5bc7",
+    "backend/network_layer/base_station.py": "5729ae142646a9fa8724145da581754432dd04e3403d3845e80851aca5999d12"
+  },
+  "protocol_sha256": "3473df82df79fd3588e4c4646a1c0191282200f32ebf73f17ff10b5f2aca19ca",
+  "manifest_sha256": "89342c246f80f8e1bca86f08739dc6237786a8f85d16fa01d81b0e5d5bcb02e4",
+  "raw_data_sha256": {
+    "equivalence_runs.jsonl.gz": "fdd910d5748e4db8d81ff8e9ce847994a3a4012cbfa75571276ec91dd82d9cd0",
+    "independent_runs.jsonl.gz": "f3186ab848e4cc6e2979a3bc164dc853d15c534156b19278fe5efddab27e4fc7",
+    "independent_original_checks.jsonl.gz": "e7f8fe93427ebf147d2be2c85e945ed9fa7504f7e595f5121afadf378bec9f55",
+    "tick_times.csv.gz": "f3e67ef283ed8c73296fad6f6c21f42188395b35c4d37d0bc94d5cc7cdcf4839",
+    "service_windows.csv.gz": "3a01326fa56619140a36fdc2f3e930b1457a73b7f95e2dd9529b2fd09e3f5c27"
+  },
+  "independent_seeds_nonoverlapping": true,
+  "candidate_indices": [
+    15001,
+    15024
+  ],
+  "selected_placements": 9,
+  "independent_scenarios": 27,
+  "independent_episodes": 81,
+  "development_equivalence_pairs": 10,
+  "independent_equivalence_pairs": 3,
+  "strict_allocation_service_physical_reward_deficit_equivalence": true,
+  "study_neural_model_constructions": 0,
+  "dqn_training_updates": 0,
+  "frozen_joint_holdout_evaluations": 0,
+  "full_study_episodes": 110,
+  "short_exogenous_probes": 24,
+  "equivalence_scope": "Scheduling/physical/numerical outcomes, not timing or private collector query/cache identity. Unqueried debug miss fractions are null."
+}
