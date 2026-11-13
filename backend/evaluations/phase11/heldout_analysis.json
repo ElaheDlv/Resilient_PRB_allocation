@@ -1,0 +1,2894 @@
+{
+  "groups": {
+    "j0_proportional_wc": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.2808,
+          "ci95": [
+            -0.07948899344960703,
+            0.641088993449607
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.28130625,
+          "ci95": [
+            -0.07950129163659841,
+            0.6421137916365984
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.2686093749999932,
+          "ci95": [
+            -0.08824068591383039,
+            0.6254594359138168
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.2747389500062803,
+          "ci95": [
+            -0.08363902933842599,
+            0.6331169293509866
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 89856,
+          "completed_batches": 317818,
+          "completed_over_budget_batches": 87836,
+          "unresolved_not_due_batches": 162
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.33134375,
+          "ci95": [
+            -0.058737092824844184,
+            0.7214245928248442
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.33160625,
+          "ci95": [
+            -0.05870359179624929,
+            0.7219160917962493
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.3088437499999936,
+          "ci95": [
+            -0.06652286773584126,
+            0.6842103677358284
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.3201493011747358,
+          "ci95": [
+            -0.06191498075964735,
+            0.702213583109119
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 53015,
+          "completed_batches": 158910,
+          "completed_over_budget_batches": 51967,
+          "unresolved_not_due_batches": 42
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.23025625,
+          "ci95": [
+            -0.1262502258606069,
+            0.586762725860607
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.23100625,
+          "ci95": [
+            -0.1262485056465619,
+            0.5882610056465619
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.22837499999999278,
+          "ci95": [
+            -0.12523386552834354,
+            0.5819838655283291
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.22932296364488963,
+          "ci95": [
+            -0.1257460305387777,
+            0.584391957828557
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 36841,
+          "completed_batches": 158908,
+          "completed_over_budget_batches": 35869,
+          "unresolved_not_due_batches": 120
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.334325,
+        "ci95": [
+          -0.058096406063110284,
+          0.7267464060631103
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 8.3076662,
+        "ci95": [
+          6.748906781661236,
+          9.866425618338765
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 3.5091138598218095,
+        "ci95": [
+          3.2640416123400686,
+          3.7541861073035503
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.99999999999991,
+        "ci95": [
+          95.99999999999991,
+          95.99999999999991
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [],
+      "starvation_max_s": 0.0,
+      "expired_head_grant_prbs": 705514,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j0_deadline_slack": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.3305,
+          "ci95": [
+            -0.057260975760091315,
+            0.7182609757600913
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.3312375,
+          "ci95": [
+            -0.05697463577212364,
+            0.7194496357721236
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.30914687499999227,
+          "ci95": [
+            -0.06366457403945058,
+            0.6819583240394351
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.31210938485373074,
+          "ci95": [
+            -0.06255306943006039,
+            0.6867718391375219
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 105760,
+          "completed_batches": 317682,
+          "completed_over_budget_batches": 103678,
+          "unresolved_not_due_batches": 236
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.33030625,
+          "ci95": [
+            -0.057281170764666434,
+            0.7178936707646665
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.33054375,
+          "ci95": [
+            -0.05729043823753954,
+            0.7183779382375396
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.3088687499999923,
+          "ci95": [
+            -0.06382522218429476,
+            0.6815627221842794
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.3114779874662986,
+          "ci95": [
+            -0.06269435372729837,
+            0.6856503286598956
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 52849,
+          "completed_batches": 158921,
+          "completed_over_budget_batches": 51808,
+          "unresolved_not_due_batches": 38
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.33069375,
+          "ci95": [
+            -0.057240999340394005,
+            0.718628499340394
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.33193125,
+          "ci95": [
+            -0.05665929878221376,
+            0.7205217987822138
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.3094249999999922,
+          "ci95": [
+            -0.0635053083785333,
+            0.6823553083785177
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.3127418125926066,
+          "ci95": [
+            -0.062413873171013434,
+            0.6878974983562266
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 52911,
+          "completed_batches": 158761,
+          "completed_over_budget_batches": 51870,
+          "unresolved_not_due_batches": 198
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.33205,
+        "ci95": [
+          -0.05700407248029654,
+          0.7211040724802966
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 198.0187549,
+        "ci95": [
+          189.02217163392447,
+          207.01533816607554
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 4.538084269821411,
+        "ci95": [
+          4.256067400103515,
+          4.820101139539307
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.99999999999991,
+        "ci95": [
+          95.99999999999991,
+          95.99999999999991
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [],
+      "starvation_max_s": 0.001,
+      "expired_head_grant_prbs": 839466,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j0_deadline_feasible": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.042118749999999996,
+          "ci95": [
+            -0.007001423710531154,
+            0.09123892371053115
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.042403125,
+          "ci95": [
+            -0.0066616802703510225,
+            0.09146793027035102
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.042118749999998754,
+          "ci95": [
+            -0.007001423710531217,
+            0.09123892371052872
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.02467298350263296,
+          "ci95": [
+            -0.003834640455331672,
+            0.05318060746059759
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 13478,
+          "completed_batches": 313929,
+          "completed_over_budget_batches": 7498,
+          "unresolved_not_due_batches": 91
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.0306,
+          "ci95": [
+            -0.04175750208059999,
+            0.10295750208059999
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.030625,
+          "ci95": [
+            -0.04177472899127281,
+            0.10302472899127281
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.030599999999999784,
+          "ci95": [
+            -0.041757502080599695,
+            0.10295750208059926
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.018158128921897932,
+          "ci95": [
+            -0.0247790230796064,
+            0.06109528092340226
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 4896,
+          "completed_batches": 157667,
+          "completed_over_budget_batches": 2567,
+          "unresolved_not_due_batches": 4
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.053637500000000005,
+          "ci95": [
+            -0.03025313872294122,
+            0.13752813872294123
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.05418125,
+          "ci95": [
+            -0.029714581401173404,
+            0.13807708140117342
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.05363749999999773,
+          "ci95": [
+            -0.030253138722940415,
+            0.13752813872293587
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.033975294373045486,
+          "ci95": [
+            -0.01872375714371436,
+            0.08667434588980533
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 8582,
+          "completed_batches": 156262,
+          "completed_over_budget_batches": 4931,
+          "unresolved_not_due_batches": 87
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.33694999999999997,
+        "ci95": [
+          -0.056011389684249235,
+          0.7299113896842492
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 256.15934355,
+        "ci95": [
+          229.86590070960887,
+          282.45278639039117
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 4.5878340553317685,
+        "ci95": [
+          4.335561914876527,
+          4.84010619578701
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.99999999999991,
+        "ci95": [
+          95.99999999999991,
+          95.99999999999991
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [],
+      "starvation_max_s": 0.003,
+      "expired_head_grant_prbs": 80189,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j10_proportional_wc": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.52245,
+          "ci95": [
+            0.11436638190329479,
+            0.9305336180967052
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.5231875,
+          "ci95": [
+            0.11451692851975248,
+            0.9318580714802476
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.512703124999992,
+          "ci95": [
+            0.10404939065169055,
+            0.9213568593482935
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.5179687890882736,
+          "ci95": [
+            0.10937455757711789,
+            0.9265630205994293
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 167184,
+          "completed_batches": 314881,
+          "completed_over_budget_batches": 162301,
+          "unresolved_not_due_batches": 236
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.5603375,
+          "ci95": [
+            0.14984309686113506,
+            0.970831903138865
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.560675,
+          "ci95": [
+            0.14995091239831682,
+            0.9713990876016833
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.5519624999999942,
+          "ci95": [
+            0.14227753758781353,
+            0.9616474624121749
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.5563182668490719,
+          "ci95": [
+            0.14616207312341245,
+            0.9664744605747314
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 89654,
+          "completed_batches": 157491,
+          "completed_over_budget_batches": 87199,
+          "unresolved_not_due_batches": 54
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.4845625,
+          "ci95": [
+            0.06977908527629095,
+            0.8993459147237091
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.4857,
+          "ci95": [
+            0.06996732455965726,
+            0.9014326754403428
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.4734437499999898,
+          "ci95": [
+            0.05652342353762685,
+            0.8903640764623527
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.47961062884854244,
+          "ci95": [
+            0.06340037654977654,
+            0.8958208811473083
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 77530,
+          "completed_batches": 157390,
+          "completed_over_budget_batches": 75102,
+          "unresolved_not_due_batches": 182
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.560925,
+        "ci95": [
+          0.15033521280968576,
+          0.9715147871903143
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 9.009500225,
+        "ci95": [
+          7.264529544694925,
+          10.754470905305075
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 3.595394296455197,
+        "ci95": [
+          3.361536621042439,
+          3.829251971867955
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.96133839999992,
+        "ci95": [
+          95.87012035142556,
+          96.05255644857428
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [
+        {
+          "seed": 4001,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4001,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4003,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4003,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 1.25,
+          "recovery_s": 0.22099999999999986,
+          "censored": false,
+          "end_s": 1.48,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4007,
+          "off_s": 3.75,
+          "recovery_s": 0.2250000000000001,
+          "censored": false,
+          "end_s": 3.984,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "starvation_max_s": 0.0,
+      "expired_head_grant_prbs": 1285634,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j10_deadline_slack": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.55474375,
+          "ci95": [
+            0.14769999281176327,
+            0.9617875071882367
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.555559375,
+          "ci95": [
+            0.14795080400615224,
+            0.9631679459938477
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.5461843749999931,
+          "ci95": [
+            0.13990980879661685,
+            0.9524589412033693
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.5477627644556514,
+          "ci95": [
+            0.14113341526014722,
+            0.9543921136511556
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 177518,
+          "completed_batches": 314790,
+          "completed_over_budget_batches": 172569,
+          "unresolved_not_due_batches": 261
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.55484375,
+          "ci95": [
+            0.14779472950338057,
+            0.9618927704966194
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.55515,
+          "ci95": [
+            0.14784947568491053,
+            0.9624505243150896
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.5462312499999931,
+          "ci95": [
+            0.13992959902713592,
+            0.9525329009728503
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.5473907405403051,
+          "ci95": [
+            0.1410856714347859,
+            0.9536958096458243
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 88775,
+          "completed_batches": 157477,
+          "completed_over_budget_batches": 86301,
+          "unresolved_not_due_batches": 49
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.55464375,
+          "ci95": [
+            0.14760515776086158,
+            0.9616823422391384
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.55596875,
+          "ci95": [
+            0.14805210429029375,
+            0.9638853957097062
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.546137499999993,
+          "ci95": [
+            0.13989001102071608,
+            0.9523849889792698
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.5481354151808703,
+          "ci95": [
+            0.14118119609166135,
+            0.9550896342700792
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 88743,
+          "completed_batches": 157313,
+          "completed_over_budget_batches": 86268,
+          "unresolved_not_due_batches": 212
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.555275,
+        "ci95": [
+          0.1480338698285606,
+          0.9625161301714393
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 190.01129315,
+        "ci95": [
+          181.52429599330767,
+          198.49829030669233
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 4.539258993288968,
+        "ci95": [
+          4.269427322531039,
+          4.809090664046897
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.96133839999992,
+        "ci95": [
+          95.87012035142556,
+          96.05255644857428
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [
+        {
+          "seed": 4001,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4001,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4003,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4003,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 1.25,
+          "recovery_s": 0.21899999999999986,
+          "censored": false,
+          "end_s": 1.478,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4007,
+          "off_s": 3.75,
+          "recovery_s": 0.2370000000000001,
+          "censored": false,
+          "end_s": 3.996,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "starvation_max_s": 0.001,
+      "expired_head_grant_prbs": 1365300,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j10_deadline_feasible": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.076309375,
+          "ci95": [
+            0.02346819719855197,
+            0.12915055280144802
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.0763875,
+          "ci95": [
+            0.02350333646175349,
+            0.1292716635382465
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.0763093749999994,
+          "ci95": [
+            0.023468197198551775,
+            0.12915055280144702
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.043584544768310106,
+          "ci95": [
+            0.011081055589861583,
+            0.07608803394675863
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 24419,
+          "completed_batches": 308788,
+          "completed_over_budget_batches": 13232,
+          "unresolved_not_due_batches": 25
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.12181875,
+          "ci95": [
+            0.012921783790665331,
+            0.23071571620933468
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.12189375,
+          "ci95": [
+            0.012929766646907814,
+            0.23085773335309218
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.12181874999999895,
+          "ci95": [
+            0.012921783790665192,
+            0.2307157162093327
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.07790602971870653,
+          "ci95": [
+            0.005434105816577328,
+            0.15037795362083572
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 19491,
+          "completed_batches": 151776,
+          "completed_over_budget_batches": 11279,
+          "unresolved_not_due_batches": 12
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.0308,
+          "ci95": [
+            -0.042030426930799995,
+            0.10363042693079999
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.03088125,
+          "ci95": [
+            -0.04210752816752808,
+            0.10387002816752808
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.030799999999999852,
+          "ci95": [
+            -0.04203042693079978,
+            0.10363042693079949
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.014344421272611074,
+          "ci95": [
+            -0.01957474513516535,
+            0.0482635876803875
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 4928,
+          "completed_batches": 157012,
+          "completed_over_budget_batches": 1953,
+          "unresolved_not_due_batches": 13
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.610475,
+        "ci95": [
+          0.18774557758841576,
+          1.0332044224115842
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 238.477516875,
+        "ci95": [
+          223.7280204152116,
+          253.22701333478838
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 4.548168313020142,
+        "ci95": [
+          4.359027411569282,
+          4.737309214471002
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.96133839999992,
+        "ci95": [
+          95.87012035142556,
+          96.05255644857428
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [
+        {
+          "seed": 4001,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4001,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4003,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4003,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4008,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "starvation_max_s": 0.003,
+      "expired_head_grant_prbs": 138462,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j20_proportional_wc": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.710378125,
+          "ci95": [
+            0.3376844415378178,
+            1.0830718084621822
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.7112906250000001,
+          "ci95": [
+            0.3380966213703866,
+            1.0844846286296135
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.7070249999999892,
+          "ci95": [
+            0.3352710806353349,
+            1.0787789193646435
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.7091691222545551,
+          "ci95": [
+            0.33667449329608473,
+            1.0816637512130254
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 227321,
+          "completed_batches": 310740,
+          "completed_over_budget_batches": 218353,
+          "unresolved_not_due_batches": 292
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.7242999999999999,
+          "ci95": [
+            0.347077779647024,
+            1.101522220352976
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.7247125,
+          "ci95": [
+            0.34728930790059054,
+            1.1021356920994094
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.7209999999999903,
+          "ci95": [
+            0.34490812570494894,
+            1.0970918742950317
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.72283024088111,
+          "ci95": [
+            0.34607489450851686,
+            1.0995855872537033
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 115888,
+          "completed_batches": 155421,
+          "completed_over_budget_batches": 111375,
+          "unresolved_not_due_batches": 66
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.69645625,
+          "ci95": [
+            0.3274881779050462,
+            1.0654243220949537
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.69786875,
+          "ci95": [
+            0.3280851639581769,
+            1.067652336041823
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.6930499999999882,
+          "ci95": [
+            0.3248126926997034,
+            1.0612873073002729
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.6955020928026605,
+          "ci95": [
+            0.3264512917107595,
+            1.0645528938945614
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 111433,
+          "completed_batches": 155319,
+          "completed_over_budget_batches": 106978,
+          "unresolved_not_due_batches": 226
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.724525,
+        "ci95": [
+          0.3471996165852366,
+          1.1018503834147633
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 8.605958575,
+        "ci95": [
+          7.833860960524055,
+          9.378056189475947
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 3.759713270148495,
+        "ci95": [
+          3.5403699748265134,
+          3.979056565470477
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.55957459999992,
+        "ci95": [
+          94.75769592069246,
+          96.36145327930738
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [
+        {
+          "seed": 4001,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4001,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4003,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4003,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4008,
+          "off_s": 1.25,
+          "recovery_s": 0.8290000000000002,
+          "censored": false,
+          "end_s": 2.088,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 3.75,
+          "recovery_s": 0.830000000000001,
+          "censored": false,
+          "end_s": 4.589,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "starvation_max_s": 0.0,
+      "expired_head_grant_prbs": 1703514,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j20_deadline_slack": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.716525,
+          "ci95": [
+            0.3420822981773357,
+            1.0909677018226642
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.717425,
+          "ci95": [
+            0.34248980348362423,
+            1.0923601965163758
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.7131562499999895,
+          "ci95": [
+            0.3397449129458659,
+            1.0865675870541132
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.7141095769224262,
+          "ci95": [
+            0.34028044601131496,
+            1.0879387078335374
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 229288,
+          "completed_batches": 310659,
+          "completed_over_budget_batches": 220235,
+          "unresolved_not_due_batches": 288
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.71653125,
+          "ci95": [
+            0.34209992442421316,
+            1.0909625755757868
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.71690625,
+          "ci95": [
+            0.34225650147470277,
+            1.0915559985252972
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.7131499999999895,
+          "ci95": [
+            0.33972028198030113,
+            1.086579718019678
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.7135739406849527,
+          "ci95": [
+            0.3400392175321986,
+            1.0871086638377068
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 114645,
+          "completed_batches": 155414,
+          "completed_over_budget_batches": 110119,
+          "unresolved_not_due_batches": 60
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.71651875,
+          "ci95": [
+            0.34206464336148024,
+            1.0909728566385197
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.71794375,
+          "ci95": [
+            0.3427229295624942,
+            1.0931645704375057
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.7131624999999895,
+          "ci95": [
+            0.33976949710112453,
+            1.0865555028988545
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.7146460667294319,
+          "ci95": [
+            0.34052200740478683,
+            1.088770126054077
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 114643,
+          "completed_batches": 155245,
+          "completed_over_budget_batches": 110116,
+          "unresolved_not_due_batches": 228
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.717075,
+        "ci95": [
+          0.342382111213416,
+          1.091767888786584
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 189.853088275,
+        "ci95": [
+          183.45930660244704,
+          196.24686994755297
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 4.755893748166272,
+        "ci95": [
+          4.499784736225312,
+          5.012002760107233
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.55957459999992,
+        "ci95": [
+          94.75769592069246,
+          96.36145327930738
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [
+        {
+          "seed": 4001,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4001,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4003,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4003,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4008,
+          "off_s": 1.25,
+          "recovery_s": 0.7989999999999999,
+          "censored": false,
+          "end_s": 2.058,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4008,
+          "off_s": 3.75,
+          "recovery_s": 0.8000000000000007,
+          "censored": false,
+          "end_s": 4.559,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "starvation_max_s": 0.001,
+      "expired_head_grant_prbs": 1719257,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    },
+    "j20_deadline_feasible": {
+      "overall": {
+        "failure_fraction_lower": {
+          "mean": 0.09260625,
+          "ci95": [
+            0.04481972979188188,
+            0.14039277020811813
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.092671875,
+          "ci95": [
+            0.04486437394738852,
+            0.1404793760526115
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.09260624999999961,
+          "ci95": [
+            0.044819729791881695,
+            0.14039277020811752
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.043429222568729595,
+          "ci95": [
+            0.01598688325004914,
+            0.07087156188741005
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 320000,
+          "known_failed_batches": 29634,
+          "completed_batches": 303383,
+          "completed_over_budget_batches": 13038,
+          "unresolved_not_due_batches": 21
+        }
+      },
+      "tight": {
+        "failure_fraction_lower": {
+          "mean": 0.1852125,
+          "ci95": [
+            0.08963945958376376,
+            0.28078554041623627
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 0.185325,
+          "ci95": [
+            0.08969391089613304,
+            0.28095608910386694
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.18521249999999922,
+          "ci95": [
+            0.08963945958376339,
+            0.28078554041623505
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.09309662833587523,
+          "ci95": [
+            0.03549231423470486,
+            0.1507009424370456
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 29634,
+          "completed_batches": 143386,
+          "completed_over_budget_batches": 13038,
+          "unresolved_not_due_batches": 18
+        }
+      },
+      "relaxed": {
+        "failure_fraction_lower": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "n": 8
+        },
+        "failure_fraction_upper": {
+          "mean": 1.8750000000000002e-05,
+          "ci95": [
+            -2.884096678563472e-06,
+            4.0384096678563475e-05
+          ],
+          "n": 8
+        },
+        "hol_violation_fraction": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "n": 8
+        },
+        "served_byte_late_fraction": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "n": 8
+        },
+        "counts": {
+          "offered_batches": 160000,
+          "known_failed_batches": 0,
+          "completed_batches": 159997,
+          "completed_over_budget_batches": 0,
+          "unresolved_not_due_batches": 3
+        }
+      },
+      "worst_ue_failure": {
+        "mean": 0.74085,
+        "ci95": [
+          0.35855783833505506,
+          1.123142161664945
+        ],
+        "n": 8
+      },
+      "scheduler_us": {
+        "mean": 233.157871475,
+        "ci95": [
+          226.43827017747319,
+          239.87747277252683
+        ],
+        "n": 8
+      },
+      "wall_s": {
+        "mean": 4.67687409199425,
+        "ci95": [
+          4.607566354252364,
+          4.746181829736137
+        ],
+        "n": 8
+      },
+      "embb_mbps": {
+        "mean": 95.55957459999992,
+        "ci95": [
+          94.75769592069246,
+          96.36145327930738
+        ],
+        "n": 8
+      },
+      "reserve_prbs": {
+        "mean": 3.000000000000089,
+        "ci95": [
+          3.000000000000089,
+          3.000000000000089
+        ],
+        "n": 8
+      },
+      "recovery": [
+        {
+          "seed": 4001,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4001,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4002,
+          "off_s": 3.75,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 3.759,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        },
+        {
+          "seed": 4003,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4003,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4004,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4005,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4006,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4007,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4008,
+          "off_s": 1.25,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 2.499,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        },
+        {
+          "seed": 4008,
+          "off_s": 3.75,
+          "recovery_s": null,
+          "censored": true,
+          "end_s": 4.999,
+          "compliant_run_s": 0.0,
+          "reason": "next_jam"
+        }
+      ],
+      "starvation_max_s": 0.003,
+      "expired_head_grant_prbs": 130485,
+      "over_demand_prbs": 0,
+      "eligible_unused_ue_ticks": 0
+    }
+  },
+  "paired_differences": {
+    "j0_deadline_slack_minus_proportional": {
+      "overall": {
+        "mean": 0.0497,
+        "ci95": [
+          -0.05476949095901857,
+          0.15416949095901858
+        ],
+        "n": 8
+      },
+      "tight": {
+        "mean": -0.0010375000000000106,
+        "ci95": [
+          -0.008235841610678724,
+          0.006160841610678701
+        ],
+        "n": 8
+      },
+      "relaxed": {
+        "mean": 0.1004375,
+        "ci95": [
+          -0.10340950366665415,
+          0.30428450366665416
+        ],
+        "n": 8
+      },
+      "harmed_ues": [
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.7108
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_1",
+          "increase": 0.022800000000000042
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.7016
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_3",
+          "increase": 0.023799999999999932
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.7054
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_5",
+          "increase": 0.022199999999999998
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.6864
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.04359999999999997
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.043399999999999994
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.04380000000000006
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.038999999999999924
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.06159999999999999
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.057399999999999896
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.0603999999999999
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.06059999999999999
+        }
+      ]
+    },
+    "j0_deadline_feasible_minus_proportional": {
+      "overall": {
+        "mean": -0.23868125,
+        "ci95": [
+          -0.552494193392456,
+          0.07513169339245596
+        ],
+        "n": 8
+      },
+      "tight": {
+        "mean": -0.30074375,
+        "ci95": [
+          -0.654756132929988,
+          0.053268632929988124
+        ],
+        "n": 8
+      },
+      "relaxed": {
+        "mean": -0.17661875,
+        "ci95": [
+          -0.5086175233016723,
+          0.1553800233016724
+        ],
+        "n": 8
+      },
+      "harmed_ues": [
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.751
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.06059999999999999
+        }
+      ]
+    },
+    "j10_deadline_slack_minus_proportional": {
+      "overall": {
+        "mean": 0.032293749999999996,
+        "ci95": [
+          -0.026713529807781564,
+          0.09130102980778156
+        ],
+        "n": 8
+      },
+      "tight": {
+        "mean": -0.005493750000000006,
+        "ci95": [
+          -0.009546415542310071,
+          -0.001441084457689941
+        ],
+        "n": 8
+      },
+      "relaxed": {
+        "mean": 0.07008125,
+        "ci95": [
+          -0.04986714109666372,
+          0.1900296410966637
+        ],
+        "n": 8
+      },
+      "harmed_ues": [
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.08560000000000001
+        },
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.09460000000000002
+        },
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.08540000000000003
+        },
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.09440000000000004
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.02180000000000004
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.022199999999999998
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.0242
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.022399999999999975
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.013800000000000034
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.014000000000000012
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.01419999999999999
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.01419999999999999
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.015800000000000036
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.018199999999999994
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.016199999999999992
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.015600000000000058
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.42900000000000005
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.4254
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.4
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.4156000000000001
+        }
+      ]
+    },
+    "j10_deadline_feasible_minus_proportional": {
+      "overall": {
+        "mean": -0.446140625,
+        "ci95": [
+          -0.8076424011387828,
+          -0.08463884886121725
+        ],
+        "n": 8
+      },
+      "tight": {
+        "mean": -0.43851875,
+        "ci95": [
+          -0.7836725847764132,
+          -0.09336491522358681
+        ],
+        "n": 8
+      },
+      "relaxed": {
+        "mean": -0.4537625,
+        "ci95": [
+          -0.8455415044567318,
+          -0.06198349554326821
+        ],
+        "n": 8
+      },
+      "harmed_ues": [
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.01540000000000008
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_5",
+          "increase": 0.4336
+        }
+      ]
+    },
+    "j20_deadline_slack_minus_proportional": {
+      "overall": {
+        "mean": 0.00614687500000001,
+        "ci95": [
+          -0.0026393915091857643,
+          0.014933141509185784
+        ],
+        "n": 8
+      },
+      "tight": {
+        "mean": -0.007768750000000005,
+        "ci95": [
+          -0.016742088938558726,
+          0.0012045889385587146
+        ],
+        "n": 8
+      },
+      "relaxed": {
+        "mean": 0.020062499999999997,
+        "ci95": [
+          -0.006410014171192344,
+          0.04653501417119234
+        ],
+        "n": 8
+      },
+      "harmed_ues": [
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.015000000000000013
+        },
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.014399999999999968
+        },
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.015199999999999991
+        },
+        {
+          "seed": 4003,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.014399999999999968
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.010000000000000009
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.010600000000000054
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.012599999999999945
+        },
+        {
+          "seed": 4004,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.010199999999999987
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.009000000000000008
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.009600000000000053
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.009199999999999986
+        },
+        {
+          "seed": 4005,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.008399999999999963
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.008600000000000052
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.010600000000000054
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.008199999999999985
+        },
+        {
+          "seed": 4006,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.008799999999999919
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.019399999999999973
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.019399999999999973
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.020199999999999996
+        },
+        {
+          "seed": 4007,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.02180000000000004
+        },
+        {
+          "seed": 4008,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_0",
+          "increase": 0.09240000000000004
+        },
+        {
+          "seed": 4008,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_2",
+          "increase": 0.10119999999999996
+        },
+        {
+          "seed": 4008,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_4",
+          "increase": 0.09720000000000006
+        },
+        {
+          "seed": 4008,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_6",
+          "increase": 0.09560000000000002
+        }
+      ]
+    },
+    "j20_deadline_feasible_minus_proportional": {
+      "overall": {
+        "mean": -0.617771875,
+        "ci95": [
+          -0.9435160088487075,
+          -0.2920277411512925
+        ],
+        "n": 8
+      },
+      "tight": {
+        "mean": -0.5390874999999999,
+        "ci95": [
+          -0.8218053318412283,
+          -0.2563696681587716
+        ],
+        "n": 8
+      },
+      "relaxed": {
+        "mean": -0.69645625,
+        "ci95": [
+          -1.0654243220949537,
+          -0.3274881779050462
+        ],
+        "n": 8
+      },
+      "harmed_ues": [
+        {
+          "seed": 4008,
+          "uid": "DQNIMSI_phase1_pilot_URLLC_3",
+          "increase": 0.16260000000000008
+        }
+      ]
+    }
+  }
+}

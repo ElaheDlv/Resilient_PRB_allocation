@@ -334,11 +334,11 @@ class Cell:
         for s, quota in self.slice_dl_prb_quota.items():
             ue_ids = ues_by_slice.get(s, [])
             mode = getattr(settings, "PRB_UE_SCHEDULER", "legacy")
-            if mode in {"proportional_wc", "deadline_slack"}:
+            if mode in {"proportional_wc", "deadline_slack", "deadline_feasible"}:
                 started = time.perf_counter_ns()
                 useful = {uid: ue_prb_requirements.get(uid, {}).get("backlog_prbs", 0)
                           for uid in ue_ids}
-                if mode == "deadline_slack" and s == settings.NETWORK_SLICE_URLLC_NAME:
+                if mode in {"deadline_slack", "deadline_feasible"} and s == settings.NETWORK_SLICE_URLLC_NAME:
                     bs = self.base_station
                     views = {uid: QueueView(bs.get_dl_buf_bytes(uid),
                         ue_prb_requirements.get(uid, {}).get("dl_throughput_per_prb", 0)*sim_dt/8,
@@ -346,7 +346,8 @@ class Cell:
                         bs._dl_buf_queue.get(uid, ())) for uid in ue_ids}
                     grants = deadline_allocation(views, quota, bs._time_s, sim_dt,
                         self._deadline_starvation_ticks,
-                        getattr(settings, "DEADLINE_STARVATION_TICKS", 5), self.prb_per_ue_cap)
+                        getattr(settings, "DEADLINE_STARVATION_TICKS", 5), self.prb_per_ue_cap,
+                        feasibility=mode == "deadline_feasible")
                     for uid, view in views.items():
                         served = int(grants[uid]*view.bytes_per_prb) if view.bytes_per_prb > 0 else 0
                         self._deadline_starvation_ticks[uid] = (
@@ -355,6 +356,9 @@ class Cell:
                 else:
                     grants = proportional_allocation(useful, quota, self.prb_per_ue_cap)
                 elapsed = time.perf_counter_ns()-started
+                diagnostic = getattr(self, "allocation_diagnostic", None)
+                if diagnostic is not None and s == settings.NETWORK_SLICE_URLLC_NAME:
+                    diagnostic(self, ue_ids, grants, quota, sim_dt, ue_prb_requirements)
                 for uid, grant in grants.items():
                     self.prb_ue_allocation_dict[uid]["downlink"] = grant
                 self.allocated_dl_prb_by_slice[s] = sum(grants.values())

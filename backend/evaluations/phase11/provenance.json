@@ -1,0 +1,34 @@
+{
+  "base_commit": "cb35202",
+  "branch": "phase1.1/scheduler-diagnosis",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:09:02) [GCC 11.2.0]",
+  "numpy": "2.1.3",
+  "torch": "2.10.0+cu128",
+  "platform": "Linux-6.17.0-22-generic-x86_64-with-glibc2.39",
+  "source_sha256": {
+    "backend/network_layer/cell.py": "f675529aaed5cdb945c5bee2c4ef93ea60591c6f200bdfaab1bd39aa8a12fbe0",
+    "backend/network_layer/deadline_scheduler.py": "a4d46def845dbe1809489db6d886ec67bf720e41b3d974d67b7bee0d43cf2cd1",
+    "backend/network_layer/queue_measurements.py": "ae8997e8240cbe2e158293598e32c14fa2ca43c18478161022173d566db88163",
+    "backend/network_layer/scheduler_diagnostics.py": "b8a9cc315d91ed35f5421aa3958fbd7d1e4dc08546af935737ebfcd49061f9f8",
+    "backend/settings/phase0_config.py": "e16cbde0146b054512aaa10afe9e82036656cbf54d6273ec5178efc1fb8fefb7",
+    "backend/tools/phase0_evaluate.py": "589a5e8dca8b98550ffdc3d2f52c9de9d317986684e69e11e24cd17901e54f98",
+    "backend/tools/phase11_study.py": "0f4ad9fd61181b65ae12653bf5ad851598aa12083fa0ae0020fb609581b13c0f",
+    "backend/tools/phase11_analyze.py": "d9f8ead0d838647a776c222835544e0a32324b47fcff0ab0e99c93c19f811ff1",
+    "backend/tests/test_phase11.py": "b83368fc227c6274f3fe8ed486ad1920cfd64fa5f2158b356e8bf6a76509e8ff"
+  },
+  "input_sha256": {
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+    "backend/evaluations/phase1/main_scenarios/scenario_j0.json": "ee24e28ee55bb9bc55d4636603e14b402465fb3dcae854c5ffb3a059122550f4",
+    "backend/evaluations/phase1/main_scenarios/scenario_j10.json": "edc6c251e8035a2ff77b8e4e31dbb69de1981e1a8170d5dedce22ecff7279e6a",
+    "backend/evaluations/phase1/main_scenarios/scenario_j20.json": "1761f79153aa47fc1e8b44d523d841e1c44400b803e78f480e206e1c969dba4b"
+  },
+  "study_episode_counts": {
+    "reproduction": 18,
+    "validation": 18,
+    "heldout": 72
+  },
+  "original_18_trajectories_match": true,
+  "paired_heldout_seed_count": 8,
+  "diagnostic_wall_time_includes_gzip": true
+}

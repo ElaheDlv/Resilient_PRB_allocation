@@ -59,6 +59,7 @@ class QueueMeasurements:
             completed_over_budget_batches=0, overflowed_batches=0,
             partially_admitted_completed_batches=0, offered_batches=0,
             fully_admitted_on_time_batches=0, fully_admitted_late_batches=0))
+        self.event_sink = None
         self.events = deque(maxlen=256)
         self.closed = []
         self._next_id = 0
@@ -73,6 +74,8 @@ class QueueMeasurements:
     def emit(self, kind, imsi, now, **values):
         event = dict(kind=kind, imsi=imsi, time_s=now, **values)
         self.events.append(event)
+        if self.event_sink is not None:
+            self.event_sink(event)
         if self._file:
             self._file.write(json.dumps(event, allow_nan=False) + "\n")
 

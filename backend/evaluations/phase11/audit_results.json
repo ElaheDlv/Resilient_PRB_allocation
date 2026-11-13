@@ -1,0 +1,8 @@
+{
+  "episodes": 108,
+  "event_vs_sidecar_outcomes": true,
+  "phase_cohort_partitions": true,
+  "service_resource_segment_sums": true,
+  "no_over_useful_demand_grants": true,
+  "no_eligible_unused_capacity": true
+}

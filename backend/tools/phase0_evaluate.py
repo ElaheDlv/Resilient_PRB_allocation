@@ -22,7 +22,7 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
                    transitions="legacy", scheduler="legacy", paced=False,
                    measurements=False, steps=10000, period=10, dt=0.001,
                    stop_after_episodes=1, event_path="", phase1=False,
-                   fixed_reserve=(0, 0), per_ue_cap=None):
+                   fixed_reserve=(0, 0), per_ue_cap=None, diagnostics_path=""):
     # settings are imported once. For another configuration use a fresh process.
     if "settings" in sys.modules:
         raise RuntimeError("Use a fresh process for each evaluation configuration")
@@ -58,6 +58,21 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
         from network_layer.phase1_metrics import Phase1Metrics
         observer = Phase1Metrics()
         engine.after_service_observer = observer.observe
+    diagnostic = None
+    if diagnostics_path:
+        if not phase1:
+            raise ValueError("Diagnostics require Phase 1 metrics")
+        from network_layer.scheduler_diagnostics import SchedulerDiagnostics
+        diagnostic = SchedulerDiagnostics(diagnostics_path)
+        for cell in engine.cell_list.values():
+            cell.allocation_diagnostic = diagnostic.allocation
+        for bs in engine.base_station_list.values():
+            bs.queue_measurements.event_sink = diagnostic.event
+        previous_observe = engine.after_service_observer
+        def observe(engine, dt):
+            previous_observe(engine, dt)
+            diagnostic.observe(engine, dt)
+        engine.after_service_observer = observe
     app = next(iter(engine.ric.xapp_list.values()))
     digest = hashlib.sha256()
     records = []
@@ -91,6 +106,7 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
             for imsi in list(bs._dl_replay):
                 reports.append(bs.queue_measurements.finalize(imsi, bs._time_s))
             bs.queue_measurements.close()
+    diagnostics = diagnostic.finish(reports) if diagnostic is not None else None
     pending = getattr(app, "_causal_interval", None)
     pending = pending.pending if pending is not None else None
     result = dict(seed=seed, transitions=transitions, scheduler=scheduler, paced=paced,
@@ -103,6 +119,8 @@ def run_evaluation(config, *, policy="idle", checkpoint="", seed=1234,
         unfinished_control_interval_ticks=pending["ticks"] if pending else 0,
         checkpoint_sha256=hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest() if checkpoint else None,
         config_sha256=hashlib.sha256(Path(config).read_bytes()).hexdigest())
+    if diagnostics is not None:
+        result["diagnostics"] = diagnostics
     if observer is not None:
         result["phase1"] = observer.finish(reports)
         result["fixed_reserve"] = list(fixed_reserve) if policy == "fixed" else None
@@ -115,7 +133,8 @@ def main():
     parser.add_argument("--policy", choices=["idle", "random", "aggressive", "dqn", "qrdqn", "fixed"], default="idle")
     parser.add_argument("--checkpoint", default="")
     parser.add_argument("--transitions", choices=["legacy", "causal"], default="legacy")
-    parser.add_argument("--scheduler", choices=["legacy", "proportional_wc", "deadline_slack"], default="legacy")
+    parser.add_argument("--scheduler", choices=["legacy", "proportional_wc", "deadline_slack", "deadline_feasible"], default="legacy")
+    parser.add_argument("--diagnostics", default="", help="Gzip per-tick allocation and batch-event trace")
     parser.add_argument("--phase1-metrics", action="store_true")
     parser.add_argument("--fixed-e", type=int, default=0)
     parser.add_argument("--fixed-u", type=int, default=0)
@@ -136,9 +155,9 @@ def main():
         transitions=args.transitions, scheduler=args.scheduler, seed=args.seed, paced=args.paced,
         measurements=args.measurements, steps=args.steps, period=args.period, dt=args.dt,
         stop_after_episodes=args.episodes, event_path=args.events, phase1=args.phase1_metrics,
-        fixed_reserve=(args.fixed_e,args.fixed_u),per_ue_cap=args.per_ue_cap)
+        fixed_reserve=(args.fixed_e,args.fixed_u),per_ue_cap=args.per_ue_cap, diagnostics_path=args.diagnostics)
     Path(args.output).write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
-    print(json.dumps({k: v for k, v in result.items() if k not in {"samples", "batch_measurements", "phase1"}}, indent=2))
+    print(json.dumps({k: v for k, v in result.items() if k not in {"samples", "batch_measurements", "phase1", "diagnostics"}}, indent=2))
 
 
 if __name__ == "__main__":

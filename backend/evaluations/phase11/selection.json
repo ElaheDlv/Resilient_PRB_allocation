@@ -1,0 +1,33 @@
+{
+  "scores": {
+    "3": {
+      "mean_failure": 0.0199625,
+      "worst_ue": 0.1597
+    },
+    "5": {
+      "mean_failure": 0.0199625,
+      "worst_ue": 0.1597
+    },
+    "10": {
+      "mean_failure": 0.0199625,
+      "worst_ue": 0.1597
+    }
+  },
+  "selected_guard": 3,
+  "rule": "Minimum mean failed-offered lower bound; then mean worst UE; then smaller guard",
+  "validation_seeds": [
+    3001,
+    3002
+  ],
+  "budget_seed": 2027,
+  "heldout_seeds": [
+    4001,
+    4002,
+    4003,
+    4004,
+    4005,
+    4006,
+    4007,
+    4008
+  ]
+}

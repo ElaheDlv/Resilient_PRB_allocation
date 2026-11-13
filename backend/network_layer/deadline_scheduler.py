@@ -1,4 +1,4 @@
-"""Current-state least-slack scheduling with a bounded starvation guard.
+"""Current-state slack / optional optimistic-feasibility FIFO scheduling.
 
 The virtual FIFO is used only to account for grants within this allocation round.
 It does not consume queues, forecast arrivals, or change service/expiry rules.
@@ -18,7 +18,15 @@ class QueueView:
 
 
 def deadline_allocation(
-    queues, quota, now_s, dt, starvation_ticks, starvation_limit=5, per_ue_cap=None
+    queues,
+    quota,
+    now_s,
+    dt,
+    starvation_ticks,
+    starvation_limit=5,
+    per_ue_cap=None,
+    *,
+    feasibility=False,
 ):
     if quota < 0 or int(quota) != quota or dt <= 0 or starvation_limit < 1:
         raise ValueError("Invalid quota, step or starvation limit")
@@ -80,6 +88,28 @@ def deadline_allocation(
         value = (
             q.budget_s - max(0.0, now_s - arrival) - head_bytes * dt / q.bytes_per_prb
         )
+        if feasibility:
+            # Optimistic local feasibility: unchanged current rate and quota,
+            # inclusive instantaneous service timestamps (the simulator model).
+            slots = (
+                math.floor((q.budget_s - max(0.0, now_s - arrival) + 1e-12) / dt) + 1
+            )
+            cap = min(int(quota), per_ue_cap) if per_ue_cap is not None else int(quota)
+            current = math.floor(grants[uid] * q.bytes_per_prb)
+            need = max(
+                1, math.ceil((current + head_bytes) / q.bytes_per_prb) - grants[uid]
+            )
+            attainable = max(0, cap - grants[uid]) + max(0, slots - 1) * cap
+            feasible = slots > 0 and need <= attainable
+            # EDF among potentially feasible FIFO heads, then shortest service.
+            # Infeasible/expired heads remain eligible as fallback; never dropped.
+            return (
+                0 if feasible else 1,
+                arrival + q.budget_s if feasible else 0,
+                need,
+                -starvation_ticks.get(uid, 0),
+                uid,
+            )
         return (value, -starvation_ticks.get(uid, 0), uid)
 
     while remaining:
