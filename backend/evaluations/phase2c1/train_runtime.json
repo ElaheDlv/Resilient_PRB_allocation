@@ -1,0 +1,11 @@
+{
+  "elapsed_seconds": 273.31283214199357,
+  "cpus": [
+    6,
+    8,
+    9,
+    15
+  ],
+  "cuda_visible_devices": "",
+  "protocol_sha256": "7063fe82326689bc5721133f1445373c4140f3611ccea4e679cd811a2dce4fef"
+}

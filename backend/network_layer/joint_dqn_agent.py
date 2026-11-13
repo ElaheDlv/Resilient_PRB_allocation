@@ -53,6 +53,16 @@ def masked_td_targets(rewards, dones, next_q, next_masks, gamma):
 
 
 class JointDQNAgent:
+    state_dimension = STATE_DIM
+    action_count = len(ACTIONS)
+    gradient_clip = 10.0
+
+    def make_network(self):
+        return JointNetwork()
+
+    def loss_function(self, prediction, targets):
+        return nn.functional.smooth_l1_loss(prediction, targets)
+
     def __init__(self, config=TrainingConfig(), reward_config=RewardConfig(), observation_config=None):
         self.config = config
         self.reward_config = reward_config
@@ -62,20 +72,25 @@ class JointDQNAgent:
         self.device = torch.device('cpu')
         with torch.random.fork_rng(devices=[]):
             torch.manual_seed(config.seed)
-            self.policy = JointNetwork().to(self.device)
-            self.target = JointNetwork().to(self.device)
+            self.policy = self.make_network().to(self.device)
+            self.target = self.make_network().to(self.device)
         self.target.load_state_dict(self.policy.state_dict())
         self.target.eval()
         self.optimizer = torch.optim.Adam(self.policy.parameters(), lr=config.learning_rate)
         self.replay = deque(maxlen=config.replay_capacity)
         self.rng = random.Random(config.seed)
         self.updates = 0
+        self.interactions = 0
+        self.last_update = None
 
-    def select(self, state, mask, *, explore=True):
+    def select(self, state, mask, *, explore=True, epsilon=None):
+        epsilon = self.config.epsilon if epsilon is None else epsilon
+        if not 0 <= epsilon <= 1 or len(mask) != self.action_count:
+            raise ValueError("Invalid epsilon or action-mask shape")
         valid = [i for i, ok in enumerate(mask) if ok]
         if not valid:
             raise ValueError('No feasible joint action')
-        if explore and self.rng.random() < self.config.epsilon:
+        if explore and self.rng.random() < epsilon:
             return self.rng.choice(valid)
         with torch.no_grad():
             q = self.policy(torch.as_tensor(state, dtype=torch.float32, device=self.device))
@@ -83,14 +98,15 @@ class JointDQNAgent:
             return int(q.argmax().item())
 
     def remember(self, transition):
-        if not 0 <= transition.action_idx < len(ACTIONS) or not np.isfinite(transition.reward):
+        if not 0 <= transition.action_idx < self.action_count or not np.isfinite(transition.reward):
             raise ValueError('Invalid transition action/reward')
-        if (np.shape(transition.state) != (STATE_DIM,)
-                or np.shape(transition.next_state) != (STATE_DIM,)
-                or len(transition.next_mask) != len(ACTIONS)
+        if (np.shape(transition.state) != (self.state_dimension,)
+                or np.shape(transition.next_state) != (self.state_dimension,)
+                or len(transition.next_mask) != self.action_count
                 or not np.isfinite(transition.state).all()
                 or not np.isfinite(transition.next_state).all()):
             raise ValueError('Invalid replay dimensions or values')
+        self.interactions += 1
         self.replay.append((transition.state.copy(), transition.action_idx,
                             transition.reward, transition.next_state.copy(),
                             bool(transition.done), list(transition.next_mask)))
@@ -109,13 +125,18 @@ class JointDQNAgent:
         prediction = self.policy(s).gather(1, a[:, None]).squeeze(1)
         with torch.no_grad():
             targets = masked_td_targets(r, d, self.target(ns), m, self.config.gamma)
-        loss = nn.functional.smooth_l1_loss(prediction, targets)
+        loss = self.loss_function(prediction, targets)
         if not torch.isfinite(loss):
             raise ValueError('Nonfinite DQN loss')
         self.optimizer.zero_grad(set_to_none=True)
         loss.backward()
-        nn.utils.clip_grad_norm_(self.policy.parameters(), 10.0, error_if_nonfinite=True)
+        if self.gradient_clip is not None:
+            nn.utils.clip_grad_norm_(self.policy.parameters(), self.gradient_clip, error_if_nonfinite=True)
         self.optimizer.step()
+        self.last_update = dict(loss=float(loss.item()),
+            mean_abs_td=float((targets-prediction).detach().abs().mean()),
+            max_abs_q=float(prediction.detach().abs().max()),
+            max_abs_target=float(targets.abs().max()))
         self.updates += 1
         if self.updates % self.config.target_every == 0:
             self.target.load_state_dict(self.policy.state_dict())

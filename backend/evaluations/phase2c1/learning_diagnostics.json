@@ -1,0 +1,486 @@
+[
+  {
+    "method": "B3",
+    "episodes": 9,
+    "transitions": 2691,
+    "updates": 2660,
+    "return_mean": -1611.4082094682321,
+    "return_population_sd": 2280.760053530647,
+    "first_episode_losses": {
+      "mean": 5.805243497019384,
+      "max": 12.293619155883789,
+      "mean_abs_td": 2.0178788809189157,
+      "max_abs_target": 5.83973503112793
+    },
+    "last_episode_losses": {
+      "mean": 66.99836316475502,
+      "max": 199.38389587402344,
+      "mean_abs_td": 5.001632086808067,
+      "max_abs_target": 96.2333984375
+    },
+    "first_q": {
+      "max_abs": 5.4046101570129395,
+      "mean_selected": -1.097776335719381
+    },
+    "last_q": {
+      "max_abs": 61.05702209472656,
+      "mean_selected": -27.922909235874545
+    },
+    "validation_checkpoints": [
+      {
+        "episode": 3,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 9.000000000000876,
+        "feasibility_service_fraction": 0.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.4485700634768957,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 6,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 0.0,
+        "feasibility_service_fraction": 0.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.32653061224489793,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 9,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 0.0,
+        "feasibility_service_fraction": 0.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.32653061224489793,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      }
+    ],
+    "training_loop_seconds": 29.63790781283751
+  },
+  {
+    "method": "B4",
+    "episodes": 9,
+    "transitions": 2691,
+    "updates": 2660,
+    "return_mean": -1660.3143847338745,
+    "return_population_sd": 2261.9982701545377,
+    "first_episode_losses": {
+      "mean": 5.805243497019384,
+      "max": 12.293619155883789,
+      "mean_abs_td": 2.0178788809189157,
+      "max_abs_target": 5.83973503112793
+    },
+    "last_episode_losses": {
+      "mean": 44.45291050780178,
+      "max": 214.89012145996094,
+      "mean_abs_td": 3.8423479743625806,
+      "max_abs_target": 127.55143737792969
+    },
+    "first_q": {
+      "max_abs": 5.4046101570129395,
+      "mean_selected": -1.097776335719381
+    },
+    "last_q": {
+      "max_abs": 85.86708068847656,
+      "mean_selected": -48.67131503688851
+    },
+    "validation_checkpoints": [
+      {
+        "episode": 3,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 9.000000000000876,
+        "feasibility_service_fraction": 1.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.4485700634768957,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 6,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 2.0000000000000737,
+        "feasibility_service_fraction": 1.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.4587400177462289,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 9,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 0.0,
+        "feasibility_service_fraction": 1.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.32653061224489793,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      }
+    ],
+    "training_loop_seconds": 36.86785133113153
+  },
+  {
+    "method": "P",
+    "episodes": 9,
+    "transitions": 2691,
+    "updates": 2660,
+    "return_mean": -27.396529510513055,
+    "return_population_sd": 42.409588604165,
+    "first_episode_losses": {
+      "mean": 0.002265650426369263,
+      "max": 0.011903450824320316,
+      "mean_abs_td": 0.0385163211708527,
+      "max_abs_target": 0.25931617617607117
+    },
+    "last_episode_losses": {
+      "mean": 0.008770246100995494,
+      "max": 0.055458616465330124,
+      "mean_abs_td": 0.05170785233901695,
+      "max_abs_target": 1.2530137300491333
+    },
+    "first_q": {
+      "max_abs": 0.3384743928909302,
+      "mean_selected": 0.11992816416154238
+    },
+    "last_q": {
+      "max_abs": 0.938256025314331,
+      "mean_selected": 0.29795577466786904
+    },
+    "validation_checkpoints": [
+      {
+        "episode": 3,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 8.174444444445399,
+        "feasibility_service_fraction": 0.9688888888888889,
+        "switches_per_decision": 0.014492753623188406,
+        "valid_action_fraction": 0.5439674197438172,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 6,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 4.647777777778092,
+        "feasibility_service_fraction": 0.9733333333333333,
+        "switches_per_decision": 0.010033444816053512,
+        "valid_action_fraction": 0.43614770322844854,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 9,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 5.5255555555559726,
+        "feasibility_service_fraction": 0.86,
+        "switches_per_decision": 0.27759197324414714,
+        "valid_action_fraction": 0.5114554182877163,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      }
+    ],
+    "training_loop_seconds": 35.22240709094331
+  },
+  {
+    "method": "B5",
+    "episodes": 9,
+    "transitions": 2691,
+    "updates": 2660,
+    "return_mean": -2944.8851405319015,
+    "return_population_sd": 4649.511618992629,
+    "first_episode_losses": {
+      "mean": 5.805243497019384,
+      "max": 12.293619155883789,
+      "mean_abs_td": 2.0178788809189157,
+      "max_abs_target": 5.83973503112793
+    },
+    "last_episode_losses": {
+      "mean": 151.14238585915453,
+      "max": 413.3913269042969,
+      "mean_abs_td": 9.06296364838463,
+      "max_abs_target": 118.52700805664062
+    },
+    "first_q": {
+      "max_abs": 5.4046101570129395,
+      "mean_selected": -1.097776335719381
+    },
+    "last_q": {
+      "max_abs": 100.77128601074219,
+      "mean_selected": -43.29785540271364
+    },
+    "validation_checkpoints": [
+      {
+        "episode": 3,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 9.000000000000876,
+        "feasibility_service_fraction": 0.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.4485700634768957,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 6,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 0.0,
+        "feasibility_service_fraction": 0.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.32653061224489793,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      },
+      {
+        "episode": 9,
+        "independent_scenario_seeds": 1,
+        "failed_percent": 0.0,
+        "failed_upper_percent": 0.0,
+        "failed_seed_range_percent": [
+          0.0,
+          0.0
+        ],
+        "worst_percent": 0.0,
+        "worst_upper_percent": 0.0,
+        "per_class_percent": {
+          "tight": 0.0,
+          "relaxed": 0.0
+        },
+        "embb_mbps": 96.00000000000702,
+        "embb_served_offered_fraction": 1.0,
+        "reserve_prbs": 0.0,
+        "feasibility_service_fraction": 0.0,
+        "switches_per_decision": 0.0,
+        "valid_action_fraction": 0.32653061224489793,
+        "recovery_success": 2,
+        "recovery_windows": 2,
+        "recovery_success_seconds": [
+          0.0,
+          0.0
+        ],
+        "worst_risk_saturated_fraction": 0.0,
+        "fluid_load_ratio": 0.78866180139768
+      }
+    ],
+    "training_loop_seconds": 33.40242948173545
+  }
+]

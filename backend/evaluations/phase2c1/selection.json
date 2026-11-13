@@ -1,0 +1,136 @@
+{
+  "protocol": {
+    "version": "phase2c1-pilot-v1",
+    "base_commit": "ed267de",
+    "episode_intervals": 300,
+    "severities": [
+      0,
+      10,
+      20
+    ],
+    "training_scenario_seeds": [
+      1101,
+      1102,
+      1103
+    ],
+    "validation_scenario_seeds": [
+      2101
+    ],
+    "test_scenario_seeds": [
+      3101,
+      3102
+    ],
+    "network_seed": 12026,
+    "training_methods": [
+      "B3",
+      "B4",
+      "P",
+      "B5"
+    ],
+    "test_methods": [
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "P"
+    ],
+    "checkpoint_after_episodes": [
+      3,
+      6,
+      9
+    ],
+    "training_config": {
+      "replay_capacity": 2048,
+      "batch_size": 32,
+      "gamma": 0.99,
+      "learning_rate": 0.0001,
+      "target_every": 100
+    },
+    "exploration": {
+      "start": 1.0,
+      "end": 0.05,
+      "decay_fraction": 0.8
+    },
+    "rule_entry_candidates": [
+      0.75,
+      1.25
+    ],
+    "rule_release_ratio": 0.5,
+    "rule_release_decisions": 2,
+    "checkpoint_selection": "Minimize validation mean offered-failure upper bound; ties: mean worst-UE upper bound, negative eMBB Mbps, earlier episode.",
+    "rule_selection": "Use greedy selected B3 reserve weights on validation only, minimize the same physical metric tuple; tie favors lower entry threshold. Freeze before B5 training.",
+    "test_epsilon": 0.0,
+    "reward_weights": "Unchanged Phase2B joint-reward-v1 for P; unchanged original source reward for B3/B4/B5.",
+    "physical_reserve_prbs": 18,
+    "traffic_policy": "Original CSVs and budgets unchanged; no capacity-conditioned trace generation.",
+    "resource_policy": {
+      "cpus": [
+        6,
+        8,
+        9,
+        15
+      ],
+      "warning_gib": 2.0,
+      "stop_gib": 2.5,
+      "minimum_available_gib": 4.0,
+      "cuda": false,
+      "dataloader_workers": 0,
+      "parallel_workers": 1
+    },
+    "scope": "One network seed, nine episodes/2691 transitions per learned method, two held-out paired scenario seeds, exploratory only. No automatic budget escalation."
+  },
+  "selected": {
+    "B3": {
+      "score": [
+        0.0,
+        0.0,
+        -96.00000000000702
+      ],
+      "episode": 3,
+      "checkpoint": "checkpoints/B3_episode3.pt",
+      "rule_entry": null,
+      "training_transitions": 2691,
+      "updates": 2660
+    },
+    "B4": {
+      "score": [
+        0.0,
+        0.0,
+        -96.00000000000702
+      ],
+      "episode": 3,
+      "checkpoint": "checkpoints/B4_episode3.pt",
+      "rule_entry": null,
+      "training_transitions": 2691,
+      "updates": 2660
+    },
+    "P": {
+      "score": [
+        0.0,
+        0.0,
+        -96.00000000000702
+      ],
+      "episode": 3,
+      "checkpoint": "checkpoints/P_episode3.pt",
+      "rule_entry": null,
+      "training_transitions": 2691,
+      "updates": 2660
+    },
+    "B5": {
+      "score": [
+        0.0,
+        0.0,
+        -96.00000000000702
+      ],
+      "episode": 3,
+      "checkpoint": "checkpoints/B5_episode3.pt",
+      "rule_entry": 0.75,
+      "training_transitions": 2691,
+      "updates": 2660
+    }
+  },
+  "rule_entry": 0.75,
+  "selection_complete": true
+}

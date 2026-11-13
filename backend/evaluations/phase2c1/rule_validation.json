@@ -1,0 +1,3410 @@
+[
+  {
+    "method": "B5",
+    "scenario_seed": 2101,
+    "physical": {
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        }
+      },
+      "per_class": {
+        "relaxed": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        },
+        "tight": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        }
+      },
+      "overall": {
+        "offered_batches": 24000,
+        "known_failed_batches": 0,
+        "completed_batches": 24000,
+        "completed_over_budget_batches": 0,
+        "served_bytes": 15600000,
+        "served_over_budget_bytes": 0,
+        "unresolved_not_due_batches": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0,
+        "completed_batch_late_fraction": 0.0,
+        "served_byte_late_fraction": 0.0,
+        "hol_violation_fraction": 0.0,
+        "mean_observed_violation_s": 0.0,
+        "longest_observed_violation_s": 0.0,
+        "unfinished_bytes": 0,
+        "overflow_bytes": 0
+      },
+      "worst_ue": "DQNIMSI_phase1_pilot_URLLC_0",
+      "worst_ue_failure_fraction": 0.0,
+      "recovery": [],
+      "embb_throughput_mbps": 96.00000000000702,
+      "mean_reserve_prbs": 9.000000000000876,
+      "max_reserve_prbs": 18,
+      "resources": {
+        "eMBB": {
+          "quota_prb_s": 433.4999999999871,
+          "allocated_prb_s": 375.0,
+          "unused_prb_s": 58.50000000000152,
+          "mean_quota_prbs": 144.50000000000625,
+          "mean_allocated_prbs": 125.00000000000914,
+          "mean_unused_prbs": 19.500000000001933,
+          "scheduler_mean_us": 6.902595333333334,
+          "scheduler_median_us": 6.16,
+          "scheduler_p99_us": 17.928,
+          "scheduler_p95_us": 10.649
+        },
+        "URLLC": {
+          "quota_prb_s": 193.49999999999866,
+          "allocated_prb_s": 156.00000000000375,
+          "unused_prb_s": 37.49999999999993,
+          "mean_quota_prbs": 64.50000000000428,
+          "mean_allocated_prbs": 52.00000000000505,
+          "mean_unused_prbs": 12.50000000000089,
+          "scheduler_mean_us": 7.716639666666667,
+          "scheduler_median_us": 7.0145,
+          "scheduler_p99_us": 20.07,
+          "scheduler_p95_us": 11.749
+        }
+      },
+      "assignments": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1112.9639224964073,
+            643.4567225016644
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1153.8886418097547,
+            1081.0085524149683
+          ],
+          "cqi": 14
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            918.9906811854129,
+            1015.6894422744161
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1042.4551569144437,
+            985.9027441522637
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            946.3834262500286,
+            1127.5748331303616
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            937.6208791839618,
+            757.3379063188211
+          ],
+          "cqi": 11
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1023.3013344371504,
+            628.8309081737444
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            976.9241673389979,
+            839.7666631875933
+          ],
+          "cqi": 15
+        }
+      },
+      "starvation_limit_ticks": 3,
+      "recovery_hold_s": 0.01,
+      "exogenous_sha256": "918ef58be3a69272c7245008946e7d76cc30d28fd27ad4492d550f5e5c5cd48d",
+      "quota_sha256": "178122c47adea4b790f27e9d234df141c5722d55ff1d2dac56e9841e23ca9ef3"
+    },
+    "embb_offered_mbps": 96.0,
+    "embb_served_offered_fraction": 1.0,
+    "ue_resources": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 145.25341386553487,
+        "fluid_prbs": 4.474937853107033
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "prbs": 7.0,
+        "capacity_bytes_per_prb": 107.46290703781422,
+        "fluid_prbs": 6.048598701794439
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      }
+    },
+    "return_value": -750.0,
+    "return_objective": "original-legacy",
+    "common_joint_monitor_return": -2.999999999999891,
+    "transitions": 299,
+    "updates": 0,
+    "terminal": {
+      "unresolved_batches": 0,
+      "unresolved_bytes": 0,
+      "terminal_unresolved_charges": 0
+    },
+    "live_accounting": {
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      }
+    },
+    "known_failures": 0,
+    "bootstrap": {
+      "new_known_failures": 0,
+      "offered_batches": 80
+    },
+    "losses": {
+      "mean": null,
+      "max": null,
+      "mean_abs_td": null,
+      "max_abs_target": null
+    },
+    "q": {
+      "max_abs": 13.674644470214844,
+      "mean_selected": -5.930858183066582
+    },
+    "mean_valid_action_fraction": 0.4485700634768957,
+    "valid_action_checks": 299,
+    "mode_service_ticks": {
+      "PROPORTIONAL": 3000
+    },
+    "switches": 0,
+    "switches_per_decision": 0.0,
+    "worst_risk_valid_decisions": 290,
+    "worst_risk_saturated_fraction": 0.0,
+    "mean_exogenous_fluid_load_ratio": 0.7643265191127316,
+    "control_digest": "dea973df366781485a7dcab305e2af98559c3515d5925c563d15499c63b71d22",
+    "parameter_sha256": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "severity": 0,
+    "elapsed_seconds": 2.8392450530081987,
+    "steps": 3000,
+    "rule_entry": 0.75,
+    "training": false,
+    "network_seed": 12026,
+    "epsilon_start": 0.0,
+    "epsilon_end": 0.0,
+    "deadline_assignment_sha256": "02163d9e3d5834f270a812e61e695aee7f436645dc991716243f05c43d0c0201"
+  },
+  {
+    "method": "B5",
+    "scenario_seed": 2101,
+    "physical": {
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        }
+      },
+      "per_class": {
+        "relaxed": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        },
+        "tight": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        }
+      },
+      "overall": {
+        "offered_batches": 24000,
+        "known_failed_batches": 0,
+        "completed_batches": 24000,
+        "completed_over_budget_batches": 0,
+        "served_bytes": 15600000,
+        "served_over_budget_bytes": 0,
+        "unresolved_not_due_batches": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0,
+        "completed_batch_late_fraction": 0.0,
+        "served_byte_late_fraction": 0.0,
+        "hol_violation_fraction": 0.0,
+        "mean_observed_violation_s": 0.0,
+        "longest_observed_violation_s": 0.0,
+        "unfinished_bytes": 0,
+        "overflow_bytes": 0
+      },
+      "worst_ue": "DQNIMSI_phase1_pilot_URLLC_0",
+      "worst_ue_failure_fraction": 0.0,
+      "recovery": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "embb_throughput_mbps": 96.00000000000702,
+      "mean_reserve_prbs": 9.000000000000876,
+      "max_reserve_prbs": 18,
+      "resources": {
+        "eMBB": {
+          "quota_prb_s": 421.24999999998585,
+          "allocated_prb_s": 375.0,
+          "unused_prb_s": 46.25000000000194,
+          "mean_quota_prbs": 140.41666666667223,
+          "mean_allocated_prbs": 125.00000000000914,
+          "mean_unused_prbs": 15.41666666666844,
+          "scheduler_mean_us": 6.898934333333334,
+          "scheduler_median_us": 6.186,
+          "scheduler_p99_us": 21.487,
+          "scheduler_p95_us": 10.699
+        },
+        "URLLC": {
+          "quota_prb_s": 188.24999999999886,
+          "allocated_prb_s": 156.00000000000375,
+          "unused_prb_s": 32.249999999998806,
+          "mean_quota_prbs": 62.750000000004206,
+          "mean_allocated_prbs": 52.00000000000505,
+          "mean_unused_prbs": 10.750000000000389,
+          "scheduler_mean_us": 7.782031333333333,
+          "scheduler_median_us": 7.048,
+          "scheduler_p99_us": 20.289,
+          "scheduler_p95_us": 12.922
+        }
+      },
+      "assignments": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1112.9639224964073,
+            643.4567225016644
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1153.8886418097547,
+            1081.0085524149683
+          ],
+          "cqi": 14
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            918.9906811854129,
+            1015.6894422744161
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1042.4551569144437,
+            985.9027441522637
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            946.3834262500286,
+            1127.5748331303616
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            937.6208791839618,
+            757.3379063188211
+          ],
+          "cqi": 11
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1023.3013344371504,
+            628.8309081737444
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            976.9241673389979,
+            839.7666631875933
+          ],
+          "cqi": 15
+        }
+      },
+      "starvation_limit_ticks": 3,
+      "recovery_hold_s": 0.01,
+      "exogenous_sha256": "6e12a4aab2da6c2672859b9a3a3176463ee340b14a52e7a4813ce4b47f8d7900",
+      "quota_sha256": "d070d65bf2c18f3526a87941384fa1373ab16087b11c03734a41fafc4e025799"
+    },
+    "embb_offered_mbps": 96.0,
+    "embb_served_offered_fraction": 1.0,
+    "ue_resources": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 145.25341386553487,
+        "fluid_prbs": 4.474937853107033
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "prbs": 7.0,
+        "capacity_bytes_per_prb": 107.46290703781422,
+        "fluid_prbs": 6.048598701794439
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      }
+    },
+    "return_value": -750.0,
+    "return_objective": "original-legacy",
+    "common_joint_monitor_return": -2.999999999999891,
+    "transitions": 299,
+    "updates": 0,
+    "terminal": {
+      "unresolved_batches": 0,
+      "unresolved_bytes": 0,
+      "terminal_unresolved_charges": 0
+    },
+    "live_accounting": {
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      }
+    },
+    "known_failures": 0,
+    "bootstrap": {
+      "new_known_failures": 0,
+      "offered_batches": 80
+    },
+    "losses": {
+      "mean": null,
+      "max": null,
+      "mean_abs_td": null,
+      "max_abs_target": null
+    },
+    "q": {
+      "max_abs": 13.674644470214844,
+      "mean_selected": -5.871523954397858
+    },
+    "mean_valid_action_fraction": 0.4485700634768957,
+    "valid_action_checks": 299,
+    "mode_service_ticks": {
+      "PROPORTIONAL": 3000
+    },
+    "switches": 0,
+    "switches_per_decision": 0.0,
+    "worst_risk_valid_decisions": 290,
+    "worst_risk_saturated_fraction": 0.0,
+    "mean_exogenous_fluid_load_ratio": 0.7877926841732049,
+    "control_digest": "cc169cca6fc4e057792df6319aa5165051b60fd58e321239499074d88c3701b6",
+    "parameter_sha256": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "severity": 10,
+    "elapsed_seconds": 2.8484653881751,
+    "steps": 3000,
+    "rule_entry": 0.75,
+    "training": false,
+    "network_seed": 12026,
+    "epsilon_start": 0.0,
+    "epsilon_end": 0.0,
+    "deadline_assignment_sha256": "02163d9e3d5834f270a812e61e695aee7f436645dc991716243f05c43d0c0201"
+  },
+  {
+    "method": "B5",
+    "scenario_seed": 2101,
+    "physical": {
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        }
+      },
+      "per_class": {
+        "relaxed": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        },
+        "tight": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        }
+      },
+      "overall": {
+        "offered_batches": 24000,
+        "known_failed_batches": 0,
+        "completed_batches": 24000,
+        "completed_over_budget_batches": 0,
+        "served_bytes": 15600000,
+        "served_over_budget_bytes": 0,
+        "unresolved_not_due_batches": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0,
+        "completed_batch_late_fraction": 0.0,
+        "served_byte_late_fraction": 0.0,
+        "hol_violation_fraction": 0.0,
+        "mean_observed_violation_s": 0.0,
+        "longest_observed_violation_s": 0.0,
+        "unfinished_bytes": 0,
+        "overflow_bytes": 0
+      },
+      "worst_ue": "DQNIMSI_phase1_pilot_URLLC_0",
+      "worst_ue_failure_fraction": 0.0,
+      "recovery": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "embb_throughput_mbps": 96.00000000000702,
+      "mean_reserve_prbs": 9.000000000000876,
+      "max_reserve_prbs": 18,
+      "resources": {
+        "eMBB": {
+          "quota_prb_s": 408.9999999999854,
+          "allocated_prb_s": 375.0,
+          "unused_prb_s": 33.99999999999988,
+          "mean_quota_prbs": 136.33333333333843,
+          "mean_allocated_prbs": 125.00000000000914,
+          "mean_unused_prbs": 11.333333333334123,
+          "scheduler_mean_us": 6.902531,
+          "scheduler_median_us": 6.197,
+          "scheduler_p99_us": 21.764,
+          "scheduler_p95_us": 10.352
+        },
+        "URLLC": {
+          "quota_prb_s": 182.999999999999,
+          "allocated_prb_s": 156.00000000000375,
+          "unused_prb_s": 26.999999999998593,
+          "mean_quota_prbs": 61.00000000000413,
+          "mean_allocated_prbs": 52.00000000000505,
+          "mean_unused_prbs": 9.00000000000019,
+          "scheduler_mean_us": 7.733497333333334,
+          "scheduler_median_us": 7.06,
+          "scheduler_p99_us": 24.225,
+          "scheduler_p95_us": 11.933
+        }
+      },
+      "assignments": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1112.9639224964073,
+            643.4567225016644
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1153.8886418097547,
+            1081.0085524149683
+          ],
+          "cqi": 14
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            918.9906811854129,
+            1015.6894422744161
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1042.4551569144437,
+            985.9027441522637
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            946.3834262500286,
+            1127.5748331303616
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            937.6208791839618,
+            757.3379063188211
+          ],
+          "cqi": 11
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1023.3013344371504,
+            628.8309081737444
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            976.9241673389979,
+            839.7666631875933
+          ],
+          "cqi": 15
+        }
+      },
+      "starvation_limit_ticks": 3,
+      "recovery_hold_s": 0.01,
+      "exogenous_sha256": "1bd4595cc140ab21810af19d1e164dc15a11c3a35078c9bdbc6f9a12322e23b2",
+      "quota_sha256": "8bd4f56ec577c2812a92a484a51b2b30b158a3155752b42797246bac26f245b4"
+    },
+    "embb_offered_mbps": 96.0,
+    "embb_served_offered_fraction": 1.0,
+    "ue_resources": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 145.25341386553487,
+        "fluid_prbs": 4.474937853107033
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "prbs": 7.0,
+        "capacity_bytes_per_prb": 107.46290703781422,
+        "fluid_prbs": 6.048598701794439
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      }
+    },
+    "return_value": -750.0,
+    "return_objective": "original-legacy",
+    "common_joint_monitor_return": -2.999999999999891,
+    "transitions": 299,
+    "updates": 0,
+    "terminal": {
+      "unresolved_batches": 0,
+      "unresolved_bytes": 0,
+      "terminal_unresolved_charges": 0
+    },
+    "live_accounting": {
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      }
+    },
+    "known_failures": 0,
+    "bootstrap": {
+      "new_known_failures": 0,
+      "offered_batches": 80
+    },
+    "losses": {
+      "mean": null,
+      "max": null,
+      "mean_abs_td": null,
+      "max_abs_target": null
+    },
+    "q": {
+      "max_abs": 13.674644470214844,
+      "mean_selected": -5.81254733446051
+    },
+    "mean_valid_action_fraction": 0.4485700634768957,
+    "valid_action_checks": 299,
+    "mode_service_ticks": {
+      "PROPORTIONAL": 3000
+    },
+    "switches": 0,
+    "switches_per_decision": 0.0,
+    "worst_risk_valid_decisions": 290,
+    "worst_risk_saturated_fraction": 0.0,
+    "mean_exogenous_fluid_load_ratio": 0.8138662009071037,
+    "control_digest": "ce4ef2e6de4619d5f3e1827e6365bc80a980fbf59af7bb376e935fb5e25791bb",
+    "parameter_sha256": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "severity": 20,
+    "elapsed_seconds": 2.8371428181417286,
+    "steps": 3000,
+    "rule_entry": 0.75,
+    "training": false,
+    "network_seed": 12026,
+    "epsilon_start": 0.0,
+    "epsilon_end": 0.0,
+    "deadline_assignment_sha256": "02163d9e3d5834f270a812e61e695aee7f436645dc991716243f05c43d0c0201"
+  },
+  {
+    "method": "B5",
+    "scenario_seed": 2101,
+    "physical": {
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        }
+      },
+      "per_class": {
+        "relaxed": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        },
+        "tight": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        }
+      },
+      "overall": {
+        "offered_batches": 24000,
+        "known_failed_batches": 0,
+        "completed_batches": 24000,
+        "completed_over_budget_batches": 0,
+        "served_bytes": 15600000,
+        "served_over_budget_bytes": 0,
+        "unresolved_not_due_batches": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0,
+        "completed_batch_late_fraction": 0.0,
+        "served_byte_late_fraction": 0.0,
+        "hol_violation_fraction": 0.0,
+        "mean_observed_violation_s": 0.0,
+        "longest_observed_violation_s": 0.0,
+        "unfinished_bytes": 0,
+        "overflow_bytes": 0
+      },
+      "worst_ue": "DQNIMSI_phase1_pilot_URLLC_0",
+      "worst_ue_failure_fraction": 0.0,
+      "recovery": [],
+      "embb_throughput_mbps": 96.00000000000702,
+      "mean_reserve_prbs": 9.000000000000876,
+      "max_reserve_prbs": 18,
+      "resources": {
+        "eMBB": {
+          "quota_prb_s": 433.4999999999871,
+          "allocated_prb_s": 375.0,
+          "unused_prb_s": 58.50000000000152,
+          "mean_quota_prbs": 144.50000000000625,
+          "mean_allocated_prbs": 125.00000000000914,
+          "mean_unused_prbs": 19.500000000001933,
+          "scheduler_mean_us": 6.976213333333333,
+          "scheduler_median_us": 6.2475,
+          "scheduler_p99_us": 19.478,
+          "scheduler_p95_us": 10.632
+        },
+        "URLLC": {
+          "quota_prb_s": 193.49999999999866,
+          "allocated_prb_s": 156.00000000000375,
+          "unused_prb_s": 37.49999999999993,
+          "mean_quota_prbs": 64.50000000000428,
+          "mean_allocated_prbs": 52.00000000000505,
+          "mean_unused_prbs": 12.50000000000089,
+          "scheduler_mean_us": 7.669035666666667,
+          "scheduler_median_us": 7.014,
+          "scheduler_p99_us": 19.8,
+          "scheduler_p95_us": 11.678
+        }
+      },
+      "assignments": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1112.9639224964073,
+            643.4567225016644
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1153.8886418097547,
+            1081.0085524149683
+          ],
+          "cqi": 14
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            918.9906811854129,
+            1015.6894422744161
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1042.4551569144437,
+            985.9027441522637
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            946.3834262500286,
+            1127.5748331303616
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            937.6208791839618,
+            757.3379063188211
+          ],
+          "cqi": 11
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1023.3013344371504,
+            628.8309081737444
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            976.9241673389979,
+            839.7666631875933
+          ],
+          "cqi": 15
+        }
+      },
+      "starvation_limit_ticks": 3,
+      "recovery_hold_s": 0.01,
+      "exogenous_sha256": "918ef58be3a69272c7245008946e7d76cc30d28fd27ad4492d550f5e5c5cd48d",
+      "quota_sha256": "178122c47adea4b790f27e9d234df141c5722d55ff1d2dac56e9841e23ca9ef3"
+    },
+    "embb_offered_mbps": 96.0,
+    "embb_served_offered_fraction": 1.0,
+    "ue_resources": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 145.25341386553487,
+        "fluid_prbs": 4.474937853107033
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "prbs": 7.0,
+        "capacity_bytes_per_prb": 107.46290703781422,
+        "fluid_prbs": 6.048598701794439
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      }
+    },
+    "return_value": -750.0,
+    "return_objective": "original-legacy",
+    "common_joint_monitor_return": -2.999999999999891,
+    "transitions": 299,
+    "updates": 0,
+    "terminal": {
+      "unresolved_batches": 0,
+      "unresolved_bytes": 0,
+      "terminal_unresolved_charges": 0
+    },
+    "live_accounting": {
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      }
+    },
+    "known_failures": 0,
+    "bootstrap": {
+      "new_known_failures": 0,
+      "offered_batches": 80
+    },
+    "losses": {
+      "mean": null,
+      "max": null,
+      "mean_abs_td": null,
+      "max_abs_target": null
+    },
+    "q": {
+      "max_abs": 13.674644470214844,
+      "mean_selected": -5.930858183066582
+    },
+    "mean_valid_action_fraction": 0.4485700634768957,
+    "valid_action_checks": 299,
+    "mode_service_ticks": {
+      "PROPORTIONAL": 3000
+    },
+    "switches": 0,
+    "switches_per_decision": 0.0,
+    "worst_risk_valid_decisions": 290,
+    "worst_risk_saturated_fraction": 0.0,
+    "mean_exogenous_fluid_load_ratio": 0.7643265191127316,
+    "control_digest": "dea973df366781485a7dcab305e2af98559c3515d5925c563d15499c63b71d22",
+    "parameter_sha256": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "severity": 0,
+    "elapsed_seconds": 2.8411267600022256,
+    "steps": 3000,
+    "rule_entry": 1.25,
+    "training": false,
+    "network_seed": 12026,
+    "epsilon_start": 0.0,
+    "epsilon_end": 0.0,
+    "deadline_assignment_sha256": "02163d9e3d5834f270a812e61e695aee7f436645dc991716243f05c43d0c0201"
+  },
+  {
+    "method": "B5",
+    "scenario_seed": 2101,
+    "physical": {
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        }
+      },
+      "per_class": {
+        "relaxed": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        },
+        "tight": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        }
+      },
+      "overall": {
+        "offered_batches": 24000,
+        "known_failed_batches": 0,
+        "completed_batches": 24000,
+        "completed_over_budget_batches": 0,
+        "served_bytes": 15600000,
+        "served_over_budget_bytes": 0,
+        "unresolved_not_due_batches": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0,
+        "completed_batch_late_fraction": 0.0,
+        "served_byte_late_fraction": 0.0,
+        "hol_violation_fraction": 0.0,
+        "mean_observed_violation_s": 0.0,
+        "longest_observed_violation_s": 0.0,
+        "unfinished_bytes": 0,
+        "overflow_bytes": 0
+      },
+      "worst_ue": "DQNIMSI_phase1_pilot_URLLC_0",
+      "worst_ue_failure_fraction": 0.0,
+      "recovery": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "embb_throughput_mbps": 96.00000000000702,
+      "mean_reserve_prbs": 9.000000000000876,
+      "max_reserve_prbs": 18,
+      "resources": {
+        "eMBB": {
+          "quota_prb_s": 421.24999999998585,
+          "allocated_prb_s": 375.0,
+          "unused_prb_s": 46.25000000000194,
+          "mean_quota_prbs": 140.41666666667223,
+          "mean_allocated_prbs": 125.00000000000914,
+          "mean_unused_prbs": 15.41666666666844,
+          "scheduler_mean_us": 6.896890999999999,
+          "scheduler_median_us": 6.239,
+          "scheduler_p99_us": 17.892,
+          "scheduler_p95_us": 11.412
+        },
+        "URLLC": {
+          "quota_prb_s": 188.24999999999886,
+          "allocated_prb_s": 156.00000000000375,
+          "unused_prb_s": 32.249999999998806,
+          "mean_quota_prbs": 62.750000000004206,
+          "mean_allocated_prbs": 52.00000000000505,
+          "mean_unused_prbs": 10.750000000000389,
+          "scheduler_mean_us": 7.739198666666666,
+          "scheduler_median_us": 6.942,
+          "scheduler_p99_us": 25.102,
+          "scheduler_p95_us": 11.738
+        }
+      },
+      "assignments": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1112.9639224964073,
+            643.4567225016644
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1153.8886418097547,
+            1081.0085524149683
+          ],
+          "cqi": 14
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            918.9906811854129,
+            1015.6894422744161
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1042.4551569144437,
+            985.9027441522637
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            946.3834262500286,
+            1127.5748331303616
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            937.6208791839618,
+            757.3379063188211
+          ],
+          "cqi": 11
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1023.3013344371504,
+            628.8309081737444
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            976.9241673389979,
+            839.7666631875933
+          ],
+          "cqi": 15
+        }
+      },
+      "starvation_limit_ticks": 3,
+      "recovery_hold_s": 0.01,
+      "exogenous_sha256": "6e12a4aab2da6c2672859b9a3a3176463ee340b14a52e7a4813ce4b47f8d7900",
+      "quota_sha256": "d070d65bf2c18f3526a87941384fa1373ab16087b11c03734a41fafc4e025799"
+    },
+    "embb_offered_mbps": 96.0,
+    "embb_served_offered_fraction": 1.0,
+    "ue_resources": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 145.25341386553487,
+        "fluid_prbs": 4.474937853107033
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "prbs": 7.0,
+        "capacity_bytes_per_prb": 107.46290703781422,
+        "fluid_prbs": 6.048598701794439
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      }
+    },
+    "return_value": -750.0,
+    "return_objective": "original-legacy",
+    "common_joint_monitor_return": -2.999999999999891,
+    "transitions": 299,
+    "updates": 0,
+    "terminal": {
+      "unresolved_batches": 0,
+      "unresolved_bytes": 0,
+      "terminal_unresolved_charges": 0
+    },
+    "live_accounting": {
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      }
+    },
+    "known_failures": 0,
+    "bootstrap": {
+      "new_known_failures": 0,
+      "offered_batches": 80
+    },
+    "losses": {
+      "mean": null,
+      "max": null,
+      "mean_abs_td": null,
+      "max_abs_target": null
+    },
+    "q": {
+      "max_abs": 13.674644470214844,
+      "mean_selected": -5.871523954397858
+    },
+    "mean_valid_action_fraction": 0.4485700634768957,
+    "valid_action_checks": 299,
+    "mode_service_ticks": {
+      "PROPORTIONAL": 3000
+    },
+    "switches": 0,
+    "switches_per_decision": 0.0,
+    "worst_risk_valid_decisions": 290,
+    "worst_risk_saturated_fraction": 0.0,
+    "mean_exogenous_fluid_load_ratio": 0.7877926841732049,
+    "control_digest": "cc169cca6fc4e057792df6319aa5165051b60fd58e321239499074d88c3701b6",
+    "parameter_sha256": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "severity": 10,
+    "elapsed_seconds": 2.8353950940072536,
+    "steps": 3000,
+    "rule_entry": 1.25,
+    "training": false,
+    "network_seed": 12026,
+    "epsilon_start": 0.0,
+    "epsilon_end": 0.0,
+    "deadline_assignment_sha256": "02163d9e3d5834f270a812e61e695aee7f436645dc991716243f05c43d0c0201"
+  },
+  {
+    "method": "B5",
+    "scenario_seed": 2101,
+    "physical": {
+      "per_ue": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "batch_outcomes": {
+            "offered": 3000,
+            "on_time": 3000,
+            "known_failed": 0,
+            "unresolved_not_due": 0,
+            "unfinished_overdue": 0,
+            "failure_fraction_lower": 0.0,
+            "failure_fraction_upper": 0.0
+          },
+          "completed_batches": 3000,
+          "completed_batch_late_fraction": 0.0,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 1950000,
+          "served_over_budget_bytes": 0,
+          "served_byte_late_fraction": 0.0,
+          "overflow_bytes": 0,
+          "unfinished_bytes": 0,
+          "hol": {
+            "observed_s": 2.9999999999997806,
+            "violating_s": 0.0,
+            "fraction": 0.0,
+            "runs": 0,
+            "longest_run_s": 0.0,
+            "mean_observed_run_s": 0.0,
+            "right_censored_run": false
+          }
+        }
+      },
+      "per_class": {
+        "relaxed": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        },
+        "tight": {
+          "offered_batches": 12000,
+          "known_failed_batches": 0,
+          "completed_batches": 12000,
+          "completed_over_budget_batches": 0,
+          "served_bytes": 7800000,
+          "served_over_budget_bytes": 0,
+          "unresolved_not_due_batches": 0,
+          "failure_fraction_lower": 0.0,
+          "failure_fraction_upper": 0.0,
+          "completed_batch_late_fraction": 0.0,
+          "served_byte_late_fraction": 0.0,
+          "hol_violation_fraction": 0.0,
+          "mean_observed_violation_s": 0.0,
+          "longest_observed_violation_s": 0.0,
+          "unfinished_bytes": 0,
+          "overflow_bytes": 0
+        }
+      },
+      "overall": {
+        "offered_batches": 24000,
+        "known_failed_batches": 0,
+        "completed_batches": 24000,
+        "completed_over_budget_batches": 0,
+        "served_bytes": 15600000,
+        "served_over_budget_bytes": 0,
+        "unresolved_not_due_batches": 0,
+        "failure_fraction_lower": 0.0,
+        "failure_fraction_upper": 0.0,
+        "completed_batch_late_fraction": 0.0,
+        "served_byte_late_fraction": 0.0,
+        "hol_violation_fraction": 0.0,
+        "mean_observed_violation_s": 0.0,
+        "longest_observed_violation_s": 0.0,
+        "unfinished_bytes": 0,
+        "overflow_bytes": 0
+      },
+      "worst_ue": "DQNIMSI_phase1_pilot_URLLC_0",
+      "worst_ue_failure_fraction": 0.0,
+      "recovery": [
+        {
+          "off_s": 1.25,
+          "recovery_s": 0.0,
+          "censored": false,
+          "end_s": 1.2590000000000001,
+          "compliant_run_s": 0.010000000000000002,
+          "reason": "recovered"
+        }
+      ],
+      "embb_throughput_mbps": 96.00000000000702,
+      "mean_reserve_prbs": 9.000000000000876,
+      "max_reserve_prbs": 18,
+      "resources": {
+        "eMBB": {
+          "quota_prb_s": 408.9999999999854,
+          "allocated_prb_s": 375.0,
+          "unused_prb_s": 33.99999999999988,
+          "mean_quota_prbs": 136.33333333333843,
+          "mean_allocated_prbs": 125.00000000000914,
+          "mean_unused_prbs": 11.333333333334123,
+          "scheduler_mean_us": 6.92441,
+          "scheduler_median_us": 6.213,
+          "scheduler_p99_us": 19.217,
+          "scheduler_p95_us": 10.762
+        },
+        "URLLC": {
+          "quota_prb_s": 182.999999999999,
+          "allocated_prb_s": 156.00000000000375,
+          "unused_prb_s": 26.999999999998593,
+          "mean_quota_prbs": 61.00000000000413,
+          "mean_allocated_prbs": 52.00000000000505,
+          "mean_unused_prbs": 9.00000000000019,
+          "scheduler_mean_us": 7.767086,
+          "scheduler_median_us": 7.0305,
+          "scheduler_p99_us": 21.784,
+          "scheduler_p95_us": 11.974
+        }
+      },
+      "assignments": {
+        "DQNIMSI_phase1_pilot_URLLC_0": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1112.9639224964073,
+            643.4567225016644
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_1": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1153.8886418097547,
+            1081.0085524149683
+          ],
+          "cqi": 14
+        },
+        "DQNIMSI_phase1_pilot_URLLC_2": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            918.9906811854129,
+            1015.6894422744161
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_3": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            1042.4551569144437,
+            985.9027441522637
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_4": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            946.3834262500286,
+            1127.5748331303616
+          ],
+          "cqi": 15
+        },
+        "DQNIMSI_phase1_pilot_URLLC_5": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            937.6208791839618,
+            757.3379063188211
+          ],
+          "cqi": 11
+        },
+        "DQNIMSI_phase1_pilot_URLLC_6": {
+          "budget_s": 0.01,
+          "budget_class": "relaxed",
+          "position": [
+            1023.3013344371504,
+            628.8309081737444
+          ],
+          "cqi": 8
+        },
+        "DQNIMSI_phase1_pilot_URLLC_7": {
+          "budget_s": 0.002,
+          "budget_class": "tight",
+          "position": [
+            976.9241673389979,
+            839.7666631875933
+          ],
+          "cqi": 15
+        }
+      },
+      "starvation_limit_ticks": 3,
+      "recovery_hold_s": 0.01,
+      "exogenous_sha256": "1bd4595cc140ab21810af19d1e164dc15a11c3a35078c9bdbc6f9a12322e23b2",
+      "quota_sha256": "8bd4f56ec577c2812a92a484a51b2b30b158a3155752b42797246bac26f245b4"
+    },
+    "embb_offered_mbps": 96.0,
+    "embb_served_offered_fraction": 1.0,
+    "ue_resources": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 145.25341386553487,
+        "fluid_prbs": 4.474937853107033
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "prbs": 7.0,
+        "capacity_bytes_per_prb": 107.46290703781422,
+        "fluid_prbs": 6.048598701794439
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "prbs": 10.0,
+        "capacity_bytes_per_prb": 69.79549632352612,
+        "fluid_prbs": 9.312921810699017
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "prbs": 5.0,
+        "capacity_bytes_per_prb": 155.59348739496133,
+        "fluid_prbs": 4.177552742616143
+      }
+    },
+    "return_value": -750.0,
+    "return_objective": "original-legacy",
+    "common_joint_monitor_return": -2.999999999999891,
+    "transitions": 299,
+    "updates": 0,
+    "terminal": {
+      "unresolved_batches": 0,
+      "unresolved_bytes": 0,
+      "terminal_unresolved_charges": 0
+    },
+    "live_accounting": {
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "offered": 3000,
+        "overflowed": 0,
+        "fully_admitted_late": 0,
+        "pending_overdue_without_overflow": 0,
+        "independently_counted_known_failures": 0
+      }
+    },
+    "known_failures": 0,
+    "bootstrap": {
+      "new_known_failures": 0,
+      "offered_batches": 80
+    },
+    "losses": {
+      "mean": null,
+      "max": null,
+      "mean_abs_td": null,
+      "max_abs_target": null
+    },
+    "q": {
+      "max_abs": 13.674644470214844,
+      "mean_selected": -5.81254733446051
+    },
+    "mean_valid_action_fraction": 0.4485700634768957,
+    "valid_action_checks": 299,
+    "mode_service_ticks": {
+      "PROPORTIONAL": 3000
+    },
+    "switches": 0,
+    "switches_per_decision": 0.0,
+    "worst_risk_valid_decisions": 290,
+    "worst_risk_saturated_fraction": 0.0,
+    "mean_exogenous_fluid_load_ratio": 0.8138662009071037,
+    "control_digest": "ce4ef2e6de4619d5f3e1827e6365bc80a980fbf59af7bb376e935fb5e25791bb",
+    "parameter_sha256": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "severity": 20,
+    "elapsed_seconds": 2.8656286960467696,
+    "steps": 3000,
+    "rule_entry": 1.25,
+    "training": false,
+    "network_seed": 12026,
+    "epsilon_start": 0.0,
+    "epsilon_end": 0.0,
+    "deadline_assignment_sha256": "02163d9e3d5834f270a812e61e695aee7f436645dc991716243f05c43d0c0201"
+  }
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "reference": "B0",
+    "seed": 3101,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 6.960000000000649,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B0",
+    "seed": 3101,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 6.960000000000649,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B0",
+    "seed": 3101,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 6.1066666666673255,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B0",
+    "seed": 3102,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 4.066666666666664,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B0",
+    "seed": 3102,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 5.136666666667382,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B0",
+    "seed": 3102,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 9.940000000000893,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B1",
+    "seed": 3101,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 6.960000000000649,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B1",
+    "seed": 3101,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 1.1166666666669034,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B1",
+    "seed": 3101,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -4.306666666667028,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B1",
+    "seed": 3102,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 4.066666666666664,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B1",
+    "seed": 3102,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -0.7066666666663641,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B1",
+    "seed": 3102,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -0.4733333333334606,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B2",
+    "seed": 3101,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 6.960000000000649,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B2",
+    "seed": 3101,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 1.1166666666669034,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B2",
+    "seed": 3101,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -4.306666666667028,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B2",
+    "seed": 3102,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 4.066666666666664,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B2",
+    "seed": 3102,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -0.7066666666663641,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B2",
+    "seed": 3102,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -0.4733333333334606,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B3",
+    "seed": 3101,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.0400000000002265,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B3",
+    "seed": 3101,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.0400000000002265,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B3",
+    "seed": 3101,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.8933333333335503,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B3",
+    "seed": 3102,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -4.933333333334212,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B3",
+    "seed": 3102,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -3.863333333333494,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B3",
+    "seed": 3102,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 0.9400000000000173,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B4",
+    "seed": 3101,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.0400000000002265,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B4",
+    "seed": 3101,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.0400000000002265,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B4",
+    "seed": 3101,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.8933333333335503,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B4",
+    "seed": 3102,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -4.933333333334212,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B4",
+    "seed": 3102,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -3.863333333333494,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B4",
+    "seed": 3102,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 0.9400000000000173,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B5",
+    "seed": 3101,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.0400000000002265,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B5",
+    "seed": 3101,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.0400000000002265,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B5",
+    "seed": 3101,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -2.8933333333335503,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B5",
+    "seed": 3102,
+    "severity": 0,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -4.933333333334212,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B5",
+    "seed": 3102,
+    "severity": 10,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": -3.863333333333494,
+    "embb_difference_mbps": 0.0
+  },
+  {
+    "reference": "B5",
+    "seed": 3102,
+    "severity": 20,
+    "failed_difference_pp": 0.0,
+    "worst_difference_pp": 0.0,
+    "reserve_difference_prbs": 0.9400000000000173,
+    "embb_difference_mbps": 0.0
+  }
+]

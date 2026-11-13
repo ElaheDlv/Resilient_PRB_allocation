@@ -1,0 +1,81 @@
+{
+  "base_commit": "ed267def5581a0557be869d4fe3f8b91f4efe00e",
+  "protocol_sha256": "7063fe82326689bc5721133f1445373c4140f3611ccea4e679cd811a2dce4fef",
+  "unchanged_protected_source_sha256": {
+    "backend/network_layer/xApps/xapp_resilient_dqn_allocator.py": "634ec18387808c0eba2f9ce93228ab97eedc9f39a2e53f5beca81613358e0544",
+    "backend/network_layer/xApps/xapp_joint_deadline_dqn.py": "ac96ee758f3fa5060998dace0c1927fef3c9eeab48db5a516f484894441bad85",
+    "backend/network_layer/xApps/xapp_resilient_policy_validator.py": "560ad5657d4b70e81fef90bada993dc74bdddc535e43d14e97f60b33d5488b12",
+    "backend/network_layer/joint_dqn_schema.py": "e1c5c884547dc5c6be24a421e13b98bb584e5605b69836ed2aeb795b6299cd73",
+    "backend/network_layer/joint_reward.py": "224b95d363c849650653b65d3c138ea607e546b9603cb3f78987683647f88317",
+    "backend/network_layer/joint_control.py": "cfeae45758ffd43e9efbd2bd4f08a5023ce56787636834e389ee4a5ad41d7fb3",
+    "backend/network_layer/resilient_interval.py": "6017cb42e86f170c5c0cb9e360e213186459183d4597d7056578223bcea092ee",
+    "backend/network_layer/deadline_risk.py": "a6722cb87cbbfe4bf6fa9218ab6917e5b3ff226aff3858de480e13e654d6782e",
+    "backend/network_layer/ue_telemetry.py": "4c2781c1185270f2442e00498715df10278e95426981b97b4e3f99260e90f36f",
+    "backend/network_layer/phase1_metrics.py": "92a82ffacd83c8e508675a676c96134ab1f8b2b5d50b4c507c0df0d7a0b2b0f3",
+    "backend/network_layer/proportional_scheduler.py": "0a6406571857826cdd260b12063b34aa04184311c5d5e3712e9dbf862bab5f1f",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/cell.py": "0e55268a8a4bb46308c66595b1f1c8cdd9be63b6937162d2541bb9f1d53ec8c2",
+    "backend/network_layer/ue.py": "90e0cacd9b7bfdd5fde866e57417f86fb8216ca29920180e342f4e61b3692ca2",
+    "backend/network_layer/base_station.py": "5729ae142646a9fa8724145da581754432dd04e3403d3845e80851aca5999d12",
+    "backend/network_layer/ue_budgets.py": "aa242c0f6f32bc0525b0fecbb40448e1dc1fb6d50f98845d0789688e87789ce7"
+  },
+  "trace_sha256": {
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  },
+  "selected_models": {
+    "B3": {
+      "path": "checkpoints/B3_episode3.pt",
+      "sha256": "b3917f2b381729fc396269103cd9593d36cc4094d464c27e5f5397e8caab36bd",
+      "selected_episode": 3,
+      "selected_transitions": 897
+    },
+    "B4": {
+      "path": "checkpoints/B4_episode3.pt",
+      "sha256": "0879581c56ac18765cae5b85871d469a8c0978a23fd60b7ec49b25be1ee38b97",
+      "selected_episode": 3,
+      "selected_transitions": 897
+    },
+    "P": {
+      "path": "checkpoints/P_episode3.pt",
+      "sha256": "971018ea3866dfd07302f5ecba3558ab279bd548d8562da3b128f860cf79bd26",
+      "selected_episode": 3,
+      "selected_transitions": 897
+    },
+    "B5": {
+      "path": "checkpoints/B5_episode3.pt",
+      "sha256": "8c7736c0628a4aa45b95a01d27b77ef54640f45c11b972fc4ef62c0f15a2f27f",
+      "selected_episode": 3,
+      "selected_transitions": 897
+    }
+  },
+  "paired_heldout_scenarios": 6,
+  "heldout_controllers": 7,
+  "all_exogenous_and_budget_fingerprints_match": true,
+  "reactive_P_F_quota_hashes_match": true,
+  "train_episodes": 36,
+  "checkpoint_validation_episodes": 36,
+  "rule_validation_episodes": 6,
+  "heldout_episodes": 42,
+  "scope": "One independently trained network per learned method, two held-out scenario seeds. Exploratory; no significance/generalization claim.",
+  "implementation_source_sha256": {
+    "backend/network_layer/joint_dqn_agent.py": "e259e9424259d4a73a81b256fc517b00c866ef803c2cae80060d817b00155807",
+    "backend/tools/phase2b_guard.py": "fdbf064676a59bbf6a274a1cea60d70db0009af2f65af3cf0807880f90575108",
+    "backend/network_layer/pilot_control.py": "c0edc0cd47c7b40134e127f4a4ed209f54db84e156171c50140f98304732f37d",
+    "backend/tools/phase2c1_pilot.py": "ee3550bf8f2741bf4c059a87fbef7b64cf3cc57e09d7cf201496c68aaf9e98bb",
+    "backend/tools/phase2c1_analyze.py": "9b38362ec85593622acb7acf0e67744784a1ad8aecafad709a774847f2c470c2",
+    "backend/tests/test_phase2c1.py": "8e000d34fc313832bf2dc88ed38a4a40a15fdbd871181b8dcda77b8d4db2cfc8"
+  },
+  "scenario_config_sha256": {
+    "j0": "ee24e28ee55bb9bc55d4636603e14b402465fb3dcae854c5ffb3a059122550f4",
+    "j10": "edc6c251e8035a2ff77b8e4e31dbb69de1981e1a8170d5dedce22ecff7279e6a",
+    "j20": "1761f79153aa47fc1e8b44d523d841e1c44400b803e78f480e206e1c969dba4b"
+  },
+  "selected_parameter_sha256": {
+    "B3": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "B4": "201c9c99f58238dd62d4e81e1307fa3bfe5d20676a6f7e577212ba5f1ec1ba91",
+    "B5": "7d5e9da6cf6104a02fcac67f8380d05865b4060c57026b1997142ded229b1f10",
+    "P": "17a9b13138e64f10d077992b80411c28889576923b815fbbfa9d421ae0941a58"
+  },
+  "selected_B3_and_B5_parameters_identical": true
+}

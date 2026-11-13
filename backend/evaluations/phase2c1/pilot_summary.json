@@ -1,0 +1,632 @@
+[
+  {
+    "method": "B0",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 0.0,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.32653061224489793,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "B0",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.004166666666666667,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.016666666666666666,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 0.0,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.32653061224489793,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "B0",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.01666666666666667,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.03333333333333333,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 0.0,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.32653061224489793,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  },
+  {
+    "method": "B1",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 0.0,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.32653061224489793,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "B1",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 5.843333333333746,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4118490205446727,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "B1",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 10.413333333334354,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.38932496075353207,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  },
+  {
+    "method": "B2",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 0.0,
+    "feasibility_service_fraction": 1.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.32653061224489793,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "B2",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 5.843333333333746,
+    "feasibility_service_fraction": 1.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4118490205446727,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "B2",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 10.413333333334354,
+    "feasibility_service_fraction": 1.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.38932496075353207,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  },
+  {
+    "method": "B3",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "B3",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "B3",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  },
+  {
+    "method": "B4",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 1.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "B4",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 1.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "B4",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 1.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  },
+  {
+    "method": "B5",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "B5",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "B5",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 9.000000000000876,
+    "feasibility_service_fraction": 0.0,
+    "switches_per_decision": 0.0,
+    "valid_action_fraction": 0.4485700634768957,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  },
+  {
+    "method": "P",
+    "severity": 0,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 5.513333333333657,
+    "feasibility_service_fraction": 0.975,
+    "switches_per_decision": 0.020066889632107024,
+    "valid_action_fraction": 0.5197938707255477,
+    "recovery_success": 0,
+    "recovery_windows": 0,
+    "recovery_success_seconds": [],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8671460698456017
+  },
+  {
+    "method": "P",
+    "severity": 10,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.0,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.0,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 6.048333333334016,
+    "feasibility_service_fraction": 0.9666666666666667,
+    "switches_per_decision": 0.010033444816053512,
+    "valid_action_fraction": 0.5196232339089482,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.8937689754987728
+  },
+  {
+    "method": "P",
+    "severity": 20,
+    "independent_scenario_seeds": 2,
+    "failed_percent": 0.0,
+    "failed_upper_percent": 0.00625,
+    "failed_seed_range_percent": [
+      0.0,
+      0.0
+    ],
+    "worst_percent": 0.0,
+    "worst_upper_percent": 0.03333333333333333,
+    "per_class_percent": {
+      "tight": 0.0,
+      "relaxed": 0.0
+    },
+    "embb_mbps": 96.00000000000702,
+    "embb_served_offered_fraction": 1.0,
+    "reserve_prbs": 8.02333333333411,
+    "feasibility_service_fraction": 0.9616666666666667,
+    "switches_per_decision": 0.013377926421404682,
+    "valid_action_fraction": 0.557948262917207,
+    "recovery_success": 2,
+    "recovery_windows": 2,
+    "recovery_success_seconds": [
+      0.0,
+      0.0
+    ],
+    "worst_risk_saturated_fraction": 0.0,
+    "fluid_load_ratio": 0.9233499817800683
+  }
+]
