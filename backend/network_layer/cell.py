@@ -1,3 +1,4 @@
+from .fair_service_credit import FairServiceCredit
 import math
 import logging
 import time
@@ -36,6 +37,7 @@ class Cell:
         # Map: {ue_imsi: required_dl_prbs}
         self.dl_total_prb_demand = {}
         self._deadline_starvation_ticks = {}
+        self._fair_service_credit = FairServiceCredit()
         self.last_scheduler_stats = {}
         # Static per-slice DL PRB quotas (absolute PRBs per slice)
         # Initialized from settings.RAN_SLICE_DL_PRB_SPLIT_DEFAULT
@@ -334,20 +336,25 @@ class Cell:
         for s, quota in self.slice_dl_prb_quota.items():
             ue_ids = ues_by_slice.get(s, [])
             mode = getattr(settings, "PRB_UE_SCHEDULER", "legacy")
-            if mode in {"proportional_wc", "deadline_slack", "deadline_feasible"}:
+            if mode in {"proportional_wc", "deadline_slack", "deadline_feasible", "deadline_fair"}:
                 started = time.perf_counter_ns()
                 useful = {uid: ue_prb_requirements.get(uid, {}).get("backlog_prbs", 0)
                           for uid in ue_ids}
-                if mode in {"deadline_slack", "deadline_feasible"} and s == settings.NETWORK_SLICE_URLLC_NAME:
+                if mode in {"deadline_slack", "deadline_feasible", "deadline_fair"} and s == settings.NETWORK_SLICE_URLLC_NAME:
                     bs = self.base_station
                     views = {uid: QueueView(bs.get_dl_buf_bytes(uid),
                         ue_prb_requirements.get(uid, {}).get("dl_throughput_per_prb", 0)*sim_dt/8,
                         getattr(self.connected_ue_list[uid], "queue_budget_s", None),
                         bs._dl_buf_queue.get(uid, ())) for uid in ue_ids}
+                    fair_args = {}
+                    if mode == "deadline_fair":
+                        credits, entitlements = self._fair_service_credit.prepare(views, quota, self.prb_per_ue_cap)
+                        fair_args = dict(fair_credits=credits, fair_entitlements=entitlements,
+                                         fair_fraction=settings.DEADLINE_FAIR_FRACTION)
                     grants = deadline_allocation(views, quota, bs._time_s, sim_dt,
                         self._deadline_starvation_ticks,
                         getattr(settings, "DEADLINE_STARVATION_TICKS", 5), self.prb_per_ue_cap,
-                        feasibility=mode == "deadline_feasible")
+                        feasibility=mode in {"deadline_feasible", "deadline_fair"}, **fair_args)
                     for uid, view in views.items():
                         served = int(grants[uid]*view.bytes_per_prb) if view.bytes_per_prb > 0 else 0
                         self._deadline_starvation_ticks[uid] = (
@@ -447,6 +454,9 @@ class Cell:
                 #     ue.dl_buffer_bytes = max(0, ue.dl_buffer_bytes - take)
                 # Compute served bitrate
                 served_bps = (take * 8) / dt if dt > 0 else 0
+                if getattr(settings, "PRB_UE_SCHEDULER", "legacy") == "deadline_fair":
+                    self._fair_service_credit.service(ue.ue_imsi, take,
+                        self.base_station.get_dl_buf_bytes(ue.ue_imsi))
                 ue.served_downlink_bitrate = served_bps
                 # Trace debug counters
                 try:
@@ -491,6 +501,8 @@ class Cell:
 
     def deregister_ue(self, ue):
         self._deadline_starvation_ticks.pop(ue.ue_imsi, None)
+        if hasattr(self, "_fair_service_credit"):
+            self._fair_service_credit.remove(ue.ue_imsi)
         if ue.ue_imsi in self.prb_ue_allocation_dict:
             del self.prb_ue_allocation_dict[ue.ue_imsi]
             print(f"Cell {self.cell_id}: Released resources for UE {ue.ue_imsi}")

@@ -1,0 +1,57 @@
+{
+  "base_commit": "6bce0d8",
+  "branch": "phase1.2/fairness-feasibility",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:09:02) [GCC 11.2.0]",
+  "numpy": "2.1.3",
+  "torch": "2.10.0+cu128",
+  "platform": "Linux-6.17.0-22-generic-x86_64-with-glibc2.39",
+  "source_sha256": {
+    "backend/network_layer/cell.py": "da9bd0f5fb0c8a029d21c6cade9ed0b90c28039de1ec578e6377991df7d24ecc",
+    "backend/network_layer/deadline_scheduler.py": "ca58a2df2c0df32ddf14bebbdc46d6c3ada893ac4dd2ce15f309213cea6bac0c",
+    "backend/network_layer/fair_service_credit.py": "ab97efa54c15652c5bedfc02c0683b514fe0ea2fe1fd6f54b3d043c225c8861c",
+    "backend/network_layer/phase1_metrics.py": "92a82ffacd83c8e508675a676c96134ab1f8b2b5d50b4c507c0df0d7a0b2b0f3",
+    "backend/settings/phase0_config.py": "a45e9c94b6f0136fc711efe39005f5ad48e9aedc076eb8e960917e38f55e503c",
+    "backend/tests/test_phase1.py": "f9a5cc4503babd590be514ecd28ce273dc0f63cf6968812d29a370fc84ccf4fa",
+    "backend/tests/test_phase12.py": "eaa66de9cec92048ca8c868c0987f90c93dc555d3b0bf53a62d31dc3d0415168",
+    "backend/tools/phase0_evaluate.py": "946048e3f2709ee5f11598fe0b95571719bedb896b13539887d1108fad2ecc53",
+    "backend/tools/phase12_study.py": "8526e4e6610c91daa432cb1ba6ca624a986acf7d2d4fc95658352d7e70be65d7",
+    "backend/tools/phase12_analyze.py": "0cacdbf05a7426cfb0f4324945950903ce36f7b7e751d7b8c82b72aa76bc4f11"
+  },
+  "input_sha256": {
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7",
+    "backend/evaluations/phase11/heldout_summary.json": "ad0529d86e91014982f256f5ca2aded00ca2adff8e014f0ef90cdd0883c64977",
+    "backend/evaluations/phase11/heldout_analysis.json": "fd0258ca34552f161b5371da14300f7f23cdb5bdf673c5679a396f89dfd555df",
+    "backend/evaluations/phase1/main_scenarios/scenario_j0.json": "ee24e28ee55bb9bc55d4636603e14b402465fb3dcae854c5ffb3a059122550f4",
+    "backend/evaluations/phase1/main_scenarios/scenario_j20.json": "1761f79153aa47fc1e8b44d523d841e1c44400b803e78f480e206e1c969dba4b"
+  },
+  "tuning_validation_episodes": 60,
+  "supplementary_validation_episodes": 48,
+  "heldout_episodes": 240,
+  "included_study_episodes": 348,
+  "calibration_only_episodes": 52,
+  "aborted_seed_range_excluded": [
+    8001,
+    8002,
+    8003,
+    8004,
+    8005,
+    8006
+  ],
+  "fixed_activated_reserve": {
+    "eMBB": 0,
+    "URLLC": 3
+  },
+  "physical_reserve_pool": 18,
+  "no_dqn_or_prediction_changes": true,
+  "timing_scope": "Grant allocation and credit preparation; excludes post-service credit debit, network service and trace I/O",
+  "final_audit": {
+    "heldout_pairs": 60,
+    "heldout_episodes": 240,
+    "nominal_integer_certificates": true,
+    "overload_necessary_bound_violations": true,
+    "no_overflow": true,
+    "identical_fixed_quotas_and_exogenous": true,
+    "identical_embb_throughput": true
+  }
+}

@@ -133,7 +133,7 @@ def main():
     parser.add_argument("--policy", choices=["idle", "random", "aggressive", "dqn", "qrdqn", "fixed"], default="idle")
     parser.add_argument("--checkpoint", default="")
     parser.add_argument("--transitions", choices=["legacy", "causal"], default="legacy")
-    parser.add_argument("--scheduler", choices=["legacy", "proportional_wc", "deadline_slack", "deadline_feasible"], default="legacy")
+    parser.add_argument("--scheduler", choices=["legacy", "proportional_wc", "deadline_slack", "deadline_feasible", "deadline_fair"], default="legacy")
     parser.add_argument("--diagnostics", default="", help="Gzip per-tick allocation and batch-event trace")
     parser.add_argument("--phase1-metrics", action="store_true")
     parser.add_argument("--fixed-e", type=int, default=0)

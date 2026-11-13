@@ -1,0 +1,12 @@
+{
+  "proportional_wc": {
+    "new_trajectory_sha256": "8afa870173fed72da5b2d2e5aebd95a24fc5b08376754626b92c4c12fbf5bb11",
+    "saved_trajectory_sha256": "8afa870173fed72da5b2d2e5aebd95a24fc5b08376754626b92c4c12fbf5bb11",
+    "matches": true
+  },
+  "deadline_feasible": {
+    "new_trajectory_sha256": "1a684fc254c64f76fa7dea45c03ff8d5f6f3c7e087c8737e77d365a168545721",
+    "saved_trajectory_sha256": "1a684fc254c64f76fa7dea45c03ff8d5f6f3c7e087c8737e77d365a168545721",
+    "matches": true
+  }
+}

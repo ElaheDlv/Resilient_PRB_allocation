@@ -1,0 +1,36 @@
+{
+  "selected_fraction": 0.35,
+  "scores": {
+    "0.15": {
+      "failure": 0.08103819444444445,
+      "worst": 0.32555555555555554
+    },
+    "0.35": {
+      "failure": 0.14152430555555556,
+      "worst": 0.3255
+    },
+    "0.65": {
+      "failure": 0.22195833333333334,
+      "worst": 0.3294722222222222
+    }
+  },
+  "baseline_failure": 0.32196180555555554,
+  "feasible_failure": 0.04070138888888889,
+  "retention_threshold": 0.1813315972222222,
+  "retention_constraint_satisfied": true,
+  "validation_seeds": [
+    6001,
+    6002
+  ],
+  "validation_budget_seed": 2028,
+  "heldout_seeds": [
+    7001,
+    7002,
+    7003,
+    7004,
+    7005,
+    7006
+  ],
+  "heldout_budget_seed": 2026,
+  "rule": "Minimize mean worst-UE failure subject to retaining >=50% of the mean aggregate feasible-vs-proportional gain; ties by aggregate then smaller fraction; if none eligible minimize aggregate"
+}

@@ -27,11 +27,22 @@ def deadline_allocation(
     per_ue_cap=None,
     *,
     feasibility=False,
+    fair_credits=None,
+    fair_entitlements=None,
+    fair_fraction=0.0,
 ):
     if quota < 0 or int(quota) != quota or dt <= 0 or starvation_limit < 1:
         raise ValueError("Invalid quota, step or starvation limit")
     if per_ue_cap is not None and (per_ue_cap < 0 or int(per_ue_cap) != per_ue_cap):
         raise ValueError("Invalid per-UE cap")
+    if not math.isfinite(fair_fraction) or not 0 <= fair_fraction <= 1:
+        raise ValueError("Fair protected fraction must be in [0,1]")
+    if fair_fraction and (
+        not feasibility or fair_credits is None or fair_entitlements is None
+    ):
+        raise ValueError(
+            "Fair protection requires feasibility mode and service credits"
+        )
     grants = dict.fromkeys(queues, 0)
     limits, heads, iterators = {}, {}, {}
     for uid, q in queues.items():
@@ -81,6 +92,32 @@ def deadline_allocation(
     for uid in protected:
         if eligible(uid):
             give(uid)
+
+    # A bounded portion of the quota repays normalized service deficits before
+    # completion priority. Existing zero-service protection has first claim.
+    fair_remaining = min(remaining, math.floor(fair_fraction * quota))
+    while fair_remaining:
+        active = [
+            uid
+            for uid in limits
+            if eligible(uid)
+            and quantum(uid) <= fair_remaining
+            and fair_credits[uid] - math.floor(grants[uid] * queues[uid].bytes_per_prb)
+            > 0
+        ]
+        if not active:
+            break
+
+        def fair_key(uid):
+            debt = fair_credits[uid] - math.floor(
+                grants[uid] * queues[uid].bytes_per_prb
+            )
+            return (-debt / fair_entitlements[uid], -starvation_ticks.get(uid, 0), uid)
+
+        uid = min(active, key=fair_key)
+        count = quantum(uid)
+        give(uid)
+        fair_remaining -= count
 
     def slack(uid):
         arrival, head_bytes = heads[uid]

@@ -1,0 +1,6 @@
+{
+  "heldout_episodes": 240,
+  "partition_agrees": true,
+  "no_over_useful_demand": true,
+  "no_eligible_unused_capacity": true
+}

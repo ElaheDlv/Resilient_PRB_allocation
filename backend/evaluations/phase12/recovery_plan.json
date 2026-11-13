@@ -1,0 +1,13 @@
+{
+  "load": 1.05,
+  "heldout_seeds": [
+    10001,
+    10002,
+    10003,
+    10004,
+    10005,
+    10006
+  ],
+  "fair_fraction": 0.35,
+  "reason": "Recoverable ON-overload/OFF-feasible control, added because rho1.15 cannot recover even OFF; alpha stays frozen"
+}

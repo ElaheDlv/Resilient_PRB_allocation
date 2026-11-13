@@ -1,0 +1,42 @@
+{
+  "aborted_launch": "threshold_validation_initial",
+  "bug": "Initial special-stage condition recognized boundary_validation but not threshold_validation",
+  "partial_results_excluded": true,
+  "excluded_seed_range": [
+    8001,
+    8002,
+    8003,
+    8004,
+    8005,
+    8006
+  ],
+  "corrected_validation_seeds": [
+    6001,
+    6002
+  ],
+  "primary_heldout": [
+    7001,
+    7002,
+    7003,
+    7004,
+    7005,
+    7006
+  ],
+  "threshold_heldout": [
+    9001,
+    9002,
+    9003,
+    9004,
+    9005,
+    9006
+  ],
+  "recovery_heldout": [
+    10001,
+    10002,
+    10003,
+    10004,
+    10005,
+    10006
+  ],
+  "fairness_parameter_unchanged": 0.35
+}

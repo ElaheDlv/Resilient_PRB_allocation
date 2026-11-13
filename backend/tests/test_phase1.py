@@ -288,9 +288,11 @@ def test_real_episode_budget_classes_and_scheduler_reset(monkeypatch, tmp_path):
     old = set(eng.ue_list)
     for uid in old:
         cell._deadline_starvation_ticks[uid] = 10
+        cell._fair_service_credit.states[uid] = dict(credit=100)
         bs.enqueue_dl_bytes(uid, 100)
     env.reset()
     assert not old.intersection(eng.ue_list) and not cell._deadline_starvation_ticks
+    assert not cell._fair_service_credit.states
     assert len(bs.queue_measurements.closed) == 4
     for uid, u in eng.ue_list.items():
         assert bs.queue_measurements.budget_classes[uid] == u.queue_budget_class

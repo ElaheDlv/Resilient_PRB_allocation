@@ -1,0 +1,13 @@
+{
+  "load": 0.995,
+  "heldout_seeds": [
+    8001,
+    8002,
+    8003,
+    8004,
+    8005,
+    8006
+  ],
+  "fair_fraction": 0.35,
+  "reason": "Validation near rho=.96 had no misses; add a closer boundary without retuning fairness or using primary heldout results"
+}

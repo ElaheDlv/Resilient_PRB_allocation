@@ -203,6 +203,14 @@ class Phase1Metrics:
             resources[name]["scheduler_mean_us"] = (
                 statistics.mean(times) / 1000 if times else None
             )
+            resources[name]["scheduler_median_us"] = (
+                statistics.median(times) / 1000 if times else None
+            )
+            resources[name]["scheduler_p99_us"] = (
+                sorted(times)[max(0, int(0.99 * len(times)) - 1)] / 1000
+                if times
+                else None
+            )
             resources[name]["scheduler_p95_us"] = (
                 sorted(times)[max(0, int(0.95 * len(times)) - 1)] / 1000
                 if times

@@ -1,0 +1,13 @@
+{
+  "load": 1.0005,
+  "heldout_seeds": [
+    9001,
+    9002,
+    9003,
+    9004,
+    9005,
+    9006
+  ],
+  "fair_fraction": 0.35,
+  "reason": "Validation rho=.96 and .995 screening had no misses; finite-horizon threshold check is selected using validation only, without retuning fairness or using primary heldout results"
+}

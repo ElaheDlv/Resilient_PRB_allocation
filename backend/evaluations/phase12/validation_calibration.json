@@ -1,0 +1,184 @@
+[
+  {
+    "seed": 6001,
+    "budget_seed": 2028,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 116.69511554621845,
+      "DQNIMSI_phase1_pilot_URLLC_1": 81.98201155462182,
+      "DQNIMSI_phase1_pilot_URLLC_2": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_3": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_4": 81.98201155462182,
+      "DQNIMSI_phase1_pilot_URLLC_5": 81.98201155462182,
+      "DQNIMSI_phase1_pilot_URLLC_6": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_7": 145.2534138655463
+    },
+    "quota_off": 63,
+    "quota_on": 57,
+    "assignments": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1063.0581353733858,
+          795.4623573099958
+        ],
+        "cqi": 12
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          1231.6437796705409,
+          1223.5294680607462
+        ],
+        "cqi": 9
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          953.1226749487905,
+          644.0990277982361
+        ],
+        "cqi": 8
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          641.1576673489424,
+          972.5289880335336
+        ],
+        "cqi": 8
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          1066.9293367344828,
+          685.7515615405778
+        ],
+        "cqi": 9
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          1342.334204267934,
+          969.968301251986
+        ],
+        "cqi": 9
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1118.24366837317,
+          1358.3961722252031
+        ],
+        "cqi": 8
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1146.518443068064,
+          1093.6651249808351
+        ],
+        "cqi": 14
+      }
+    },
+    "method": "Exogenous 20-tick rate/quota calibration; performance discarded"
+  },
+  {
+    "seed": 6002,
+    "budget_seed": 2028,
+    "rates": {
+      "DQNIMSI_phase1_pilot_URLLC_0": 81.98201155462182,
+      "DQNIMSI_phase1_pilot_URLLC_1": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_2": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_3": 81.98201155462182,
+      "DQNIMSI_phase1_pilot_URLLC_4": 81.98201155462182,
+      "DQNIMSI_phase1_pilot_URLLC_5": 69.79549632352942,
+      "DQNIMSI_phase1_pilot_URLLC_6": 145.2534138655463,
+      "DQNIMSI_phase1_pilot_URLLC_7": 95.03019957983196
+    },
+    "quota_off": 63,
+    "quota_on": 57,
+    "assignments": {
+      "DQNIMSI_phase1_pilot_URLLC_0": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1231.6437796705409,
+          1223.5294680607462
+        ],
+        "cqi": 9
+      },
+      "DQNIMSI_phase1_pilot_URLLC_1": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          953.1226749487905,
+          644.0990277982361
+        ],
+        "cqi": 8
+      },
+      "DQNIMSI_phase1_pilot_URLLC_2": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          641.1576673489424,
+          972.5289880335336
+        ],
+        "cqi": 8
+      },
+      "DQNIMSI_phase1_pilot_URLLC_3": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1066.9293367344828,
+          685.7515615405778
+        ],
+        "cqi": 9
+      },
+      "DQNIMSI_phase1_pilot_URLLC_4": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          1342.334204267934,
+          969.968301251986
+        ],
+        "cqi": 9
+      },
+      "DQNIMSI_phase1_pilot_URLLC_5": {
+        "budget_s": 0.002,
+        "budget_class": "tight",
+        "position": [
+          1118.24366837317,
+          1358.3961722252031
+        ],
+        "cqi": 8
+      },
+      "DQNIMSI_phase1_pilot_URLLC_6": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1146.518443068064,
+          1093.6651249808351
+        ],
+        "cqi": 14
+      },
+      "DQNIMSI_phase1_pilot_URLLC_7": {
+        "budget_s": 0.01,
+        "budget_class": "relaxed",
+        "position": [
+          1247.8074652096316,
+          1165.461918931973
+        ],
+        "cqi": 10
+      }
+    },
+    "method": "Exogenous 20-tick rate/quota calibration; performance discarded"
+  }
+]
