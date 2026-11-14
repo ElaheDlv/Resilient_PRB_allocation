@@ -1,0 +1,9 @@
+{
+  "replays": 18,
+  "paid_ticks": 53820,
+  "intervals": 5382,
+  "all_original_controls_returns_physical_outcomes_match": true,
+  "all_components_sum_to_actual_rewards": true,
+  "all_saved_identifiable_totals_match_replays": true,
+  "dqn_updates": 0
+}

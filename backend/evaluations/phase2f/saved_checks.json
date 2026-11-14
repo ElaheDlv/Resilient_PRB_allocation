@@ -1,0 +1,10 @@
+{
+  "training_episodes": 72,
+  "validation_episodes": 432,
+  "candidates": 24,
+  "pair_comparisons": 276,
+  "ordering_disagreements": 6,
+  "dominance_disagreements": 0,
+  "missing_training_action_rng_replay_history": true,
+  "training_interval_components_reconstructable": false
+}

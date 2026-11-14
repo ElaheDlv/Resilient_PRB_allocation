@@ -1,0 +1,44 @@
+{
+  "recorded_utc": "2026-11-14T00:53:55.778525+00:00",
+  "base_commit": "2c31c96d302a68316bb2c2af56bc7b89db50f8f2",
+  "branch": "phase2f/joint-reward-alignment-audit",
+  "python": "3.13.5",
+  "platform": "Linux-6.17.0-22-generic-x86_64-with-glibc2.39",
+  "packages": {
+    "torch": "2.10.0",
+    "numpy": "2.1.3",
+    "matplotlib": "3.10.0",
+    "pytest": "8.3.4"
+  },
+  "assigned_logical_cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_inherited": true,
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "sequential_workload": true,
+  "cuda_visible_devices": "",
+  "dqn_device": "cpu",
+  "memory_hard_cap": false,
+  "warning_gib": 2,
+  "monitored_stop_gib": 2.5,
+  "minimum_system_available_gib": 4,
+  "meminfo_at_finalization": {
+    "MemTotal": "65448608 kB",
+    "MemAvailable": "23985364 kB",
+    "SwapTotal": "31250428 kB",
+    "SwapFree": "14545348 kB"
+  },
+  "peak_sampled_process_tree_cpu_percent": 138.71,
+  "peak_sampled_aggregate_rss_bytes": 1524047872,
+  "any_warning": false,
+  "any_stop": false,
+  "notes": [
+    "Archived resources include guard RSS. Sampled peaks may miss short-lived processes.",
+    "No writable delegated cgroup; monitored RSS threshold, not a hard memory cap.",
+    "No training or parallel workload; seven learning tests excluded."
+  ]
+}

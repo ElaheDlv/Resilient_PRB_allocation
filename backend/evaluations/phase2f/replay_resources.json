@@ -1,0 +1,40 @@
+{
+  "command": [
+    "python",
+    "backend/tools/phase2f_audit.py",
+    "replay"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 138.71,
+  "peak_aggregate_rss_bytes": 760729600,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15405056,
+  "samples": 1886,
+  "assigned_cpu_busy_percent_before": {
+    "6": 16.67,
+    "7": 15.79,
+    "11": 5.56,
+    "14": 28.57
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24096580 kB",
+  "elapsed_seconds": 95.35017183213495,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}

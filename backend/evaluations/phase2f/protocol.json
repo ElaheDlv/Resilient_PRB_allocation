@@ -1,0 +1,198 @@
+{
+  "version": "phase2f-readonly-v1",
+  "base_commit": "2c31c96",
+  "reward_config": {
+    "failure": 1.0,
+    "worst": 0.25,
+    "embb": 0.1,
+    "reserve": 0.02,
+    "switch": 0.01,
+    "embb_target_bps": 96000000.0,
+    "reference_batches_per_ue_s": 1000.0,
+    "period_s": 0.01
+  },
+  "replays": [
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53264384_j0",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53264384_j10",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_feasible_seed53264384_j20",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j0",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j10",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j0",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j10",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "role": "grid"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_feasible_seed53264384_j20",
+      "role": "severe_replication"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "severe_replication"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 9,
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "role": "severe_replication"
+    },
+    {
+      "method": "A1",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "matched_comparison"
+    },
+    {
+      "method": "A2",
+      "network_seed": 12026,
+      "episode": 6,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "matched_comparison"
+    },
+    {
+      "method": "A3",
+      "network_seed": 12026,
+      "episode": 3,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "matched_comparison"
+    },
+    {
+      "method": "A4",
+      "network_seed": 12026,
+      "episode": 9,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "checkpoint_comparison"
+    },
+    {
+      "method": "A4",
+      "network_seed": 22026,
+      "episode": 3,
+      "scenario_id": "validation_contested_seed53260288_j20",
+      "role": "checkpoint_comparison"
+    },
+    {
+      "method": "A2",
+      "network_seed": 22026,
+      "episode": 6,
+      "scenario_id": "validation_overloaded_seed53252096_j20",
+      "role": "learning_comparison"
+    }
+  ],
+  "prefix_accounting_steps": [
+    100,
+    500,
+    1000,
+    2000,
+    3000
+  ],
+  "scope": "All72 training and432 validation episode totals;18 frozen validation replays only. No training/action-history reconstruction, weights/reward changes, new scenarios or future holdout.",
+  "sampling": "Nine A4 grid cases: one NN seed, one placement/regime, all severities. Three severe second-seed replications plus six declared matched/checkpoint/learning comparisons. Stratify grid distributions; extras are diagnostic, not extra independent replications.",
+  "prefix_scope": "Read-only terminal administrative count at observed prefixes; not different-horizon policy outcomes or training. Saved physical horizon is always3s, checkpoint episodes3/6/9 are training budgets.",
+  "resources": {
+    "cpus": [
+      6,
+      7,
+      11,
+      14
+    ],
+    "warning_gib": 2,
+    "stop_gib": 2.5,
+    "minimum_available_gib": 4,
+    "threads": 1,
+    "workers": 1,
+    "cuda": false,
+    "hard_memory_cap": false
+  },
+  "input_sha256": {
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_contested_seed53260288_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j0.json": "c172083d98b858116f1a1bbb910eda6b188f81f8eb004ad8b4e9eaf310c0fc63",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j10.json": "a71612e7cebe8819b786d7cb775bd15eb8e7e4a3dd0e63b6c52b2bb10d97f13a",
+    "backend/evaluations/phase2c2/configs/validation_feasible_seed53264384_j20.json": "5320e45d7cfded65a1674078e920172614c50f9e68d5393d46679275b8154e93",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j0.json": "487c3fba687de4bfda70c249ca13f947ce05336be3726744ed4a478cfbcd3a82",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j10.json": "faab8381abe2c8fe92132f0731d48de7754daef237ae7206943e83f3928a1a32",
+    "backend/evaluations/phase2c2/configs/validation_overloaded_seed53252096_j20.json": "4a35d3128e17f1a3d1a3420d11270c81590a83b441fd5e610b64003238f0eb8e",
+    "backend/evaluations/phase2c2/traces/urllc_seed53252096_overloaded.csv": "0466fc31c4d508548f3248cab74a9c239e8c18e7021bc9a2de70abcf6325391f",
+    "backend/evaluations/phase2c2/validation_manifest.json": "33e4778710cfe37a3a7b73dc7f963fd12d7bf2c0881413e2763a8a79935d7c3d",
+    "backend/evaluations/phase2c3/checkpoints/A1_seed12026_ep6.pt": "e60dfce74aa9542704e32eae611806d38d40895de3781d9e9e67061d2da5b9fd",
+    "backend/evaluations/phase2c3/checkpoints/A2_seed12026_ep6.pt": "c4c0f942ca8fd4d0f03132a56e85bd6cb2ab62c09cebc3a347324cc7a328ef78",
+    "backend/evaluations/phase2c3/checkpoints/A2_seed22026_ep6.pt": "4e0c699250c9b784a91b7facbcac033e7288cbf14deba97d9c86ade206173dd6",
+    "backend/evaluations/phase2c3/checkpoints/A3_seed12026_ep3.pt": "228094e74c5992e2c977794856a00eaf2e09eaac206767c5c064e5c253e871b1",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed12026_ep6.pt": "4430938fe9a898b3250bf8850a580743b055ef5653218430165438a9f81052f6",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed12026_ep9.pt": "c7d96ddf7b39532535f238e271c1162d10f9f89f93fbaa027e59587463c34a44",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed22026_ep3.pt": "f26b6ae39381fef4f4134e2433e34fd4624aefa80df751e2a9f5db5753391d52",
+    "backend/evaluations/phase2c3/checkpoints/A4_seed22026_ep9.pt": "4d097fa1ee1d99900d4bfd0f32ab064b7f2965269252a19195ccb46a449e0e44",
+    "backend/evaluations/phase2c3/protocol.json": "b88d1c15e53ba980a2d502d664f10a1590c7cd123fb2acf1d2fd1244713e65b8",
+    "backend/evaluations/phase2c3/selection.json": "f7bd94ef46b79cd90b80e0437c3999131f3487af8819f91cc2f08aefc9c30445",
+    "backend/evaluations/phase2c3/training.jsonl.gz": "e082f2449c22aad4db4d724aa80db5277a351ae86e372db078669c3279227312",
+    "backend/evaluations/phase2c3/validation.jsonl.gz": "f7231a1c3753655ddebd57d2fafe55a847f9529735892c99ccd20d821b704406",
+    "backend/network_layer/joint_reward.py": "224b95d363c849650653b65d3c138ea607e546b9603cb3f78987683647f88317",
+    "backend/network_layer/pilot_control.py": "c0edc0cd47c7b40134e127f4a4ed209f54db84e156171c50140f98304732f37d",
+    "backend/network_layer/resilient_interval.py": "6017cb42e86f170c5c0cb9e360e213186459183d4597d7056578223bcea092ee",
+    "backend/network_layer/xApps/xapp_joint_deadline_dqn.py": "ac96ee758f3fa5060998dace0c1927fef3c9eeab48db5a516f484894441bad85",
+    "backend/notebooks/Resilient_data/embb_dl.csv": "f189e02c3de31fc1891835a2e99a2a5471ff735b26b8e688dd397440a0ca61f1",
+    "backend/notebooks/Resilient_data/urllc_dl.csv": "26967815cc41b604e819be26939b3b6f5bfa19ae7ed29f30d5a3690b63ed05b7"
+  }
+}

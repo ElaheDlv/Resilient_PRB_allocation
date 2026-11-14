@@ -1,0 +1,58 @@
+{"stage": "replay", "completed": 1, "run": "A4_12026_ep6_validation_feasible_seed53264384_j0", "components": {"failure_cost": 0.0, "worst_cost": 0.0, "embb_cost": 0.3851575000000026, "reserve_cost": 4.42888888888907, "switch_cost": 0.01, "terminal_cost": 0.0}}
+{"stage": "replay", "completed": 2, "run": "A4_12026_ep6_validation_feasible_seed53264384_j10", "components": {"failure_cost": 0.0, "worst_cost": 0.0, "embb_cost": 1.4128641666666317, "reserve_cost": 3.6399999999999633, "switch_cost": 0.01, "terminal_cost": 0.0}}
+{"stage": "replay", "completed": 3, "run": "A4_12026_ep6_validation_feasible_seed53264384_j20", "components": {"failure_cost": 0.0, "worst_cost": 0.0, "embb_cost": 1.8175124999999694, "reserve_cost": 4.183333333333376, "switch_cost": 0.01, "terminal_cost": 0.0}}
+{"stage": "replay", "completed": 4, "run": "A4_12026_ep6_validation_contested_seed53260288_j0", "components": {"failure_cost": 0.0, "worst_cost": 0.0, "embb_cost": 1.736920833333291, "reserve_cost": 3.9855555555554796, "switch_cost": 0.01, "terminal_cost": 0.425}}
+{"stage": "replay", "completed": 5, "run": "A4_12026_ep6_validation_contested_seed53260288_j10", "components": {"failure_cost": 33.38749999999903, "worst_cost": 65.67499999999781, "embb_cost": 3.2262924999999947, "reserve_cost": 3.4111111111109587, "switch_cost": 0.01, "terminal_cost": 0.1375}}
+{"stage": "replay", "completed": 6, "run": "A4_12026_ep6_validation_contested_seed53260288_j20", "components": {"failure_cost": 35.49999999999951, "worst_cost": 69.79999999999875, "embb_cost": 4.2783449999998355, "reserve_cost": 2.9799999999998934, "switch_cost": 0.01, "terminal_cost": 0.0375}}
+{"stage": "replay", "completed": 7, "run": "A4_12026_ep6_validation_overloaded_seed53252096_j0", "components": {"failure_cost": 75.92500000000015, "worst_cost": 72.52242268041174, "embb_cost": 0.0, "reserve_cost": 2.999999999999891, "switch_cost": 0.01, "terminal_cost": 0.075}}
+{"stage": "replay", "completed": 8, "run": "A4_12026_ep6_validation_overloaded_seed53252096_j10", "components": {"failure_cost": 112.41249999999437, "worst_cost": 72.5234536082468, "embb_cost": 0.0, "reserve_cost": 2.999999999999891, "switch_cost": 0.01, "terminal_cost": 0.1125}}
+{"stage": "replay", "completed": 9, "run": "A4_12026_ep6_validation_overloaded_seed53252096_j20", "components": {"failure_cost": 112.68749999999433, "worst_cost": 72.5234536082468, "embb_cost": 0.0, "reserve_cost": 2.999999999999891, "switch_cost": 0.01, "terminal_cost": 0.1125}}
+{"stage": "replay", "completed": 10, "run": "A4_22026_ep9_validation_feasible_seed53264384_j20", "components": {"failure_cost": 0.0, "worst_cost": 0.0, "embb_cost": 3.3494058333333565, "reserve_cost": 4.434444444444399, "switch_cost": 2.109999999999999, "terminal_cost": 0.0}}
+{"stage": "replay", "completed": 11, "run": "A4_22026_ep9_validation_contested_seed53260288_j20", "components": {"failure_cost": 66.99999999999982, "worst_cost": 72.44123711340141, "embb_cost": 4.964676666666467, "reserve_cost": 1.716666666666657, "switch_cost": 0.5300000000000002, "terminal_cost": 0.0375}}
+{"stage": "replay", "completed": 12, "run": "A4_22026_ep9_validation_overloaded_seed53252096_j20", "components": {"failure_cost": 184.03750000000997, "worst_cost": 72.5234536082468, "embb_cost": 0.0, "reserve_cost": 1.1722222222222105, "switch_cost": 1.410000000000001, "terminal_cost": 0.35}}
+{"stage": "replay", "completed": 13, "run": "A1_12026_ep6_validation_contested_seed53260288_j20", "components": {"failure_cost": 0.0, "worst_cost": 0.0, "embb_cost": 4.825910833333169, "reserve_cost": 4.956666666666616, "switch_cost": 0.0, "terminal_cost": 0.0125}}
+{"stage": "replay", "completed": 14, "run": "A2_12026_ep6_validation_contested_seed53260288_j20", "components": {"failure_cost": 33.79999999999912, "worst_cost": 66.499999999998, "embb_cost": 5.11779416666641, "reserve_cost": 0.7599999999999819, "switch_cost": 0.0, "terminal_cost": 0.1375}}
+{"stage": "replay", "completed": 15, "run": "A3_12026_ep3_validation_contested_seed53260288_j20", "components": {"failure_cost": 42.724999999998886, "worst_cost": 56.04999999999789, "embb_cost": 3.711024999999863, "reserve_cost": 3.471111111110955, "switch_cost": 0.05, "terminal_cost": 0.175}}
+{"stage": "replay", "completed": 16, "run": "A4_12026_ep9_validation_contested_seed53260288_j20", "components": {"failure_cost": 0.7374999999999994, "worst_cost": 0.8118556701030921, "embb_cost": 5.017892499999754, "reserve_cost": 5.242222222222456, "switch_cost": 0.05, "terminal_cost": 0.0}}
+{"stage": "replay", "completed": 17, "run": "A4_22026_ep3_validation_contested_seed53260288_j20", "components": {"failure_cost": 84.74999999999844, "worst_cost": 47.42706185566862, "embb_cost": 3.6261816666666635, "reserve_cost": 3.9099999999997985, "switch_cost": 2.349999999999994, "terminal_cost": 0.1125}}
+{"stage": "replay", "completed": 18, "run": "A2_22026_ep6_validation_overloaded_seed53252096_j20", "components": {"failure_cost": 111.71249999999448, "worst_cost": 72.48994845360761, "embb_cost": 0.0, "reserve_cost": 3.0499999999998857, "switch_cost": 0.0, "terminal_cost": 0.1125}}
+{
+  "command": [
+    "python",
+    "backend/tools/phase2f_audit.py",
+    "replay"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 138.71,
+  "peak_aggregate_rss_bytes": 760729600,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15405056,
+  "samples": 1886,
+  "assigned_cpu_busy_percent_before": {
+    "6": 16.67,
+    "7": 15.79,
+    "11": 5.56,
+    "14": 28.57
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24096580 kB",
+  "elapsed_seconds": 95.35017183213495,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}
