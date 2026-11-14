@@ -1,0 +1,62 @@
+{
+  "learners": [
+    {
+      "reward_arm": "R0",
+      "network_seed": 12026,
+      "interactions": 2691,
+      "optimizer_updates": 2660,
+      "initial_parameter_sha256": "9dda2a2494d6c4e921afffd4be50f4e367755ce0c258093ee486765fabfc1bf5",
+      "final_parameter_sha256": "99788473ec8cac7b6a3431549fefbee402ea44d5fab3fb06f413a8bd1a96fe8b",
+      "validation_frozen": true
+    },
+    {
+      "reward_arm": "R1",
+      "network_seed": 12026,
+      "interactions": 2691,
+      "optimizer_updates": 2660,
+      "initial_parameter_sha256": "9dda2a2494d6c4e921afffd4be50f4e367755ce0c258093ee486765fabfc1bf5",
+      "final_parameter_sha256": "a950148acc17b27279ca62c8d17ee3234ff94391412fec044631a1df100e2acb",
+      "validation_frozen": true
+    },
+    {
+      "reward_arm": "R2",
+      "network_seed": 12026,
+      "interactions": 2691,
+      "optimizer_updates": 2660,
+      "initial_parameter_sha256": "9dda2a2494d6c4e921afffd4be50f4e367755ce0c258093ee486765fabfc1bf5",
+      "final_parameter_sha256": "cb506350e31c5105eddbe77b0ab9e037f29e8a2b47bc3faf9af2f1a98f36c0ac",
+      "validation_frozen": true
+    },
+    {
+      "reward_arm": "R0",
+      "network_seed": 22026,
+      "interactions": 2691,
+      "optimizer_updates": 2660,
+      "initial_parameter_sha256": "21783f6bb7855154a99903ab2a17e72eb618aa3403660a51627a50f5d699e47b",
+      "final_parameter_sha256": "b6946ec5fcd2687c4cb8ecc1a15e442b62dbd62d806f13dd4ee8b88d14bdeaa0",
+      "validation_frozen": true
+    },
+    {
+      "reward_arm": "R1",
+      "network_seed": 22026,
+      "interactions": 2691,
+      "optimizer_updates": 2660,
+      "initial_parameter_sha256": "21783f6bb7855154a99903ab2a17e72eb618aa3403660a51627a50f5d699e47b",
+      "final_parameter_sha256": "0270708dccfe8e5251adacb5ecb18e2b2366676140a0699de7248ee550550ddc",
+      "validation_frozen": true
+    },
+    {
+      "reward_arm": "R2",
+      "network_seed": 22026,
+      "interactions": 2691,
+      "optimizer_updates": 2660,
+      "initial_parameter_sha256": "21783f6bb7855154a99903ab2a17e72eb618aa3403660a51627a50f5d699e47b",
+      "final_parameter_sha256": "854967d2422fb1f56c633aa5cf77ee2fe7bc7bf7aceb0635c8a68f6b47cace50",
+      "validation_frozen": true
+    }
+  ],
+  "exogenous_pairing": true,
+  "cuda_initialized": false,
+  "validation_rows": 324,
+  "future_holdout_used": false
+}

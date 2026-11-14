@@ -1,0 +1,112 @@
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 1, "interactions": 299, "updates": 268, "seconds": 3.6075182009954005}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 2, "interactions": 598, "updates": 567, "seconds": 3.7432465499732643}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 3, "interactions": 897, "updates": 866, "seconds": 7.630721641937271}
+{"stage": "validation", "arm": "R0", "seed": 12026, "episode": 3, "aggregate_percent": 22.96990740740741, "worst_percent": 36.611111111111114}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 4, "interactions": 1196, "updates": 1165, "seconds": 3.978129387833178}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 5, "interactions": 1495, "updates": 1464, "seconds": 6.902201029937714}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 6, "interactions": 1794, "updates": 1763, "seconds": 3.9530719181057066}
+{"stage": "validation", "arm": "R0", "seed": 12026, "episode": 6, "aggregate_percent": 13.215046296296295, "worst_percent": 44.26111111111111}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 7, "interactions": 2093, "updates": 2062, "seconds": 7.625251295976341}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 8, "interactions": 2392, "updates": 2361, "seconds": 3.949940370162949}
+{"stage": "training", "arm": "R0", "seed": 12026, "episode": 9, "interactions": 2691, "updates": 2660, "seconds": 3.982657328946516}
+{"stage": "validation", "arm": "R0", "seed": 12026, "episode": 9, "aggregate_percent": 20.882175925925925, "worst_percent": 35.72777777777778}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 1, "interactions": 299, "updates": 268, "seconds": 3.6280536390841007}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 2, "interactions": 598, "updates": 567, "seconds": 3.7640873030759394}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 3, "interactions": 897, "updates": 866, "seconds": 7.603396927006543}
+{"stage": "validation", "arm": "R1", "seed": 12026, "episode": 3, "aggregate_percent": 25.56273148148148, "worst_percent": 35.07592592592593}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 4, "interactions": 1196, "updates": 1165, "seconds": 3.9717211700044572}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 5, "interactions": 1495, "updates": 1464, "seconds": 7.106908104848117}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 6, "interactions": 1794, "updates": 1763, "seconds": 3.970076306955889}
+{"stage": "validation", "arm": "R1", "seed": 12026, "episode": 6, "aggregate_percent": 14.15462962962963, "worst_percent": 32.83148148148148}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 7, "interactions": 2093, "updates": 2062, "seconds": 7.473306788131595}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 8, "interactions": 2392, "updates": 2361, "seconds": 3.8377452299464494}
+{"stage": "training", "arm": "R1", "seed": 12026, "episode": 9, "interactions": 2691, "updates": 2660, "seconds": 3.915599178057164}
+{"stage": "validation", "arm": "R1", "seed": 12026, "episode": 9, "aggregate_percent": 21.923842592592592, "worst_percent": 43.922222222222224}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 1, "interactions": 299, "updates": 268, "seconds": 3.631072183139622}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 2, "interactions": 598, "updates": 567, "seconds": 3.8255268400534987}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 3, "interactions": 897, "updates": 866, "seconds": 7.845502445008606}
+{"stage": "validation", "arm": "R2", "seed": 12026, "episode": 3, "aggregate_percent": 26.16134259259259, "worst_percent": 33.26111111111111}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 4, "interactions": 1196, "updates": 1165, "seconds": 3.9633906800299883}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 5, "interactions": 1495, "updates": 1464, "seconds": 7.039869970874861}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 6, "interactions": 1794, "updates": 1763, "seconds": 3.971768386894837}
+{"stage": "validation", "arm": "R2", "seed": 12026, "episode": 6, "aggregate_percent": 28.71990740740741, "worst_percent": 33.26111111111111}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 7, "interactions": 2093, "updates": 2062, "seconds": 7.484638174064457}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 8, "interactions": 2392, "updates": 2361, "seconds": 4.037044122815132}
+{"stage": "training", "arm": "R2", "seed": 12026, "episode": 9, "interactions": 2691, "updates": 2660, "seconds": 3.9942629949655384}
+{"stage": "validation", "arm": "R2", "seed": 12026, "episode": 9, "aggregate_percent": 13.199537037037038, "worst_percent": 33.26296296296296}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 1, "interactions": 299, "updates": 268, "seconds": 3.6323877659160644}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 2, "interactions": 598, "updates": 567, "seconds": 3.8082027852069587}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 3, "interactions": 897, "updates": 866, "seconds": 7.656415582867339}
+{"stage": "validation", "arm": "R0", "seed": 22026, "episode": 3, "aggregate_percent": 24.58888888888889, "worst_percent": 36.91111111111111}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 4, "interactions": 1196, "updates": 1165, "seconds": 4.04856763407588}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 5, "interactions": 1495, "updates": 1464, "seconds": 7.461604573065415}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 6, "interactions": 1794, "updates": 1763, "seconds": 3.9956154939718544}
+{"stage": "validation", "arm": "R0", "seed": 22026, "episode": 6, "aggregate_percent": 26.00810185185185, "worst_percent": 45.07222222222222}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 7, "interactions": 2093, "updates": 2062, "seconds": 7.427332108141854}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 8, "interactions": 2392, "updates": 2361, "seconds": 4.082499135984108}
+{"stage": "training", "arm": "R0", "seed": 22026, "episode": 9, "interactions": 2691, "updates": 2660, "seconds": 3.935631224885583}
+{"stage": "validation", "arm": "R0", "seed": 22026, "episode": 9, "aggregate_percent": 21.5962962962963, "worst_percent": 38.76481481481481}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 1, "interactions": 299, "updates": 268, "seconds": 3.736157230101526}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 2, "interactions": 598, "updates": 567, "seconds": 3.8467927780002356}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 3, "interactions": 897, "updates": 866, "seconds": 7.951435608090833}
+{"stage": "validation", "arm": "R1", "seed": 22026, "episode": 3, "aggregate_percent": 17.40787037037037, "worst_percent": 40.70185185185185}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 4, "interactions": 1196, "updates": 1165, "seconds": 3.99516132613644}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 5, "interactions": 1495, "updates": 1464, "seconds": 7.500741049880162}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 6, "interactions": 1794, "updates": 1763, "seconds": 4.029887029202655}
+{"stage": "validation", "arm": "R1", "seed": 22026, "episode": 6, "aggregate_percent": 18.977314814814815, "worst_percent": 40.76851851851852}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 7, "interactions": 2093, "updates": 2062, "seconds": 7.5379017039667815}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 8, "interactions": 2392, "updates": 2361, "seconds": 3.9235321490559727}
+{"stage": "training", "arm": "R1", "seed": 22026, "episode": 9, "interactions": 2691, "updates": 2660, "seconds": 3.9642352988012135}
+{"stage": "validation", "arm": "R1", "seed": 22026, "episode": 9, "aggregate_percent": 15.32175925925926, "worst_percent": 33.75925925925926}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 1, "interactions": 299, "updates": 268, "seconds": 3.7411369080655277}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 2, "interactions": 598, "updates": 567, "seconds": 3.859019417781383}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 3, "interactions": 897, "updates": 866, "seconds": 7.76143599092029}
+{"stage": "validation", "arm": "R2", "seed": 22026, "episode": 3, "aggregate_percent": 35.56435185185185, "worst_percent": 38.36296296296297}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 4, "interactions": 1196, "updates": 1165, "seconds": 3.9001139679457992}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 5, "interactions": 1495, "updates": 1464, "seconds": 7.177099840948358}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 6, "interactions": 1794, "updates": 1763, "seconds": 3.9760331572033465}
+{"stage": "validation", "arm": "R2", "seed": 22026, "episode": 6, "aggregate_percent": 22.835185185185185, "worst_percent": 53.738888888888894}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 7, "interactions": 2093, "updates": 2062, "seconds": 7.820042172912508}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 8, "interactions": 2392, "updates": 2361, "seconds": 3.8931480501778424}
+{"stage": "training", "arm": "R2", "seed": 22026, "episode": 9, "interactions": 2691, "updates": 2660, "seconds": 3.8855786460917443}
+{"stage": "validation", "arm": "R2", "seed": 22026, "episode": 9, "aggregate_percent": 13.405092592592593, "worst_percent": 33.12777777777778}
+{
+  "command": [
+    "python",
+    "backend/tools/phase2g_ablation.py",
+    "run"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 138.8,
+  "peak_aggregate_rss_bytes": 769306624,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15290368,
+  "samples": 35697,
+  "assigned_cpu_busy_percent_before": {
+    "6": 16.67,
+    "7": 15.0,
+    "11": 15.79,
+    "14": 36.84
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24399252 kB",
+  "elapsed_seconds": 1805.6765438730363,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}

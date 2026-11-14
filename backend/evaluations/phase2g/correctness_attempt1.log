@@ -1,0 +1,243 @@
+.....FFF.F                                                               [100%]
+=================================== FAILURES ===================================
+___ test_exact_r0_all_components_interval_boundary_and_no_future_leakage[R0] ___
+
+arm = 'R0'
+
+    @pytest.mark.parametrize('arm', ['R0','R1','R2'])
+    def test_exact_r0_all_components_interval_boundary_and_no_future_leakage(arm):
+        a = fake_adapter(arm)
+        risk = NS(values=(0,0,0,0,.8,0), valid=(False,False,False,False,True,False))
+        action = next(x for x in ACTIONS if x.delta_embb_prb==x.delta_urllc_prb==0
+                      and x.urllc_scheduler_mode is Mode.PROPORTIONAL)
+        rewards = []
+        # Failures alternate between UEs; only the full-interval max is appropriate.
+        for i in range(10):
+            counts = {'a':2 if i<5 else 0, 'b':2 if i>=5 else 0}
+            a.app.ledger.last_consumed_by_ue = counts
+            outcome = dict(counts=dict(new_known_failures=2,offered_batches=2),
+                           terminal_charges=4 if i==9 else 0, embb_bytes=3210+i, reserve_prbs=9)
+            a.tick_outcome = outcome
+            a.switched = i==0
+            a.app.engine.sim_step = 11+i
+            old,parts = tick_reward(**outcome,risk=risk,dt=.001,switched=i==0,ue_count=2,config=RewardConfig())
+            r,p = a._compute_reward({'risk':risk},action,action)
+            if arm=='R0':
+                assert r == old
+                assert p['fairness_cost'] == parts['worst_cost']
+            else:
+                assert p['fairness_cost'] == (.25 if arm=='R2' and i==9 else 0.)
+                for k in ('failure_cost','terminal_cost','embb_cost','reserve_cost','switch_cost'):
+                    assert p[k] == parts[k]
+            rewards.append(r)
+        assert a.failures == {'a':10,'b':10}
+        assert a.interval_count == 1
+        assert sum(rewards) == pytest.approx(-sum(a.parts.values()))
+        assert a.parts['switch_cost'] == .01
+        assert a.parts['terminal_cost'] == .2
+        assert a.parts['fairness_cost'] == pytest.approx({'R0':.2,'R1':0.,'R2':.25}[arm])
+        # A subsequent action starts fresh; a new boundary failure cannot charge backward.
+        previous_parts = a.parts.copy()
+        a.service_ticks = 0
+        a.failures.clear()
+        a.parts = dict.fromkeys(COMPONENTS,0.)
+        a.app.ledger.last_consumed_by_ue = {'a':1,'b':0}
+        a.tick_outcome = dict(outcome,counts=dict(new_known_failures=1,offered_batches=1),terminal_charges=0)
+        a._compute_reward({'risk':risk},action,action)
+        assert a.failures == {'a':1,'b':0}
+>       assert previous_parts['failure_cost'] == 1.
+E       assert 0.9999999999999999 == 1.0
+
+backend/tests/test_phase2g.py:150: AssertionError
+___ test_exact_r0_all_components_interval_boundary_and_no_future_leakage[R1] ___
+
+arm = 'R1'
+
+    @pytest.mark.parametrize('arm', ['R0','R1','R2'])
+    def test_exact_r0_all_components_interval_boundary_and_no_future_leakage(arm):
+        a = fake_adapter(arm)
+        risk = NS(values=(0,0,0,0,.8,0), valid=(False,False,False,False,True,False))
+        action = next(x for x in ACTIONS if x.delta_embb_prb==x.delta_urllc_prb==0
+                      and x.urllc_scheduler_mode is Mode.PROPORTIONAL)
+        rewards = []
+        # Failures alternate between UEs; only the full-interval max is appropriate.
+        for i in range(10):
+            counts = {'a':2 if i<5 else 0, 'b':2 if i>=5 else 0}
+            a.app.ledger.last_consumed_by_ue = counts
+            outcome = dict(counts=dict(new_known_failures=2,offered_batches=2),
+                           terminal_charges=4 if i==9 else 0, embb_bytes=3210+i, reserve_prbs=9)
+            a.tick_outcome = outcome
+            a.switched = i==0
+            a.app.engine.sim_step = 11+i
+            old,parts = tick_reward(**outcome,risk=risk,dt=.001,switched=i==0,ue_count=2,config=RewardConfig())
+            r,p = a._compute_reward({'risk':risk},action,action)
+            if arm=='R0':
+                assert r == old
+                assert p['fairness_cost'] == parts['worst_cost']
+            else:
+                assert p['fairness_cost'] == (.25 if arm=='R2' and i==9 else 0.)
+                for k in ('failure_cost','terminal_cost','embb_cost','reserve_cost','switch_cost'):
+                    assert p[k] == parts[k]
+            rewards.append(r)
+        assert a.failures == {'a':10,'b':10}
+        assert a.interval_count == 1
+        assert sum(rewards) == pytest.approx(-sum(a.parts.values()))
+        assert a.parts['switch_cost'] == .01
+        assert a.parts['terminal_cost'] == .2
+        assert a.parts['fairness_cost'] == pytest.approx({'R0':.2,'R1':0.,'R2':.25}[arm])
+        # A subsequent action starts fresh; a new boundary failure cannot charge backward.
+        previous_parts = a.parts.copy()
+        a.service_ticks = 0
+        a.failures.clear()
+        a.parts = dict.fromkeys(COMPONENTS,0.)
+        a.app.ledger.last_consumed_by_ue = {'a':1,'b':0}
+        a.tick_outcome = dict(outcome,counts=dict(new_known_failures=1,offered_batches=1),terminal_charges=0)
+        a._compute_reward({'risk':risk},action,action)
+        assert a.failures == {'a':1,'b':0}
+>       assert previous_parts['failure_cost'] == 1.
+E       assert 0.9999999999999999 == 1.0
+
+backend/tests/test_phase2g.py:150: AssertionError
+___ test_exact_r0_all_components_interval_boundary_and_no_future_leakage[R2] ___
+
+arm = 'R2'
+
+    @pytest.mark.parametrize('arm', ['R0','R1','R2'])
+    def test_exact_r0_all_components_interval_boundary_and_no_future_leakage(arm):
+        a = fake_adapter(arm)
+        risk = NS(values=(0,0,0,0,.8,0), valid=(False,False,False,False,True,False))
+        action = next(x for x in ACTIONS if x.delta_embb_prb==x.delta_urllc_prb==0
+                      and x.urllc_scheduler_mode is Mode.PROPORTIONAL)
+        rewards = []
+        # Failures alternate between UEs; only the full-interval max is appropriate.
+        for i in range(10):
+            counts = {'a':2 if i<5 else 0, 'b':2 if i>=5 else 0}
+            a.app.ledger.last_consumed_by_ue = counts
+            outcome = dict(counts=dict(new_known_failures=2,offered_batches=2),
+                           terminal_charges=4 if i==9 else 0, embb_bytes=3210+i, reserve_prbs=9)
+            a.tick_outcome = outcome
+            a.switched = i==0
+            a.app.engine.sim_step = 11+i
+            old,parts = tick_reward(**outcome,risk=risk,dt=.001,switched=i==0,ue_count=2,config=RewardConfig())
+            r,p = a._compute_reward({'risk':risk},action,action)
+            if arm=='R0':
+                assert r == old
+                assert p['fairness_cost'] == parts['worst_cost']
+            else:
+                assert p['fairness_cost'] == (.25 if arm=='R2' and i==9 else 0.)
+                for k in ('failure_cost','terminal_cost','embb_cost','reserve_cost','switch_cost'):
+                    assert p[k] == parts[k]
+            rewards.append(r)
+        assert a.failures == {'a':10,'b':10}
+        assert a.interval_count == 1
+        assert sum(rewards) == pytest.approx(-sum(a.parts.values()))
+        assert a.parts['switch_cost'] == .01
+        assert a.parts['terminal_cost'] == .2
+        assert a.parts['fairness_cost'] == pytest.approx({'R0':.2,'R1':0.,'R2':.25}[arm])
+        # A subsequent action starts fresh; a new boundary failure cannot charge backward.
+        previous_parts = a.parts.copy()
+        a.service_ticks = 0
+        a.failures.clear()
+        a.parts = dict.fromkeys(COMPONENTS,0.)
+        a.app.ledger.last_consumed_by_ue = {'a':1,'b':0}
+        a.tick_outcome = dict(outcome,counts=dict(new_known_failures=1,offered_batches=1),terminal_charges=0)
+        a._compute_reward({'risk':risk},action,action)
+        assert a.failures == {'a':1,'b':0}
+>       assert previous_parts['failure_cost'] == 1.
+E       assert 0.9999999999999999 == 1.0
+
+backend/tests/test_phase2g.py:150: AssertionError
+___________ test_real_frozen_arms_same_physics_masks_and_r0_identity ___________
+
+    def test_real_frozen_arms_same_physics_masks_and_r0_identity():
+        from tools.phase2g_ablation import OUT, run, make_agent, entries
+        from tools.phase2c3_pilot import run as original_run
+        p = json.loads((OUT/'protocol.json').read_text())
+        entry = next(e for e in entries('validation') if e['regime']=='overloaded' and e['severity']==20)
+        class Fixed(RewardArmAgent):
+            def select(self,state,mask,**kwargs):
+                index = next(i for i,a in enumerate(ACTIONS) if a.delta_embb_prb==a.delta_urllc_prb==0
+                             and a.urllc_scheduler_mode is Mode.PROPORTIONAL)
+                assert len(state)==30 and len(mask)==98 and mask[index]
+                return index
+            def remember(self,*args):
+                raise AssertionError('No training in correctness gate')
+            learn = remember
+        observed = []
+        for arm in VERSIONS:
+            agent = make_agent(12026,arm,p,Fixed)
+            intervals = []
+>           row = run(entry,arm,agent,p,intervals=32,interval_sink=intervals.append)
+
+backend/tests/test_phase2g.py:185:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend/tools/phase2g_ablation.py:121: in run
+    row = run_episode('A4', entry['severity'], entry['seed'], rp, agent=agent, train=train,
+backend/tools/phase2c1_pilot.py:91: in run_episode
+    engine.network_setup(xapp_classes=[partial(app_class or xAppPairedPilot,method=method,agent=agent,
+backend/network_layer/simulation_engine.py:106: in network_setup
+    self.ric.load_xApps(xapp_classes=xapp_classes)
+backend/network_layer/ric.py:43: in load_xApps
+    instance.start()
+backend/network_layer/reward_ablation.py:147: in start
+    super().start()
+backend/network_layer/matched_control.py:60: in start
+    super().start()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <network_layer.reward_ablation.xAppRewardAblation object at 0x715b980eb8c0>
+
+    def start(self):
+        if len(self.ric.xapp_list) != 1 or settings.RES_DQN_TRANSITION_MODE != 'causal':
+>           raise ValueError('Pilot requires one causal control owner')
+E           ValueError: Pilot requires one causal control owner
+
+backend/network_layer/pilot_control.py:144: ValueError
+=========================== short test summary info ============================
+FAILED backend/tests/test_phase2g.py::test_exact_r0_all_components_interval_boundary_and_no_future_leakage[R0]
+FAILED backend/tests/test_phase2g.py::test_exact_r0_all_components_interval_boundary_and_no_future_leakage[R1]
+FAILED backend/tests/test_phase2g.py::test_exact_r0_all_components_interval_boundary_and_no_future_leakage[R2]
+FAILED backend/tests/test_phase2g.py::test_real_frozen_arms_same_physics_masks_and_r0_identity
+4 failed, 6 passed in 1.39s
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "backend/tests/test_phase2g.py",
+    "-q"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 118.85,
+  "peak_aggregate_rss_bytes": 737902592,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 14725120,
+  "samples": 42,
+  "assigned_cpu_busy_percent_before": {
+    "6": 11.11,
+    "7": 11.11,
+    "11": 16.67,
+    "14": 15.0
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24381640 kB",
+  "elapsed_seconds": 2.075397255131975,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 1
+}

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "training_episodes": 54,
+  "validation_episodes": 324,
+  "learners": 6,
+  "intervals": 113022,
+  "per_ue_partition_and_event_conservation": true,
+  "terminal_exclusion_verified": true,
+  "interval_boundaries_verified": true,
+  "all_six_budgets_exact": true,
+  "optimizer_updates": 15960,
+  "physical_selection_recomputed": true,
+  "original_frozen_sources_and_inputs_unchanged": true,
+  "exogenous_pairing_verified": true,
+  "initial_fingerprints_matched": true,
+  "fresh_simulations": 0
+}

@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "protocol_sha256": "7efc239de939d55f0ae0a832111338263c120c6aeaf5b078f96fd41cd32ab52b",
+  "correctness_tests": 10,
+  "regression_passed": 126,
+  "training_tests_deselected": 7,
+  "training_updates_in_gate": 0,
+  "regression_log_sha256": "c9f2dccf9ff8548f515c3202167356d43a3c7cdbb9a484c6253dae66d2f6bfe8",
+  "note": "Initial test-harness failures corrected before any training; source/experiment hashes frozen and verified."
+}

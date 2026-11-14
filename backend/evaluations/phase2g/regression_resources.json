@@ -1,0 +1,44 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "backend/tests",
+    "-q",
+    "-k",
+    "not actual_updates_bounded and not real_causal_learning and not episode_resets_no_leaked_exposure and not actual_sequential_controllers_training and not actual_matched_learning"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 138.66,
+  "peak_aggregate_rss_bytes": 1610588160,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 15405056,
+  "samples": 1758,
+  "assigned_cpu_busy_percent_before": {
+    "6": 11.11,
+    "7": 10.53,
+    "11": 21.05,
+    "14": 10.0
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24778008 kB",
+  "elapsed_seconds": 88.96187966689467,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 0
+}

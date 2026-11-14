@@ -1,0 +1,105 @@
+.........F                                                               [100%]
+=================================== FAILURES ===================================
+___________ test_real_frozen_arms_same_physics_masks_and_r0_identity ___________
+
+    def test_real_frozen_arms_same_physics_masks_and_r0_identity():
+        # Physics settings are import-time values: configure in a fresh subprocess.
+        import subprocess
+        import sys
+        code = r'''
+    from tools.phase2c1_pilot import configure_environment
+    configure_environment()
+    import json
+    from network_layer.reward_ablation import RewardArmAgent, event_fairness_cost, VERSIONS
+    from network_layer.joint_dqn_schema import ACTIONS
+    from network_layer.joint_control import URLLCSchedulerMode as Mode
+    from tools.phase2g_ablation import OUT, run, make_agent, entries
+    from tools.phase2c3_pilot import run as original_run
+    p = json.loads((OUT/'protocol.json').read_text())
+    entry = next(e for e in entries('validation') if e['regime']=='overloaded' and e['severity']==20)
+    class Fixed(RewardArmAgent):
+        def select(self,state,mask,**kwargs):
+            index = next(i for i,a in enumerate(ACTIONS) if a.delta_embb_prb==a.delta_urllc_prb==0
+                         and a.urllc_scheduler_mode is Mode.PROPORTIONAL)
+            assert len(state)==30 and len(mask)==98 and mask[index]
+            return index
+        def remember(self,*args):
+            raise AssertionError('No training in correctness gate')
+        learn = remember
+    observed = []
+    for arm in VERSIONS:
+        agent = make_agent(12026,arm,p,Fixed)
+        intervals = []
+        row = run(entry,arm,agent,p,intervals=32,interval_sink=intervals.append)
+        assert len(intervals) == 31
+        assert row['known_failures'] > 0
+        assert sum(v['new_failures'] for v in intervals) == sum(row['paid_failures_by_ue'].values())
+        assert all(sum(v['failures_by_ue'].values())==v['new_failures'] for v in intervals)
+        if arm=='R2':
+            assert all(v['reward_components']['fairness_cost']==event_fairness_cost(v['failures_by_ue']) for v in intervals)
+        if arm=='R0':
+            original = original_run(entry,'A4',agent,p,intervals=32)
+            assert row['return_value']==original['return_value']
+            assert row['control_digest']==original['control_digest']
+        observed.append(row)
+    assert all(r['physical']['per_ue']==observed[0]['physical']['per_ue'] for r in observed)
+    assert all(r['control_digest']==observed[0]['control_digest'] for r in observed)
+    assert all(r['updates']==0 for r in observed)
+    '''
+        result = subprocess.run([sys.executable, '-c', code], cwd=ROOT,
+                                capture_output=True, text=True)
+>       assert result.returncode == 0, result.stdout+result.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<string>", line 2, in <module>
+E             from tools.phase2c1_pilot import configure_environment
+E         ModuleNotFoundError: No module named 'tools'
+E
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/home/elahe/anaconda3/bin/python', '-c', "\nfrom tools.phase2c1_pilot import configure_environ...module>\n    from tools.phase2c1_pilot import configure_environment\nModuleNotFoundError: No module named \'tools\'\n').returncode
+
+backend/tests/test_phase2g.py:213: AssertionError
+=========================== short test summary info ============================
+FAILED backend/tests/test_phase2g.py::test_real_frozen_arms_same_physics_masks_and_r0_identity
+1 failed, 9 passed in 1.38s
+{
+  "command": [
+    "python",
+    "-m",
+    "pytest",
+    "backend/tests/test_phase2g.py",
+    "-q"
+  ],
+  "cpus": [
+    6,
+    7,
+    11,
+    14
+  ],
+  "affinity_mechanism": "sched_setaffinity inherited by subprocesses",
+  "peak_process_group_cpu_percent": 118.91,
+  "peak_aggregate_rss_bytes": 771506176,
+  "sampling_period_s": 0.05,
+  "guard_rss_bytes": 14671872,
+  "samples": 42,
+  "assigned_cpu_busy_percent_before": {
+    "6": 10.53,
+    "7": 10.53,
+    "11": 10.0,
+    "14": 26.32
+  },
+  "cpu_measurement_note": "Sampled launched process tree plus guard; 100% equals one logical CPU. Short-lived processes may be missed.",
+  "memory_limit_hard_enforced": false,
+  "monitored_stop_threshold_bytes": 2684354560,
+  "memory_limit_note": "No writable delegated cgroup or user systemd bus; conservative RSS watchdog, not a hard cap.",
+  "numerical_threads_per_process": 1,
+  "dataloader_workers": 0,
+  "cuda_visible_devices": "",
+  "available_ram_before": "MemAvailable:   24305016 kB",
+  "elapsed_seconds": 2.0758988379966468,
+  "stopped_for_memory": false,
+  "warning_threshold_bytes": 2147483648,
+  "warning_triggered": false,
+  "stop_reason": null,
+  "minimum_available_gib": 4.0,
+  "exit_code": 1
+}

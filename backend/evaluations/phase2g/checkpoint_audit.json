@@ -1,0 +1,9 @@
+{
+  "checkpoints_verified": 18,
+  "validation_fingerprints_verified": 324,
+  "r0_historical_c3_comparisons": 108,
+  "r0_historical_controls_rewards_parameters_per_ue_all_match": true,
+  "r0_historical_match_count": 108,
+  "fresh_scenarios_executed": 0,
+  "cuda_initialized": false
+}
